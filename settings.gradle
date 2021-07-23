@@ -1,0 +1,2 @@
+rootProject.name = "Pex Wallpapers"
+include ':app'

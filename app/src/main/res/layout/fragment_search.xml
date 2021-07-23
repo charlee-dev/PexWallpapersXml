@@ -48,7 +48,7 @@
                     android:id="@+id/instructions_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@string/search_instructions"
+                    android:text="@string/search_instructions"
                     android:layout_centerInParent="true"
                     android:layout_margin="@dimen/margin_small" />
 
@@ -60,6 +60,7 @@
                     android:visibility="gone"
                     tools:visibility="visible"
                     android:layout_centerInParent="true" />
+
 
             </RelativeLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -7,13 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.adwi.pexwallpapers.R
 
-class PreviewFragment : Fragment() {
+class PreviewFragment : Fragment(R.layout.fragment_preview) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_preview, container, false)
-    }
+
 }

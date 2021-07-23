@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/wallpapers_item"
+        android:icon="@drawable/ic_wallpapers"
+        android:title="@string/wallpapers" />
+    <item
+        android:id="@+id/search_item"
+        android:icon="@drawable/ic_search"
+        android:title="@string/search" />
+    <item
+        android:id="@+id/favorites_item"
+        android:icon="@drawable/ic_favorite_checked"
+        android:title="@string/favorites" />
+</menu>

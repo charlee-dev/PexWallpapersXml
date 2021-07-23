@@ -6,15 +6,24 @@
 
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".FavoritesFragment">
+        tools:context=".ui.favorites.FavoritesFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="favorites" />
+            android:id="@+id/no_favorites_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/no_favorites"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </RelativeLayout>
 </layout>

@@ -9,7 +9,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.wallpapers.WallpapersFragment">
+        tools:context=".ui.search.SearchFragment">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swife_refresh_layout"
@@ -29,21 +29,40 @@
                     android:id="@+id/error_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_above="@+id/retry_button"
-                    android:layout_margin="@dimen/margin_small"
+                    tools:text="An error occured"
                     android:gravity="center"
-                    tools:text="An error occured" />
+                    android:layout_above="@+id/retry_button"
+                    android:layout_margin="@dimen/margin_small" />
+
+                <TextView
+                    android:id="@+id/no_results_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/no_results_found"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="@dimen/margin_small" />
+
+                <TextView
+                    android:id="@+id/instructions_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/search_instructions"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="@dimen/margin_small" />
 
                 <Button
                     android:id="@+id/retry_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
                     android:text="@string/retry"
                     android:visibility="gone"
-                    tools:visibility="visible" />
+                    tools:visibility="visible"
+                    android:layout_centerInParent="true" />
 
             </RelativeLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">Pex Wallpapers</string>
+    <string name="wallpapers">Wallpapers</string>
+    <string name="search">Search</string>
+    <string name="favorites">Favorites</string>
+    <string name="could_not_refresh">Could not refresh: %s</string>
+    <string name="could_not_load_search_results">Could not load search results: %s</string>
+    <string name="unknown_error_occurred">An unknown error occurred</string>
+    <string name="retry">Retry</string>
+    <string name="refresh">Refresh</string>
+    <string name="no_favorites">No favorites</string>
+    <string name="no_results_found">No results found</string>
+    <string name="search_instructions">Tap the magnifying glass to start searching</string>
+    <string name="delete_all_bookmarks">Delete all favorites</string>
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

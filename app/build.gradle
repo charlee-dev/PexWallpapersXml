@@ -18,7 +18,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "NEWS_API_ACCESS_KEY", news_api_access_key)
+        buildConfigField("String", "PEX_API_ACCESS_KEY", pex_api_access_key)
     }
 
     buildTypes {

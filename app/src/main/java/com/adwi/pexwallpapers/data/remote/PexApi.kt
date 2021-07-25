@@ -1,7 +1,9 @@
 package com.adwi.pexwallpapers.data.remote
 
 import com.adwi.pexwallpapers.BuildConfig
-import com.adwi.pexwallpapers.data.remote.dto.WallpaperResponse
+import com.adwi.pexwallpapers.data.remote.dto.WallpaperDtoFull
+import com.adwi.pexwallpapers.data.remote.dto.WallpaperDtoMinimal
+import com.adwi.pexwallpapers.data.remote.dto.WallpaperResponseMinimal
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
@@ -20,19 +22,19 @@ interface PexApi {
         @Query("query") searchCategory: String,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
-    ): WallpaperResponse
+    ): WallpaperResponseMinimal
 
     @Headers("Authorization: $API_KEY")
     @GET("curated")
     suspend fun getCuratedPhotos(
         @Query("per_page") perPage: Int,
         @Query("page") page: Int
-    ): WallpaperResponse
+    ): WallpaperDtoMinimal
 
     @GET("search")
     suspend fun getPhotoById(
         @Query("query") photoId: Int,
         @Query("page") page: Int,
-        @Query("per_page") perPage: Int
-    ): WallpaperResponse
+        @Query("per_page") perPage: Int = 1
+    ): WallpaperDtoFull
 }

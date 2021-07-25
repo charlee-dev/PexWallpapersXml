@@ -5,6 +5,7 @@ import coil.load
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.WallpaperItemBinding
+import kotlin.random.Random
 
 class WallpaperViewHolder(
     private val binding: WallpaperItemBinding
@@ -16,10 +17,6 @@ class WallpaperViewHolder(
                 placeholder(R.drawable.placeholder_item)
                 crossfade(600)
             }
-//            Glide.with(itemView)
-//                .load(wallpaper.src?.tiny)
-//                .error(R.drawable.image_placeholder)
-//                .into(wallpaperImageView)
 
             val photographer = wallpaper.photographer
             val byPhotographer = "by $photographer"
@@ -33,4 +30,8 @@ class WallpaperViewHolder(
             )
         }
     }
+
+
+    private fun getRandomHeight() = 200 + Random.nextInt(200, 400)
+
 }

@@ -10,7 +10,7 @@ object TypeConverter {
 
     private val TAG = "TypeConverter"
 
-    fun wallpaperDtoListToEntityListMinimal(wallpaperList: List<WallpaperDto>): List<Wallpaper> {
+    fun wallpaperDtoListToEntityList(wallpaperList: List<WallpaperDto>): List<Wallpaper> {
         val list = mutableListOf<Wallpaper>()
         for (wallpaper in wallpaperList) {
             list.add(wallpaperDtoToEntityFull(wallpaper))

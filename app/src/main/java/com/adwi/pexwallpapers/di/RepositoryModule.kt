@@ -1,7 +1,8 @@
 package com.adwi.pexwallpapers.di
 
-import com.adwi.pexwallpapers.data.local.WallpapersDao
+import com.adwi.pexwallpapers.data.local.WallpaperDatabase
 import com.adwi.pexwallpapers.data.remote.PexApi
+import com.adwi.pexwallpapers.data.repository.FavoritesRepository
 import com.adwi.pexwallpapers.data.repository.PreviewRepository
 import com.adwi.pexwallpapers.data.repository.SearchRepository
 import com.adwi.pexwallpapers.data.repository.WallpaperRepository
@@ -19,20 +20,31 @@ object RepositoryModule {
     @ViewModelScoped
     fun provideWallpaperRepository(
         pexApi: PexApi,
-        wallpapersDao: WallpapersDao
+        wallpapersDatabase: WallpaperDatabase
     ): WallpaperRepository =
-        WallpaperRepository(pexApi, wallpapersDao)
+        WallpaperRepository(pexApi, wallpapersDatabase)
 
     @Provides
     @ViewModelScoped
     fun provideSearchRepository(
         pexApi: PexApi,
-        wallpapersDao: WallpapersDao
+        wallpapersDatabase: WallpaperDatabase
     ): SearchRepository =
-        SearchRepository(pexApi, wallpapersDao)
+        SearchRepository(pexApi, wallpapersDatabase)
 
     @Provides
     @ViewModelScoped
-    fun providePreviewRepository(wallpapersDao: WallpapersDao): PreviewRepository =
-        PreviewRepository(wallpapersDao)
+    fun providePreviewRepository(
+        pexApi: PexApi,
+        wallpapersDatabase: WallpaperDatabase
+    ): PreviewRepository =
+        PreviewRepository(pexApi, wallpapersDatabase)
+
+    @Provides
+    @ViewModelScoped
+    fun provideFavoritesRepository(
+        pexApi: PexApi,
+        wallpapersDatabase: WallpaperDatabase
+    ): FavoritesRepository =
+        FavoritesRepository(pexApi, wallpapersDatabase)
 }

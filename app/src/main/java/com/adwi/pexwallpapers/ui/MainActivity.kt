@@ -1,14 +1,17 @@
 package com.adwi.pexwallpapers.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.ActivityMainBinding
 import com.adwi.pexwallpapers.ui.favorites.FavoritesFragment
 import com.adwi.pexwallpapers.ui.search.SearchFragment
 import com.adwi.pexwallpapers.ui.wallpapers.WallpapersFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

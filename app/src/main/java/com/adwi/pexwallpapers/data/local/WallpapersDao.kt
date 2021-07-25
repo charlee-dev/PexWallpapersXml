@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import kotlinx.coroutines.flow.Flow
 
 @Dao

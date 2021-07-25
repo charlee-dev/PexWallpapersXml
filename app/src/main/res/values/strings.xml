@@ -1,5 +1,8 @@
 <resources>
+    <!-- App -->
     <string name="app_name">Pex Wallpapers</string>
+    <string name="init_class">Initialized</string>
+    <!-- UI -->
     <string name="wallpapers">Wallpapers</string>
     <string name="search">Search</string>
     <string name="favorites">Favorites</string>

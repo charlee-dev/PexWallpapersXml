@@ -2,7 +2,9 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
     id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -49,9 +51,6 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // Glide
     implementation "com.github.bumptech.glide:glide:4.12.0"
@@ -67,6 +66,9 @@ dependencies {
     // Retrofit + GSON
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
+    implementation "com.github.skydoves:sandwich:1.0.9"
+    testImplementation "com.squareup.okhttp3:mockwebserver:4.9.0"
 
     // Room
     implementation "androidx.room:room-runtime:2.4.0-alpha04"
@@ -81,6 +83,51 @@ dependencies {
 
     // Fragment
     implementation 'androidx.fragment:fragment-ktx:1.3.6'
+
+    // Timber
+    implementation 'com.github.ajalt:timberkt:1.5.1'
+
+    // Shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    // Dependencies for local unit tests
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "org.hamcrest:hamcrest-all:1.3"
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.1"
+    testImplementation "org.robolectric:robolectric:4.5.1"
+    testImplementation "com.google.truth:truth:1.1.2"
+    testImplementation "org.mockito:mockito-core:2.21.0"
+    testImplementation "androidx.test:core-ktx:1.4.0"
+    testImplementation "org.robolectric:robolectric:4.5.1"
+    testImplementation "androidx.test.ext:junit-ktx:1.1.3"
+
+    // AndroidX Test - JVM testing
+    testImplementation "androidx.test:core-ktx:1.4.0"
+    testImplementation "androidx.test.ext:junit-ktx:1.1.3"
+    testImplementation "androidx.test:rules:1.4.0"
+
+    // AndroidX Test - Instrumented testing
+    androidTestImplementation "androidx.test:core-ktx:1.4.0"
+    androidTestImplementation "androidx.test.ext:junit-ktx:1.1.3"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.1"
+    androidTestImplementation "androidx.test:rules:1.4.0"
+    androidTestImplementation "androidx.room:room-testing:2.3.0"
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+    androidTestImplementation "org.robolectric:annotations:4.5.1"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.4.0"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:3.4.0"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:3.4.0"
+    androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:3.4.0"
+    androidTestImplementation "junit:junit:4.13.2"
+    // Once https://issuetracker.google.com/127986458 is fixed this can be testImplementation
+    debugImplementation "androidx.fragment:fragment-testing:1.3.6"
+    implementation "androidx.test:core:1.4.0"
+    implementation "androidx.fragment:fragment-ktx:1.3.6"
+    androidTestImplementation "org.mockito:mockito-core:2.21.0"
+    androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:2.12.1"
+    androidTestImplementation('org.koin:koin-test:2.2.1') { exclude group: 'org.mockito' }
 }
 
 kapt {

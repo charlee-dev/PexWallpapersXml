@@ -9,13 +9,14 @@ import androidx.room.PrimaryKey
 data class Wallpaper(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
-    val width: Int,
-    val height: Int,
-    val url: String,
-    val photographer: String?,
-    val photographerUrl: String?,
-    val avgColor: String?,
+    val width: Int? = null,
+    val height: Int? = null,
+    val url: String? = null,
+    val photographer: String,
+    val photographerUrl: String? = null,
+    val color: String,
+    val imageUrl: String,
     @Embedded
-    val src: Src,
+    val src: Src? = null,
     val isFavorite: Boolean = false
 )

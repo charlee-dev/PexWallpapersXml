@@ -32,7 +32,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/photoplaceholder" />
+                    tools:src="@drawable/photo_placeholder" />
 
                 <View
                     android:id="@+id/item_gradient_background"
@@ -49,11 +49,10 @@
                     android:id="@+id/wallpaper_photographer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
                     android:layout_margin="@dimen/margin_small"
+                    android:ellipsize="end"
                     android:fontFamily="@font/montserrat"
                     android:singleLine="true"
-                    android:textColor="@color/white"
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="@+id/wallpaper_imageView"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -65,10 +64,11 @@
                     android:layout_height="80dp"
                     android:layout_margin="@dimen/margin_small"
                     android:elevation="5dp"
-                    android:src="@drawable/ic_favorite_unchecked"
+                    android:contentDescription="@string/add_image_toFavorites"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/red" />
+                    app:tint="@color/red"
+                    tools:src="@drawable/ic_favorite_unchecked" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

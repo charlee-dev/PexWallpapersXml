@@ -1,16 +1,10 @@
 package com.adwi.pexwallpapers.data.remote.dto
 
+import com.adwi.pexwallpapers.data.local.entity.Src
 import com.google.gson.annotations.SerializedName
 
-data class WallpaperDtoMinimal(
-    val id: Long,
-    val photographer: String,
-    @SerializedName("avg_color")
-    val color: String,
-    val src: SrcDtoMinimal
-)
 
-data class WallpaperDtoFull(
+data class WallpaperDto(
     val id: Int,
     val width: Int?,
     val height: Int?,
@@ -20,5 +14,5 @@ data class WallpaperDtoFull(
     val photographerUrl: String?,
     @SerializedName("avg_color")
     val color: String,
-    val src: SrcDtoFull
+    val src: Src
 )

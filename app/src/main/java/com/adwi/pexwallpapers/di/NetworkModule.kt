@@ -34,52 +34,39 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideNetworkInterceptor(): Interceptor {
-        return Interceptor {
+    fun provideNetworkInterceptor(): Interceptor =
+        Interceptor {
             val request = it.request().newBuilder()
                 .addHeader(AUTHORIZATION, API_KEY)
                 .build()
             it.proceed(request)
         }
-    }
 
     @Singleton
     @Provides
     fun provideHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
         networkInterceptor: Interceptor
-    ): OkHttpClient {
-        return OkHttpClient.Builder()
+    ): OkHttpClient =
+        OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addNetworkInterceptor(networkInterceptor)
             .readTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)
             .build()
-    }
 
     @Singleton
     @Provides
-    fun provideConverterFactory(): GsonConverterFactory {
-        return GsonConverterFactory.create()
-    }
-
-    @Singleton
-    @Provides
-    fun provideRetrofitInstance(
-        okHttpClient: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory
-    ): Retrofit {
-        return Retrofit.Builder()
+    fun provideRetrofitInstance(okHttpClient: OkHttpClient): Retrofit =
+        Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(BASE_URL)
-            .addConverterFactory(gsonConverterFactory)
+            .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(CoroutinesResponseCallAdapterFactory())
             .build()
-    }
 
     @Singleton
     @Provides
-    fun provideApiService(retrofit: Retrofit): PexApi {
-        return retrofit.create(PexApi::class.java)
-    }
+    fun provideApiService(retrofit: Retrofit): PexApi =
+        retrofit.create(PexApi::class.java)
 }

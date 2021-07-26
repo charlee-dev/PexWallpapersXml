@@ -17,11 +17,23 @@ import javax.inject.Inject
 class WallpaperViewModel @Inject constructor(repository: WallpaperRepository) : ViewModel() {
 
     // Hot flow - produces value no matter if there is collector or not
+    private val eventChannel = Channel<Event>()
+    val events = eventChannel.receiveAsFlow()
+
     private val refreshTriggerChannel = Channel<Unit>()
     private val refreshTrigger = refreshTriggerChannel.receiveAsFlow()
 
+    var pendingScrollToTopAfterRefresh = false
+
     val wallpaperList = refreshTrigger.flatMapLatest {
-        repository.getCuratedWallpapers()
+        repository.getCuratedWallpapers(
+            onFetchSuccess = {
+                pendingScrollToTopAfterRefresh = true
+            },
+            onFetchRemoteFailed = { t ->
+                viewModelScope.launch { eventChannel.send(Event.ShowErrorMessage(t)) }
+            }
+        )
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     fun onStart() {
@@ -38,4 +50,7 @@ class WallpaperViewModel @Inject constructor(repository: WallpaperRepository) : 
             }
     }
 
+    sealed class Event {
+        data class ShowErrorMessage(val error: Throwable) : Event()
+    }
 }

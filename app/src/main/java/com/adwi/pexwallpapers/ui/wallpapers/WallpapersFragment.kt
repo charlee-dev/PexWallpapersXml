@@ -15,6 +15,8 @@ import com.adwi.pexwallpapers.databinding.FragmentWallpapersBinding
 import com.adwi.pexwallpapers.shared.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.util.Resource
+import com.adwi.pexwallpapers.util.exhaustive
+import com.adwi.pexwallpapers.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -48,7 +50,12 @@ class WallpapersFragment : BaseFragment<FragmentWallpapersBinding>() {
                             ?: getString(R.string.unknown_error_occurred)
                     )
 
-                    wallpaperListAdapter.submitList(result.data)
+                    wallpaperListAdapter.submitList(result.data) {
+                        if (viewModel.pendingScrollToTopAfterRefresh) {
+                            recyclerView.smoothScrollToPosition(0)
+                            viewModel.pendingScrollToTopAfterRefresh = false
+                        }
+                    }
                 }
             }
 
@@ -59,6 +66,20 @@ class WallpapersFragment : BaseFragment<FragmentWallpapersBinding>() {
             retryButton.setOnClickListener {
                 viewModel.onManualRefresh()
             }
+
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is WallpaperViewModel.Event.ShowErrorMessage -> showSnackbar(
+                            getString(
+                                R.string.could_not_refresh,
+                                event.error.localizedMessage
+                                    ?: getString(R.string.unknown_error_occurred)
+                            )
+                        )
+                    }.exhaustive
+                }
+            }
         }
 
         setHasOptionsMenu(true)
@@ -66,6 +87,7 @@ class WallpapersFragment : BaseFragment<FragmentWallpapersBinding>() {
 
     override fun onStart() {
         super.onStart()
+        // TODO decide if its really needed
         viewModel.onStart()
     }
 

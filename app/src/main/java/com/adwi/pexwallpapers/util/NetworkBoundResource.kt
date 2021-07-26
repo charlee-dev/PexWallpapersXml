@@ -8,29 +8,31 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
+
+// Cold flow - executed only if there is collector
 @ExperimentalCoroutinesApi
 inline fun <ResultType, RequestType> networkBoundResource(
-    crossinline query: () -> Flow<ResultType>,
-    crossinline fetch: suspend () -> RequestType,
-    crossinline saveFetchResult: suspend (RequestType) -> Unit,
+    crossinline queryLocal: () -> Flow<ResultType>,
+    crossinline fetchRemote: suspend () -> RequestType,
+    crossinline saveRemoteToLocal: suspend (RequestType) -> Unit,
     crossinline shouldFetch: (ResultType) -> Boolean = { true }
 ) = channelFlow {
-    val data = query().first()
+    val data = queryLocal().first()
 
     if (shouldFetch(data)) {
         val loading = launch {
-            query().collect { send(Resource.Loading(it)) }
+            queryLocal().collect { send(Resource.Loading(it)) }
         }
         try {
             delay(2000)
-            saveFetchResult(fetch())
+            saveRemoteToLocal(fetchRemote())
             loading.cancel()
-            query().collect { send(Resource.Success(it)) }
+            queryLocal().collect { send(Resource.Success(it)) }
         } catch (t: Throwable) {
             loading.cancel()
-            query().collect { send(Resource.Error(t, it)) }
+            queryLocal().collect { send(Resource.Error(t, it)) }
         }
     } else {
-        query().collect { send(Resource.Success(it)) }
+        queryLocal().collect { send(Resource.Success(it)) }
     }
 }

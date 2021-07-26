@@ -1,18 +1,12 @@
 package com.adwi.pexwallpapers.data.remote
 
-import com.adwi.pexwallpapers.BuildConfig
 import com.adwi.pexwallpapers.data.remote.dto.WallpaperResponse
+import com.adwi.pexwallpapers.util.Constants.Companion.CURATED_PAGE_SIZE
+import com.adwi.pexwallpapers.util.Constants.Companion.STANDARD_PAGE_SIZE
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface PexApi {
-    companion object {
-        const val BASE_URL = "https://api.pexels.com/"
-        const val CURATED_PAGE_SIZE = 5
-        const val STANDARD_PAGE_SIZE = 10
-        const val API_KEY = BuildConfig.PEX_API_ACCESS_KEY
-        const val AUTHORIZATION = "Authorization"
-    }
 
     @GET("search")
     suspend fun getPhotosOfCategory(

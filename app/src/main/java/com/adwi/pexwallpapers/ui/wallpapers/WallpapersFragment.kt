@@ -1,5 +1,8 @@
 package com.adwi.pexwallpapers.ui.wallpapers
 
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -8,9 +11,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.adwi.pexwallpapers.R
-import com.adwi.pexwallpapers.base.BaseFragment
 import com.adwi.pexwallpapers.databinding.FragmentWallpapersBinding
 import com.adwi.pexwallpapers.shared.WallpaperListAdapter
+import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -48,6 +51,34 @@ class WallpapersFragment : BaseFragment<FragmentWallpapersBinding>() {
                     wallpaperListAdapter.submitList(result.data)
                 }
             }
+
+            swipeRefreshLayout.setOnRefreshListener {
+                viewModel.onManualRefresh()
+            }
+
+            retryButton.setOnClickListener {
+                viewModel.onManualRefresh()
+            }
         }
+
+        setHasOptionsMenu(true)
     }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.onStart()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_wallpapers, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) =
+        when (item.itemId) {
+            R.id.action_refresh -> {
+                viewModel.onManualRefresh()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
 }

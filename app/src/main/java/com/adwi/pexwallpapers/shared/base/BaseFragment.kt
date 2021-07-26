@@ -1,4 +1,4 @@
-package com.adwi.pexwallpapers.base
+package com.adwi.pexwallpapers.shared.base
 
 import android.os.Bundle
 import android.view.LayoutInflater

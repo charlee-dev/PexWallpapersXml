@@ -19,14 +19,14 @@ class WallpaperRepository @Inject constructor(
 
     fun getCuratedWallpapers(): Flow<Resource<List<Wallpaper>>> =
         networkBoundResource(
-            query = {
+            queryLocal = {
                 dao.getAllWallpapers()
             },
-            fetch = {
+            fetchRemote = {
                 val response = pexApi.getCuratedPhotos()
                 response.wallpaperList
             },
-            saveFetchResult = { remoteWallpaperList ->
+            saveRemoteToLocal = { remoteWallpaperList ->
                 val wallpaperList =
                     TypeConverter.wallpaperDtoListToEntityList(remoteWallpaperList)
                 wallpapersDatabase.withTransaction {

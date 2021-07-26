@@ -8,6 +8,7 @@ data class WallpaperDto(
     val id: Int,
     val width: Int?,
     val height: Int?,
+    @SerializedName("url")
     val pexUrl: String?,
     val photographer: String,
     @SerializedName("photographer_url")

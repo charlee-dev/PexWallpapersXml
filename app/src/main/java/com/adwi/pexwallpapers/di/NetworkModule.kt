@@ -1,9 +1,9 @@
 package com.adwi.pexwallpapers.di
 
 import com.adwi.pexwallpapers.data.remote.PexApi
-import com.adwi.pexwallpapers.data.remote.PexApi.Companion.API_KEY
-import com.adwi.pexwallpapers.data.remote.PexApi.Companion.AUTHORIZATION
-import com.adwi.pexwallpapers.data.remote.PexApi.Companion.BASE_URL
+import com.adwi.pexwallpapers.util.Constants.Companion.API_KEY
+import com.adwi.pexwallpapers.util.Constants.Companion.AUTHORIZATION
+import com.adwi.pexwallpapers.util.Constants.Companion.BASE_URL
 import com.skydoves.sandwich.coroutines.CoroutinesResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides

@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.adwi.pexwallpapers.data.local.WallpaperDatabase
 import com.adwi.pexwallpapers.data.local.WallpapersDao
+import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_DATABASE
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +22,7 @@ object LocalModule {
             .databaseBuilder(
                 application,
                 WallpaperDatabase::class.java,
-                "wallpaper_database"
+                WALLPAPER_DATABASE
             )
             .fallbackToDestructiveMigration()
             .build()

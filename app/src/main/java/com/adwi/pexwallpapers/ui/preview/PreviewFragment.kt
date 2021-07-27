@@ -1,22 +1,23 @@
 package com.adwi.pexwallpapers.ui.preview
 
-import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.adwi.pexwallpapers.R
+import androidx.navigation.fragment.navArgs
+import by.kirich1409.viewbindingdelegate.CreateMethod
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.adwi.pexwallpapers.databinding.FragmentPreviewBinding
+import com.adwi.pexwallpapers.shared.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PreviewFragment : Fragment(R.layout.fragment_preview) {
+class PreviewFragment : BaseFragment<FragmentPreviewBinding, PreviewViewModel>() {
 
-    private val viewModel: PreviewViewModel by viewModels()
+    override val viewModel: PreviewViewModel by viewModels()
+    override val binding: FragmentPreviewBinding by viewBinding(CreateMethod.INFLATE)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private val args: PreviewFragmentArgs by navArgs()
 
-        val binding = FragmentPreviewBinding.bind(view)
-
+    override fun setupViews() {
+        val wallpaperId = args.id
+        binding.wallpaperIdTextview.text = wallpaperId.toString()
     }
 }

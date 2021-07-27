@@ -7,7 +7,9 @@ import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.WallpaperItemBinding
 
 class WallpaperViewHolder(
-    private val binding: WallpaperItemBinding
+    private val binding: WallpaperItemBinding,
+    private val onItemClick: (Int) -> Unit,
+    private val onFavoriteClick: (Int) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(wallpaper: Wallpaper) {
@@ -27,6 +29,23 @@ class WallpaperViewHolder(
                     else -> R.drawable.ic_favorite_unchecked
                 }
             )
+        }
+    }
+
+    init {
+        binding.apply {
+            root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClick(position)
+                }
+            }
+            favoritesBookmark.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onFavoriteClick(position)
+                }
+            }
         }
     }
 }

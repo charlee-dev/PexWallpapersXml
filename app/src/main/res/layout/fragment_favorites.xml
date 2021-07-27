@@ -25,11 +25,5 @@
             android:visibility="gone"
             tools:visibility="visible" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Favorites"/>
-
     </RelativeLayout>
 </layout>

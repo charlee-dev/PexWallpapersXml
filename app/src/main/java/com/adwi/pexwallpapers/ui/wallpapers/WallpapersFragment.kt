@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import by.kirich1409.viewbindingdelegate.CreateMethod
@@ -21,19 +22,33 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class WallpapersFragment : BaseFragment<FragmentWallpapersBinding>() {
+class WallpapersFragment : BaseFragment<FragmentWallpapersBinding, WallpaperViewModel>() {
 
     override val viewModel: WallpaperViewModel by viewModels()
     override val binding: FragmentWallpapersBinding by viewBinding(CreateMethod.INFLATE)
 
     override fun setupViews() {
-        val wallpaperListAdapter = WallpaperListAdapter()
+        val wallpaperListAdapter = WallpaperListAdapter(
+            onItemClick = { wallpaper ->
+                findNavController().navigate(
+                    WallpapersFragmentDirections.actionWallpapersFragmentToPreviewFragment(
+                        wallpaper.id
+                    )
+                )
+            },
+            onFavoriteClick = { wallpaper ->
+                viewModel.onFavoriteClick(wallpaper)
+            }
+        )
 
         binding.apply {
             recyclerView.apply {
                 adapter = wallpaperListAdapter
                 layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
                 setHasFixedSize(true)
+                // hide item strange animation even when favorite clicked
+                itemAnimator = null
+                itemAnimator?.changeDuration = 0
             }
 
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {

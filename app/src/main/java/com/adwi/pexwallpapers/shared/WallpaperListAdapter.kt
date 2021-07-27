@@ -6,12 +6,29 @@ import androidx.recyclerview.widget.ListAdapter
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.WallpaperItemBinding
 
-class WallpaperListAdapter : ListAdapter<Wallpaper, WallpaperViewHolder>(WallpaperComparator()) {
+class WallpaperListAdapter(
+    private val onItemClick: (Wallpaper) -> Unit,
+    private val onFavoriteClick: (Wallpaper) -> Unit
+) : ListAdapter<Wallpaper, WallpaperViewHolder>(WallpaperComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WallpaperViewHolder {
         val binding =
             WallpaperItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return WallpaperViewHolder(binding)
+        return WallpaperViewHolder(
+            binding,
+            onItemClick = { position ->
+                val wallpaper = getItem(position)
+                if (wallpaper != null) {
+                    onItemClick(wallpaper)
+                }
+            },
+            onFavoriteClick = { position ->
+                val wallpaper = getItem(position)
+                if (wallpaper != null) {
+                    onFavoriteClick(wallpaper)
+                }
+            }
+        )
     }
 
     override fun onBindViewHolder(holder: WallpaperViewHolder, position: Int) {

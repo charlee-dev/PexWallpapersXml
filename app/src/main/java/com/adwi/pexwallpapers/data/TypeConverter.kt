@@ -3,31 +3,10 @@ package com.adwi.pexwallpapers.data
 import com.adwi.pexwallpapers.data.local.entity.Src
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.remote.dto.WallpaperDto
-import com.github.ajalt.timberkt.Timber
-import com.github.ajalt.timberkt.d
 
 object TypeConverter {
 
-    private val TAG = "TypeConverter"
-
-    fun wallpaperDtoListToEntityList(wallpaperList: List<WallpaperDto>): List<Wallpaper> {
-        val list = mutableListOf<Wallpaper>()
-        for (wallpaper in wallpaperList) {
-            list.add(wallpaperDtoToEntityFull(wallpaper))
-        }
-        Timber.tag(TAG).d { "wallpaperDtoListToEntityListMinimal - List size: ${list.size}" }
-        return list
-    }
-
-    private fun wallpaperDtoMinimalToEntity(wallpaper: WallpaperDto) =
-        Wallpaper(
-            id = wallpaper.id,
-            photographer = wallpaper.photographer,
-            color = wallpaper.color,
-            imageUrl = wallpaper.src.medium,
-        )
-
-    private fun wallpaperDtoToEntityFull(wallpaper: WallpaperDto) =
+    fun wallpaperDtoToWallpaper(wallpaper: WallpaperDto, isFavorite: Boolean) =
         Wallpaper(
             id = wallpaper.id,
             photographer = wallpaper.photographer,
@@ -37,6 +16,7 @@ object TypeConverter {
             width = wallpaper.width,
             url = wallpaper.pexUrl,
             photographerUrl = wallpaper.photographerUrl,
+            isFavorite = isFavorite,
             src = Src(
                 original = wallpaper.src.original,
                 large2x = wallpaper.src.large2x,

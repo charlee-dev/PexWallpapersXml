@@ -2,7 +2,6 @@ package com.adwi.pexwallpapers.di
 
 import com.adwi.pexwallpapers.data.local.WallpaperDatabase
 import com.adwi.pexwallpapers.data.remote.PexApi
-import com.adwi.pexwallpapers.data.repository.FavoritesRepository
 import com.adwi.pexwallpapers.data.repository.PreviewRepository
 import com.adwi.pexwallpapers.data.repository.SearchRepository
 import com.adwi.pexwallpapers.data.repository.WallpaperRepository
@@ -39,12 +38,4 @@ object RepositoryModule {
         wallpapersDatabase: WallpaperDatabase
     ): PreviewRepository =
         PreviewRepository(pexApi, wallpapersDatabase)
-
-    @Provides
-    @ViewModelScoped
-    fun provideFavoritesRepository(
-        pexApi: PexApi,
-        wallpapersDatabase: WallpaperDatabase
-    ): FavoritesRepository =
-        FavoritesRepository(pexApi, wallpapersDatabase)
 }

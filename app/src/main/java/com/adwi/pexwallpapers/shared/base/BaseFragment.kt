@@ -12,9 +12,9 @@ import com.github.ajalt.timberkt.Timber
 import com.github.ajalt.timberkt.d
 
 
-abstract class BaseFragment<out VB : ViewDataBinding> : Fragment() {
+abstract class BaseFragment<out VB : ViewDataBinding, VM : ViewModel> : Fragment() {
 
-    abstract val viewModel: ViewModel
+    abstract val viewModel: VM
     abstract val binding: VB
 
     override fun onCreateView(
@@ -29,64 +29,14 @@ abstract class BaseFragment<out VB : ViewDataBinding> : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupViews()
-//        setupListeners()
-//        setupObservers()
-//        setupAdapters()
     }
 
     override fun onStart() {
         super.onStart()
-
         Timber.tag(TAG).d { resources.getString(R.string.init_class) }
-
-//        viewModel.showErrorMessage.observe(this, {
-//            val toast = Toast.makeText(activity, it, Toast.LENGTH_LONG)
-//            toast.show()
-//        })
-//
-//        viewModel.showToast.observe(this, {
-//            val toast = Toast.makeText(activity, it, Toast.LENGTH_LONG)
-//
-//            toast.show()
-//        })
-//
-//        viewModel.showSnackBar.observe(this, {
-//            val snackBar = Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG)
-//            snackBar.addCallback(object : Snackbar.Callback() {
-//                override fun onShown(sb: Snackbar?) {
-//                    EspressoIdlingResource.increment()
-//                }
-//
-//                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-//                    EspressoIdlingResource.decrement()
-//                }
-//            })
-//            snackBar.show()
-//        })
-//
-//        viewModel.showSnackBarInt.observe(this, {
-//            val snackBar = Snackbar.make(requireView(), getString(it), Snackbar.LENGTH_LONG)
-//            snackBar.addCallback(object : Snackbar.Callback() {
-//
-//                override fun onShown(sb: Snackbar?) {
-//                    EspressoIdlingResource.increment()
-//                }
-//
-//                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-//                    EspressoIdlingResource.decrement()
-//                }
-//            })
-//            snackBar.show()
-//        })
     }
 
     abstract fun setupViews()
-//
-//    abstract fun setupListeners()
-//
-//    abstract fun setupObservers()
-//
-//    abstract fun setupAdapters()
 
     companion object {
         private val TAG = this::class.java.simpleName

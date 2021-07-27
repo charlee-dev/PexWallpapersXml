@@ -14,7 +14,7 @@
     <string name="no_favorites">No favorites</string>
     <string name="no_results_found">No results found</string>
     <string name="search_instructions">Tap the magnifying glass to start searching</string>
-    <string name="delete_all_bookmarks">Delete all favorites</string>
+    <string name="delete_all_favorites">Delete all favorites</string>
     <string name="add_image_toFavorites">Add image to favorites</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/wallpapers_item"
+        android:id="@+id/wallpapersFragment"
         android:icon="@drawable/ic_wallpapers"
         android:title="@string/wallpapers" />
     <item
-        android:id="@+id/search_item"
+        android:id="@+id/searchFragment"
         android:icon="@drawable/ic_search"
         android:title="@string/search" />
     <item
-        android:id="@+id/favorites_item"
+        android:id="@+id/favoritesFragment"
         android:icon="@drawable/ic_favorite_checked"
         android:title="@string/favorites" />
 </menu>

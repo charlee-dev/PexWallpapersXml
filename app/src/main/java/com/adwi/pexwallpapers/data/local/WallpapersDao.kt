@@ -1,9 +1,6 @@
 package com.adwi.pexwallpapers.data.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import kotlinx.coroutines.flow.Flow
 
@@ -18,6 +15,15 @@ interface WallpapersDao {
 
     @Query("SELECT * FROM wallpaper_table")
     fun getAllWallpapers(): Flow<List<Wallpaper>>
+
+    @Query("SELECT * FROM wallpaper_table WHERE isFavorite = 1")
+    fun getAllFavorites(): Flow<List<Wallpaper>>
+
+    @Update
+    suspend fun updateWallpaperFavorite(wallpaper: Wallpaper)
+
+    @Query("UPDATE wallpaper_table SET isFavorite = 0")
+    suspend fun resetAllFavorites()
 
     @Query("DELETE FROM wallpaper_table")
     suspend fun deleteAllWallpapers()

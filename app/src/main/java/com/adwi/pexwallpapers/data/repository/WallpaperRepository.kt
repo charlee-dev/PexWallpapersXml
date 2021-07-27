@@ -8,6 +8,7 @@ import com.adwi.pexwallpapers.data.remote.PexApi
 import com.adwi.pexwallpapers.util.Resource
 import com.adwi.pexwallpapers.util.networkBoundResource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -33,9 +34,18 @@ class WallpaperRepository @Inject constructor(
                 response.wallpaperList
             },
             saveFetchResult = { remoteWallpaperList ->
+                // first() collects one list than cancels flow
+                val favoriteWallpapers = dao.getAllFavorites().first()
+
                 val wallpaperList =
-                    TypeConverter.wallpaperDtoListToEntityList(remoteWallpaperList)
+                    remoteWallpaperList.map { wallpaper ->
+                        val isFavorite = favoriteWallpapers.any { favoriteWallpaper ->
+                            favoriteWallpaper.id == wallpaper.id
+                        }
+                        TypeConverter.wallpaperDtoToWallpaper(wallpaper, isFavorite)
+                    }
                 wallpapersDatabase.withTransaction {
+                    dao.deleteAllWallpapers()
                     dao.insertWallpapers(wallpaperList)
                 }
             },
@@ -62,7 +72,15 @@ class WallpaperRepository @Inject constructor(
             }
         )
 
-    suspend fun deleteNonFavoriteWallpapersOlderThan(timestampInMillis: Long) {
+    fun getAllFavorites(): Flow<List<Wallpaper>> =
+        dao.getAllFavorites()
+
+    suspend fun deleteNonFavoriteWallpapersOlderThan(timestampInMillis: Long) =
         dao.deleteNonFavoriteWallpapersOlderThan(timestampInMillis)
-    }
+
+    suspend fun updateWallpaperFavorite(wallpaper: Wallpaper) =
+        dao.updateWallpaperFavorite(wallpaper)
+
+    suspend fun resetAllFavorites() =
+        dao.resetAllFavorites()
 }

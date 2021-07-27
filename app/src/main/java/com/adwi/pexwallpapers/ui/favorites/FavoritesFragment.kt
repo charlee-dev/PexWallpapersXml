@@ -1,22 +1,74 @@
 package com.adwi.pexwallpapers.ui.favorites
 
-import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.Fragment
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import by.kirich1409.viewbindingdelegate.CreateMethod
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentFavoritesBinding
+import com.adwi.pexwallpapers.shared.WallpaperListAdapter
+import com.adwi.pexwallpapers.shared.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
+class FavoritesFragment : BaseFragment<FragmentFavoritesBinding, FavoritesViewModel>() {
 
-    private val viewModel: FavoritesViewModel by viewModels()
+    override val viewModel: FavoritesViewModel by viewModels()
+    override val binding: FragmentFavoritesBinding by viewBinding(CreateMethod.INFLATE)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setupViews() {
+        setHasOptionsMenu(true)
 
-        val binding = FragmentFavoritesBinding.bind(view)
+        val favoritesAdapter = WallpaperListAdapter(
+            onItemClick = { wallpaper ->
+                findNavController().navigate(
+                    FavoritesFragmentDirections.actionFavoritesFragmentToPreviewFragment(
+                        wallpaper.id
+                    )
+                )
+            },
+            onFavoriteClick = { wallpaper ->
+                viewModel.onFavoriteClick(wallpaper)
+            }
+        )
 
+        binding.apply {
+            recyclerView.apply {
+                adapter = favoritesAdapter
+                layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+                setHasFixedSize(true)
+            }
+
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                viewModel.favorites.collect {
+                    val favorites = it ?: return@collect
+
+                    favoritesAdapter.submitList(favorites)
+                    noFavoritesTextview.isVisible = favorites.isEmpty()
+                    recyclerView.isVisible = favorites.isNotEmpty()
+                }
+            }
+        }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) =
+        inflater.inflate(R.menu.menu_favorites, menu)
+
+
+    override fun onOptionsItemSelected(item: MenuItem) =
+        when (item.itemId) {
+            R.id.action_delete_all_favorites -> {
+                viewModel.onDeleteAllFavorites()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
 }

@@ -2,6 +2,7 @@ package com.adwi.pexwallpapers.ui.wallpapers
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.repository.WallpaperRepository
 import com.adwi.pexwallpapers.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,9 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
-class WallpaperViewModel @Inject constructor(repository: WallpaperRepository) : ViewModel() {
+class WallpaperViewModel @Inject constructor(
+    private val repository: WallpaperRepository
+) : ViewModel() {
 
     // Hot flow - produces value no matter if there is collector or not
     private val eventChannel = Channel<Event>()
@@ -58,6 +61,14 @@ class WallpaperViewModel @Inject constructor(repository: WallpaperRepository) : 
             viewModelScope.launch {
                 refreshTriggerChannel.send(Refresh.FORCE)
             }
+    }
+
+    fun onFavoriteClick(wallpaper: Wallpaper) {
+        val currentlyFavorite = wallpaper.isFavorite
+        val updatedWallpaper = wallpaper.copy(isFavorite = !currentlyFavorite)
+        viewModelScope.launch {
+            repository.updateWallpaperFavorite(updatedWallpaper)
+        }
     }
 
     enum class Refresh {

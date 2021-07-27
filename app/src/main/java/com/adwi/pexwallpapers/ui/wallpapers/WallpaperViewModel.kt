@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,13 +21,14 @@ class WallpaperViewModel @Inject constructor(repository: WallpaperRepository) : 
     private val eventChannel = Channel<Event>()
     val events = eventChannel.receiveAsFlow()
 
-    private val refreshTriggerChannel = Channel<Unit>()
+    private val refreshTriggerChannel = Channel<Refresh>()
     private val refreshTrigger = refreshTriggerChannel.receiveAsFlow()
 
     var pendingScrollToTopAfterRefresh = false
 
-    val wallpaperList = refreshTrigger.flatMapLatest {
+    val wallpaperList = refreshTrigger.flatMapLatest { refresh ->
         repository.getCuratedWallpapers(
+            refresh == Refresh.FORCE,
             onFetchSuccess = {
                 pendingScrollToTopAfterRefresh = true
             },
@@ -36,18 +38,30 @@ class WallpaperViewModel @Inject constructor(repository: WallpaperRepository) : 
         )
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
+    init {
+        viewModelScope.launch {
+            repository.deleteNonFavoriteWallpapersOlderThan(
+                System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7)
+            )
+        }
+    }
+
     fun onStart() {
         if (wallpaperList.value !is Resource.Loading)
             viewModelScope.launch {
-                refreshTriggerChannel.send(Unit)
+                refreshTriggerChannel.send(Refresh.NORMAL)
             }
     }
 
     fun onManualRefresh() {
         if (wallpaperList.value !is Resource.Loading)
             viewModelScope.launch {
-                refreshTriggerChannel.send(Unit)
+                refreshTriggerChannel.send(Refresh.FORCE)
             }
+    }
+
+    enum class Refresh {
+        FORCE, NORMAL
     }
 
     sealed class Event {

@@ -18,5 +18,6 @@ data class Wallpaper(
     val imageUrl: String,
     @Embedded
     val src: Src? = null,
-    val isFavorite: Boolean = false
+    val isFavorite: Boolean = false,
+    val updatedAt: Long = System.currentTimeMillis()
 )

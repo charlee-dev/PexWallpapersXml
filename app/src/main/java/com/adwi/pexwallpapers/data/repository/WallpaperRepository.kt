@@ -20,6 +20,7 @@ class WallpaperRepository @Inject constructor(
     private val dao = wallpapersDatabase.wallpaperDao()
 
     fun getCuratedWallpapers(
+        forceRefresh: Boolean,
         onFetchSuccess: () -> Unit,
         onFetchRemoteFailed: (Throwable) -> Unit
     ): Flow<Resource<List<Wallpaper>>> =
@@ -38,6 +39,20 @@ class WallpaperRepository @Inject constructor(
                     dao.insertWallpapers(wallpaperList)
                 }
             },
+            shouldFetch = { cachedArticles ->
+                if (forceRefresh) {
+                    true
+                } else {
+                    val sortedArticles = cachedArticles.sortedBy { article ->
+                        article.updatedAt
+                    }
+                    val oldestTimestamp = sortedArticles.firstOrNull()?.updatedAt
+                    val needsRefresh = oldestTimestamp == null ||
+                            oldestTimestamp < System.currentTimeMillis() -
+                            java.util.concurrent.TimeUnit.MINUTES.toMillis(5)
+                    needsRefresh
+                }
+            },
             onFetchSuccess = onFetchSuccess,
             onFetchFailed = { t ->
                 if (t !is HttpException && t !is IOException) {
@@ -45,6 +60,9 @@ class WallpaperRepository @Inject constructor(
                 }
                 onFetchRemoteFailed(t)
             }
-
         )
+
+    suspend fun deleteNonFavoriteWallpapersOlderThan(timestampInMillis: Long) {
+        dao.deleteNonFavoriteWallpapersOlderThan(timestampInMillis)
+    }
 }

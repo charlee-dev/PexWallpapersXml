@@ -21,4 +21,7 @@ interface WallpapersDao {
 
     @Query("DELETE FROM wallpaper_table")
     suspend fun deleteAllWallpapers()
+
+    @Query("DELETE FROM wallpaper_table WHERE updatedAt < :timestampInMillis AND isFavorite = 0")
+    suspend fun deleteNonFavoriteWallpapersOlderThan(timestampInMillis: Long)
 }

@@ -5,7 +5,6 @@ import coil.load
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.WallpaperItemBinding
-import kotlin.random.Random
 
 class WallpaperViewHolder(
     private val binding: WallpaperItemBinding
@@ -30,8 +29,4 @@ class WallpaperViewHolder(
             )
         }
     }
-
-
-    private fun getRandomHeight() = 200 + Random.nextInt(200, 400)
-
 }

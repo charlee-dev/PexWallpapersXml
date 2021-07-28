@@ -1,12 +1,16 @@
-package com.adwi.pexwallpapers.data.repository
+package com.adwi.pexwallpapers.data
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.room.withTransaction
-import com.adwi.pexwallpapers.data.TypeConverter
 import com.adwi.pexwallpapers.data.local.WallpaperDatabase
-import com.adwi.pexwallpapers.data.local.entity.CuratedWallpapers
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.remote.PexApi
+import com.adwi.pexwallpapers.util.Constants.Companion.PAGING_MAX_SIZE
+import com.adwi.pexwallpapers.util.Constants.Companion.PAGING_SIZE
 import com.adwi.pexwallpapers.util.Resource
+import com.adwi.pexwallpapers.util.TypeConverter
 import com.adwi.pexwallpapers.util.networkBoundResource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -31,7 +35,7 @@ class WallpaperRepository @Inject constructor(
                 dao.getAllCuratedWallpapers()
             },
             fetch = {
-                val response = pexApi.getCuratedPhotos()
+                val response = pexApi.getCuratedWallpapers()
                 response.wallpaperList
             },
             saveFetchResult = { remoteWallpaperList ->
@@ -47,7 +51,7 @@ class WallpaperRepository @Inject constructor(
                     }
 
                 val curatedWallpapers = wallpaperList.map { wallpaper ->
-                    CuratedWallpapers(wallpaper.id)
+                    TypeConverter.wallpaperToCuratedWallpaper(wallpaper)
                 }
 
                 wallpapersDatabase.withTransaction {
@@ -78,6 +82,13 @@ class WallpaperRepository @Inject constructor(
                 onFetchRemoteFailed(t)
             }
         )
+
+    fun getSearchResultsPaged(query: String): Flow<PagingData<Wallpaper>> =
+        Pager(
+            config = PagingConfig(pageSize = PAGING_SIZE, maxSize = PAGING_MAX_SIZE),
+            remoteMediator = SearchNewsRemoteMediator(query, pexApi, wallpapersDatabase),
+            pagingSourceFactory = { dao.getSearchResultWallpaperPaged(query) }
+        ).flow
 
     fun getAllFavorites(): Flow<List<Wallpaper>> =
         dao.getAllFavorites()

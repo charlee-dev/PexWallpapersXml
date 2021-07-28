@@ -1,5 +1,7 @@
-package com.adwi.pexwallpapers.data
+package com.adwi.pexwallpapers.util
 
+import com.adwi.pexwallpapers.data.local.entity.CuratedWallpapers
+import com.adwi.pexwallpapers.data.local.entity.SearchResult
 import com.adwi.pexwallpapers.data.local.entity.Src
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.remote.dto.WallpaperDto
@@ -26,5 +28,15 @@ object TypeConverter {
                 portrait = wallpaper.src.portrait,
                 tiny = wallpaper.src.tiny
             )
+        )
+
+    fun wallpaperToCuratedWallpaper(wallpaper: Wallpaper) =
+        CuratedWallpapers(wallpaper.id)
+
+    fun wallpaperToSearchResult(searchQuery: String, wallpaper: Wallpaper, queryPosition: Int) =
+        SearchResult(
+            searchQuery = searchQuery,
+            wallpaperId = wallpaper.id,
+            queryPosition = queryPosition
         )
 }

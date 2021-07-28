@@ -25,9 +25,9 @@ data class CuratedWallpapers(
     @PrimaryKey val wallpaperId: Int
 )
 
-@Entity(tableName = "search_results", primaryKeys = ["searchQuery", "id"])
+@Entity(tableName = "search_results", primaryKeys = ["searchQuery", "wallpaperId"])
 data class SearchResult(
     val searchQuery: String,
-    val id: Int,
+    val wallpaperId: Int,
     val queryPosition: Int
 )

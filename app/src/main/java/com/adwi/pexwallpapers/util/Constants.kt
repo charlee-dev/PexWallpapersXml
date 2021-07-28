@@ -10,7 +10,11 @@ class Constants {
         const val API_KEY = BuildConfig.PEX_API_ACCESS_KEY
         const val AUTHORIZATION = "Authorization"
         const val CURATED_PAGE_SIZE = 5
-        const val STANDARD_PAGE_SIZE = 10
+        const val SEARCH_PAGE_SIZE = 10
+
+        // Pager
+        const val PAGING_SIZE = 20
+        const val PAGING_MAX_SIZE = 200
 
         // Database
         const val WALLPAPER_DATABASE = "wallpaper_database"

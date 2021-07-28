@@ -1,8 +1,8 @@
 package com.adwi.pexwallpapers.di
 
+import com.adwi.pexwallpapers.data.WallpaperRepository
 import com.adwi.pexwallpapers.data.local.WallpaperDatabase
 import com.adwi.pexwallpapers.data.remote.PexApi
-import com.adwi.pexwallpapers.data.repository.WallpaperRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

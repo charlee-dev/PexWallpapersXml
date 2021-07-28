@@ -1,5 +1,6 @@
 package com.adwi.pexwallpapers.data.local
 
+import androidx.paging.PagingSource
 import androidx.room.*
 import com.adwi.pexwallpapers.data.local.entity.CuratedWallpapers
 import com.adwi.pexwallpapers.data.local.entity.SearchResult
@@ -11,6 +12,9 @@ interface WallpapersDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWallpapers(wallpapers: List<Wallpaper>)
+
+    @Query("SELECT * FROM search_results INNER JOIN wallpaper_table ON id = wallpaperId WHERE searchQuery = :query ORDER BY queryPosition")
+    fun getSearchResultWallpaperPaged(query: String): PagingSource<Int, Wallpaper>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCuratedWallpapers(wallpapers: List<CuratedWallpapers>)

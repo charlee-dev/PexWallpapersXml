@@ -3,6 +3,7 @@ package com.adwi.pexwallpapers.data.repository
 import androidx.room.withTransaction
 import com.adwi.pexwallpapers.data.TypeConverter
 import com.adwi.pexwallpapers.data.local.WallpaperDatabase
+import com.adwi.pexwallpapers.data.local.entity.CuratedWallpapers
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.remote.PexApi
 import com.adwi.pexwallpapers.util.Resource
@@ -27,7 +28,7 @@ class WallpaperRepository @Inject constructor(
     ): Flow<Resource<List<Wallpaper>>> =
         networkBoundResource(
             query = {
-                dao.getAllWallpapers()
+                dao.getAllCuratedWallpapers()
             },
             fetch = {
                 val response = pexApi.getCuratedPhotos()
@@ -44,9 +45,15 @@ class WallpaperRepository @Inject constructor(
                         }
                         TypeConverter.wallpaperDtoToWallpaper(wallpaper, isFavorite)
                     }
+
+                val curatedWallpapers = wallpaperList.map { wallpaper ->
+                    CuratedWallpapers(wallpaper.id)
+                }
+
                 wallpapersDatabase.withTransaction {
-                    dao.deleteAllWallpapers()
+                    dao.deleteAllCuratedWallpapers()
                     dao.insertWallpapers(wallpaperList)
+                    dao.insertCuratedWallpapers(curatedWallpapers)
                 }
             },
             shouldFetch = { cachedArticles ->
@@ -78,7 +85,7 @@ class WallpaperRepository @Inject constructor(
     suspend fun deleteNonFavoriteWallpapersOlderThan(timestampInMillis: Long) =
         dao.deleteNonFavoriteWallpapersOlderThan(timestampInMillis)
 
-    suspend fun updateWallpaperFavorite(wallpaper: Wallpaper) =
+    suspend fun updateWallpaper(wallpaper: Wallpaper) =
         dao.updateWallpaperFavorite(wallpaper)
 
     suspend fun resetAllFavorites() =

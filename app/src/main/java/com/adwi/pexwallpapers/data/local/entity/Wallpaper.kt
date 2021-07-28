@@ -7,8 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "wallpaper_table")
 data class Wallpaper(
-    @PrimaryKey(autoGenerate = false)
-    val id: Int,
+    @PrimaryKey val id: Int,
     val width: Int? = null,
     val height: Int? = null,
     val url: String? = null,
@@ -16,8 +15,19 @@ data class Wallpaper(
     val photographerUrl: String? = null,
     val color: String,
     val imageUrl: String,
-    @Embedded
-    val src: Src? = null,
+    @Embedded val src: Src? = null,
     val isFavorite: Boolean = false,
     val updatedAt: Long = System.currentTimeMillis()
+)
+
+@Entity(tableName = "curated_wallpapers")
+data class CuratedWallpapers(
+    @PrimaryKey val wallpaperId: Int
+)
+
+@Entity(tableName = "search_results", primaryKeys = ["searchQuery", "id"])
+data class SearchResult(
+    val searchQuery: String,
+    val id: Int,
+    val queryPosition: Int
 )

@@ -9,8 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import by.kirich1409.viewbindingdelegate.CreateMethod
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentFavoritesBinding
 import com.adwi.pexwallpapers.shared.WallpaperListAdapter
@@ -19,10 +17,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class FavoritesFragment : BaseFragment<FragmentFavoritesBinding, FavoritesViewModel>() {
+class FavoritesFragment :
+    BaseFragment<FragmentFavoritesBinding, FavoritesViewModel>(FragmentFavoritesBinding::inflate) {
 
     override val viewModel: FavoritesViewModel by viewModels()
-    override val binding: FragmentFavoritesBinding by viewBinding(CreateMethod.INFLATE)
 
     override fun setupViews() {
         setHasOptionsMenu(true)

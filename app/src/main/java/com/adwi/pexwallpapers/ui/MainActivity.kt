@@ -35,6 +35,10 @@ class MainActivity : AppCompatActivity() {
                     bottomNav.visibility = View.VISIBLE
                 }
             }
+
+            bottomNav.setOnItemReselectedListener { menuItem ->
+                // TODO
+            }
         }
     }
 }

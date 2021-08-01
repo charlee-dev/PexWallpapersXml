@@ -10,22 +10,24 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import by.kirich1409.viewbindingdelegate.CreateMethod
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentSearchBinding
 import com.adwi.pexwallpapers.shared.WallpaperListPagingAdapterAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.util.onQueryTextSubmit
+import com.adwi.pexwallpapers.util.showIfOrVisible
+import com.adwi.pexwallpapers.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filter
 
 @AndroidEntryPoint
-class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
+class SearchFragment :
+    BaseFragment<FragmentSearchBinding, SearchViewModel>(FragmentSearchBinding::inflate) {
 
     override val viewModel: SearchViewModel by viewModels()
-    override val binding: FragmentSearchBinding by viewBinding(CreateMethod.INFLATE)
 
     private lateinit var wallpaperListAdapter: WallpaperListPagingAdapterAdapter
 
@@ -58,13 +60,40 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 // collectLatest - as soon new data received, current block will be suspended
                 viewModel.searchResults.collectLatest { data ->
-                    instructionsTextview.isVisible = false
-                    swipeRefreshLayout.isEnabled = true
                     wallpaperListAdapter.submitData(data)
                 }
             }
 
-            swipeRefreshLayout.isEnabled = false
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                viewModel.hasCurrentQuery.collect { hasCurrentQuery ->
+                    instructionsTextview.isVisible = !hasCurrentQuery
+                    swipeRefreshLayout.isEnabled = hasCurrentQuery
+                    if (!hasCurrentQuery) {
+                        recyclerView.isVisible = false
+                    }
+
+                }
+            }
+
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                wallpaperListAdapter.loadStateFlow
+                    .distinctUntilChangedBy { it.source.refresh }
+                    .filter { it.source.refresh is LoadState.NotLoading }
+                    .collect {
+                        if (viewModel.pendingScrollToTopAfterRefresh && it.mediator?.refresh is LoadState.NotLoading) {
+                            recyclerView.smoothScrollToPosition(0)
+                            viewModel.pendingScrollToTopAfterRefresh = false
+                            if (viewModel.pendingScrollToTopAfterNewQuery) {
+                                recyclerView.smoothScrollToPosition(0)
+                                viewModel.pendingScrollToTopAfterNewQuery = false
+                            }
+                            if (viewModel.pendingScrollToTopAfterNewQuery && it.mediator?.refresh is LoadState.NotLoading) {
+                                recyclerView.smoothScrollToPosition(0)
+                                viewModel.pendingScrollToTopAfterNewQuery = false
+                            }
+                        }
+                    }
+            }
 
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 wallpaperListAdapter.loadStateFlow
@@ -76,6 +105,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
                                 swipeRefreshLayout.isRefreshing = true
                                 noResultsTextview.isVisible = false
                                 recyclerView.isVisible = wallpaperListAdapter.itemCount > 0
+
+                                // there was a bug, that recyclerView was showing old data for a split second
+                                // this is work round it
+                                recyclerView.showIfOrVisible {
+                                    !viewModel.newQueryInProgress && wallpaperListAdapter.itemCount > 0
+                                }
+
+                                viewModel.refreshInProgress = true
+                                viewModel.pendingScrollToTopAfterRefresh = true
                             }
                             is LoadState.NotLoading -> {
                                 errorTextview.isVisible = false
@@ -88,6 +126,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
                                             && loadState.source.append.endOfPaginationReached
 
                                 noResultsTextview.isVisible = noResults
+
+                                viewModel.refreshInProgress = false
+                                viewModel.newQueryInProgress = false
                             }
                             is LoadState.Error -> {
                                 swipeRefreshLayout.isRefreshing = false
@@ -108,6 +149,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
                                         )
                                 )
                                 errorTextview.text = errorMessage
+
+                                if (viewModel.refreshInProgress) {
+                                    showSnackbar(errorMessage)
+                                }
+                                viewModel.refreshInProgress = false
+                                viewModel.pendingScrollToTopAfterRefresh = false
+                                viewModel.newQueryInProgress = false
                             }
                         }
                     }

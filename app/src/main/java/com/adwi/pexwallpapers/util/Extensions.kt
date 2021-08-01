@@ -52,6 +52,14 @@ fun Fragment.showSnackbar(
     Snackbar.make(view, message, duration).show()
 }
 
+inline fun <T : View> T.showIfOrVisible(condition: (T) -> Boolean) {
+    if (condition(this)) {
+        this.visibility = View.VISIBLE
+    } else {
+        this.visibility = View.INVISIBLE
+    }
+}
+
 inline fun SearchView.onQueryTextSubmit(crossinline listener: (String) -> Unit) {
     this.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {

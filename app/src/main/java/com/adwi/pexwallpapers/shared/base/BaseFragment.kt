@@ -6,28 +6,37 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import com.adwi.pexwallpapers.R
 import com.github.ajalt.timberkt.Timber
 import com.github.ajalt.timberkt.d
 
+typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
-abstract class BaseFragment<out VB : ViewDataBinding, VM : ViewModel> : Fragment() {
+abstract class BaseFragment<out VB : ViewDataBinding, VM : BaseViewModel>(
+    private val inflate: Inflate<VB>
+) : Fragment() {
 
-    abstract val viewModel: VM
-    abstract val binding: VB
+    protected abstract val viewModel: VM
+
+    private var _binding: VB? = null
+    val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
+        _binding = inflate.invoke(inflater, container, false)
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupViews()
     }
 
@@ -39,6 +48,6 @@ abstract class BaseFragment<out VB : ViewDataBinding, VM : ViewModel> : Fragment
     abstract fun setupViews()
 
     companion object {
-        private val TAG = this::class.java.simpleName
+        val TAG = this::class.java.simpleName
     }
 }

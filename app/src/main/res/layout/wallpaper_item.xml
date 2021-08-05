@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="wallpaper"
+            type="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
     </data>
 
     <RelativeLayout
@@ -33,6 +36,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@{wallpaper.photographer}"
+                    app:loadImageFromUrl="@{wallpaper.imageUrl}"
                     tools:src="@drawable/photo_placeholder" />
 
                 <View
@@ -51,10 +56,11 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif-light"
                     android:gravity="center"
-                    android:textColor="@color/black"
                     android:singleLine="true"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="italic"
+                    app:byPhotographerText="@{wallpaper.photographer}"
                     app:layout_constraintBottom_toBottomOf="@+id/wallpaper_imageView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -67,6 +73,7 @@
                     android:layout_height="40dp"
                     android:layout_margin="@dimen/margin_small"
                     android:contentDescription="@string/add_image_toFavorites"
+                    app:isFavorite="@{wallpaper.favorite}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:tint="@color/red"

@@ -33,8 +33,7 @@
         android:name="com.adwi.pexwallpapers.ui.preview.PreviewFragment"
         android:label="PreviewFragment">
         <argument
-            android:name="id"
-            android:defaultValue="1"
-            app:argType="integer" />
+            android:name="wallpaper"
+            app:argType="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
     </fragment>
 </navigation>

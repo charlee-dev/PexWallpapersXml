@@ -15,7 +15,6 @@ class PreviewFragment :
     private val args: PreviewFragmentArgs by navArgs()
 
     override fun setupViews() {
-        val wallpaperId = args.id
-        binding.wallpaperIdTextview.text = wallpaperId.toString()
+        binding.wallpaper = args.wallpaper
     }
 }

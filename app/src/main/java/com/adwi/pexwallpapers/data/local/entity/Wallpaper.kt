@@ -1,10 +1,13 @@
 package com.adwi.pexwallpapers.data.local.entity
 
+import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 
-
+@Parcelize
 @Entity(tableName = "wallpaper_table")
 data class Wallpaper(
     @PrimaryKey val id: Int,
@@ -15,10 +18,10 @@ data class Wallpaper(
     val photographerUrl: String? = null,
     val color: String,
     val imageUrl: String,
-    @Embedded val src: Src? = null,
+    @Embedded val src: @RawValue Src? = null,
     val isFavorite: Boolean = false,
     val updatedAt: Long = System.currentTimeMillis()
-)
+) : Parcelable
 
 @Entity(tableName = "curated_wallpapers")
 data class CuratedWallpapers(

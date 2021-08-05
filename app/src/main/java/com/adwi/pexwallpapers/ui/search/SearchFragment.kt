@@ -38,7 +38,7 @@ class SearchFragment :
             onItemClick = { wallpaper ->
                 findNavController().navigate(
                     SearchFragmentDirections.actionSearchFragmentToPreviewFragment(
-                        wallpaper.id
+                        wallpaper
                     )
                 )
             },

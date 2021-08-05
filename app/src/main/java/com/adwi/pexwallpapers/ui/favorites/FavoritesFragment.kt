@@ -29,7 +29,7 @@ class FavoritesFragment :
             onItemClick = { wallpaper ->
                 findNavController().navigate(
                     FavoritesFragmentDirections.actionFavoritesFragmentToPreviewFragment(
-                        wallpaper.id
+                        wallpaper
                     )
                 )
             },

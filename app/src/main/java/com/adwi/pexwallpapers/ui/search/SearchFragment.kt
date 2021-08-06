@@ -7,13 +7,14 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentSearchBinding
 import com.adwi.pexwallpapers.shared.WallpaperListPagingAdapterAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
+import com.adwi.pexwallpapers.ui.TAG_PREVIEW_FRAGMENT
+import com.adwi.pexwallpapers.ui.preview.PreviewFragment
 import com.adwi.pexwallpapers.util.onQueryTextSubmit
 import com.adwi.pexwallpapers.util.showIfOrVisible
 import com.adwi.pexwallpapers.util.showSnackbar
@@ -36,15 +37,16 @@ class SearchFragment :
 
         wallpaperListAdapter = WallpaperListPagingAdapterAdapter(
             onItemClick = { wallpaper ->
-                findNavController().navigate(
-                    SearchFragmentDirections.actionSearchFragmentToPreviewFragment(
-                        wallpaper
-                    )
-                )
+                val fragmentManager = parentFragmentManager.beginTransaction()
+                fragmentManager.replace(R.id.fragmentContainerView, PreviewFragment(wallpaper))
+                fragmentManager.addToBackStack(TAG_PREVIEW_FRAGMENT)
+                fragmentManager.commit()
             },
             onFavoriteClick = { wallpaper ->
                 viewModel.onFavoriteClick(wallpaper)
-            }
+            },
+            onDownloadClick = { TODO() },
+            onShareClick = { TODO() }
         )
 
         binding.apply {

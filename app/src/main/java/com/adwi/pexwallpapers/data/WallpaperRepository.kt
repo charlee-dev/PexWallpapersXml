@@ -101,4 +101,7 @@ class WallpaperRepository @Inject constructor(
 
     suspend fun resetAllFavorites() =
         dao.resetAllFavorites()
+
+    fun getWallpaperById(wallpaperId: Int) =
+        dao.getWallpaperById(wallpaperId)
 }

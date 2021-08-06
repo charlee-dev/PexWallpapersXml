@@ -14,8 +14,13 @@ object BindingAdapters {
     @JvmStatic
     fun isFavorite(imageView: ImageView, isFavorite: Boolean = false) {
         when {
-            isFavorite -> imageView.setImageResource(R.drawable.ic_favorite_checked)
-            else -> imageView.setImageResource(R.drawable.ic_favorite_unchecked)
+            isFavorite -> {
+                imageView.setImageResource(R.drawable.ic_favorite_checked)
+            }
+            else -> {
+                imageView.setImageResource(R.drawable.ic_favorite_unchecked)
+                imageView.setColorFilter(R.color.gray)
+            }
         }
     }
 
@@ -52,7 +57,7 @@ object BindingAdapters {
             .build()
 
     // This is the placeholder for the imageView
-    private val shimmerDrawable = ShimmerDrawable().apply {
+    val shimmerDrawable = ShimmerDrawable().apply {
         setShimmer(shimmer)
     }
 }

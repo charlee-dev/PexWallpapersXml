@@ -6,12 +6,14 @@ import android.view.MenuItem
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentWallpapersBinding
 import com.adwi.pexwallpapers.shared.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
+import com.adwi.pexwallpapers.ui.TAG_PREVIEW_FRAGMENT
+import com.adwi.pexwallpapers.ui.preview.PreviewFragment
+import com.adwi.pexwallpapers.ui.preview.PreviewViewModel
 import com.adwi.pexwallpapers.util.Resource
 import com.adwi.pexwallpapers.util.exhaustive
 import com.adwi.pexwallpapers.util.showSnackbar
@@ -23,19 +25,22 @@ class WallpapersFragment :
     BaseFragment<FragmentWallpapersBinding, WallpaperViewModel>(FragmentWallpapersBinding::inflate) {
 
     override val viewModel: WallpaperViewModel by viewModels()
+    private val previewViewModel: PreviewViewModel by viewModels()
 
     override fun setupViews() {
         val wallpaperListAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
-                findNavController().navigate(
-                    WallpapersFragmentDirections.actionWallpapersFragmentToPreviewFragment(
-                        wallpaper
-                    )
-                )
+                previewViewModel.getWallpaperById(wallpaper.id)
+                val fragmentManager = parentFragmentManager.beginTransaction()
+                fragmentManager.replace(R.id.fragmentContainerView, PreviewFragment(wallpaper))
+                fragmentManager.addToBackStack(TAG_PREVIEW_FRAGMENT)
+                fragmentManager.commit()
             },
             onFavoriteClick = { wallpaper ->
                 viewModel.onFavoriteClick(wallpaper)
-            }
+            },
+            onShareClick = { TODO() },
+            onDownloadClick = { TODO() }
         )
 
         binding.apply {
@@ -116,3 +121,5 @@ class WallpapersFragment :
             else -> super.onOptionsItemSelected(item)
         }
 }
+
+const val WALLPAPER_ID = "WALLPAPER_ID"

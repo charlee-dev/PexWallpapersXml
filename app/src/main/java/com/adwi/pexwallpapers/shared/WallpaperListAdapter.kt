@@ -8,6 +8,8 @@ import com.adwi.pexwallpapers.databinding.WallpaperItemBinding
 
 class WallpaperListAdapter(
     private val onItemClick: (Wallpaper) -> Unit,
+    private val onShareClick: (Wallpaper) -> Unit,
+    private val onDownloadClick: (Wallpaper) -> Unit,
     private val onFavoriteClick: (Wallpaper) -> Unit
 ) : ListAdapter<Wallpaper, WallpaperViewHolder>(WallpaperComparator()) {
 
@@ -23,6 +25,18 @@ class WallpaperListAdapter(
                 }
             },
             onFavoriteClick = { position ->
+                val wallpaper = getItem(position)
+                if (wallpaper != null) {
+                    onShareClick(wallpaper)
+                }
+            },
+            onDownloadClick = { position ->
+                val wallpaper = getItem(position)
+                if (wallpaper != null) {
+                    onDownloadClick(wallpaper)
+                }
+            },
+            onShareClick = { position ->
                 val wallpaper = getItem(position)
                 if (wallpaper != null) {
                     onFavoriteClick(wallpaper)

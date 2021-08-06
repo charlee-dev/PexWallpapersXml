@@ -6,13 +6,14 @@ import android.view.MenuItem
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentFavoritesBinding
 import com.adwi.pexwallpapers.shared.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
+import com.adwi.pexwallpapers.ui.TAG_PREVIEW_FRAGMENT
+import com.adwi.pexwallpapers.ui.preview.PreviewFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -27,15 +28,16 @@ class FavoritesFragment :
 
         val favoritesAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
-                findNavController().navigate(
-                    FavoritesFragmentDirections.actionFavoritesFragmentToPreviewFragment(
-                        wallpaper
-                    )
-                )
+                val fragmentManager = parentFragmentManager.beginTransaction()
+                fragmentManager.replace(R.id.fragmentContainerView, PreviewFragment(wallpaper))
+                fragmentManager.addToBackStack(TAG_PREVIEW_FRAGMENT)
+                fragmentManager.commit()
             },
             onFavoriteClick = { wallpaper ->
                 viewModel.onFavoriteClick(wallpaper)
-            }
+            },
+            onShareClick = { TODO() },
+            onDownloadClick = { TODO() }
         )
 
         binding.apply {

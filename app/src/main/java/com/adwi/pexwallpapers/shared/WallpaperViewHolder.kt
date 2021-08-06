@@ -7,7 +7,9 @@ import com.adwi.pexwallpapers.databinding.WallpaperItemBinding
 class WallpaperViewHolder(
     private val binding: WallpaperItemBinding,
     private val onItemClick: (Int) -> Unit,
-    private val onFavoriteClick: (Int) -> Unit
+    private val onFavoriteClick: (Int) -> Unit,
+    private val onShareClick: (Int) -> Unit,
+    private val onDownloadClick: (Int) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(wallpaper: Wallpaper) {
@@ -17,7 +19,7 @@ class WallpaperViewHolder(
 
     init {
         binding.apply {
-            root.setOnClickListener {
+            wallpaperImageView.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     onItemClick(position)
@@ -27,6 +29,18 @@ class WallpaperViewHolder(
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     onFavoriteClick(position)
+                }
+            }
+            downloadButton.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onDownloadClick(position)
+                }
+            }
+            shareButton.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onShareClick(position)
                 }
             }
         }

@@ -34,6 +34,9 @@ interface WallpapersDao {
     @Query("SELECT * FROM wallpaper_table")
     fun getAllWallpapers(): Flow<List<Wallpaper>>
 
+    @Query("SELECT * FROM wallpaper_table WHERE id = :wallpaperId")
+    fun getWallpaperById(wallpaperId: Int): Flow<Wallpaper>
+
     @Query("SELECT * FROM wallpaper_table WHERE isFavorite = 1")
     fun getAllFavorites(): Flow<List<Wallpaper>>
 

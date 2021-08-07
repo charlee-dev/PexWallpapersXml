@@ -2,20 +2,18 @@ package com.adwi.pexwallpapers.ui.favorites
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentFavoritesBinding
 import com.adwi.pexwallpapers.shared.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
-import com.adwi.pexwallpapers.ui.preview.PreviewFragment
-import com.adwi.pexwallpapers.util.Constants
 import com.adwi.pexwallpapers.util.ShareUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -32,16 +30,11 @@ class FavoritesFragment :
 
         val favoritesAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
-                val arguments = Bundle()
-                arguments.putInt(Constants.WALLPAPER_ID, wallpaper.id)
-
-                val previewFragment = PreviewFragment()
-                previewFragment.arguments = arguments
-
-                val fragmentManager = parentFragmentManager.beginTransaction()
-                fragmentManager.replace(R.id.fragmentContainerView, previewFragment)
-                    .addToBackStack(null)
-                    .commit()
+                findNavController().navigate(
+                    FavoritesFragmentDirections.actionFavoritesFragmentToPreviewFragment(
+                        wallpaper
+                    )
+                )
             },
             onShareClick = { wallpaper ->
                 wallpaper.url?.let {

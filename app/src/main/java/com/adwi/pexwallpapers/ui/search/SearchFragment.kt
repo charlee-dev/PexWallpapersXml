@@ -2,7 +2,6 @@ package com.adwi.pexwallpapers.ui.search
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -10,6 +9,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adwi.pexwallpapers.R
@@ -17,9 +17,10 @@ import com.adwi.pexwallpapers.databinding.FragmentSearchBinding
 import com.adwi.pexwallpapers.shared.WallpaperListPagingAdapterAdapter
 import com.adwi.pexwallpapers.shared.WallpapersLoadStateAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
-import com.adwi.pexwallpapers.ui.TAG_PREVIEW_FRAGMENT
-import com.adwi.pexwallpapers.ui.preview.PreviewFragment
-import com.adwi.pexwallpapers.util.*
+import com.adwi.pexwallpapers.util.ShareUtil
+import com.adwi.pexwallpapers.util.onQueryTextSubmit
+import com.adwi.pexwallpapers.util.showIfOrVisible
+import com.adwi.pexwallpapers.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -39,20 +40,11 @@ class SearchFragment :
 
         wallpaperListAdapter = WallpaperListPagingAdapterAdapter(
             onItemClick = { wallpaper ->
-                val fragmentManager = parentFragmentManager.beginTransaction()
-                val previewFragment = PreviewFragment()
-                val arguments = Bundle()
-                arguments.putInt(Constants.WALLPAPER_ID, wallpaper.id)
-
-                previewFragment.arguments = arguments
-
-                fragmentManager.replace(
-                    R.id.fragmentContainerView,
-                    previewFragment,
-                    TAG_PREVIEW_FRAGMENT
+                findNavController().navigate(
+                    SearchFragmentDirections.actionSearchFragmentToPreviewFragment(
+                        wallpaper
+                    )
                 )
-                    .addToBackStack(TAG_PREVIEW_FRAGMENT)
-                    .commit()
             },
             onDownloadClick = { TODO() },
             onShareClick = { wallpaper ->

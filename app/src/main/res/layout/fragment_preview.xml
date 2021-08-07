@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="wallpaper"
+            type="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,6 +22,7 @@
             android:layout_height="match_parent"
             android:contentDescription=""
             android:scaleType="centerCrop"
+            loadImageFromUrl="@{wallpaper.imageUrl}"
             app:layout_constraintBottom_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

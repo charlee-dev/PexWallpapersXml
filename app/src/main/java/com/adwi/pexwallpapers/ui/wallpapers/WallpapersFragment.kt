@@ -2,22 +2,19 @@ package com.adwi.pexwallpapers.ui.wallpapers
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentWallpapersBinding
 import com.adwi.pexwallpapers.shared.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
-import com.adwi.pexwallpapers.ui.TAG_PREVIEW_FRAGMENT
-import com.adwi.pexwallpapers.ui.preview.PreviewFragment
 import com.adwi.pexwallpapers.util.*
-import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_ID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -30,19 +27,11 @@ class WallpapersFragment :
     override fun setupViews() {
         val wallpaperListAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
-                val fragmentManager = parentFragmentManager.beginTransaction()
-                val previewFragment = PreviewFragment()
-                val arguments = Bundle()
-                arguments.putInt(WALLPAPER_ID, wallpaper.id)
-
-                previewFragment.arguments = arguments
-                fragmentManager.replace(
-                    R.id.fragmentContainerView,
-                    previewFragment,
-                    TAG_PREVIEW_FRAGMENT
+                findNavController().navigate(
+                    WallpapersFragmentDirections.actionWallpapersFragmentToPreviewFragment(
+                        wallpaper
+                    )
                 )
-                    .addToBackStack(TAG_PREVIEW_FRAGMENT)
-                    .commit()
             },
             onShareClick = { wallpaper ->
                 wallpaper.url?.let {

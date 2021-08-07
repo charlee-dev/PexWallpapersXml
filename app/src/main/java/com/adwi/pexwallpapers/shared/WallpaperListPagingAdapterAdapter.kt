@@ -34,13 +34,13 @@ class WallpaperListPagingAdapterAdapter(
             onShareClick = { position ->
                 val wallpaper = getItem(position)
                 if (wallpaper != null) {
-                    onDownloadClick(wallpaper)
+                    onShareClick(wallpaper)
                 }
             },
             onDownloadClick = { position ->
                 val wallpaper = getItem(position)
                 if (wallpaper != null) {
-                    onShareClick(wallpaper)
+                    onDownloadClick(wallpaper)
                 }
             },
             onPexelsLogoClick = { position ->

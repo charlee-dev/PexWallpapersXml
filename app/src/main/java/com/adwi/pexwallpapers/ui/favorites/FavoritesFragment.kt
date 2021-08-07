@@ -14,7 +14,6 @@ import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentFavoritesBinding
 import com.adwi.pexwallpapers.shared.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
-import com.adwi.pexwallpapers.ui.TAG_PREVIEW_FRAGMENT
 import com.adwi.pexwallpapers.ui.preview.PreviewFragment
 import com.adwi.pexwallpapers.util.Constants
 import com.adwi.pexwallpapers.util.ShareUtil
@@ -33,15 +32,15 @@ class FavoritesFragment :
 
         val favoritesAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
-                val fragmentManager = parentFragmentManager.beginTransaction()
-                val previewFragment = PreviewFragment()
                 val arguments = Bundle()
                 arguments.putInt(Constants.WALLPAPER_ID, wallpaper.id)
 
+                val previewFragment = PreviewFragment()
                 previewFragment.arguments = arguments
 
+                val fragmentManager = parentFragmentManager.beginTransaction()
                 fragmentManager.replace(R.id.fragmentContainerView, previewFragment)
-                    .addToBackStack(TAG_PREVIEW_FRAGMENT)
+                    .addToBackStack(null)
                     .commit()
             },
             onShareClick = { wallpaper ->

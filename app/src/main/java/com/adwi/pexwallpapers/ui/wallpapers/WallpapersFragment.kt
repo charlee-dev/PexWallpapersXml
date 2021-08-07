@@ -36,8 +36,11 @@ class WallpapersFragment :
                 arguments.putInt(WALLPAPER_ID, wallpaper.id)
 
                 previewFragment.arguments = arguments
-
-                fragmentManager.replace(R.id.fragmentContainerView, previewFragment)
+                fragmentManager.replace(
+                    R.id.fragmentContainerView,
+                    previewFragment,
+                    TAG_PREVIEW_FRAGMENT
+                )
                     .addToBackStack(TAG_PREVIEW_FRAGMENT)
                     .commit()
             },

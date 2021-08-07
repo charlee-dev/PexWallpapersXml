@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentSearchBinding
 import com.adwi.pexwallpapers.shared.WallpaperListPagingAdapterAdapter
+import com.adwi.pexwallpapers.shared.WallpapersLoadStateAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.ui.TAG_PREVIEW_FRAGMENT
 import com.adwi.pexwallpapers.ui.preview.PreviewFragment
@@ -45,10 +46,15 @@ class SearchFragment :
 
                 previewFragment.arguments = arguments
 
-                fragmentManager.replace(R.id.fragmentContainerView, previewFragment)
+                fragmentManager.replace(
+                    R.id.fragmentContainerView,
+                    previewFragment,
+                    TAG_PREVIEW_FRAGMENT
+                )
                     .addToBackStack(TAG_PREVIEW_FRAGMENT)
                     .commit()
             },
+            onDownloadClick = { TODO() },
             onShareClick = { wallpaper ->
                 wallpaper.url?.let {
                     ShareUtil.shareWallpaper(
@@ -57,7 +63,6 @@ class SearchFragment :
                     )
                 }
             },
-            onDownloadClick = { TODO() },
             onFavoriteClick = { wallpaper ->
                 viewModel.onFavoriteClick(wallpaper)
             },

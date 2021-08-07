@@ -1,4 +1,4 @@
-package com.adwi.pexwallpapers.ui.search
+package com.adwi.pexwallpapers.shared
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

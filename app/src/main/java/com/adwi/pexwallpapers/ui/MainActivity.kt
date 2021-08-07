@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
             wallpapersFragment,
             searchFragment,
             favoritesFragment,
-            previewFragment
+//            previewFragment
         )
 
     private var selectedIndex = 0
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             is WallpapersFragment -> getString(R.string.wallpapers)
             is SearchFragment -> getString(R.string.search)
             is FavoritesFragment -> getString(R.string.favorites)
-            is PreviewFragment -> getString(R.string.preview)
+//            is PreviewFragment -> getString(R.string.preview)
             else -> ""
         }
     }
@@ -66,13 +66,13 @@ class MainActivity : AppCompatActivity() {
             wallpapersFragment = WallpapersFragment()
             searchFragment = SearchFragment()
             favoritesFragment = FavoritesFragment()
-            previewFragment = PreviewFragment()
+//            previewFragment = PreviewFragment()
 
             supportFragmentManager.beginTransaction()
                 .add(R.id.fragmentContainerView, wallpapersFragment, TAG_WALLPAPERS_FRAGMENT)
                 .add(R.id.fragmentContainerView, searchFragment, TAG_SEARCH_FRAGMENT)
                 .add(R.id.fragmentContainerView, favoritesFragment, TAG_FAVORITES_FRAGMENT)
-                .add(R.id.fragmentContainerView, previewFragment, TAG_PREVIEW_FRAGMENT)
+//                .add(R.id.fragmentContainerView, previewFragment, TAG_PREVIEW_FRAGMENT)
                 .commit()
         } else {
             wallpapersFragment =
@@ -81,8 +81,8 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.findFragmentByTag(TAG_SEARCH_FRAGMENT) as SearchFragment
             favoritesFragment =
                 supportFragmentManager.findFragmentByTag(TAG_FAVORITES_FRAGMENT) as FavoritesFragment
-            previewFragment =
-                supportFragmentManager.findFragmentByTag(TAG_PREVIEW_FRAGMENT) as PreviewFragment
+//            previewFragment =
+//                supportFragmentManager.findFragmentByTag(TAG_PREVIEW_FRAGMENT) as PreviewFragment
 
             selectedIndex = savedInstanceState.getInt(KEY_SELECTED_INDEX, 0)
         }
@@ -118,10 +118,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (selectedIndex != 0) {
-            if (selectedIndex == R.id.previewFragment) {
-                super.onBackPressed()
-                return
-            }
             binding.bottomNav.selectedItemId = R.id.wallpapersFragment
         } else {
             super.onBackPressed()

@@ -40,8 +40,8 @@ class PreviewFragment :
     override fun onDestroyView() {
         super.onDestroyView()
         bottomNav.slideUp()
-//        val fragmentManager = parentFragmentManager.beginTransaction()
-//        fragmentManager.remove(PreviewFragment())
-//            .commit()
+        val fragmentManager = parentFragmentManager.beginTransaction()
+        fragmentManager.remove(PreviewFragment())
+            .commit()
     }
 }

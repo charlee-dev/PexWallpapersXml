@@ -12,4 +12,7 @@
     <color name="red">#C82115</color>
     <color name="green">#4CAF50</color>
     <color name="gray">#818181</color>
+    <color name="dark_gray">#6A6A6A</color>
+
+    <color name="colorBackground">#ffffff</color>
 </resources>

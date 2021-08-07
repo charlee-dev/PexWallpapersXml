@@ -90,8 +90,9 @@ class WallpaperRepository @Inject constructor(
             pagingSourceFactory = { dao.getSearchResultWallpaperPaged(query) }
         ).flow
 
-    fun getAllFavorites(): Flow<List<Wallpaper>> =
-        dao.getAllFavorites()
+    fun getAllFavorites() = dao.getAllFavorites()
+
+    fun getWallpaperById(id: Int) = dao.getWallpaperById(id)
 
     suspend fun deleteNonFavoriteWallpapersOlderThan(timestampInMillis: Long) =
         dao.deleteNonFavoriteWallpapersOlderThan(timestampInMillis)
@@ -99,9 +100,5 @@ class WallpaperRepository @Inject constructor(
     suspend fun updateWallpaper(wallpaper: Wallpaper) =
         dao.updateWallpaperFavorite(wallpaper)
 
-    suspend fun resetAllFavorites() =
-        dao.resetAllFavorites()
-
-    fun getWallpaperById(wallpaperId: Int) =
-        dao.getWallpaperById(wallpaperId)
+    suspend fun resetAllFavorites() = dao.resetAllFavorites()
 }

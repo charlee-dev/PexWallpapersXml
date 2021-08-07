@@ -7,19 +7,26 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.adwi.pexwallpapers.R
+import com.adwi.pexwallpapers.util.slideDown
 import com.github.ajalt.timberkt.Timber
 import com.github.ajalt.timberkt.d
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
-abstract class BaseFragment<out VB : ViewDataBinding, VM : BaseViewModel>(
-    private val inflate: Inflate<VB>
-) : Fragment() {
+abstract class BaseFragment<out VB : ViewDataBinding>(
+    private val inflate: Inflate<VB>,
+    private val hideNavigation: Boolean,
 
-    protected abstract val viewModel: VM
+    ) : Fragment() {
+
+    protected abstract val viewModel: BaseViewModel?
 
     private var _binding: VB? = null
     val binding get() = _binding!!
+
+    lateinit var bottomNav: BottomNavigationView
+    val TAG = this::class.java.simpleName
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,6 +34,8 @@ abstract class BaseFragment<out VB : ViewDataBinding, VM : BaseViewModel>(
         savedInstanceState: Bundle?
     ): View? {
         _binding = inflate.invoke(inflater, container, false)
+        bottomNav = requireActivity().findViewById(R.id.bottom_nav)
+        navigationVisibility(hideNavigation)
         return binding.root
     }
 
@@ -47,7 +56,9 @@ abstract class BaseFragment<out VB : ViewDataBinding, VM : BaseViewModel>(
 
     abstract fun setupViews()
 
-    companion object {
-        val TAG = this::class.java.simpleName
+    private fun navigationVisibility(hideNavigation: Boolean) {
+        bottomNav.apply {
+            if (hideNavigation) slideDown() else visibility = View.VISIBLE
+        }
     }
 }

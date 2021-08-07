@@ -22,7 +22,7 @@
             android:layout_centerInParent="true"
             android:layout_marginHorizontal="@dimen/margin_small"
             android:layout_marginTop="@dimen/margin_medium"
-            app:cardCornerRadius="5dp"
+            app:cardCornerRadius="@dimen/image_corner_radius"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

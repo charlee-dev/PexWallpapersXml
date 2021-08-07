@@ -1,5 +1,8 @@
 package com.adwi.pexwallpapers.ui.favorites
 
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -7,19 +10,21 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentFavoritesBinding
 import com.adwi.pexwallpapers.shared.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.ui.TAG_PREVIEW_FRAGMENT
 import com.adwi.pexwallpapers.ui.preview.PreviewFragment
+import com.adwi.pexwallpapers.util.Constants
+import com.adwi.pexwallpapers.util.ShareUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
+
 @AndroidEntryPoint
 class FavoritesFragment :
-    BaseFragment<FragmentFavoritesBinding, FavoritesViewModel>(FragmentFavoritesBinding::inflate) {
+    BaseFragment<FragmentFavoritesBinding>(FragmentFavoritesBinding::inflate, false) {
 
     override val viewModel: FavoritesViewModel by viewModels()
 
@@ -29,28 +34,45 @@ class FavoritesFragment :
         val favoritesAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
                 val fragmentManager = parentFragmentManager.beginTransaction()
-                fragmentManager.replace(R.id.fragmentContainerView, PreviewFragment(wallpaper))
-                fragmentManager.addToBackStack(TAG_PREVIEW_FRAGMENT)
-                fragmentManager.commit()
+                val previewFragment = PreviewFragment()
+                val arguments = Bundle()
+                arguments.putInt(Constants.WALLPAPER_ID, wallpaper.id)
+
+                previewFragment.arguments = arguments
+
+                fragmentManager.replace(R.id.fragmentContainerView, previewFragment)
+                    .addToBackStack(TAG_PREVIEW_FRAGMENT)
+                    .commit()
             },
+            onShareClick = { wallpaper ->
+                wallpaper.url?.let {
+                    ShareUtil.shareWallpaper(
+                        requireActivity(),
+                        it
+                    )
+                }
+            },
+            onDownloadClick = { TODO() },
             onFavoriteClick = { wallpaper ->
                 viewModel.onFavoriteClick(wallpaper)
             },
-            onShareClick = { TODO() },
-            onDownloadClick = { TODO() }
+            onPexelLogoClick = { wallpaper ->
+                val uri = Uri.parse(wallpaper.url)
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                requireActivity().startActivity(intent)
+            }
         )
 
         binding.apply {
             recyclerView.apply {
                 adapter = favoritesAdapter
-                layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+                layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(true)
             }
 
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 viewModel.favorites.collect {
                     val favorites = it ?: return@collect
-
                     favoritesAdapter.submitList(favorites)
                     noFavoritesTextview.isVisible = favorites.isEmpty()
                     recyclerView.isVisible = favorites.isNotEmpty()
@@ -71,4 +93,6 @@ class FavoritesFragment :
             }
             else -> super.onOptionsItemSelected(item)
         }
+
+
 }

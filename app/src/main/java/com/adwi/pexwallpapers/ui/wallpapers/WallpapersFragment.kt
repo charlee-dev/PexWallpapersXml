@@ -1,5 +1,8 @@
 package com.adwi.pexwallpapers.ui.wallpapers
 
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -13,34 +16,48 @@ import com.adwi.pexwallpapers.shared.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.ui.TAG_PREVIEW_FRAGMENT
 import com.adwi.pexwallpapers.ui.preview.PreviewFragment
-import com.adwi.pexwallpapers.ui.preview.PreviewViewModel
-import com.adwi.pexwallpapers.util.Resource
-import com.adwi.pexwallpapers.util.exhaustive
-import com.adwi.pexwallpapers.util.showSnackbar
+import com.adwi.pexwallpapers.util.*
+import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_ID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class WallpapersFragment :
-    BaseFragment<FragmentWallpapersBinding, WallpaperViewModel>(FragmentWallpapersBinding::inflate) {
+    BaseFragment<FragmentWallpapersBinding>(FragmentWallpapersBinding::inflate, false) {
 
     override val viewModel: WallpaperViewModel by viewModels()
-    private val previewViewModel: PreviewViewModel by viewModels()
 
     override fun setupViews() {
         val wallpaperListAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
-                previewViewModel.getWallpaperById(wallpaper.id)
                 val fragmentManager = parentFragmentManager.beginTransaction()
-                fragmentManager.replace(R.id.fragmentContainerView, PreviewFragment(wallpaper))
-                fragmentManager.addToBackStack(TAG_PREVIEW_FRAGMENT)
-                fragmentManager.commit()
+                val previewFragment = PreviewFragment()
+                val arguments = Bundle()
+                arguments.putInt(WALLPAPER_ID, wallpaper.id)
+
+                previewFragment.arguments = arguments
+
+                fragmentManager.replace(R.id.fragmentContainerView, previewFragment)
+                    .addToBackStack(TAG_PREVIEW_FRAGMENT)
+                    .commit()
             },
+            onShareClick = { wallpaper ->
+                wallpaper.url?.let {
+                    ShareUtil.shareWallpaper(
+                        requireActivity(),
+                        it
+                    )
+                }
+            },
+            onDownloadClick = { TODO() },
             onFavoriteClick = { wallpaper ->
                 viewModel.onFavoriteClick(wallpaper)
             },
-            onShareClick = { TODO() },
-            onDownloadClick = { TODO() }
+            onPexelLogoClick = { wallpaper ->
+                val uri = Uri.parse(wallpaper.url)
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                requireActivity().startActivity(intent)
+            }
         )
 
         binding.apply {
@@ -121,5 +138,3 @@ class WallpapersFragment :
             else -> super.onOptionsItemSelected(item)
         }
 }
-
-const val WALLPAPER_ID = "WALLPAPER_ID"

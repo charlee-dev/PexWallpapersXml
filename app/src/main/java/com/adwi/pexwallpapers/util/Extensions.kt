@@ -61,6 +61,7 @@ fun View.slideDown(duration: Int = 500) {
     animate.duration = duration.toLong()
     animate.fillAfter = true
     this.startAnimation(animate)
+    visibility = View.GONE
 }
 
 fun ImageView.loadImageFromUrl(imageUrl: String) {

@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
             wallpapersFragment,
             searchFragment,
             favoritesFragment,
-//            previewFragment
+            previewFragment
         )
 
     private var selectedIndex = 0
@@ -61,17 +61,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         if (savedInstanceState == null) {
             wallpapersFragment = WallpapersFragment()
             searchFragment = SearchFragment()
             favoritesFragment = FavoritesFragment()
-//            previewFragment = PreviewFragment()
+            previewFragment = PreviewFragment()
 
             supportFragmentManager.beginTransaction()
                 .add(R.id.fragmentContainerView, wallpapersFragment, TAG_WALLPAPERS_FRAGMENT)
                 .add(R.id.fragmentContainerView, searchFragment, TAG_SEARCH_FRAGMENT)
                 .add(R.id.fragmentContainerView, favoritesFragment, TAG_FAVORITES_FRAGMENT)
-//                .add(R.id.fragmentContainerView, previewFragment, TAG_PREVIEW_FRAGMENT)
+                .add(R.id.fragmentContainerView, previewFragment, TAG_PREVIEW_FRAGMENT)
                 .commit()
         } else {
             wallpapersFragment =
@@ -80,8 +81,8 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.findFragmentByTag(TAG_SEARCH_FRAGMENT) as SearchFragment
             favoritesFragment =
                 supportFragmentManager.findFragmentByTag(TAG_FAVORITES_FRAGMENT) as FavoritesFragment
-//            previewFragment =
-//                supportFragmentManager.findFragmentByTag(TAG_PREVIEW_FRAGMENT) as PreviewFragment
+            previewFragment =
+                supportFragmentManager.findFragmentByTag(TAG_PREVIEW_FRAGMENT) as PreviewFragment
 
             selectedIndex = savedInstanceState.getInt(KEY_SELECTED_INDEX, 0)
         }
@@ -90,6 +91,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply {
             bottomNav.slideUp()
+
             bottomNav.setOnItemSelectedListener { item ->
                 val fragment = when (item.itemId) {
                     R.id.wallpapersFragment -> wallpapersFragment
@@ -116,6 +118,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (selectedIndex != 0) {
+            if (selectedIndex == R.id.previewFragment) {
+                super.onBackPressed()
+                return
+            }
             binding.bottomNav.selectedItemId = R.id.wallpapersFragment
         } else {
             super.onBackPressed()

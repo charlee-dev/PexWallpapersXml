@@ -1,39 +1,47 @@
 package com.adwi.pexwallpapers.ui.preview
 
 import androidx.fragment.app.viewModels
-import com.adwi.pexwallpapers.R
-import com.adwi.pexwallpapers.data.local.entity.Wallpaper
+import androidx.lifecycle.lifecycleScope
 import com.adwi.pexwallpapers.databinding.FragmentPreviewBinding
 import com.adwi.pexwallpapers.shared.base.BaseFragment
+import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_ID
 import com.adwi.pexwallpapers.util.byPhotographer
 import com.adwi.pexwallpapers.util.loadImageFromUrl
-import com.adwi.pexwallpapers.util.slideDown
 import com.adwi.pexwallpapers.util.slideUp
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlin.properties.Delegates
 
 
 @AndroidEntryPoint
-class PreviewFragment(private val wallpaper: Wallpaper) :
-    BaseFragment<FragmentPreviewBinding, PreviewViewModel>(FragmentPreviewBinding::inflate) {
+class PreviewFragment :
+    BaseFragment<FragmentPreviewBinding>(FragmentPreviewBinding::inflate, true) {
 
     override val viewModel: PreviewViewModel by viewModels()
-
-    private lateinit var bottomNav: BottomNavigationView
+    private var wallpaperId by Delegates.notNull<Int>()
 
     override fun setupViews() {
+        val bundle = this.arguments
+        if (bundle != null) {
+            wallpaperId = bundle.getInt(WALLPAPER_ID)
+        }
 
-        bottomNav = requireActivity().findViewById(R.id.bottom_nav)
-
-        bottomNav.slideDown()
         binding.apply {
-            wallpaperImageView.loadImageFromUrl(wallpaper.imageUrl)
-            wallpaperPhotographerTextView.byPhotographer(wallpaper.photographer)
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                viewModel.getWallpaperById(wallpaperId).collect {
+                    val wallpaper = it ?: return@collect
+                    wallpaperImageView.loadImageFromUrl(wallpaper.imageUrl)
+                    wallpaperPhotographerTextView.byPhotographer(wallpaper.photographer)
+                }
+            }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         bottomNav.slideUp()
+//        val fragmentManager = parentFragmentManager.beginTransaction()
+//        fragmentManager.remove(PreviewFragment())
+//            .commit()
     }
 }

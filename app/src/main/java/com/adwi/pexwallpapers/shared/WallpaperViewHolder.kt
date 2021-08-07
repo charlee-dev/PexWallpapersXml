@@ -9,7 +9,8 @@ class WallpaperViewHolder(
     private val onItemClick: (Int) -> Unit,
     private val onFavoriteClick: (Int) -> Unit,
     private val onShareClick: (Int) -> Unit,
-    private val onDownloadClick: (Int) -> Unit
+    private val onDownloadClick: (Int) -> Unit,
+    private val onPexelsLogoClick: (Int) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(wallpaper: Wallpaper) {
@@ -23,6 +24,12 @@ class WallpaperViewHolder(
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     onItemClick(position)
+                }
+            }
+            pexelsLogo.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onPexelsLogoClick(position)
                 }
             }
             favoritesBookmark.setOnClickListener {

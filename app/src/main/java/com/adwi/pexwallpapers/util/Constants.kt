@@ -19,5 +19,8 @@ class Constants {
         // Database
         const val WALLPAPER_DATABASE = "wallpaper_database"
 
+        // Args
+        const val WALLPAPER_ID = "WALLPAPER_ID"
+
     }
 }

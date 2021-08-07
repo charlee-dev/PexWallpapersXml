@@ -1,5 +1,8 @@
 package com.adwi.pexwallpapers.ui.search
 
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -15,9 +18,7 @@ import com.adwi.pexwallpapers.shared.WallpaperListPagingAdapterAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.ui.TAG_PREVIEW_FRAGMENT
 import com.adwi.pexwallpapers.ui.preview.PreviewFragment
-import com.adwi.pexwallpapers.util.onQueryTextSubmit
-import com.adwi.pexwallpapers.util.showIfOrVisible
-import com.adwi.pexwallpapers.util.showSnackbar
+import com.adwi.pexwallpapers.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -26,7 +27,7 @@ import kotlinx.coroutines.flow.filter
 
 @AndroidEntryPoint
 class SearchFragment :
-    BaseFragment<FragmentSearchBinding, SearchViewModel>(FragmentSearchBinding::inflate) {
+    BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate, false) {
 
     override val viewModel: SearchViewModel by viewModels()
 
@@ -38,15 +39,33 @@ class SearchFragment :
         wallpaperListAdapter = WallpaperListPagingAdapterAdapter(
             onItemClick = { wallpaper ->
                 val fragmentManager = parentFragmentManager.beginTransaction()
-                fragmentManager.replace(R.id.fragmentContainerView, PreviewFragment(wallpaper))
-                fragmentManager.addToBackStack(TAG_PREVIEW_FRAGMENT)
-                fragmentManager.commit()
+                val previewFragment = PreviewFragment()
+                val arguments = Bundle()
+                arguments.putInt(Constants.WALLPAPER_ID, wallpaper.id)
+
+                previewFragment.arguments = arguments
+
+                fragmentManager.replace(R.id.fragmentContainerView, previewFragment)
+                    .addToBackStack(TAG_PREVIEW_FRAGMENT)
+                    .commit()
             },
+            onShareClick = { wallpaper ->
+                wallpaper.url?.let {
+                    ShareUtil.shareWallpaper(
+                        requireActivity(),
+                        it
+                    )
+                }
+            },
+            onDownloadClick = { TODO() },
             onFavoriteClick = { wallpaper ->
                 viewModel.onFavoriteClick(wallpaper)
             },
-            onDownloadClick = { TODO() },
-            onShareClick = { TODO() }
+            onPexelLogoClick = { wallpaper ->
+                val uri = Uri.parse(wallpaper.url)
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                requireActivity().startActivity(intent)
+            }
         )
 
         binding.apply {

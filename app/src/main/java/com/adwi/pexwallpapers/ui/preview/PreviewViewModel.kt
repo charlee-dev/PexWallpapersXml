@@ -5,7 +5,8 @@ import com.adwi.pexwallpapers.data.WallpaperRepository
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -13,9 +14,8 @@ import javax.inject.Inject
 class PreviewViewModel @Inject constructor(private val repository: WallpaperRepository) :
     BaseViewModel() {
 
-    fun getWallpaperById(wallpaperId: Int): Flow<Wallpaper> {
-        return repository.getWallpaperById(wallpaperId)
-    }
+    fun getWallpaperById(id: Int) = repository.getWallpaperById(id)
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     fun onFavoriteClick(wallpaper: Wallpaper) {
         val currentlyFavorite = wallpaper.isFavorite

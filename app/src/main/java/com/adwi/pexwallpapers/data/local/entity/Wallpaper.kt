@@ -18,7 +18,7 @@ data class Wallpaper(
     val photographerUrl: String? = null,
     val color: String,
     val imageUrl: String,
-    @Embedded val src: @RawValue Src? = null,
+    @Embedded val src: @RawValue Src?,
     val isFavorite: Boolean = false,
     val updatedAt: Long = System.currentTimeMillis()
 ) : Parcelable

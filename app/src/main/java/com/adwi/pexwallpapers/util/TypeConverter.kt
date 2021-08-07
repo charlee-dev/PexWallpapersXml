@@ -13,7 +13,7 @@ object TypeConverter {
             id = wallpaper.id,
             photographer = wallpaper.photographer,
             color = wallpaper.color,
-            imageUrl = wallpaper.src.medium,
+            imageUrl = wallpaper.src.portrait,
             height = wallpaper.height,
             width = wallpaper.width,
             url = wallpaper.pexUrl,

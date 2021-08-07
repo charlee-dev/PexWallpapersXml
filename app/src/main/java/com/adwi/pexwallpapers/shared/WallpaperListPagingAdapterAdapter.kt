@@ -8,7 +8,6 @@ import com.adwi.pexwallpapers.databinding.WallpaperItemBinding
 
 class WallpaperListPagingAdapterAdapter(
     private val onItemClick: (Wallpaper) -> Unit,
-    private val onDownloadClick: (Wallpaper) -> Unit,
     private val onShareClick: (Wallpaper) -> Unit,
     private val onFavoriteClick: (Wallpaper) -> Unit,
     private val onPexelLogoClick: (Wallpaper) -> Unit
@@ -35,12 +34,6 @@ class WallpaperListPagingAdapterAdapter(
                 val wallpaper = getItem(position)
                 if (wallpaper != null) {
                     onShareClick(wallpaper)
-                }
-            },
-            onDownloadClick = { position ->
-                val wallpaper = getItem(position)
-                if (wallpaper != null) {
-                    onDownloadClick(wallpaper)
                 }
             },
             onPexelsLogoClick = { position ->

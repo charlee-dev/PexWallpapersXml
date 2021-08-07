@@ -14,7 +14,7 @@ import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentFavoritesBinding
 import com.adwi.pexwallpapers.shared.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
-import com.adwi.pexwallpapers.util.ShareUtil
+import com.adwi.pexwallpapers.tools.SharingTools
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -38,13 +38,9 @@ class FavoritesFragment :
             },
             onShareClick = { wallpaper ->
                 wallpaper.url?.let {
-                    ShareUtil.shareWallpaper(
-                        requireActivity(),
-                        it
-                    )
+                    SharingTools(requireContext()).share(it)
                 }
             },
-            onDownloadClick = { TODO() },
             onFavoriteClick = { wallpaper ->
                 viewModel.onFavoriteClick(wallpaper)
             },

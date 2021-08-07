@@ -17,7 +17,7 @@ import com.adwi.pexwallpapers.databinding.FragmentSearchBinding
 import com.adwi.pexwallpapers.shared.WallpaperListPagingAdapterAdapter
 import com.adwi.pexwallpapers.shared.WallpapersLoadStateAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
-import com.adwi.pexwallpapers.util.ShareUtil
+import com.adwi.pexwallpapers.tools.SharingTools
 import com.adwi.pexwallpapers.util.onQueryTextSubmit
 import com.adwi.pexwallpapers.util.showIfOrVisible
 import com.adwi.pexwallpapers.util.showSnackbar
@@ -46,13 +46,10 @@ class SearchFragment :
                     )
                 )
             },
-            onDownloadClick = { TODO() },
             onShareClick = { wallpaper ->
                 wallpaper.url?.let {
-                    ShareUtil.shareWallpaper(
-                        requireActivity(),
-                        it
-                    )
+                    SharingTools(requireContext())
+                        .share(it)
                 }
             },
             onFavoriteClick = { wallpaper ->

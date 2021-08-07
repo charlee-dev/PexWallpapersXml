@@ -46,10 +46,10 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.core:core-ktx:1.7.0-alpha01'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.test.espresso:espresso-idling-resource:3.4.0"
 
@@ -96,6 +96,9 @@ dependencies {
 
     // Shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    // Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     // ViewBinding property delegate
     implementation 'com.github.kirich1409:viewbindingpropertydelegate:1.4.7'

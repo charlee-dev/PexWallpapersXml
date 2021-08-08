@@ -1,4 +1,4 @@
-package com.adwi.pexwallpapers.tools
+package com.adwi.pexwallpapers.shared.tools
 
 import android.content.Context
 import android.content.Intent

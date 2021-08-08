@@ -13,7 +13,7 @@ import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentWallpapersBinding
 import com.adwi.pexwallpapers.shared.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
-import com.adwi.pexwallpapers.tools.SharingTools
+import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.ui.preview.PreviewFragment
 import com.adwi.pexwallpapers.util.*
 import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_ID

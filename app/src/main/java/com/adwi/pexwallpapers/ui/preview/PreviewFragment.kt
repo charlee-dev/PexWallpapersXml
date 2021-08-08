@@ -4,7 +4,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.adwi.pexwallpapers.databinding.FragmentPreviewBinding
 import com.adwi.pexwallpapers.shared.base.BaseFragment
-import com.adwi.pexwallpapers.tools.WallpaperSetter
+import com.adwi.pexwallpapers.shared.tools.WallpaperSetter
 import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_ID
 import com.adwi.pexwallpapers.util.byPhotographer
 import com.adwi.pexwallpapers.util.byPhotographerContentDescription
@@ -38,10 +38,8 @@ class PreviewFragment :
                         setWallpaperButton.setOnClickListener {
                             viewLifecycleOwner.lifecycleScope.launch {
                                 wallpaperFlow.imageUrl.let { url ->
-                                    WallpaperSetter(requireContext()).setWallpaperByImagePath(
-                                        requireActivity(),
-                                        url
-                                    )
+                                    WallpaperSetter(requireActivity(), true)
+                                        .setWallpaperByImagePath(url)
                                 }
                             }
                         }

@@ -2,11 +2,13 @@ package com.adwi.pexwallpapers.util
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -89,6 +91,10 @@ fun Fragment.showSnackbar(
     view: View = requireView()
 ) {
     Snackbar.make(view, message, duration).show()
+}
+
+fun showToast(context: Context, message: String) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
 inline fun <T : View> T.showIfOrVisible(condition: (T) -> Boolean) {

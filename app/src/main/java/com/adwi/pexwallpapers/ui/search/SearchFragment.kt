@@ -9,7 +9,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adwi.pexwallpapers.R
@@ -18,9 +17,8 @@ import com.adwi.pexwallpapers.shared.WallpaperListPagingAdapterAdapter
 import com.adwi.pexwallpapers.shared.WallpapersLoadStateAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.tools.SharingTools
-import com.adwi.pexwallpapers.util.onQueryTextSubmit
-import com.adwi.pexwallpapers.util.showIfOrVisible
-import com.adwi.pexwallpapers.util.showSnackbar
+import com.adwi.pexwallpapers.ui.preview.PreviewFragment
+import com.adwi.pexwallpapers.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -40,10 +38,10 @@ class SearchFragment :
 
         wallpaperListAdapter = WallpaperListPagingAdapterAdapter(
             onItemClick = { wallpaper ->
-                findNavController().navigate(
-                    SearchFragmentDirections.actionSearchFragmentToPreviewFragment(
-                        wallpaper
-                    )
+                navigateToFragmentWithArgumentInt(
+                    Constants.WALLPAPER_ID,
+                    wallpaper.id,
+                    PreviewFragment()
                 )
             },
             onShareClick = { wallpaper ->
@@ -194,6 +192,7 @@ class SearchFragment :
 
         searchView.onQueryTextSubmit { query ->
             viewModel.onSearchQuerySubmit(query)
+
             searchView.clearFocus()
         }
     }

@@ -26,6 +26,7 @@ abstract class BaseFragment<out VB : ViewDataBinding>(
     val binding get() = _binding!!
 
     lateinit var bottomNav: BottomNavigationView
+
     val TAG = this::class.java.simpleName
 
     override fun onCreateView(
@@ -33,6 +34,7 @@ abstract class BaseFragment<out VB : ViewDataBinding>(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         _binding = inflate.invoke(inflater, container, false)
         bottomNav = requireActivity().findViewById(R.id.bottom_nav)
         navigationVisibility(hideNavigation)

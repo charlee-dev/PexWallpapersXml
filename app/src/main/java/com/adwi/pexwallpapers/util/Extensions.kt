@@ -2,6 +2,7 @@ package com.adwi.pexwallpapers.util
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.os.Bundle
 import android.view.View
 import android.view.animation.TranslateAnimation
 import android.widget.ImageView
@@ -72,6 +73,11 @@ fun ImageView.loadImageFromUrl(imageUrl: String) {
     }
 }
 
+fun ImageView.byPhotographerContentDescription(photographer: String) {
+    val byText = "Picture taken by $photographer"
+    this.contentDescription = byText
+}
+
 fun TextView.byPhotographer(photographer: String) {
     val byText = "by $photographer"
     this.text = byText
@@ -113,20 +119,17 @@ val <T> T.exhaustive: T
 
 // Navigation extensions
 
-//fun AppCompatActivity.addFragment(frameId: Int, fragment: Fragment){
-//    supportFragmentManager.doTransaction { add(frameId, fragment) }
-//}
-//
-//
-//fun AppCompatActivity.replaceFragment(frameId: Int, fragment: Fragment) {
-//    supportFragmentManager.doTransaction{replace(frameId, fragment)}
-//}
-//
-//fun AppCompatActivity.removeFragment(fragment: Fragment) {
-//    supportFragmentManager.doTransaction{remove(fragment)}
-//}
-//
-//inline fun FragmentManager.doTransaction(func: FragmentTransaction.() ->
-//FragmentTransaction) {
-//    beginTransaction().func().commit()
-//}
+fun Fragment.replaceFragment(fragment: Fragment) {
+    val fragmentManager = parentFragmentManager
+    val transaction = fragmentManager.beginTransaction()
+    transaction.replace(R.id.fragment_container, fragment)
+    transaction.addToBackStack(null)
+    transaction.commit()
+}
+
+fun Fragment.navigateToFragmentWithArgumentInt(name: String, value: Int, destination: Fragment) {
+    val args = Bundle()
+    args.putInt(name, value)
+    destination.arguments = args
+    replaceFragment(destination)
+}

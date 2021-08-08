@@ -8,14 +8,15 @@ import android.view.MenuItem
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentWallpapersBinding
 import com.adwi.pexwallpapers.shared.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.tools.SharingTools
+import com.adwi.pexwallpapers.ui.preview.PreviewFragment
 import com.adwi.pexwallpapers.util.*
+import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_ID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -28,11 +29,7 @@ class WallpapersFragment :
     override fun setupViews() {
         val wallpaperListAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
-                findNavController().navigate(
-                    WallpapersFragmentDirections.actionWallpapersFragmentToPreviewFragment(
-                        wallpaper
-                    )
-                )
+                navigateToFragmentWithArgumentInt(WALLPAPER_ID, wallpaper.id, PreviewFragment())
             },
             onShareClick = { wallpaper ->
                 wallpaper.url?.let {

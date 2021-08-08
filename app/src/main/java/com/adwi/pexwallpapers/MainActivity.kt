@@ -1,9 +1,8 @@
-package com.adwi.pexwallpapers.ui
+package com.adwi.pexwallpapers
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.ActivityMainBinding
 import com.adwi.pexwallpapers.ui.favorites.FavoritesFragment
 import com.adwi.pexwallpapers.ui.preview.PreviewFragment
@@ -111,10 +110,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (selectedIndex != 0) {
-            if (selectedIndex != R.id.previewFragment) {
-                supportFragmentManager.popBackStackImmediate()
-            } else {
+            if (
+                selectedIndex == R.id.wallpapersFragment ||
+                selectedIndex == R.id.searchFragment ||
+                selectedIndex == R.id.favoritesFragment
+            ) {
                 binding.bottomNav.selectedItemId = R.id.wallpapersFragment
+            } else {
+                supportFragmentManager.popBackStackImmediate()
             }
         } else {
             super.onBackPressed()

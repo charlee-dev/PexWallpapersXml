@@ -47,6 +47,8 @@ class WallpapersFragment :
         )
 
         binding.apply {
+            shimmerFrameLayout.startShimmer()
+
             recyclerView.apply {
                 adapter = wallpaperListAdapter
                 layoutManager = LinearLayoutManager(requireContext())
@@ -61,6 +63,10 @@ class WallpapersFragment :
                     val result = it ?: return@collect
 
                     swipeRefreshLayout.isRefreshing = result is Resource.Loading
+                    shimmerFrameLayout.apply {
+                        if (result.data.isNullOrEmpty()) startShimmer() else stopShimmer()
+                    }
+                    shimmerFrameLayout.isVisible = result.data.isNullOrEmpty()
                     recyclerView.isVisible = !result.data.isNullOrEmpty()
                     errorTextview.isVisible = result.error != null && result.data.isNullOrEmpty()
                     retryButton.isVisible = result.error != null && result.data.isNullOrEmpty()
@@ -123,4 +129,14 @@ class WallpapersFragment :
             }
             else -> super.onOptionsItemSelected(item)
         }
+
+    override fun onResume() {
+        super.onResume()
+        binding.shimmerFrameLayout.startShimmer()
+    }
+
+    override fun onPause() {
+        binding.shimmerFrameLayout.stopShimmer()
+        super.onPause()
+    }
 }

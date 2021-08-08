@@ -17,6 +17,7 @@
             android:layout_height="match_parent" />
 
         <TextView
+            style="@style/text_alert"
             android:id="@+id/no_favorites_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -57,18 +57,19 @@
 
         <TextView
             android:id="@+id/wallpaper_photographer"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_medium"
             android:ellipsize="end"
             android:fontFamily="sans-serif-light"
-            android:gravity="center"
+            android:gravity="start"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="italic"
             app:byPhotographerText="@{wallpaper.photographer}"
             app:layout_constraintBottom_toBottomOf="@+id/pexels_logo"
+            app:layout_constraintEnd_toStartOf="@+id/favorites_bookmark"
             app:layout_constraintStart_toEndOf="@id/pexels_logo"
             app:layout_constraintTop_toTopOf="@id/pexels_logo"
             tools:text="by Ad Wi" />

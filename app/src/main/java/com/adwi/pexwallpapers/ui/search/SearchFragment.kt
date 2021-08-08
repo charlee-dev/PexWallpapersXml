@@ -5,6 +5,7 @@ import android.net.Uri
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -36,6 +37,7 @@ class SearchFragment :
     override fun setupViews() {
         setHasOptionsMenu(true)
 
+
         wallpaperListAdapter = WallpaperListPagingAdapterAdapter(
             onItemClick = { wallpaper ->
                 navigateToFragmentWithArgumentInt(
@@ -61,6 +63,8 @@ class SearchFragment :
         )
 
         binding.apply {
+            shimmerFrameLayout.visibility = View.GONE
+
             recyclerView.apply {
                 adapter = wallpaperListAdapter.withLoadStateFooter(
                     WallpapersLoadStateAdapter(wallpaperListAdapter::retry)
@@ -113,6 +117,8 @@ class SearchFragment :
                     .collect { loadState ->
                         when (val refresh = loadState.mediator?.refresh) {
                             is LoadState.Loading -> {
+                                shimmerFrameLayout.visibility = View.VISIBLE
+                                shimmerFrameLayout.startShimmer()
                                 errorTextview.isVisible = false
                                 retryButton.isVisible = false
                                 swipeRefreshLayout.isRefreshing = true
@@ -124,11 +130,16 @@ class SearchFragment :
                                 recyclerView.showIfOrVisible {
                                     !viewModel.newQueryInProgress && wallpaperListAdapter.itemCount > 0
                                 }
+                                shimmerFrameLayout.showIfOrVisible {
+                                    viewModel.newQueryInProgress
+                                }
 
                                 viewModel.refreshInProgress = true
                                 viewModel.pendingScrollToTopAfterRefresh = true
                             }
                             is LoadState.NotLoading -> {
+                                shimmerFrameLayout.stopShimmer()
+                                shimmerFrameLayout.isVisible = false
                                 errorTextview.isVisible = false
                                 retryButton.isVisible = false
                                 swipeRefreshLayout.isRefreshing = false
@@ -144,6 +155,8 @@ class SearchFragment :
                                 viewModel.newQueryInProgress = false
                             }
                             is LoadState.Error -> {
+                                shimmerFrameLayout.stopShimmer()
+                                shimmerFrameLayout.isVisible = false
                                 swipeRefreshLayout.isRefreshing = false
                                 noResultsTextview.isVisible = false
                                 recyclerView.isVisible = wallpaperListAdapter.itemCount > 0
@@ -205,4 +218,9 @@ class SearchFragment :
             }
             else -> super.onOptionsItemSelected(item)
         }
+
+    override fun onPause() {
+        binding.shimmerFrameLayout.stopShimmer()
+        super.onPause()
+    }
 }

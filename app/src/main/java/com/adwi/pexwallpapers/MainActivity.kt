@@ -85,22 +85,24 @@ class MainActivity : AppCompatActivity() {
 
         selectFragment(selectedFragment)
 
-        binding.bottomNav.setOnNavigationItemSelectedListener { item ->
-            val fragment = when (item.itemId) {
-                R.id.wallpapersFragment -> wallaperFragment
-                R.id.searchFragment -> searchFragment
-                R.id.favoritesFragment -> favoritesFragment
-                else -> throw IllegalArgumentException("Unexpected itemId")
-            }
-
-            if (selectedFragment === fragment) {
-                if (fragment is OnBottomNavigationFragmentReselectedListener) {
-                    fragment.onBottomNavigationFragmentReselected()
+        binding.apply {
+            bottomNav.setOnNavigationItemSelectedListener { item ->
+                val fragment = when (item.itemId) {
+                    R.id.wallpapersFragment -> wallaperFragment
+                    R.id.searchFragment -> searchFragment
+                    R.id.favoritesFragment -> favoritesFragment
+                    else -> throw IllegalArgumentException("Unexpected itemId")
                 }
-            } else {
-                selectFragment(fragment)
+
+                if (selectedFragment === fragment) {
+                    if (fragment is OnBottomNavigationFragmentReselectedListener) {
+                        fragment.onBottomNavigationFragmentReselected()
+                    }
+                } else {
+                    selectFragment(fragment)
+                }
+                true
             }
-            true
         }
     }
 

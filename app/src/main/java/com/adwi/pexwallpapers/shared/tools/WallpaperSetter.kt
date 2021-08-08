@@ -1,7 +1,7 @@
 package com.adwi.pexwallpapers.shared.tools
 
-import android.app.Activity
 import android.app.WallpaperManager
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 
 
-class WallpaperSetter(private val activity: Activity, private val setHomeScreen: Boolean) {
+class WallpaperSetter(private val context: Context, private val imageURL: String) {
 
     private lateinit var wallpaperManager: WallpaperManager
 
@@ -25,18 +25,23 @@ class WallpaperSetter(private val activity: Activity, private val setHomeScreen:
         private const val TAG = "WallpaperSetter"
     }
 
-    suspend fun setWallpaperByImagePath(imageURL: String) {
+    suspend fun setWallpaperByImagePath(
+        setHomeScreen: Boolean = false,
+        setLockScreen: Boolean = false
+    ) {
         coroutineScope {
             launch {
-                val bitmap = getImageUsingCoil(imageURL)
-                setWallpaper(bitmap, setHomeScreen)
+                Timber.tag(TAG).d { "setWallpaperByImagePath" }
+                val bitmap = getImageUsingCoil()
+                setWallpaper(bitmap, setHomeScreen, setLockScreen)
             }
         }
     }
 
-    private suspend fun getImageUsingCoil(imageURL: String): Bitmap {
-        val loader = ImageLoader(activity)
-        val request = ImageRequest.Builder(activity)
+    private suspend fun getImageUsingCoil(): Bitmap {
+        Timber.tag(TAG).d { "getImageUsingCoil" }
+        val loader = ImageLoader(context)
+        val request = ImageRequest.Builder(context)
             .data(imageURL)
             .allowHardware(false)
             .build()
@@ -45,33 +50,58 @@ class WallpaperSetter(private val activity: Activity, private val setHomeScreen:
         return (result as BitmapDrawable).bitmap
     }
 
-    private fun setWallpaper(bitmap: Bitmap, setHomeScreen: Boolean) {
-        wallpaperManager = WallpaperManager.getInstance(activity)
+    private fun setWallpaper(bitmap: Bitmap, setHomeScreen: Boolean, setLockScreen: Boolean) {
+        Timber.tag(TAG).d { "setWallpaper" }
+        wallpaperManager = WallpaperManager.getInstance(context)
         try {
-            if (setHomeScreen) setHomeScreenWallpaper(bitmap) else setLockScreenWallpaper(bitmap)
+            if (setHomeScreen && !setLockScreen) setHomeScreenWallpaper(bitmap)
+            if (!setHomeScreen && setLockScreen) setLockScreenWallpaper(bitmap)
+            if (setHomeScreen && setLockScreen) setHomeAndLockScreenWallpaper(bitmap)
         } catch (ex: IOException) {
             Timber.tag(TAG).d { "Exception: ${ex.printStackTrace()}" }
         }
     }
 
-    private fun setHomeScreenWallpaper(bitmap: Bitmap) {
+    private fun setHomeScreenWallpaper(
+        bitmap: Bitmap,
+        message: String? = context.getString(R.string.home_wallpaper_set)
+    ) {
+        Timber.tag(TAG).d { "setHomeScreenWallpaper" }
         wallpaperManager.setBitmap(bitmap)
-        showToast(activity, activity.getString(R.string.wallpaper_set))
+        if (message != null) {
+            showToast(context, message)
+        }
     }
 
-    private fun setLockScreenWallpaper(bitmap: Bitmap) {
+    private fun setLockScreenWallpaper(
+        bitmap: Bitmap,
+        message: String = context.getString(R.string.lock_wallpaper_set)
+    ) {
+        Timber.tag(TAG).d { "setLockScreenWallpaper" }
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK)
-                showToast(activity, activity.getString(R.string.wallpaper_set))
+                wallpaperManager.setBitmap(
+                    bitmap, null, true,
+                    WallpaperManager.FLAG_LOCK
+                )
+                showToast(context, message)
             } else {
                 showToast(
-                    activity,
-                    activity.getString(R.string.lock_screen_wallpaper_not_supported)
+                    context,
+                    context.getString(R.string.lock_screen_wallpaper_not_supported)
                 )
             }
         } catch (e: Exception) {
-            e.message?.let { showToast(activity, it) }
+            e.message?.let { showToast(context, it) }
         }
+    }
+
+    private fun setHomeAndLockScreenWallpaper(bitmap: Bitmap) {
+        Timber.tag(TAG).d { "setHomeAndLockScreenWallpaper" }
+        setHomeScreenWallpaper(bitmap, null)
+        setLockScreenWallpaper(
+            bitmap,
+            context.getString(R.string.home_and_lock_screen_wallpaper_set)
+        )
     }
 }

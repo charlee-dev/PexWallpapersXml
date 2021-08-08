@@ -21,6 +21,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="share_text">Share text</string>
     <string name="set_wallpaper">Set wallpaper</string>
-    <string name="wallpaper_set">Wallpaper set</string>
+    <string name="home_wallpaper_set">Home screen wallpaper set</string>
+    <string name="lock_wallpaper_set">Lock screen wallpaper set</string>
+    <string name="home_and_lock_screen_wallpaper_set">Home and Lock screen wallpaper set</string>
     <string name="lock_screen_wallpaper_not_supported">Lock screen wallpaper not supported</string>
+    <string name="home_screen">Home Screen</string>
+    <string name="lock_screen">lock screen</string>
+    <string name="home_and_lock_screen">Home and Lock screen</string>
+    <string name="set_wallpaper_on">Set wallpaper on</string>
 </resources>

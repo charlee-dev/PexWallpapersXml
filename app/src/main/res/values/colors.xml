@@ -15,4 +15,6 @@
     <color name="dark_gray">#6A6A6A</color>
 
     <color name="colorBackground">#ffffff</color>
+    <color name="dialog_background">#6FFFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

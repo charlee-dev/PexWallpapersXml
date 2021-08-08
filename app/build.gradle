@@ -106,6 +106,9 @@ dependencies {
     // Material Dialog
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
 
+    // Lottie
+    implementation 'com.github.nabil6391:LottieSwipeRefreshLayout:1.0.0'
+
     // Dependencies for local unit tests
     testImplementation "junit:junit:4.13.2"
     testImplementation "org.hamcrest:hamcrest-all:1.3"

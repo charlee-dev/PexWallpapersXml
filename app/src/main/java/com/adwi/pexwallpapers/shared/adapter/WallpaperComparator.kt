@@ -1,4 +1,4 @@
-package com.adwi.pexwallpapers.shared
+package com.adwi.pexwallpapers.shared.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper

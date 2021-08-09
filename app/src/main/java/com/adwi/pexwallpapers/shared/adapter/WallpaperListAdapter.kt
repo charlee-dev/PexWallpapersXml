@@ -1,21 +1,24 @@
-package com.adwi.pexwallpapers.shared
+package com.adwi.pexwallpapers.shared.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
+import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.ListAdapter
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.WallpaperItemBinding
 
-class WallpaperListPagingAdapterAdapter(
+class WallpaperListAdapter(
     private val onItemClick: (Wallpaper) -> Unit,
     private val onShareClick: (Wallpaper) -> Unit,
     private val onFavoriteClick: (Wallpaper) -> Unit,
-    private val onPexelLogoClick: (Wallpaper) -> Unit
-) : PagingDataAdapter<Wallpaper, WallpaperViewHolder>(WallpaperComparator()) {
+    private val onPexelLogoClick: (Wallpaper) -> Unit,
+    private val requireActivity: FragmentActivity
+) : ListAdapter<Wallpaper, WallpaperViewHolder>(WallpaperComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WallpaperViewHolder {
         val binding =
             WallpaperItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
         return WallpaperViewHolder(
             binding,
             onItemClick = { position ->
@@ -24,16 +27,16 @@ class WallpaperListPagingAdapterAdapter(
                     onItemClick(wallpaper)
                 }
             },
-            onFavoriteClick = { position ->
-                val wallpaper = getItem(position)
-                if (wallpaper != null) {
-                    onFavoriteClick(wallpaper)
-                }
-            },
             onShareClick = { position ->
                 val wallpaper = getItem(position)
                 if (wallpaper != null) {
                     onShareClick(wallpaper)
+                }
+            },
+            onFavoriteClick = { position ->
+                val wallpaper = getItem(position)
+                if (wallpaper != null) {
+                    onFavoriteClick(wallpaper)
                 }
             },
             onPexelsLogoClick = { position ->
@@ -41,7 +44,8 @@ class WallpaperListPagingAdapterAdapter(
                 if (wallpaper != null) {
                     onPexelLogoClick(wallpaper)
                 }
-            }
+            },
+            requireActivity = requireActivity
         )
     }
 

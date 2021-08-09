@@ -26,7 +26,7 @@
                 android:layout_height="250dp"
                 android:layout_centerInParent="true"
                 android:scaleType="centerCrop"
-                android:src="@color/gray" />
+                android:src="@color/mediumGray" />
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
@@ -37,7 +37,7 @@
         android:layout_height="24dp"
         android:layout_marginVertical="@dimen/margin_medium"
         android:scaleType="fitXY"
-        android:src="@color/gray"
+        android:src="@color/mediumGray"
         app:layout_constraintStart_toStartOf="@id/card_view"
         app:layout_constraintTop_toBottomOf="@id/card_view" />
 
@@ -46,13 +46,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
-        android:background="@color/gray"
+        android:background="@color/mediumGray"
         android:ellipsize="end"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:singleLine="true"
         android:text="placeholder placeholder"
-        android:textColor="@color/gray"
+        android:textColor="@color/mediumGray"
         android:textSize="16sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/pexels_logo"
@@ -64,7 +64,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginEnd="@dimen/margin_large"
-        android:src="@color/gray"
+        android:src="@color/mediumGray"
         app:layout_constraintBottom_toBottomOf="@+id/pexels_logo"
         app:layout_constraintEnd_toStartOf="@id/share_button"
         app:layout_constraintTop_toTopOf="@id/pexels_logo" />
@@ -73,7 +73,7 @@
         android:id="@+id/share_button"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@color/gray"
+        android:src="@color/mediumGray"
         app:layout_constraintBottom_toBottomOf="@+id/pexels_logo"
         app:layout_constraintEnd_toEndOf="@+id/card_view"
         app:layout_constraintTop_toTopOf="@id/pexels_logo" />

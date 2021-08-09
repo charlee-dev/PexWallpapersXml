@@ -5,13 +5,15 @@ import android.net.Uri
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentFavoritesBinding
-import com.adwi.pexwallpapers.shared.WallpaperListAdapter
+import com.adwi.pexwallpapers.shared.adapter.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.ui.preview.PreviewFragment
@@ -53,7 +55,8 @@ class FavoritesFragment :
                 val uri = Uri.parse(wallpaper.url)
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 requireActivity().startActivity(intent)
-            }
+            },
+            requireActivity = requireActivity()
         )
 
         binding.apply {
@@ -61,6 +64,15 @@ class FavoritesFragment :
                 adapter = favoritesAdapter
                 layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(true)
+                val divider =
+                    DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+                divider.setDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.list_tem_separator
+                    )!!
+                )
+                addItemDecoration(divider)
             }
 
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {

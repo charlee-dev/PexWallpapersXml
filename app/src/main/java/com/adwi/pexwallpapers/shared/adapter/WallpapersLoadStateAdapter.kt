@@ -1,4 +1,4 @@
-package com.adwi.pexwallpapers.shared
+package com.adwi.pexwallpapers.shared.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

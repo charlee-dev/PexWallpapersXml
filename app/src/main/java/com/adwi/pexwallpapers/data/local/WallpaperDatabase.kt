@@ -13,7 +13,8 @@ import com.adwi.pexwallpapers.data.local.entity.Wallpaper
         CuratedWallpapers::class,
         SearchResult::class,
         SearchQueryRemoteKey::class
-    ], version = 1
+    ],
+    version = 2
 )
 abstract class WallpaperDatabase : RoomDatabase() {
 

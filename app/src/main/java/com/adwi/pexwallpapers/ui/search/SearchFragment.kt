@@ -7,15 +7,17 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentSearchBinding
-import com.adwi.pexwallpapers.shared.WallpaperListPagingAdapterAdapter
-import com.adwi.pexwallpapers.shared.WallpapersLoadStateAdapter
+import com.adwi.pexwallpapers.shared.adapter.WallpaperListPagingAdapterAdapter
+import com.adwi.pexwallpapers.shared.adapter.WallpapersLoadStateAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.ui.preview.PreviewFragment
@@ -60,7 +62,8 @@ class SearchFragment :
                 val uri = Uri.parse(wallpaper.url)
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 requireActivity().startActivity(intent)
-            }
+            },
+            requireActivity = requireActivity()
         )
 
         binding.apply {
@@ -73,6 +76,15 @@ class SearchFragment :
                 layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(true)
                 itemAnimator?.changeDuration = 0
+                val divider =
+                    DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+                divider.setDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.list_tem_separator
+                    )!!
+                )
+                addItemDecoration(divider)
             }
 
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {

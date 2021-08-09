@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
         android:text="@string/app_name"
-        android:textColor="@color/gray"
+        android:textColor="@color/mediumGray"
         android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
         android:src="@drawable/ic_copyright"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/gray" />
+        app:tint="@color/mediumGray" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

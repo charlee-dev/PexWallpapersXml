@@ -5,5 +5,5 @@
     <dimen name="margin_medium">16dp</dimen>
     <dimen name="margin_large">24dp</dimen>
     <dimen name="margin_extra_large">36dp</dimen>
-    <dimen name="image_corner_radius">4dp</dimen>
+    <dimen name="image_corner_radius">20dp</dimen>
 </resources>

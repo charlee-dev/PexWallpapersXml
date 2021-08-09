@@ -19,7 +19,6 @@ object BindingAdapters {
             }
             else -> {
                 imageView.setImageResource(R.drawable.ic_favorite_unchecked)
-                imageView.setColorFilter(R.color.gray)
             }
         }
     }

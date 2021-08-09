@@ -32,13 +32,14 @@ class SearchFragment :
 
     override val viewModel: SearchViewModel by viewModels()
 
-    private lateinit var wallpaperListAdapter: WallpaperListPagingAdapterAdapter
+    private var _wallpaperListAdapter: WallpaperListPagingAdapterAdapter? = null
+    private val wallpaperListAdapter get() = _wallpaperListAdapter
 
     override fun setupViews() {
         setHasOptionsMenu(true)
 
 
-        wallpaperListAdapter = WallpaperListPagingAdapterAdapter(
+        _wallpaperListAdapter = WallpaperListPagingAdapterAdapter(
             onItemClick = { wallpaper ->
                 navigateToFragmentWithArgumentInt(
                     Constants.WALLPAPER_ID,
@@ -66,8 +67,8 @@ class SearchFragment :
             shimmerFrameLayout.visibility = View.GONE
 
             recyclerView.apply {
-                adapter = wallpaperListAdapter.withLoadStateFooter(
-                    WallpapersLoadStateAdapter(wallpaperListAdapter::retry)
+                adapter = wallpaperListAdapter?.withLoadStateFooter(
+                    WallpapersLoadStateAdapter(wallpaperListAdapter!!::retry)
                 )
                 layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(true)
@@ -77,7 +78,7 @@ class SearchFragment :
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 // collectLatest - as soon new data received, current block will be suspended
                 viewModel.searchResults.collectLatest { data ->
-                    wallpaperListAdapter.submitData(data)
+                    wallpaperListAdapter?.submitData(data)
                 }
             }
 
@@ -93,10 +94,10 @@ class SearchFragment :
             }
 
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                wallpaperListAdapter.loadStateFlow
-                    .distinctUntilChangedBy { it.source.refresh }
-                    .filter { it.source.refresh is LoadState.NotLoading }
-                    .collect {
+                wallpaperListAdapter?.loadStateFlow
+                    ?.distinctUntilChangedBy { it.source.refresh }
+                    ?.filter { it.source.refresh is LoadState.NotLoading }
+                    ?.collect {
                         if (viewModel.pendingScrollToTopAfterRefresh && it.mediator?.refresh is LoadState.NotLoading) {
                             recyclerView.smoothScrollToPosition(0)
                             viewModel.pendingScrollToTopAfterRefresh = false
@@ -113,8 +114,8 @@ class SearchFragment :
             }
 
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                wallpaperListAdapter.loadStateFlow
-                    .collect { loadState ->
+                wallpaperListAdapter?.loadStateFlow
+                    ?.collect { loadState ->
                         when (val refresh = loadState.mediator?.refresh) {
                             is LoadState.Loading -> {
                                 shimmerFrameLayout.visibility = View.VISIBLE
@@ -123,12 +124,12 @@ class SearchFragment :
                                 retryButton.isVisible = false
                                 swipeRefreshLayout.isRefreshing = true
                                 noResultsTextview.isVisible = false
-                                recyclerView.isVisible = wallpaperListAdapter.itemCount > 0
+                                recyclerView.isVisible = wallpaperListAdapter!!.itemCount > 0
 
                                 // there was a bug, that recyclerView was showing old data for a split second
                                 // this is work round it
                                 recyclerView.showIfOrVisible {
-                                    !viewModel.newQueryInProgress && wallpaperListAdapter.itemCount > 0
+                                    !viewModel.newQueryInProgress && wallpaperListAdapter!!.itemCount > 0
                                 }
                                 shimmerFrameLayout.showIfOrVisible {
                                     viewModel.newQueryInProgress
@@ -143,10 +144,10 @@ class SearchFragment :
                                 errorTextview.isVisible = false
                                 retryButton.isVisible = false
                                 swipeRefreshLayout.isRefreshing = false
-                                recyclerView.isVisible = wallpaperListAdapter.itemCount > 0
+                                recyclerView.isVisible = wallpaperListAdapter!!.itemCount > 0
 
                                 val noResults =
-                                    wallpaperListAdapter.itemCount < 1 && loadState.append.endOfPaginationReached
+                                    wallpaperListAdapter!!.itemCount < 1 && loadState.append.endOfPaginationReached
                                             && loadState.source.append.endOfPaginationReached
 
                                 noResultsTextview.isVisible = noResults
@@ -159,10 +160,10 @@ class SearchFragment :
                                 shimmerFrameLayout.isVisible = false
                                 swipeRefreshLayout.isRefreshing = false
                                 noResultsTextview.isVisible = false
-                                recyclerView.isVisible = wallpaperListAdapter.itemCount > 0
+                                recyclerView.isVisible = wallpaperListAdapter!!.itemCount > 0
 
                                 val noCachedResults =
-                                    wallpaperListAdapter.itemCount < 1 && loadState.source.append.endOfPaginationReached
+                                    wallpaperListAdapter!!.itemCount < 1 && loadState.source.append.endOfPaginationReached
 
                                 errorTextview.isVisible = noCachedResults
                                 retryButton.isVisible = noCachedResults
@@ -188,11 +189,11 @@ class SearchFragment :
             }
 
             swipeRefreshLayout.setOnRefreshListener {
-                wallpaperListAdapter.refresh()
+                wallpaperListAdapter?.refresh()
             }
 
             retryButton.setOnClickListener {
-                wallpaperListAdapter.retry()
+                wallpaperListAdapter?.retry()
             }
         }
     }
@@ -213,7 +214,7 @@ class SearchFragment :
     override fun onOptionsItemSelected(item: MenuItem) =
         when (item.itemId) {
             R.id.action_refresh -> {
-                wallpaperListAdapter.refresh()
+                wallpaperListAdapter?.refresh()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -222,5 +223,10 @@ class SearchFragment :
     override fun onPause() {
         binding.shimmerFrameLayout.stopShimmer()
         super.onPause()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _wallpaperListAdapter = null
     }
 }

@@ -26,8 +26,13 @@ class WallpapersFragment :
 
     override val viewModel: WallpaperViewModel by viewModels()
 
+    private var _wallpaperListAdapter: WallpaperListAdapter? = null
+    private val wallpaperListAdapter get() = _wallpaperListAdapter!!
+
     override fun setupViews() {
-        val wallpaperListAdapter = WallpaperListAdapter(
+        setHasOptionsMenu(true)
+
+        _wallpaperListAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
                 navigateToFragmentWithArgumentInt(WALLPAPER_ID, wallpaper.id, PreviewFragment())
             },
@@ -107,13 +112,10 @@ class WallpapersFragment :
                 }
             }
         }
-
-        setHasOptionsMenu(true)
     }
 
     override fun onStart() {
         super.onStart()
-        // TODO decide if its really needed
         viewModel.onStart()
     }
 
@@ -138,5 +140,10 @@ class WallpapersFragment :
     override fun onPause() {
         binding.shimmerFrameLayout.stopShimmer()
         super.onPause()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _wallpaperListAdapter = null
     }
 }

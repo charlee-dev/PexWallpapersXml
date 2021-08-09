@@ -16,6 +16,7 @@ class WallpaperListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WallpaperViewHolder {
         val binding =
             WallpaperItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
         return WallpaperViewHolder(
             binding,
             onItemClick = { position ->

@@ -9,7 +9,7 @@ class WallpaperViewHolder(
     private val onItemClick: (Int) -> Unit,
     private val onFavoriteClick: (Int) -> Unit,
     private val onShareClick: (Int) -> Unit,
-    private val onPexelsLogoClick: (Int) -> Unit
+    private val onPexelsLogoClick: (Int) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(wallpaper: Wallpaper) {

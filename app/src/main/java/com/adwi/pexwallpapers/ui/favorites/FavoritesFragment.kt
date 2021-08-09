@@ -27,10 +27,13 @@ class FavoritesFragment :
 
     override val viewModel: FavoritesViewModel by viewModels()
 
+    private var _favoritesAdapter: WallpaperListAdapter? = null
+    private val favoritesAdapter get() = _favoritesAdapter
+
     override fun setupViews() {
         setHasOptionsMenu(true)
 
-        val favoritesAdapter = WallpaperListAdapter(
+        _favoritesAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
                 navigateToFragmentWithArgumentInt(
                     Constants.WALLPAPER_ID,
@@ -63,7 +66,7 @@ class FavoritesFragment :
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 viewModel.favorites.collect {
                     val favorites = it ?: return@collect
-                    favoritesAdapter.submitList(favorites)
+                    favoritesAdapter?.submitList(favorites)
                     noFavoritesTextview.isVisible = favorites.isEmpty()
                     recyclerView.isVisible = favorites.isNotEmpty()
                 }
@@ -84,5 +87,8 @@ class FavoritesFragment :
             else -> super.onOptionsItemSelected(item)
         }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _favoritesAdapter = null
+    }
 }

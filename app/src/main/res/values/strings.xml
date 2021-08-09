@@ -29,4 +29,5 @@
     <string name="lock_screen">lock screen</string>
     <string name="home_and_lock_screen">Home and Lock screen</string>
     <string name="set_wallpaper_on">Set wallpaper on</string>
+    <string name="delete_favorite">Delete Favorite</string>
 </resources>

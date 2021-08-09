@@ -3,6 +3,6 @@
 
     <style name="text_alert">
         <item name="android:fontFamily">@font/montserrat</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 </resources>

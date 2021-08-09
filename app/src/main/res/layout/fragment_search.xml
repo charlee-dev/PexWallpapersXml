@@ -115,9 +115,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/error_textview"
                     tools:visibility="visible" />
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.nabilmh.lottieswiperefreshlayout.LottieSwipeRefreshLayout>
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

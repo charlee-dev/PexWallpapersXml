@@ -16,7 +16,7 @@
         android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardview"
+            android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -52,8 +52,8 @@
             android:layout_marginVertical="@dimen/margin_medium"
             android:scaleType="fitXY"
             android:src="@drawable/pexels_logo"
-            app:layout_constraintStart_toStartOf="@id/cardview"
-            app:layout_constraintTop_toBottomOf="@id/cardview" />
+            app:layout_constraintStart_toStartOf="@id/card_view"
+            app:layout_constraintTop_toBottomOf="@id/card_view" />
 
         <TextView
             android:id="@+id/wallpaper_photographer"
@@ -93,7 +93,7 @@
             android:layout_height="24dp"
             android:src="@drawable/ic_share"
             app:layout_constraintBottom_toBottomOf="@+id/pexels_logo"
-            app:layout_constraintEnd_toEndOf="@+id/cardview"
+            app:layout_constraintEnd_toEndOf="@+id/card_view"
             app:layout_constraintTop_toTopOf="@id/pexels_logo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,16 +14,17 @@
         android:id="@+id/wallpaper_item_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
-        android:layout_marginBottom="@dimen/margin_small">
+        android:layout_margin="@dimen/margin_extra_small"
+        android:layout_marginHorizontal="@dimen/margin_extra_small"
+        android:animateLayoutChanges="true"
+        android:animationCache="true">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginHorizontal="@dimen/margin_medium"
-            android:translationZ="4dp"
+            android:translationZ="6dp"
             app:cardCornerRadius="@dimen/image_corner_radius"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,67 +38,16 @@
                 <ImageView
                     android:id="@+id/wallpaper_imageView"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:contentDescription="@{wallpaper.photographer}"
                     android:scaleType="centerCrop"
-                    android:translationZ="20dp"
                     app:loadImageFromUrl="@{wallpaper.imageUrl}"
                     tools:src="@drawable/photo_placeholder" />
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
-        <ImageView
-            android:id="@+id/pexels_logo"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="@dimen/margin_small"
-            android:contentDescription="@string/pexels_com_button"
-            android:scaleType="fitXY"
-            android:src="@drawable/pexels_logo"
-            app:layout_constraintStart_toStartOf="@id/card_view"
-            app:layout_constraintTop_toBottomOf="@id/card_view" />
-
-        <TextView
-            android:id="@+id/wallpaper_photographer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:ellipsize="end"
-            android:fontFamily="@font/montserrat"
-            android:gravity="start"
-            android:singleLine="true"
-            android:textSize="14sp"
-            app:byPhotographerText="@{wallpaper.photographer}"
-            app:layout_constraintBottom_toBottomOf="@+id/pexels_logo"
-            app:layout_constraintEnd_toStartOf="@+id/favorites_bookmark"
-            app:layout_constraintStart_toEndOf="@id/pexels_logo"
-            app:layout_constraintTop_toTopOf="@id/pexels_logo"
-            tools:text="by Ad Wi" />
-
-        <ImageView
-            android:id="@+id/favorites_bookmark"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="@dimen/margin_large"
-            android:contentDescription="@string/add_image_toFavorites"
-            app:isFavorite="@{wallpaper.favorite}"
-            app:layout_constraintBottom_toBottomOf="@+id/pexels_logo"
-            app:layout_constraintEnd_toStartOf="@id/share_button"
-            app:layout_constraintTop_toTopOf="@id/pexels_logo"
-            app:tint="@color/red"
-            tools:src="@drawable/ic_favorite_unchecked" />
-
-        <ImageView
-            android:id="@+id/share_button"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:contentDescription="@string/share_button"
-            android:src="@drawable/ic_share"
-            app:layout_constraintBottom_toBottomOf="@+id/pexels_logo"
-            app:layout_constraintEnd_toEndOf="@+id/card_view"
-            app:layout_constraintTop_toTopOf="@id/pexels_logo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

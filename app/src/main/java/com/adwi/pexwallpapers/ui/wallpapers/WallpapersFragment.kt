@@ -5,12 +5,10 @@ import android.net.Uri
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentWallpapersBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListAdapter
@@ -59,20 +57,11 @@ class WallpapersFragment :
 
             recyclerView.apply {
                 adapter = wallpaperListAdapter
-                layoutManager = LinearLayoutManager(requireContext())
-                setHasFixedSize(true)
+                layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+//                setHasFixedSize(true)
                 // hide item strange animation even when favorite clicked
                 itemAnimator = null
                 itemAnimator?.changeDuration = 0
-                val divider =
-                    DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-                divider.setDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.list_tem_separator
-                    )!!
-                )
-                addItemDecoration(divider)
             }
 
 

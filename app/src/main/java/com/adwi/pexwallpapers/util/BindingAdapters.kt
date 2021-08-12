@@ -23,12 +23,6 @@ object BindingAdapters {
         }
     }
 
-    @BindingAdapter("app:customColor")
-    @JvmStatic
-    fun customColor(textView: TextView, color: String) {
-        textView.setTextColor(color.toInt())
-    }
-
     @BindingAdapter("app:byPhotographerText")
     @JvmStatic
     fun byPhotographerText(textView: TextView, photographerName: String) {
@@ -44,6 +38,7 @@ object BindingAdapters {
             placeholder(R.drawable.placeholder_item)
             crossfade(600)
         }
+        imageView.layoutParams.height = heights.random()
     }
 
     private val shimmer =
@@ -59,4 +54,6 @@ object BindingAdapters {
     val shimmerDrawable = ShimmerDrawable().apply {
         setShimmer(shimmer)
     }
+
+    private val heights = listOf(830, 1220, 975, 513, 600, 790)
 }

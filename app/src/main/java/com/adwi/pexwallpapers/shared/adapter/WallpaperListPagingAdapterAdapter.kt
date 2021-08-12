@@ -12,7 +12,8 @@ class WallpaperListPagingAdapterAdapter(
     private val onShareClick: (Wallpaper) -> Unit,
     private val onFavoriteClick: (Wallpaper) -> Unit,
     private val onPexelLogoClick: (Wallpaper) -> Unit,
-    private val requireActivity: FragmentActivity
+    private val requireActivity: FragmentActivity,
+    private val buttonsVisible: Boolean
 ) : PagingDataAdapter<Wallpaper, WallpaperViewHolder>(WallpaperComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WallpaperViewHolder {
@@ -44,7 +45,8 @@ class WallpaperListPagingAdapterAdapter(
                     onPexelLogoClick(wallpaper)
                 }
             },
-            requireActivity = requireActivity
+            requireActivity = requireActivity,
+            buttonsVisible = buttonsVisible
         )
     }
 

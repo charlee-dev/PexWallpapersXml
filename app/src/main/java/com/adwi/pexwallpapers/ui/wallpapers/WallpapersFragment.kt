@@ -49,7 +49,8 @@ class WallpapersFragment :
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 requireActivity().startActivity(intent)
             },
-            requireActivity = requireActivity()
+            requireActivity = requireActivity(),
+            buttonsVisible = false
         )
 
         binding.apply {
@@ -58,7 +59,7 @@ class WallpapersFragment :
             recyclerView.apply {
                 adapter = wallpaperListAdapter
                 layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-//                setHasFixedSize(true)
+                setHasFixedSize(true)
                 // hide item strange animation even when favorite clicked
                 itemAnimator = null
                 itemAnimator?.changeDuration = 0

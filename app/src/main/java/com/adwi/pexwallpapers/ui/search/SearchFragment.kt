@@ -7,13 +7,11 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentSearchBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListPagingAdapterAdapter
@@ -63,7 +61,8 @@ class SearchFragment :
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 requireActivity().startActivity(intent)
             },
-            requireActivity = requireActivity()
+            requireActivity = requireActivity(),
+            buttonsVisible = false
         )
 
         binding.apply {
@@ -73,18 +72,9 @@ class SearchFragment :
                 adapter = wallpaperListAdapter?.withLoadStateFooter(
                     WallpapersLoadStateAdapter(wallpaperListAdapter!!::retry)
                 )
-                layoutManager = LinearLayoutManager(requireContext())
+                layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                 setHasFixedSize(true)
                 itemAnimator?.changeDuration = 0
-                val divider =
-                    DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-                divider.setDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.list_tem_separator
-                    )!!
-                )
-                addItemDecoration(divider)
             }
 
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {

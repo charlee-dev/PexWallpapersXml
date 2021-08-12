@@ -56,7 +56,8 @@ class FavoritesFragment :
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 requireActivity().startActivity(intent)
             },
-            requireActivity = requireActivity()
+            requireActivity = requireActivity(),
+            buttonsVisible = true
         )
 
         binding.apply {

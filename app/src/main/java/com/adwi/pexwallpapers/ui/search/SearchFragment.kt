@@ -14,7 +14,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentSearchBinding
-import com.adwi.pexwallpapers.shared.adapter.WallpaperListPagingAdapterAdapter
+import com.adwi.pexwallpapers.shared.adapter.WallpaperListPagingAdapter
 import com.adwi.pexwallpapers.shared.adapter.WallpapersLoadStateAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.shared.tools.SharingTools
@@ -32,14 +32,14 @@ class SearchFragment :
 
     override val viewModel: SearchViewModel by viewModels()
 
-    private var _wallpaperListAdapter: WallpaperListPagingAdapterAdapter? = null
+    private var _wallpaperListAdapter: WallpaperListPagingAdapter? = null
     private val wallpaperListAdapter get() = _wallpaperListAdapter
 
     override fun setupViews() {
         setHasOptionsMenu(true)
 
 
-        _wallpaperListAdapter = WallpaperListPagingAdapterAdapter(
+        _wallpaperListAdapter = WallpaperListPagingAdapter(
             onItemClick = { wallpaper ->
                 navigateToFragmentWithArgumentInt(
                     Constants.WALLPAPER_ID,

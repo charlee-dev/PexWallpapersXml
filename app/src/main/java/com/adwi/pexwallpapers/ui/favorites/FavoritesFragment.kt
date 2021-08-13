@@ -61,7 +61,8 @@ class FavoritesFragment :
         )
 
         binding.apply {
-            recyclerView.apply {
+
+        recyclerView.apply {
                 adapter = favoritesAdapter
                 layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(true)

@@ -21,5 +21,6 @@ class Constants {
 
         // Args
         const val WALLPAPER_ID = "WALLPAPER_ID"
+
     }
 }

@@ -7,7 +7,7 @@ import androidx.paging.PagingDataAdapter
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.WallpaperItemBinding
 
-class WallpaperListPagingAdapterAdapter(
+class WallpaperListPagingAdapter(
     private val onItemClick: (Wallpaper) -> Unit,
     private val onShareClick: (Wallpaper) -> Unit,
     private val onFavoriteClick: (Wallpaper) -> Unit,

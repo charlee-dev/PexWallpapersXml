@@ -1,21 +1,22 @@
 package com.adwi.pexwallpapers.ui.preview
 
+import android.view.View
 import android.widget.Button
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.adwi.pexwallpapers.R
+import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.FragmentPreviewBinding
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.shared.tools.WallpaperSetter
+import com.adwi.pexwallpapers.util.*
 import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_ID
-import com.adwi.pexwallpapers.util.byPhotographer
-import com.adwi.pexwallpapers.util.byPhotographerContentDescription
-import com.adwi.pexwallpapers.util.loadImageFromUrl
-import com.adwi.pexwallpapers.util.slideUp
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -23,6 +24,10 @@ class PreviewFragment :
     BaseFragment<FragmentPreviewBinding>(FragmentPreviewBinding::inflate, true) {
 
     override val viewModel: PreviewViewModel by viewModels()
+
+    private lateinit var wallpaper: Wallpaper
+
+    private var doubleClick = false
 
     override fun setupViews() {
 
@@ -33,6 +38,7 @@ class PreviewFragment :
                 viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                     viewModel.getWallpaperById(wallpaperId).collect {
                         val wallpaperFlow = it ?: return@collect
+                        wallpaper = wallpaperFlow
 
                         wallpaperImageView.loadImageFromUrl(wallpaperFlow.imageUrl)
                         wallpaperImageView.byPhotographerContentDescription(wallpaperFlow.photographer)
@@ -44,7 +50,30 @@ class PreviewFragment :
                         }
                     }
                 }
+
+                wallpaperImageView.setOnClickListener {
+                    doubleClick = true
+                    if (doubleClick) {
+                        wallpaperImageView.isClickable = false
+                        heartImageView.visibility = View.VISIBLE
+                        heartImageView.playAnimation()
+                        favoriteOnDoubleClicked(wallpaper)
+                    }
+
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        delay(2000)
+                        !doubleClick
+                        heartImageView.visibility = View.GONE
+                        wallpaperImageView.isClickable = true
+                    }
+                }
             }
+        }
+    }
+
+    private fun favoriteOnDoubleClicked(wallpaper: Wallpaper) {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.favoriteOnDoubleClicked(wallpaper)
         }
     }
 

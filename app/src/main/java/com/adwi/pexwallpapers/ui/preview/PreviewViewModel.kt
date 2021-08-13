@@ -24,4 +24,13 @@ class PreviewViewModel @Inject constructor(private val repository: WallpaperRepo
             repository.updateWallpaper(updatedWallpaper)
         }
     }
+
+    fun favoriteOnDoubleClicked(wallpaper: Wallpaper) {
+        if (!wallpaper.isFavorite) {
+            val updatedWallpaper = wallpaper.copy(isFavorite = true)
+            viewModelScope.launch {
+                repository.updateWallpaper(updatedWallpaper)
+            }
+        }
+    }
 }

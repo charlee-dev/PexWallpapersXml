@@ -65,8 +65,6 @@ class WallpapersFragment :
                 itemAnimator?.changeDuration = 0
             }
 
-
-
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 viewModel.wallpaperList.collect {
                     val result = it ?: return@collect

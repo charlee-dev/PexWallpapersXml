@@ -2,6 +2,7 @@ package com.adwi.pexwallpapers.ui.preview
 
 import android.view.View
 import android.widget.Button
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.adwi.pexwallpapers.R
@@ -21,7 +22,12 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PreviewFragment :
-    BaseFragment<FragmentPreviewBinding>(FragmentPreviewBinding::inflate, true) {
+    BaseFragment<FragmentPreviewBinding, Any>(
+        FragmentPreviewBinding::inflate,
+        hasBackButton = true,
+        hasOptionsMenu = true,
+        hasNavigation = false
+    ) {
 
     override val viewModel: PreviewViewModel by viewModels()
 
@@ -29,10 +35,15 @@ class PreviewFragment :
 
     private var doubleClick = false
 
+    override fun setupToolbar() {
+        binding.toolbar.apply {
+            titleTextView.isVisible = false
+            backButton.isVisible = true
+        }
+    }
+
     override fun setupViews() {
-
         val wallpaperId = arguments?.getInt(WALLPAPER_ID)
-
         if (wallpaperId != null) {
             binding.apply {
                 viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -70,6 +81,8 @@ class PreviewFragment :
             }
         }
     }
+
+    override fun setupAdapter() {}
 
     private fun favoriteOnDoubleClicked(wallpaper: Wallpaper) {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -114,10 +127,5 @@ class PreviewFragment :
         }
 
         dialog.show()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        bottomNav.slideUp()
     }
 }

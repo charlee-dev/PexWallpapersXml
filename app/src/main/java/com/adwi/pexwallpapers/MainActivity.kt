@@ -15,14 +15,14 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var wallaperFragment: WallpapersFragment
+    private lateinit var wallpaperFragment: WallpapersFragment
     private lateinit var searchFragment: SearchFragment
     private lateinit var favoritesFragment: FavoritesFragment
     private lateinit var previewFragment: PreviewFragment
 
     private val fragments: Array<Fragment>
         get() = arrayOf(
-            wallaperFragment,
+            wallpaperFragment,
             searchFragment,
             favoritesFragment,
             previewFragment
@@ -59,19 +59,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (savedInstanceState == null) {
-            wallaperFragment = WallpapersFragment()
+            wallpaperFragment = WallpapersFragment()
             searchFragment = SearchFragment()
             favoritesFragment = FavoritesFragment()
             previewFragment = PreviewFragment()
 
             supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, wallaperFragment, TAG_BREAKING_NEWS_FRAGMENT)
+                .add(R.id.fragment_container, wallpaperFragment, TAG_BREAKING_NEWS_FRAGMENT)
                 .add(R.id.fragment_container, searchFragment, TAG_SEARCH_NEWS_FRAGMENT)
                 .add(R.id.fragment_container, favoritesFragment, TAG_BOOKMARKS_FRAGMENT)
                 .add(R.id.fragment_container, previewFragment, TAG_PREVIEW_FRAGMENT)
                 .commit()
         } else {
-            wallaperFragment =
+            wallpaperFragment =
                 supportFragmentManager.findFragmentByTag(TAG_BREAKING_NEWS_FRAGMENT) as WallpapersFragment
             searchFragment =
                 supportFragmentManager.findFragmentByTag(TAG_SEARCH_NEWS_FRAGMENT) as SearchFragment
@@ -86,9 +86,9 @@ class MainActivity : AppCompatActivity() {
         selectFragment(selectedFragment)
 
         binding.apply {
-            bottomNav.setOnNavigationItemSelectedListener { item ->
+            bottomNav.setOnItemSelectedListener { item ->
                 val fragment = when (item.itemId) {
-                    R.id.wallpapersFragment -> wallaperFragment
+                    R.id.wallpapersFragment -> wallpaperFragment
                     R.id.searchFragment -> searchFragment
                     R.id.favoritesFragment -> favoritesFragment
                     else -> throw IllegalArgumentException("Unexpected itemId")

@@ -33,4 +33,6 @@
     <string name="pexels_com_button">Pexels.com button</string>
     <string name="share_button">Share button</string>
     <string name="heart_image">Heart image</string>
+    <string name="back_button">Navigate back button</string>
+    <string name="menu">Menu</string>
 </resources>

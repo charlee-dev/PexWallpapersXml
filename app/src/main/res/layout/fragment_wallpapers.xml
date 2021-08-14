@@ -12,67 +12,100 @@
         android:layout_height="match_parent"
         tools:context=".ui.wallpapers.WallpapersFragment">
 
-        <com.nabilmh.lottieswiperefreshlayout.LottieSwipeRefreshLayout
-            android:id="@+id/swipe_refresh_layout"
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:animateLayoutChanges="true"
-            app:indicator_overlay="false"
-            app:lottie_rawRes="@raw/loading_dots">
+            app:layoutDescription="@xml/fragment_wallpapers_xml_constraintlayout_scene">
 
-            <RelativeLayout
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/swipe_refresh_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/shimmerFrameLayout"
+            <com.nabilmh.lottieswiperefreshlayout.LottieSwipeRefreshLayout
+                android:id="@+id/swipe_refresh_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:animateLayoutChanges="true"
+                app:indicator_overlay="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_rawRes="@raw/loading_dots">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <LinearLayout
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shimmerFrameLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_gravity="center"
                         android:orientation="vertical">
 
-                        <include layout="@layout/shimmer_placeholder_layout" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
-                        <include layout="@layout/shimmer_placeholder_layout" />
+                            <include layout="@layout/shimmer_placeholder_layout" />
 
-                        <include layout="@layout/shimmer_placeholder_layout" />
+                            <include layout="@layout/shimmer_placeholder_layout" />
 
-                    </LinearLayout>
-                </com.facebook.shimmer.ShimmerFrameLayout>
+                            <include layout="@layout/shimmer_placeholder_layout" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentTop="true" />
+                        </LinearLayout>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true" />
 
 
-                <TextView
-                    style="@style/text_alert"
-                    android:id="@+id/error_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/retry_button"
-                    android:layout_margin="@dimen/margin_small"
-                    android:gravity="center"
-                    tools:text="An error occurred" />
+                    <TextView
+                        android:id="@+id/error_textview"
+                        style="@style/text_alert"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/retry_button"
+                        android:layout_margin="@dimen/margin_small"
+                        android:gravity="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="An error occurred" />
 
-                <Button
-                    android:id="@+id/retry_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/retry"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    <Button
+                        android:id="@+id/retry_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/retry"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="visible" />
 
-            </RelativeLayout>
-        </com.nabilmh.lottieswiperefreshlayout.LottieSwipeRefreshLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.nabilmh.lottieswiperefreshlayout.LottieSwipeRefreshLayout>
+        </androidx.constraintlayout.motion.widget.MotionLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

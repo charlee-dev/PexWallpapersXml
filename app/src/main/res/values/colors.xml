@@ -5,6 +5,7 @@
     <color name="colorAccent">#9D46FF</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="white_transparent">#4FFFFFFF</color>
     <color name="lightGray">#F9F9F9</color>
     <color name="mediumGray">#D1D1D1</color>
     <color name="lightMediumGray">#80D1D1D1</color>

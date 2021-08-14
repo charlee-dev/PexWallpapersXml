@@ -124,18 +124,22 @@ val <T> T.exhaustive: T
     get() = this
 
 // Navigation extensions
-
-fun Fragment.replaceFragment(fragment: Fragment) {
+fun <T> Fragment.replaceFragment(fragment: T) {
     val fragmentManager = parentFragmentManager
     val transaction = fragmentManager.beginTransaction()
-    transaction.replace(R.id.fragment_container, fragment)
-    transaction.addToBackStack(null)
-    transaction.commit()
+    if (fragment is Fragment) {
+        transaction.replace(R.id.fragment_container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
 }
 
-fun Fragment.navigateToFragmentWithArgumentInt(name: String, value: Int, destination: Fragment) {
+fun <T> Fragment.navigateToFragmentWithArgumentInt(name: String, value: Int, destination: T?) {
     val args = Bundle()
     args.putInt(name, value)
-    destination.arguments = args
-    replaceFragment(destination)
+    if (destination is Fragment) {
+        destination.arguments = args
+        replaceFragment(destination)
+    }
 }

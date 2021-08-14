@@ -25,17 +25,24 @@ import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class FavoritesFragment :
-    BaseFragment<FragmentFavoritesBinding>(FragmentFavoritesBinding::inflate, false) {
+    BaseFragment<FragmentFavoritesBinding, WallpaperListAdapter>(
+        inflate = FragmentFavoritesBinding::inflate,
+        hasBackButton = false,
+        hasOptionsMenu = false,
+        hasNavigation = true
+    ) {
 
     override val viewModel: FavoritesViewModel by viewModels()
 
-    private var _favoritesAdapter: WallpaperListAdapter? = null
-    private val favoritesAdapter get() = _favoritesAdapter
+    override fun setupToolbar() {
+        binding.toolbar.apply {
+            titleTextView.text = requireContext().getString(R.string.favorites)
+            backButton.isVisible = false
+        }
+    }
 
-    override fun setupViews() {
-        setHasOptionsMenu(true)
-
-        _favoritesAdapter = WallpaperListAdapter(
+    override fun setupAdapter() {
+        mAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
                 navigateToFragmentWithArgumentInt(
                     Constants.WALLPAPER_ID,
@@ -59,11 +66,13 @@ class FavoritesFragment :
             requireActivity = requireActivity(),
             buttonsVisible = true
         )
+    }
 
+    override fun setupViews() {
         binding.apply {
 
-        recyclerView.apply {
-                adapter = favoritesAdapter
+            recyclerView.apply {
+                adapter = mAdapter
                 layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(true)
                 val divider =
@@ -80,7 +89,7 @@ class FavoritesFragment :
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 viewModel.favorites.collect {
                     val favorites = it ?: return@collect
-                    favoritesAdapter?.submitList(favorites)
+                    mAdapter?.submitList(favorites)
                     noFavoritesTextview.isVisible = favorites.isEmpty()
                     recyclerView.isVisible = favorites.isNotEmpty()
                 }
@@ -100,9 +109,4 @@ class FavoritesFragment :
             }
             else -> super.onOptionsItemSelected(item)
         }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _favoritesAdapter = null
-    }
 }

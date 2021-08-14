@@ -22,17 +22,24 @@ import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class WallpapersFragment :
-    BaseFragment<FragmentWallpapersBinding>(FragmentWallpapersBinding::inflate, false) {
+    BaseFragment<FragmentWallpapersBinding, WallpaperListAdapter>(
+        inflate = FragmentWallpapersBinding::inflate,
+        hasBackButton = false,
+        hasOptionsMenu = true,
+        hasNavigation = true
+    ) {
 
     override val viewModel: WallpaperViewModel by viewModels()
 
-    private var _wallpaperListAdapter: WallpaperListAdapter? = null
-    private val wallpaperListAdapter get() = _wallpaperListAdapter!!
+    override fun setupToolbar() {
+        binding.toolbar.apply {
+            titleTextView.text = requireContext().getString(R.string.wallpapers)
+            backButton.isVisible = false
+        }
+    }
 
-    override fun setupViews() {
-        setHasOptionsMenu(true)
-
-        _wallpaperListAdapter = WallpaperListAdapter(
+    override fun setupAdapter() {
+        mAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
                 navigateToFragmentWithArgumentInt(WALLPAPER_ID, wallpaper.id, PreviewFragment())
             },
@@ -52,12 +59,14 @@ class WallpapersFragment :
             requireActivity = requireActivity(),
             buttonsVisible = false
         )
+    }
 
+    override fun setupViews() {
         binding.apply {
             shimmerFrameLayout.startShimmer()
 
             recyclerView.apply {
-                adapter = wallpaperListAdapter
+                adapter = mAdapter
                 layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                 setHasFixedSize(true)
                 // hide item strange animation even when favorite clicked
@@ -83,7 +92,7 @@ class WallpapersFragment :
                             ?: getString(R.string.unknown_error_occurred)
                     )
 
-                    wallpaperListAdapter.submitList(result.data) {
+                    mAdapter!!.submitList(result.data) {
                         if (viewModel.pendingScrollToTopAfterRefresh) {
                             recyclerView.smoothScrollToPosition(0)
                             viewModel.pendingScrollToTopAfterRefresh = false
@@ -140,12 +149,7 @@ class WallpapersFragment :
     }
 
     override fun onPause() {
-        binding.shimmerFrameLayout.stopShimmer()
         super.onPause()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _wallpaperListAdapter = null
+        binding.shimmerFrameLayout.stopShimmer()
     }
 }

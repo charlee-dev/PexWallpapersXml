@@ -3,22 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/previewFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.preview.PreviewFragment">
-
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/wallpaper_imageView"

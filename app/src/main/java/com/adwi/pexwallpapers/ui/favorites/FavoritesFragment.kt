@@ -27,21 +27,12 @@ import kotlinx.coroutines.flow.collect
 class FavoritesFragment :
     BaseFragment<FragmentFavoritesBinding, WallpaperListAdapter>(
         inflate = FragmentFavoritesBinding::inflate,
-        hasBackButton = false,
-        hasOptionsMenu = false,
         hasNavigation = true
     ) {
 
     override val viewModel: FavoritesViewModel by viewModels()
 
-    override fun setupToolbar() {
-        binding.toolbar.apply {
-            titleTextView.text = requireContext().getString(R.string.favorites)
-            backButton.isVisible = false
-        }
-    }
-
-    override fun setupAdapter() {
+    override fun setupAdapters() {
         mAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
                 navigateToFragmentWithArgumentInt(
@@ -70,7 +61,6 @@ class FavoritesFragment :
 
     override fun setupViews() {
         binding.apply {
-
             recyclerView.apply {
                 adapter = mAdapter
                 layoutManager = LinearLayoutManager(requireContext())
@@ -85,7 +75,13 @@ class FavoritesFragment :
                 )
                 addItemDecoration(divider)
             }
+        }
+    }
 
+    override fun setupListeners() {}
+
+    override fun setupFlows() {
+        binding.apply {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 viewModel.favorites.collect {
                     val favorites = it ?: return@collect

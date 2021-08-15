@@ -24,21 +24,12 @@ import kotlinx.coroutines.flow.collect
 class WallpapersFragment :
     BaseFragment<FragmentWallpapersBinding, WallpaperListAdapter>(
         inflate = FragmentWallpapersBinding::inflate,
-        hasBackButton = false,
-        hasOptionsMenu = true,
         hasNavigation = true
     ) {
 
     override val viewModel: WallpaperViewModel by viewModels()
 
-    override fun setupToolbar() {
-        binding.toolbar.apply {
-            titleTextView.text = requireContext().getString(R.string.wallpapers)
-            backButton.isVisible = false
-        }
-    }
-
-    override fun setupAdapter() {
+    override fun setupAdapters() {
         mAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
                 navigateToFragmentWithArgumentInt(WALLPAPER_ID, wallpaper.id, PreviewFragment())
@@ -73,11 +64,14 @@ class WallpapersFragment :
                 itemAnimator = null
                 itemAnimator?.changeDuration = 0
             }
+        }
+    }
 
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                viewModel.wallpaperList.collect {
-                    val result = it ?: return@collect
-
+    override fun setupFlows() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.wallpaperList.collect {
+                val result = it ?: return@collect
+                binding.apply {
                     swipeRefreshLayout.isRefreshing = result is Resource.Loading
                     shimmerFrameLayout.apply {
                         if (result.data.isNullOrEmpty()) startShimmer() else stopShimmer()
@@ -100,27 +94,31 @@ class WallpapersFragment :
                     }
                 }
             }
+        }
 
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.events.collect { event ->
+                when (event) {
+                    is WallpaperViewModel.Event.ShowErrorMessage -> showSnackbar(
+                        getString(
+                            R.string.could_not_refresh,
+                            event.error.localizedMessage
+                                ?: getString(R.string.unknown_error_occurred)
+                        )
+                    )
+                }.exhaustive
+            }
+        }
+    }
+
+    override fun setupListeners() {
+        binding.apply {
             swipeRefreshLayout.setOnRefreshListener {
                 viewModel.onManualRefresh()
             }
 
             retryButton.setOnClickListener {
                 viewModel.onManualRefresh()
-            }
-
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                viewModel.events.collect { event ->
-                    when (event) {
-                        is WallpaperViewModel.Event.ShowErrorMessage -> showSnackbar(
-                            getString(
-                                R.string.could_not_refresh,
-                                event.error.localizedMessage
-                                    ?: getString(R.string.unknown_error_occurred)
-                            )
-                        )
-                    }.exhaustive
-                }
             }
         }
     }

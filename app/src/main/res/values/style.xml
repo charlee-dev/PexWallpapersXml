@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorOnPrimarySurface">@color/white</item>
         <item name="actionModeBackground">@color/contextualActionBarColor</item>
         <item name="android:statusBarColor">@color/statusBarColor</item>
         <item name="actionBarStyle">@style/CustomActionBarStyle</item>
@@ -20,6 +21,7 @@
 
     <style name="CustomActionBarStyle" parent="Widget.MaterialComponents.ActionBar.Primary">
         <item name="background">@color/actionBarBackgroundColor</item>
+        <item name="titleTextColor">@color/white</item>
     </style>
 
     <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Filter">

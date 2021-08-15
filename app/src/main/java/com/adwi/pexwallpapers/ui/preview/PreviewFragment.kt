@@ -2,7 +2,6 @@ package com.adwi.pexwallpapers.ui.preview
 
 import android.view.View
 import android.widget.Button
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.adwi.pexwallpapers.R
@@ -14,6 +13,8 @@ import com.adwi.pexwallpapers.util.*
 import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_ID
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
+import com.github.ajalt.timberkt.Timber
+import com.github.ajalt.timberkt.d
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
@@ -24,56 +25,46 @@ import kotlinx.coroutines.launch
 class PreviewFragment :
     BaseFragment<FragmentPreviewBinding, Any>(
         FragmentPreviewBinding::inflate,
-        hasBackButton = true,
-        hasOptionsMenu = true,
         hasNavigation = false
     ) {
 
     override val viewModel: PreviewViewModel by viewModels()
 
-    private lateinit var wallpaper: Wallpaper
+    private lateinit var wallpaperFlow: Wallpaper
 
-    private var doubleClick = false
+    private var doubleClickCounter = 0
 
-    override fun setupToolbar() {
-        binding.toolbar.apply {
-            titleTextView.isVisible = false
-            backButton.isVisible = true
-        }
-    }
+    override fun setupViews() {}
+    override fun setupAdapters() {}
 
-    override fun setupViews() {
+    override fun setupFlows() {
         val wallpaperId = arguments?.getInt(WALLPAPER_ID)
         if (wallpaperId != null) {
             binding.apply {
                 viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                     viewModel.getWallpaperById(wallpaperId).collect {
-                        val wallpaperFlow = it ?: return@collect
-                        wallpaper = wallpaperFlow
-
+                        wallpaperFlow = it ?: return@collect
                         wallpaperImageView.loadImageFromUrl(wallpaperFlow.imageUrl)
                         wallpaperImageView.byPhotographerContentDescription(wallpaperFlow.photographer)
                         wallpaperPhotographerTextView.byPhotographer(wallpaperFlow.photographer)
-
                         setWallpaperButton.setOnClickListener {
                             showDialog(wallpaperFlow.imageUrl)
-
                         }
                     }
                 }
-
                 wallpaperImageView.setOnClickListener {
-                    doubleClick = true
-                    if (doubleClick) {
+                    doubleClickCounter++
+                    Timber.tag(TAG).d { doubleClickCounter.toString() }
+                    if (doubleClickCounter > 1) {
                         wallpaperImageView.isClickable = false
+                        doubleClickCounter = 0
                         heartImageView.visibility = View.VISIBLE
                         heartImageView.playAnimation()
-                        favoriteOnDoubleClicked(wallpaper)
+                        favoriteOnDoubleClicked(wallpaperFlow)
                     }
-
                     viewLifecycleOwner.lifecycleScope.launch {
-                        delay(2000)
-                        !doubleClick
+                        delay(1000)
+                        doubleClickCounter = 0
                         heartImageView.visibility = View.GONE
                         wallpaperImageView.isClickable = true
                     }
@@ -82,7 +73,10 @@ class PreviewFragment :
         }
     }
 
-    override fun setupAdapter() {}
+    override fun setupListeners() {
+        binding.apply {
+        }
+    }
 
     private fun favoriteOnDoubleClicked(wallpaper: Wallpaper) {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {

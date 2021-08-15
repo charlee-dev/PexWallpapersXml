@@ -8,31 +8,19 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.wallpapers.WallpapersFragment">
 
-        <androidx.constraintlayout.motion.widget.MotionLayout
-            android:id="@+id/constraintLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutDescription="@xml/fragment_wallpapers_xml_constraintlayout_scene">
-
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/toolbar_layout"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@id/swipe_refresh_layout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent">
 
             <com.nabilmh.lottieswiperefreshlayout.LottieSwipeRefreshLayout
                 android:id="@+id/swipe_refresh_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="?attr/actionBarSize"
                 android:animateLayoutChanges="true"
                 app:indicator_overlay="false"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -44,7 +32,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                     <com.facebook.shimmer.ShimmerFrameLayout
                         android:id="@+id/shimmerFrameLayout"
@@ -54,18 +43,8 @@
                         android:layout_gravity="center"
                         android:orientation="vertical">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                        <include layout="@layout/shimmer_placeholder_layout" />
 
-                            <include layout="@layout/shimmer_placeholder_layout" />
-
-                            <include layout="@layout/shimmer_placeholder_layout" />
-
-                            <include layout="@layout/shimmer_placeholder_layout" />
-
-                        </LinearLayout>
                     </com.facebook.shimmer.ShimmerFrameLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -106,6 +85,6 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.nabilmh.lottieswiperefreshlayout.LottieSwipeRefreshLayout>
-        </androidx.constraintlayout.motion.widget.MotionLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

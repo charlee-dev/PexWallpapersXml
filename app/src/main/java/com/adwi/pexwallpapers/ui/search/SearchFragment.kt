@@ -19,7 +19,11 @@ import com.adwi.pexwallpapers.shared.adapter.WallpapersLoadStateAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.ui.preview.PreviewFragment
-import com.adwi.pexwallpapers.util.*
+import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_ID
+import com.adwi.pexwallpapers.util.navigateToFragmentWithArgumentInt
+import com.adwi.pexwallpapers.util.onQueryTextSubmit
+import com.adwi.pexwallpapers.util.showIfOrVisible
+import com.adwi.pexwallpapers.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -30,28 +34,14 @@ import kotlinx.coroutines.flow.filter
 class SearchFragment :
     BaseFragment<FragmentSearchBinding, WallpaperListPagingAdapter>(
         FragmentSearchBinding::inflate,
-        hasBackButton = false,
-        hasOptionsMenu = true,
         hasNavigation = true
     ) {
-
     override val viewModel: SearchViewModel by viewModels()
 
-    override fun setupToolbar() {
-        binding.toolbar.apply {
-            titleTextView.text = requireContext().getString(R.string.search)
-            backButton.isVisible = false
-        }
-    }
-
-    override fun setupAdapter() {
+    override fun setupAdapters() {
         mAdapter = WallpaperListPagingAdapter(
             onItemClick = { wallpaper ->
-                navigateToFragmentWithArgumentInt(
-                    Constants.WALLPAPER_ID,
-                    wallpaper.id,
-                    PreviewFragment()
-                )
+                navigateToFragmentWithArgumentInt(WALLPAPER_ID, wallpaper.id, PreviewFragment())
             },
             onShareClick = { wallpaper ->
                 wallpaper.url?.let {
@@ -73,6 +63,7 @@ class SearchFragment :
     }
 
     override fun setupViews() {
+        setHasOptionsMenu(true)
         binding.apply {
             shimmerFrameLayout.visibility = View.GONE
 
@@ -84,7 +75,23 @@ class SearchFragment :
                 setHasFixedSize(true)
                 itemAnimator?.changeDuration = 0
             }
+        }
+    }
 
+    override fun setupListeners() {
+        binding.apply {
+            swipeRefreshLayout.setOnRefreshListener {
+                mAdapter?.refresh()
+            }
+
+            retryButton.setOnClickListener {
+                mAdapter?.retry()
+            }
+        }
+    }
+
+    override fun setupFlows() {
+        binding.apply {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 // collectLatest - as soon new data received, current block will be suspended
                 viewModel.searchResults.collectLatest { data ->
@@ -99,7 +106,6 @@ class SearchFragment :
                     if (!hasCurrentQuery) {
                         recyclerView.isVisible = false
                     }
-
                 }
             }
 
@@ -196,14 +202,6 @@ class SearchFragment :
                             }
                         }
                     }
-            }
-
-            swipeRefreshLayout.setOnRefreshListener {
-                mAdapter?.refresh()
-            }
-
-            retryButton.setOnClickListener {
-                mAdapter?.retry()
             }
         }
     }

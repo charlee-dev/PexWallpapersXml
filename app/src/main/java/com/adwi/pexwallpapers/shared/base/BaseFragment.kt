@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.util.slideDown
 import com.adwi.pexwallpapers.util.slideUp
@@ -17,26 +18,22 @@ typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
 abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
     private val inflate: Inflate<VB>,
-    private val hasBackButton: Boolean,
-    private val hasOptionsMenu: Boolean,
     private val hasNavigation: Boolean
 ) : Fragment() {
 
     protected abstract val viewModel: BaseViewModel?
 
+    // Views
+    lateinit var bottomNav: BottomNavigationView
+
+    // Binding
     private var _binding: VB? = null
     val binding get() = _binding!!
 
+    // Adapter
     var mAdapter: AD? = null
 
-    lateinit var bottomNav: BottomNavigationView
-
     val TAG = this::class.java.simpleName
-
-    override fun onStart() {
-        super.onStart()
-        Timber.tag(TAG).d { resources.getString(R.string.init_class) }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,16 +42,17 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
     ): View? {
         _binding = inflate.invoke(inflater, container, false)
         bottomNav = requireActivity().findViewById(R.id.bottom_nav)
-        setHasOptionsMenu(hasOptionsMenu)
         navigationVisibility(hasNavigation)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Timber.tag(TAG).d { resources.getString(R.string.init_class) }
         if (!hasNavigation) bottomNav.slideDown()
-        setupAdapter()
+        setupAdapters()
         setupViews()
+        setupFlows()
     }
 
     override fun onDestroyView() {
@@ -64,12 +62,17 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
         if (!hasNavigation) bottomNav.slideUp()
     }
 
-    abstract fun setupToolbar()
-    abstract fun setupAdapter()
+    abstract fun setupAdapters()
     abstract fun setupViews()
+    abstract fun setupFlows()
+    abstract fun setupListeners()
 
     private fun navigationVisibility(hideNavigation: Boolean) =
         bottomNav.apply {
             if (hideNavigation) visibility = View.VISIBLE else slideDown()
         }
+
+    protected fun navigateBack() {
+        Navigation.findNavController(requireView()).popBackStack()
+    }
 }

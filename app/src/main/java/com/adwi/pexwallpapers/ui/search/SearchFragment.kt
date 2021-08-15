@@ -276,30 +276,35 @@ class SearchFragment :
         _chipListAdapter = null
     }
 
-    private val chipList = listOf(
-        "Nature",
-        "Food",
-        "Photography",
-        "Pretty",
-        "Red",
-        "Blue",
-        "Orange",
-        "Black",
-        "Gray",
-        "Christmas",
-        "Animals",
-        "Abstract",
-        "White",
-        "Sea",
-        "Landscape",
-        "Art",
-        "Creative",
-        "Yellow",
-        "Purple",
-        "Cars",
-        "Poland",
-        "House",
-        "Flowers",
-        "Red"
-    )
+    private val chipList by lazy {
+        listOf(
+            getString(R.string.nature),
+            getString(R.string.food),
+            getString(R.string.photography),
+            getString(R.string.pretty),
+            getString(R.string.red),
+            getString(R.string.blue),
+            getString(R.string.orange),
+            getString(R.string.black),
+            getString(R.string.gray),
+            getString(R.string.christmas),
+            getString(R.string.animals),
+            getString(R.string.abstr),
+            getString(R.string.white),
+            getString(R.string.sea),
+            getString(R.string.landscape),
+            getString(R.string.art),
+            getString(R.string.creative),
+            getString(R.string.yellow),
+            getString(R.string.purple),
+            getString(R.string.cars),
+            getString(R.string.horses),
+            getString(R.string.dogs),
+            getString(R.string.cats),
+            getString(R.string.beach),
+            getString(R.string.butterfly),
+            getString(R.string.flowers),
+            getString(R.string.racing)
+        )
+    }
 }

@@ -21,7 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:translationZ="6dp"
+            android:clipChildren="true"
+            android:clipToPadding="true"
             app:cardCornerRadius="@dimen/image_corner_radius"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,6 +40,8 @@
                     android:layout_centerInParent="true"
                     android:contentDescription="@{wallpaper.photographer}"
                     android:scaleType="centerCrop"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:loadImageFromUrl="@{wallpaper.imageUrl}"
                     tools:src="@drawable/photo_placeholder" />
 

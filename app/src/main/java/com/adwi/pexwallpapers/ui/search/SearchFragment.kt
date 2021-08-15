@@ -19,11 +19,8 @@ import com.adwi.pexwallpapers.shared.adapter.WallpapersLoadStateAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.ui.preview.PreviewFragment
+import com.adwi.pexwallpapers.util.*
 import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_ID
-import com.adwi.pexwallpapers.util.navigateToFragmentWithArgumentInt
-import com.adwi.pexwallpapers.util.onQueryTextSubmit
-import com.adwi.pexwallpapers.util.showIfOrVisible
-import com.adwi.pexwallpapers.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -37,6 +34,8 @@ class SearchFragment :
         hasNavigation = true
     ) {
     override val viewModel: SearchViewModel by viewModels()
+
+    private var lastQuery: String = ""
 
     override fun setupAdapters() {
         mAdapter = WallpaperListPagingAdapter(
@@ -212,10 +211,24 @@ class SearchFragment :
         val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem?.actionView as SearchView
 
+        searchItem.setOnMenuItemClickListener {
+            binding.suggestionChipGroup.visibility = View.VISIBLE
+            showToast(requireContext(), "true")
+            true
+        }
+
         searchView.onQueryTextSubmit { query ->
             viewModel.onSearchQuerySubmit(query)
             searchView.clearFocus()
+            lastQuery = query
+            binding.suggestionChipGroup.visibility = View.GONE
+            showToast(requireContext(), "false")
         }
+    }
+
+    override fun onOptionsMenuClosed(menu: Menu) {
+        binding.suggestionChipGroup.visibility = View.GONE
+        super.onOptionsMenuClosed(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =

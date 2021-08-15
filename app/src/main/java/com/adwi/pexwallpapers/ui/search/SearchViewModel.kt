@@ -1,5 +1,6 @@
 package com.adwi.pexwallpapers.ui.search
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.adwi.pexwallpapers.data.WallpaperRepository
@@ -14,8 +15,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val repository: WallpaperRepository) :
-    BaseViewModel() {
+class SearchViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
+    private val repository: WallpaperRepository
+) : BaseViewModel() {
+
+    private var savedQuery: String? = null
 
     private val currentQuery = MutableStateFlow<String?>(null)
 
@@ -33,10 +38,18 @@ class SearchViewModel @Inject constructor(private val repository: WallpaperRepos
     var newQueryInProgress = false
     var pendingScrollToTopAfterNewQuery = false
 
+    init {
+        savedQuery = savedStateHandle.get(LAST_QUERY)
+        if (savedQuery.isNullOrBlank()) {
+            currentQuery.value = savedQuery
+        }
+    }
+
     fun onSearchQuerySubmit(query: String) {
         currentQuery.value = query
         newQueryInProgress = true
         pendingScrollToTopAfterNewQuery = true
+        savedStateHandle.set(LAST_QUERY, query)
     }
 
     fun onFavoriteClick(wallpaper: Wallpaper) {
@@ -45,5 +58,9 @@ class SearchViewModel @Inject constructor(private val repository: WallpaperRepos
         viewModelScope.launch {
             repository.updateWallpaper(updatedWallpaper)
         }
+    }
+
+    companion object {
+        private const val LAST_QUERY = "LAST_QUERY"
     }
 }

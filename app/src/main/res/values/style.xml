@@ -25,9 +25,9 @@
     </style>
 
     <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
-        <item name="chipBackgroundColor">@color/chipBackgroundColor</item>
-        <item name="android:textColor">@color/chipTextColor</item>
-        <item name="checkedIconTint">@color/chipTextColor</item>
+        <item name="chipBackgroundColor">@color/darkGray</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="checkedIconTint">@color/colorPrimary</item>
     </style>
 
     <style name="DetailsActivityStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">

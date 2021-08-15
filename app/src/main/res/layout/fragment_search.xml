@@ -49,8 +49,10 @@
                 <View
                     android:id="@+id/tint_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white_transparent"
+                    android:layout_height="0dp"
+                    android:background="@drawable/vertical_gradient"
+                    app:layout_constraintBottom_toBottomOf="@id/chips_recycler_view"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView

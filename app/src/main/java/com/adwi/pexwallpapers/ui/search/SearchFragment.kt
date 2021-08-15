@@ -245,9 +245,13 @@ class SearchFragment :
                 if (!hasFocus) {
                     chipsRecyclerView.fadeOut()
                     tintView.fadeOut()
+                    bottomNav.isVisible = true
+                    swipeRefreshLayout.isClickable = true
                 } else {
                     chipsRecyclerView.fadeIn()
                     tintView.fadeIn()
+                    bottomNav.isVisible = false
+                    swipeRefreshLayout.isClickable = false
                 }
             }
 

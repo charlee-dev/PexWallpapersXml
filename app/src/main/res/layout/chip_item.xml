@@ -13,5 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small"
-        android:text="@{item}" />
+        android:elevation="2dp"
+        android:text="@{item}"
+        android:translationZ="2dp" />
 </layout>

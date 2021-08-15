@@ -20,7 +20,7 @@ class SearchViewModel @Inject constructor(
     private val repository: WallpaperRepository
 ) : BaseViewModel() {
 
-    private var savedQuery: String? = null
+    var savedQuery: String? = null
 
     private val currentQuery = MutableStateFlow<String?>(null)
 

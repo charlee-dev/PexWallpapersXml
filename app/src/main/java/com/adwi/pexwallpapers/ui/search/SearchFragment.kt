@@ -1,7 +1,6 @@
 package com.adwi.pexwallpapers.ui.search
 
 import android.content.Intent
-import android.graphics.Rect
 import android.net.Uri
 import android.view.Menu
 import android.view.MenuInflater
@@ -28,7 +27,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
-import timber.log.Timber
+
 
 @AndroidEntryPoint
 class SearchFragment :
@@ -38,10 +37,10 @@ class SearchFragment :
     ) {
     override val viewModel: SearchViewModel by viewModels()
 
+    private lateinit var searchView: SearchView
+
     private var _chipListAdapter: ChipListAdapter? = null
     private val chipListAdapter get() = _chipListAdapter
-
-    private var lastQuery: String = ""
 
     override fun setupAdapters() {
         mAdapter = WallpaperListPagingAdapter(
@@ -68,8 +67,7 @@ class SearchFragment :
 
         _chipListAdapter = ChipListAdapter(
             onItemClick = { query ->
-                viewModel.onSearchQuerySubmit(query)
-                binding.chipsRecyclerView.fadeOut()
+                newQuery(query)
             }
         )
         _chipListAdapter!!.submitList(chipList.shuffled())
@@ -77,7 +75,6 @@ class SearchFragment :
 
     override fun setupViews() {
         setHasOptionsMenu(true)
-//        showSuggestionsIfKeyboardActive()
         binding.apply {
             shimmerFrameLayout.visibility = View.GONE
 
@@ -230,22 +227,32 @@ class SearchFragment :
         }
     }
 
+    private fun newQuery(query: String) {
+        viewModel.onSearchQuerySubmit(query)
+        binding.chipsRecyclerView.fadeOut()
+        hideKeyboard()
+        searchView.clearFocus()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_search_wallpaper, menu)
 
         val searchItem = menu.findItem(R.id.action_search)
-        val searchView = searchItem?.actionView as SearchView
+        searchView = searchItem?.actionView as SearchView
 
         binding.apply {
-            searchItem.setOnMenuItemClickListener {
-                chipsRecyclerView.isVisible = true
-                true
+            searchView.setOnQueryTextFocusChangeListener { view, hasFocus ->
+                if (!hasFocus) {
+                    chipsRecyclerView.fadeOut()
+                    tintView.fadeOut()
+                } else {
+                    chipsRecyclerView.fadeIn()
+                    tintView.fadeIn()
+                }
             }
+
             searchView.onQueryTextSubmit { query ->
-                viewModel.onSearchQuerySubmit(query)
-                searchView.clearFocus()
-                lastQuery = query
-                chipsRecyclerView.fadeOut()
+                newQuery(query)
             }
         }
     }
@@ -262,38 +269,6 @@ class SearchFragment :
     override fun onPause() {
         binding.shimmerFrameLayout.stopShimmer()
         super.onPause()
-    }
-
-    private fun showSuggestionsIfKeyboardActive() {
-        var isKeyboardShowing = false
-
-        binding.coordinatorLayout.viewTreeObserver.addOnGlobalLayoutListener {
-            val r = Rect()
-            binding.coordinatorLayout.getWindowVisibleDisplayFrame(r)
-            val screenHeight = binding.coordinatorLayout.rootView.height
-
-            // r.bottom is the position above soft keypad or device button.
-            // if keypad is shown, the r.bottom is smaller than that before.
-            // Source: https://stackoverflow.com/a/56616774/16082761
-            val keypadHeight = screenHeight - r.bottom
-
-
-            if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
-                // keyboard is opened
-                if (!isKeyboardShowing) {
-                    isKeyboardShowing = true
-                    binding.chipsRecyclerView.fadeIn()
-                    Timber.e("Fun - keyboard opened")
-                }
-            } else {
-                // keyboard is closed
-                if (isKeyboardShowing) {
-                    isKeyboardShowing = false
-                    binding.chipsRecyclerView.fadeOut()
-                    Timber.e("Fun - keyboard closed")
-                }
-            }
-        }
     }
 
     override fun onDestroyView() {

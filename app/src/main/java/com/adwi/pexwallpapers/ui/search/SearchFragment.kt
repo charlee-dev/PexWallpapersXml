@@ -214,7 +214,6 @@ class SearchFragment :
 
         searchView.onQueryTextSubmit { query ->
             viewModel.onSearchQuerySubmit(query)
-
             searchView.clearFocus()
         }
     }

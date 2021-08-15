@@ -17,6 +17,7 @@
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/activity_main.xml" value="0.309375" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/activity_preview.xml" value="0.309375" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/activity_splash.xml" value="0.4005208333333333" />
+        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/chip_item.xml" value="0.2490740740740741" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/favorite_item.xml" value="0.3046153846153846" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/favorites_item.xml" value="0.5555555555555556" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_favorites.xml" value="0.31666666666666665" />
@@ -25,6 +26,7 @@
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_wallpapers.xml" value="0.2579957356076759" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/layout_toolbar.xml" value="0.14074074074074075" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/load_state_footer.xml" value="0.2212962962962963" />
+        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/search_suggestions.xml" value="0.5296296296296297" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/shimmer_placeholder_layout.xml" value="0.26481481481481484" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/shimmer_placerholder_layout.xml" value="0.5592592592592592" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/tool_bar.xml" value="0.5148148148148148" />

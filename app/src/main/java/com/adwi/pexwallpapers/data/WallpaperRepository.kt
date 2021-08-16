@@ -60,14 +60,14 @@ class WallpaperRepository @Inject constructor(
                     dao.insertCuratedWallpapers(curatedWallpapers)
                 }
             },
-            shouldFetch = { cachedArticles ->
+            shouldFetch = { wallpapers ->
                 if (forceRefresh) {
                     true
                 } else {
-                    val sortedArticles = cachedArticles.sortedBy { article ->
-                        article.updatedAt
+                    val sortedWallpapers = wallpapers.sortedBy { wallpaper ->
+                        wallpaper.updatedAt
                     }
-                    val oldestTimestamp = sortedArticles.firstOrNull()?.updatedAt
+                    val oldestTimestamp = sortedWallpapers.firstOrNull()?.updatedAt
                     val needsRefresh = oldestTimestamp == null ||
                             oldestTimestamp < System.currentTimeMillis() -
                             java.util.concurrent.TimeUnit.MINUTES.toMillis(5)

@@ -1,9 +1,8 @@
 package com.adwi.pexwallpapers.shared.base
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
@@ -18,8 +17,8 @@ typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
 abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
     private val inflate: Inflate<VB>,
-    private val hasNavigation: Boolean = true
-) : Fragment() {
+    private val hasNavigation: Boolean
+) : Fragment(), PopupMenu.OnMenuItemClickListener {
 
     protected abstract val viewModel: BaseViewModel?
 
@@ -42,7 +41,6 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
     ): View? {
         _binding = inflate.invoke(inflater, container, false)
         bottomNav = requireActivity().findViewById(R.id.bottom_nav)
-        navigationVisibility(hasNavigation)
         return binding.root
     }
 
@@ -50,6 +48,7 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
         super.onViewCreated(view, savedInstanceState)
         Timber.tag(TAG).d { resources.getString(R.string.init_class) }
         if (!hasNavigation) bottomNav.slideDown()
+        setupToolbar()
         setupAdapters()
         setupViews()
         setupFlows()
@@ -62,17 +61,28 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
         if (!hasNavigation) bottomNav.slideUp()
     }
 
+    abstract fun setupToolbar()
     abstract fun setupAdapters()
     abstract fun setupViews()
     abstract fun setupFlows()
     abstract fun setupListeners()
 
-    private fun navigationVisibility(hideNavigation: Boolean) =
-        bottomNav.apply {
-            if (hideNavigation) visibility = View.VISIBLE else slideDown()
-        }
-
     protected fun navigateBack() {
         Navigation.findNavController(requireView()).popBackStack()
+    }
+
+    fun showMenu(v: View, menuId: Int) {
+        PopupMenu(requireContext(), v).apply {
+            setOnMenuItemClickListener(this@BaseFragment)
+            inflate(menuId)
+            show()
+        }
+    }
+
+    fun showPopup(view: View, menuId: Int) {
+        val popup = PopupMenu(requireContext(), view)
+        val inflater: MenuInflater = popup.menuInflater
+        inflater.inflate(menuId, popup.menu)
+        popup.show()
     }
 }

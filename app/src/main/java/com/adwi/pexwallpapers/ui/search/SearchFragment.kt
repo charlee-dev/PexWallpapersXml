@@ -2,11 +2,8 @@ package com.adwi.pexwallpapers.ui.search
 
 import android.content.Intent
 import android.net.Uri
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -30,14 +27,46 @@ import kotlinx.coroutines.flow.filter
 @AndroidEntryPoint
 class SearchFragment :
     BaseFragment<FragmentSearchBinding, WallpaperListPagingAdapter>(
-        FragmentSearchBinding::inflate
+        FragmentSearchBinding::inflate,
+        hasNavigation = true
     ) {
     override val viewModel: SearchViewModel by viewModels()
 
-    private lateinit var searchView: SearchView
-
     private var _chipListAdapter: ChipListAdapter? = null
     private val chipListAdapter get() = _chipListAdapter
+
+    override fun setupToolbar() {
+
+        binding.apply {
+            toolbarLayout.searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) {
+                    chipsRecyclerView.fadeOut()
+                    tintView.fadeOut()
+                    bottomNav.isVisible = true
+                    swipeRefreshLayout.isClickable = true
+                    toolbarLayout.backButton.visibility = View.GONE
+                } else {
+                    chipsRecyclerView.fadeIn()
+                    tintView.fadeIn()
+                    bottomNav.isVisible = false
+                    swipeRefreshLayout.isClickable = false
+                    toolbarLayout.apply {
+                        backButton.visibility = View.VISIBLE
+                        backButton.setOnClickListener {
+                            searchView.clearFocus()
+                            searchView.setQuery("", false)
+                        }
+                    }
+                }
+            }
+
+            toolbarLayout.apply {
+                searchView.onQueryTextSubmit { query ->
+                    newQuery(query)
+                }
+            }
+        }
+    }
 
     override fun setupAdapters() {
         mAdapter = WallpaperListPagingAdapter(
@@ -75,7 +104,6 @@ class SearchFragment :
     }
 
     override fun setupViews() {
-        setHasOptionsMenu(true)
         binding.apply {
             shimmerFrameLayout.visibility = View.GONE
 
@@ -105,9 +133,13 @@ class SearchFragment :
             swipeRefreshLayout.setOnRefreshListener {
                 mAdapter?.refresh()
             }
-
             retryButton.setOnClickListener {
                 mAdapter?.retry()
+            }
+            toolbarLayout.apply {
+                menuButton.setOnClickListener {
+                    showMenu(menuButton, R.menu.menu_search_wallpaper)
+                }
             }
         }
     }
@@ -230,46 +262,22 @@ class SearchFragment :
 
     private fun newQuery(query: String) {
         viewModel.onSearchQuerySubmit(query)
-        binding.chipsRecyclerView.fadeOut()
-        hideKeyboard()
-        searchView.clearFocus()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_search_wallpaper, menu)
-
-        val searchItem = menu.findItem(R.id.action_search)
-        searchView = searchItem?.actionView as SearchView
-
         binding.apply {
-            searchView.setOnQueryTextFocusChangeListener { view, hasFocus ->
-                if (!hasFocus) {
-                    chipsRecyclerView.fadeOut()
-                    tintView.fadeOut()
-                    bottomNav.isVisible = true
-                    swipeRefreshLayout.isClickable = true
-                } else {
-                    chipsRecyclerView.fadeIn()
-                    tintView.fadeIn()
-                    bottomNav.isVisible = false
-                    swipeRefreshLayout.isClickable = false
-                }
-            }
-
-            searchView.onQueryTextSubmit { query ->
-                newQuery(query)
-            }
+            chipsRecyclerView.fadeOut()
+            toolbarLayout.searchView.clearFocus()
         }
+        hideKeyboard()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) =
-        when (item.itemId) {
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
             R.id.action_refresh -> {
                 mAdapter?.refresh()
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> false
         }
+    }
 
     override fun onPause() {
         binding.shimmerFrameLayout.stopShimmer()

@@ -2,9 +2,7 @@ package com.adwi.pexwallpapers.ui.favorites
 
 import android.content.Intent
 import android.net.Uri
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -24,10 +22,17 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class FavoritesFragment :
     BaseFragment<FragmentFavoritesBinding, WallpaperListAdapter>(
-        inflate = FragmentFavoritesBinding::inflate
+        inflate = FragmentFavoritesBinding::inflate,
+        hasNavigation = true
     ) {
 
     override val viewModel: FavoritesViewModel by viewModels()
+
+    override fun setupToolbar() {
+        binding.toolbarLayout.apply {
+            titleTextView.text = getString(R.string.favorites)
+        }
+    }
 
     override fun setupAdapters() {
         mAdapter = WallpaperListAdapter(
@@ -57,6 +62,7 @@ class FavoritesFragment :
     }
 
     override fun setupViews() {
+        setHasOptionsMenu(true)
         binding.apply {
             recyclerView.apply {
                 adapter = mAdapter
@@ -75,7 +81,13 @@ class FavoritesFragment :
         }
     }
 
-    override fun setupListeners() {}
+    override fun setupListeners() {
+        binding.toolbarLayout.apply {
+            menuButton.setOnClickListener {
+                showMenu(menuButton, R.menu.menu_wallpapers)
+            }
+        }
+    }
 
     override fun setupFlows() {
         binding.apply {
@@ -90,16 +102,13 @@ class FavoritesFragment :
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) =
-        inflater.inflate(R.menu.menu_favorites, menu)
-
-
-    override fun onOptionsItemSelected(item: MenuItem) =
-        when (item.itemId) {
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
             R.id.action_delete_all_favorites -> {
                 viewModel.onDeleteAllFavorites()
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> false
         }
+    }
 }

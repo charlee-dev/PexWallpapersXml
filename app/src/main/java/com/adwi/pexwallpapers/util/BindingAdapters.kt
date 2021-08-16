@@ -30,6 +30,17 @@ object BindingAdapters {
         textView.text = text
     }
 
+    @BindingAdapter("loadImageFromUrlStaggered")
+    @JvmStatic
+    fun loadImageFromUrlStaggered(imageView: ImageView, imageUrl: String) {
+        imageView.load(imageUrl) {
+            placeholder(shimmerDrawable)
+            placeholder(R.drawable.placeholder_item)
+            crossfade(600)
+        }
+        imageView.layoutParams.height = heights.random()
+    }
+
     @BindingAdapter("loadImageFromUrl")
     @JvmStatic
     fun loadImageFromUrl(imageView: ImageView, imageUrl: String) {
@@ -38,7 +49,6 @@ object BindingAdapters {
             placeholder(R.drawable.placeholder_item)
             crossfade(600)
         }
-        imageView.layoutParams.height = heights.random()
     }
 
     private val shimmer =

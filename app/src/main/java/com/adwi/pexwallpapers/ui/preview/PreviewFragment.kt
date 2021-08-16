@@ -1,5 +1,6 @@
 package com.adwi.pexwallpapers.ui.preview
 
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import androidx.fragment.app.viewModels
@@ -32,6 +33,7 @@ class PreviewFragment :
     private var doubleClickCounter = 0
     private val args: PreviewFragmentArgs by navArgs()
 
+    override fun setupToolbar() {}
 
     override fun setupViews() {
         binding.apply {
@@ -50,7 +52,7 @@ class PreviewFragment :
             }
             wallpaperImageView.setOnClickListener {
                 doubleClickCounter++
-                Timber.tag(TAG).d { doubleClickCounter.toString() }
+                Timber.tag(TAG).d { "clicked: $doubleClickCounter" }
                 if (doubleClickCounter > 1) {
                     wallpaperImageView.isClickable = false
                     doubleClickCounter = 0
@@ -66,6 +68,10 @@ class PreviewFragment :
                 }
             }
         }
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        return false
     }
 
     private fun favoriteOnDoubleClicked(wallpaper: Wallpaper) {

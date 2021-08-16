@@ -42,7 +42,7 @@
                     android:scaleType="centerCrop"
                     android:clickable="true"
                     android:focusable="true"
-                    app:loadImageFromUrl="@{wallpaper.imageUrl}"
+                    app:loadImageFromUrlStaggered="@{wallpaper.imageUrl}"
                     tools:src="@drawable/photo_placeholder" />
 
             </RelativeLayout>

@@ -2,9 +2,8 @@ package com.adwi.pexwallpapers.ui.wallpapers
 
 import android.content.Intent
 import android.net.Uri
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -21,10 +20,17 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class WallpapersFragment :
     BaseFragment<FragmentWallpapersBinding, WallpaperListAdapter>(
-        inflate = FragmentWallpapersBinding::inflate
+        inflate = FragmentWallpapersBinding::inflate,
+        hasNavigation = true
     ) {
 
     override val viewModel: WallpaperViewModel by viewModels()
+
+    override fun setupToolbar() {
+        binding.toolbarLayout.apply {
+            titleTextView.text = getString(R.string.wallpapers)
+        }
+    }
 
     override fun setupAdapters() {
         mAdapter = WallpaperListAdapter(
@@ -54,6 +60,7 @@ class WallpapersFragment :
     }
 
     override fun setupViews() {
+        setHasOptionsMenu(true)
         binding.apply {
             shimmerFrameLayout.startShimmer()
 
@@ -117,9 +124,13 @@ class WallpapersFragment :
             swipeRefreshLayout.setOnRefreshListener {
                 viewModel.onManualRefresh()
             }
-
             retryButton.setOnClickListener {
                 viewModel.onManualRefresh()
+            }
+            toolbarLayout.apply {
+                menuButton.setOnClickListener {
+                    showMenu(menuButton, R.menu.menu_wallpapers)
+                }
             }
         }
     }
@@ -129,19 +140,6 @@ class WallpapersFragment :
         viewModel.onStart()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_wallpapers, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) =
-        when (item.itemId) {
-            R.id.action_refresh -> {
-                viewModel.onManualRefresh()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-
     override fun onResume() {
         super.onResume()
         binding.shimmerFrameLayout.startShimmer()
@@ -150,5 +148,15 @@ class WallpapersFragment :
     override fun onPause() {
         super.onPause()
         binding.shimmerFrameLayout.stopShimmer()
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.action_refresh -> {
+                viewModel.onManualRefresh()
+                true
+            }
+            else -> false
+        }
     }
 }

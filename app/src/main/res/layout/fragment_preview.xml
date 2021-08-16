@@ -17,16 +17,15 @@
 
         <ImageView
             android:id="@+id/wallpaper_imageView"
+            loadImageFromUrl="@{wallpaper.imageUrl}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:contentDescription="@{wallpaper.photographer}"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            loadImageFromUrl="@{wallpaper.imageUrl}"
-            android:contentDescription="@{wallpaper.photographer}"
-            tools:ignore="ContentDescription"
             tools:src="@drawable/photo_placeholder" />
 
         <View
@@ -50,8 +49,8 @@
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:byPhotographerText="@{wallpaper.photographer}"
             android:textStyle="italic"
+            app:byPhotographerText="@{wallpaper.photographer}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/view"

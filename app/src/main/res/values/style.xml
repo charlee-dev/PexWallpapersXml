@@ -9,6 +9,8 @@
         <item name="colorOnPrimarySurface">@color/white</item>
         <item name="actionModeBackground">@color/contextualActionBarColor</item>
         <item name="android:statusBarColor">@color/statusBarColor</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <item name="actionBarStyle">@style/CustomActionBarStyle</item>
         <item name="bottomNavigationStyle">@style/CustomBottomNavigationViewStyle</item>
     </style>
@@ -60,8 +62,20 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="toolbar">
+    <style name="TextStyle">
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextStyle.ToolbarTitle">
         <item name="android:textColor">@color/darkGray</item>
         <item name="fontFamily">@font/montserrat_bold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="TextStyle.Normal">
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>

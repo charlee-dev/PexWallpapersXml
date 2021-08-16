@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="wallpaper"
+            type="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,6 +24,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            loadImageFromUrl="@{wallpaper.imageUrl}"
+            android:contentDescription="@{wallpaper.photographer}"
             tools:ignore="ContentDescription"
             tools:src="@drawable/photo_placeholder" />
 
@@ -41,6 +50,7 @@
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="16sp"
+            app:byPhotographerText="@{wallpaper.photographer}"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

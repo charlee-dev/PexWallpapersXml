@@ -7,24 +7,21 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentWallpapersBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.shared.tools.SharingTools
-import com.adwi.pexwallpapers.ui.preview.PreviewFragment
 import com.adwi.pexwallpapers.util.*
-import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_ID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class WallpapersFragment :
     BaseFragment<FragmentWallpapersBinding, WallpaperListAdapter>(
-        inflate = FragmentWallpapersBinding::inflate,
-        hasNavigation = true
+        inflate = FragmentWallpapersBinding::inflate
     ) {
 
     override val viewModel: WallpaperViewModel by viewModels()
@@ -32,7 +29,11 @@ class WallpapersFragment :
     override fun setupAdapters() {
         mAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
-                navigateToFragmentWithArgumentInt(WALLPAPER_ID, wallpaper.id, PreviewFragment())
+                findNavController().navigate(
+                    WallpapersFragmentDirections.actionWallpapersFragmentToPreviewFragment(
+                        wallpaper
+                    )
+                )
             },
             onShareClick = { wallpaper ->
                 wallpaper.url?.let {
@@ -68,7 +69,7 @@ class WallpapersFragment :
     }
 
     override fun setupFlows() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        launchCoroutine {
             viewModel.wallpaperList.collect {
                 val result = it ?: return@collect
                 binding.apply {
@@ -96,7 +97,7 @@ class WallpapersFragment :
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        launchCoroutine {
             viewModel.events.collect { event ->
                 when (event) {
                     is WallpaperViewModel.Event.ShowErrorMessage -> showSnackbar(

@@ -18,7 +18,7 @@ typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
 abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
     private val inflate: Inflate<VB>,
-    private val hasNavigation: Boolean
+    private val hasNavigation: Boolean = true
 ) : Fragment() {
 
     protected abstract val viewModel: BaseViewModel?

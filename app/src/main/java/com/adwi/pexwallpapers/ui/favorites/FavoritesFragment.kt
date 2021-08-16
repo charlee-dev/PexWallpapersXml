@@ -8,7 +8,7 @@ import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adwi.pexwallpapers.R
@@ -16,9 +16,7 @@ import com.adwi.pexwallpapers.databinding.FragmentFavoritesBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.shared.tools.SharingTools
-import com.adwi.pexwallpapers.ui.preview.PreviewFragment
-import com.adwi.pexwallpapers.util.Constants
-import com.adwi.pexwallpapers.util.navigateToFragmentWithArgumentInt
+import com.adwi.pexwallpapers.util.launchCoroutine
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -26,8 +24,7 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class FavoritesFragment :
     BaseFragment<FragmentFavoritesBinding, WallpaperListAdapter>(
-        inflate = FragmentFavoritesBinding::inflate,
-        hasNavigation = true
+        inflate = FragmentFavoritesBinding::inflate
     ) {
 
     override val viewModel: FavoritesViewModel by viewModels()
@@ -35,10 +32,10 @@ class FavoritesFragment :
     override fun setupAdapters() {
         mAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
-                navigateToFragmentWithArgumentInt(
-                    Constants.WALLPAPER_ID,
-                    wallpaper.id,
-                    PreviewFragment()
+                findNavController().navigate(
+                    FavoritesFragmentDirections.actionFavoritesFragmentToPreviewFragment(
+                        wallpaper
+                    )
                 )
             },
             onShareClick = { wallpaper ->
@@ -82,7 +79,7 @@ class FavoritesFragment :
 
     override fun setupFlows() {
         binding.apply {
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            launchCoroutine {
                 viewModel.favorites.collect {
                     val favorites = it ?: return@collect
                     mAdapter?.submitList(favorites)

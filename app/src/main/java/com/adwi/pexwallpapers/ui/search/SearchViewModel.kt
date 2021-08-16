@@ -6,12 +6,12 @@ import androidx.paging.cachedIn
 import com.adwi.pexwallpapers.data.WallpaperRepository
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
+import com.adwi.pexwallpapers.util.onIO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,7 +20,7 @@ class SearchViewModel @Inject constructor(
     private val repository: WallpaperRepository
 ) : BaseViewModel() {
 
-    var savedQuery: String? = null
+    private var savedQuery: String? = null
 
     private val currentQuery = MutableStateFlow<String?>(null)
 
@@ -55,7 +55,7 @@ class SearchViewModel @Inject constructor(
     fun onFavoriteClick(wallpaper: Wallpaper) {
         val currentlyFavorite = wallpaper.isFavorite
         val updatedWallpaper = wallpaper.copy(isFavorite = !currentlyFavorite)
-        viewModelScope.launch {
+        onIO {
             repository.updateWallpaper(updatedWallpaper)
         }
     }

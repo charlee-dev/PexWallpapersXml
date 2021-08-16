@@ -4,7 +4,6 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Context
-import android.os.Bundle
 import android.view.View
 import android.view.animation.TranslateAnimation
 import android.view.inputmethod.InputMethodManager
@@ -14,24 +13,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import coil.load
 import com.adwi.pexwallpapers.R
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
+val <T> T.exhaustive: T
+    get() = this
 
-fun Fragment.setTitle(title: String) {
-    if (activity is AppCompatActivity) {
-        (activity as AppCompatActivity).supportActionBar?.title = title
-    }
-}
-
-fun Fragment.setDisplayHomeAsUpEnabled(bool: Boolean) {
-    if (activity is AppCompatActivity) {
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(
-            bool
-        )
-    }
-}
+// Views --------------------------------------------------------------------------------
 
 fun View.fadeIn() {
     this.visibility = View.VISIBLE
@@ -87,18 +82,6 @@ fun TextView.byPhotographer(photographer: String) {
     this.text = byText
 }
 
-fun Fragment.showSnackbar(
-    message: String,
-    duration: Int = Snackbar.LENGTH_LONG,
-    view: View = requireView()
-) {
-    Snackbar.make(view, message, duration).show()
-}
-
-fun showToast(context: Context, message: String) {
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-}
-
 inline fun <T : View> T.showIfOrVisible(condition: (T) -> Boolean) {
     if (condition(this)) {
         this.visibility = View.VISIBLE
@@ -122,27 +105,42 @@ inline fun SearchView.onQueryTextSubmit(crossinline listener: (String) -> Unit) 
     })
 }
 
-val <T> T.exhaustive: T
-    get() = this
+// Context --------------------------------------------------------------------------------
 
-// Navigation extensions
-fun <T> Fragment.replaceFragment(fragment: T) {
-    val fragmentManager = parentFragmentManager
-    val transaction = fragmentManager.beginTransaction()
-    if (fragment is Fragment) {
-        transaction.replace(R.id.fragment_container, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-
+fun Context.hideKeyboard(view: View) {
+    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-fun <T> Fragment.navigateToFragmentWithArgumentInt(name: String, value: Int, destination: T?) {
-    val args = Bundle()
-    args.putInt(name, value)
-    if (destination is Fragment) {
-        destination.arguments = args
-        replaceFragment(destination)
+fun showToast(context: Context, message: String) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+}
+
+// Activity --------------------------------------------------------------------------------
+
+fun Activity.hideKeyboard() {
+    hideKeyboard(currentFocus ?: View(this))
+}
+
+// Fragment --------------------------------------------------------------------------------
+
+fun Fragment.setTitle(title: String) {
+    if (activity is AppCompatActivity) {
+        (activity as AppCompatActivity).supportActionBar?.title = title
+    }
+}
+
+fun Fragment.setDisplayHomeAsUpEnabled(bool: Boolean) {
+    if (activity is AppCompatActivity) {
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(
+            bool
+        )
+    }
+}
+
+fun Fragment.launchCoroutine(body: suspend () -> Unit): Job {
+    return viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        body()
     }
 }
 
@@ -150,11 +148,24 @@ fun Fragment.hideKeyboard() {
     view?.let { activity?.hideKeyboard(it) }
 }
 
-fun Activity.hideKeyboard() {
-    hideKeyboard(currentFocus ?: View(this))
+fun Fragment.showSnackbar(
+    message: String,
+    duration: Int = Snackbar.LENGTH_LONG,
+    view: View = requireView()
+) {
+    Snackbar.make(view, message, duration).show()
 }
 
-fun Context.hideKeyboard(view: View) {
-    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+// ViewModel --------------------------------------------------------------------------------
+
+fun ViewModel.onIO(body: suspend () -> Unit): Job {
+    return viewModelScope.launch(Dispatchers.IO) {
+        body()
+    }
+}
+
+fun ViewModel.onMain(body: suspend () -> Unit): Job {
+    return viewModelScope.launch(Dispatchers.Main) {
+        body()
+    }
 }

@@ -9,7 +9,7 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.adwi.pexwallpapers.R
@@ -19,9 +19,7 @@ import com.adwi.pexwallpapers.shared.adapter.WallpaperListPagingAdapter
 import com.adwi.pexwallpapers.shared.adapter.WallpapersLoadStateAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.shared.tools.SharingTools
-import com.adwi.pexwallpapers.ui.preview.PreviewFragment
 import com.adwi.pexwallpapers.util.*
-import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_ID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -32,8 +30,7 @@ import kotlinx.coroutines.flow.filter
 @AndroidEntryPoint
 class SearchFragment :
     BaseFragment<FragmentSearchBinding, WallpaperListPagingAdapter>(
-        FragmentSearchBinding::inflate,
-        hasNavigation = true
+        FragmentSearchBinding::inflate
     ) {
     override val viewModel: SearchViewModel by viewModels()
 
@@ -45,7 +42,11 @@ class SearchFragment :
     override fun setupAdapters() {
         mAdapter = WallpaperListPagingAdapter(
             onItemClick = { wallpaper ->
-                navigateToFragmentWithArgumentInt(WALLPAPER_ID, wallpaper.id, PreviewFragment())
+                findNavController().navigate(
+                    SearchFragmentDirections.actionSearchFragmentToPreviewFragment(
+                        wallpaper
+                    )
+                )
             },
             onShareClick = { wallpaper ->
                 wallpaper.url?.let {
@@ -113,14 +114,14 @@ class SearchFragment :
 
     override fun setupFlows() {
         binding.apply {
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            launchCoroutine {
                 // collectLatest - as soon new data received, current block will be suspended
                 viewModel.searchResults.collectLatest { data ->
                     mAdapter?.submitData(data)
                 }
             }
 
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            launchCoroutine {
                 viewModel.hasCurrentQuery.collect { hasCurrentQuery ->
                     instructionsTextview.isVisible = !hasCurrentQuery
                     swipeRefreshLayout.isEnabled = hasCurrentQuery
@@ -130,7 +131,7 @@ class SearchFragment :
                 }
             }
 
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            launchCoroutine {
                 mAdapter?.loadStateFlow
                     ?.distinctUntilChangedBy { it.source.refresh }
                     ?.filter { it.source.refresh is LoadState.NotLoading }
@@ -150,7 +151,7 @@ class SearchFragment :
                     }
             }
 
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            launchCoroutine {
                 mAdapter?.loadStateFlow
                     ?.collect { loadState ->
                         when (val refresh = loadState.mediator?.refresh) {

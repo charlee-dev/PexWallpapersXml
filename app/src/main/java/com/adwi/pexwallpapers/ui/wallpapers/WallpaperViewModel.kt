@@ -5,13 +5,13 @@ import com.adwi.pexwallpapers.data.WallpaperRepository
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.Resource
+import com.adwi.pexwallpapers.util.onIO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -36,13 +36,13 @@ class WallpaperViewModel @Inject constructor(
                 pendingScrollToTopAfterRefresh = true
             },
             onFetchRemoteFailed = { t ->
-                viewModelScope.launch { eventChannel.send(Event.ShowErrorMessage(t)) }
+                onIO { eventChannel.send(Event.ShowErrorMessage(t)) }
             }
         )
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     init {
-        viewModelScope.launch {
+        onIO {
             repository.deleteNonFavoriteWallpapersOlderThan(
                 System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7)
             )
@@ -51,14 +51,14 @@ class WallpaperViewModel @Inject constructor(
 
     fun onStart() {
         if (wallpaperList.value !is Resource.Loading)
-            viewModelScope.launch {
+            onIO {
                 refreshTriggerChannel.send(Refresh.NORMAL)
             }
     }
 
     fun onManualRefresh() {
         if (wallpaperList.value !is Resource.Loading)
-            viewModelScope.launch {
+            onIO {
                 refreshTriggerChannel.send(Refresh.FORCE)
             }
     }
@@ -66,7 +66,7 @@ class WallpaperViewModel @Inject constructor(
     fun onFavoriteClick(wallpaper: Wallpaper) {
         val currentlyFavorite = wallpaper.isFavorite
         val updatedWallpaper = wallpaper.copy(isFavorite = !currentlyFavorite)
-        viewModelScope.launch {
+        onIO {
             repository.updateWallpaper(updatedWallpaper)
         }
     }

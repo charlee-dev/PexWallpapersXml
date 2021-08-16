@@ -4,10 +4,10 @@ import androidx.lifecycle.viewModelScope
 import com.adwi.pexwallpapers.data.WallpaperRepository
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
+import com.adwi.pexwallpapers.util.onIO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,13 +21,13 @@ class FavoritesViewModel @Inject constructor(
     fun onFavoriteClick(wallpaper: Wallpaper) {
         val currentlyFavorite = wallpaper.isFavorite
         val updatedWallpaper = wallpaper.copy(isFavorite = !currentlyFavorite)
-        viewModelScope.launch {
+        onIO {
             repository.updateWallpaper(updatedWallpaper)
         }
     }
 
     fun onDeleteAllFavorites() {
-        viewModelScope.launch {
+        onIO {
             repository.resetAllFavorites()
         }
     }

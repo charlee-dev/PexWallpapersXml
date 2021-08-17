@@ -3,68 +3,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
+    <data>
 
-    <com.google.android.material.appbar.AppBarLayout
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toolbar_container"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/transparent"
-        app:elevation="0dp">
+        android:layout_height="@dimen/toolbar_size">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/transparent"
-            app:titleEnabled="false">
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="@dimen/toolbar_size"
+            android:layout_height="@dimen/toolbar_size"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:background="@color/white_transparent"
+            android:contentDescription="@string/back_button"
+            android:scaleType="center"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/black" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:ignore="RtlSymmetry">
+        <TextView
+            android:id="@+id/title_textView"
+            style="@style/TextStyle.ToolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:fontFamily="sans-serif"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/back_button"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/wallpapers" />
 
-                <ImageButton
-                    android:id="@+id/back_button"
-                    android:layout_width="?actionBarSize"
-                    android:layout_height="?actionBarSize"
-                    android:layout_marginEnd="@dimen/margin_large"
-                    android:background="@color/white_transparent"
-                    android:contentDescription="@string/back_button"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_arrow_back"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/black" />
+        <ImageButton
+            android:id="@+id/menu_button"
+            android:layout_width="@dimen/toolbar_size"
+            android:layout_height="@dimen/toolbar_size"
+            android:background="@color/backgroundColor"
+            android:contentDescription="@string/menu"
+            android:src="@drawable/ic_menu_more"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/title_textView"
-                    style="@style/TextStyle.ToolbarTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_medium"
-                    android:fontFamily="sans-serif"
-                    android:textAlignment="center"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/back_button"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageButton
-                    android:id="@+id/menu_button"
-                    android:layout_width="?actionBarSize"
-                    android:layout_height="?actionBarSize"
-                    android:background="@color/backgroundColor"
-                    android:contentDescription="@string/menu"
-                    android:src="@drawable/ic_menu_more"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

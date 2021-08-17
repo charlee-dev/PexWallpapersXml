@@ -5,7 +5,7 @@ import android.view.*
 import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.util.slideDown
 import com.adwi.pexwallpapers.util.slideUp
@@ -69,7 +69,7 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
     abstract fun setupListeners()
 
     protected fun navigateBack() {
-        Navigation.findNavController(requireView()).popBackStack()
+        findNavController().popBackStack()
     }
 
     fun showMenu(v: View, menuId: Int) {

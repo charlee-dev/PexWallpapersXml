@@ -1,72 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/toolbar_container"
-    android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:fitsSystemWindows="true"
-    app:elevation="0dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.appbar.CollapsingToolbarLayout
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/backgroundColor"
-        app:titleEnabled="false">
+        android:layout_height="@dimen/toolbar_size"
+        android:animateLayoutChanges="true"
+        tools:ignore="RtlSymmetry">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="@dimen/toolbar_size"
+            android:layout_height="@dimen/toolbar_size"
             android:animateLayoutChanges="true"
-            android:paddingStart="16dp"
-            tools:ignore="RtlSymmetry">
+            android:background="@color/backgroundColor"
+            android:contentDescription="@string/back_button"
+            android:src="@drawable/ic_arrow_back"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/black"
+            tools:visibility="visible" />
 
-            <ImageButton
-                android:id="@+id/back_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:background="@color/backgroundColor"
-                android:contentDescription="@string/back_button"
-                android:src="@drawable/ic_arrow_back"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/black" />
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="@color/backgroundColor"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="8dp"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLines="1"
+            android:minHeight="48dp"
+            android:textAppearance="@style/TextStyle.Normal"
+            app:iconifiedByDefault="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/menu_button"
+            app:layout_constraintStart_toEndOf="@id/back_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:queryHint="@string/search" />
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/search_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/backgroundColor"
-                android:drawableStart="@drawable/ic_search"
-                android:drawablePadding="8dp"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:lines="1"
-                android:maxLines="1"
-                android:minHeight="48dp"
-                android:textAppearance="@style/TextStyle.Normal"
-                app:iconifiedByDefault="false"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/menu_button"
-                app:layout_constraintStart_toEndOf="@id/back_button"
-                app:layout_constraintTop_toTopOf="parent"
-                app:queryHint="@string/search" />
+        <ImageButton
+            android:id="@+id/menu_button"
+            android:layout_width="@dimen/toolbar_size"
+            android:layout_height="@dimen/toolbar_size"
+            android:background="@color/backgroundColor"
+            android:contentDescription="@string/menu"
+            android:src="@drawable/ic_menu_more"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/menu_button"
-                android:layout_width="?actionBarSize"
-                android:layout_height="?actionBarSize"
-                android:background="@color/backgroundColor"
-                android:contentDescription="@string/menu"
-                android:src="@drawable/ic_menu_more"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.appbar.CollapsingToolbarLayout>
-</com.google.android.material.appbar.AppBarLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

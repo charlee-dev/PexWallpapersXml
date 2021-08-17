@@ -31,6 +31,7 @@ class FavoritesFragment :
     override fun setupToolbar() {
         binding.toolbarLayout.apply {
             titleTextView.text = getString(R.string.favorites)
+            backButton.isVisible = false
         }
     }
 

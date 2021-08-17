@@ -37,7 +37,6 @@ class WallpaperViewHolder(
                     Toast.LENGTH_SHORT
                 ).show()
                 true
-
             }
             pexelsLogo.isVisible = buttonsVisible
             favoritesBookmark.isVisible = buttonsVisible

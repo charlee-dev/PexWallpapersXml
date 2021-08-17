@@ -28,7 +28,7 @@ class PreviewFragment :
 
     override val viewModel: PreviewViewModel by viewModels()
 
-    private lateinit var wallpaperFlow: Wallpaper
+    private lateinit var wallpaperArgs: Wallpaper
 
     private var doubleClickCounter = 0
     private val args: PreviewFragmentArgs by navArgs()
@@ -36,6 +36,7 @@ class PreviewFragment :
     override fun setupToolbar() {}
 
     override fun setupViews() {
+        wallpaperArgs = args.wallpaper
         binding.apply {
             wallpaper = args.wallpaper
             executePendingBindings()
@@ -48,7 +49,7 @@ class PreviewFragment :
     override fun setupListeners() {
         binding.apply {
             setWallpaperButton.setOnClickListener {
-                showDialog(wallpaperFlow.imageUrl)
+                showDialog(wallpaperArgs.imageUrl)
             }
             wallpaperImageView.setOnClickListener {
                 doubleClickCounter++
@@ -58,7 +59,7 @@ class PreviewFragment :
                     doubleClickCounter = 0
                     heartImageView.visibility = View.VISIBLE
                     heartImageView.playAnimation()
-                    favoriteOnDoubleClicked(args.wallpaper)
+                    favoriteOnDoubleClicked(wallpaperArgs)
                 }
                 launchCoroutine {
                     delay(1000)

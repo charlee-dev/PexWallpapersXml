@@ -50,6 +50,7 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
         if (!hasNavigation) bottomNav.slideDown()
         setupToolbar()
         setupAdapters()
+        setupListeners()
         setupViews()
         setupFlows()
     }

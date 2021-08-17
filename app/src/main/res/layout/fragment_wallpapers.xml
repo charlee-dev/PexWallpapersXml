@@ -3,8 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-    </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout"
@@ -20,21 +18,20 @@
             <include
                 android:id="@+id/toolbar_layout"
                 layout="@layout/layout_toolbar"
-                app:layout_constraintBottom_toTopOf="@id/swipe_refresh_layout"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.nabilmh.lottieswiperefreshlayout.LottieSwipeRefreshLayout
                 android:id="@+id/swipe_refresh_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:indicator_overlay="false"
-                android:layout_marginTop="@dimen/toolbar_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar_layout"
                 app:lottie_rawRes="@raw/loading_dots">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,7 +43,6 @@
                         android:id="@+id/shimmerFrameLayout"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_gravity="center"
                         android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -69,34 +65,34 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/error_textview"
-                        style="@style/text_alert"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@+id/retry_button"
-                        android:layout_margin="@dimen/margin_small"
-                        android:gravity="center"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="An error occurred" />
-
-                    <Button
-                        android:id="@+id/retry_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/retry"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:visibility="visible" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.nabilmh.lottieswiperefreshlayout.LottieSwipeRefreshLayout>
+
+            <TextView
+                android:id="@+id/error_textview"
+                style="@style/text_alert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/retry_button"
+                android:layout_margin="@dimen/margin_small"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="An error occurred" />
+
+            <Button
+                android:id="@+id/retry_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/retry"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

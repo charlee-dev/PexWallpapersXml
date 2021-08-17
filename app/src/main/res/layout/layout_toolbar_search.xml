@@ -9,6 +9,7 @@
         android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_size"
+        android:paddingStart="@dimen/margin_medium"
         android:animateLayoutChanges="true"
         tools:ignore="RtlSymmetry">
 
@@ -31,7 +32,6 @@
             android:id="@+id/search_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:background="@color/backgroundColor"
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="8dp"

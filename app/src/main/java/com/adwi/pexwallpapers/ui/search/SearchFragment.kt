@@ -1,9 +1,8 @@
 package com.adwi.pexwallpapers.ui.search
 
-import android.content.Intent
-import android.net.Uri
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,7 +14,6 @@ import com.adwi.pexwallpapers.shared.adapter.ChipListAdapter
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListPagingAdapter
 import com.adwi.pexwallpapers.shared.adapter.WallpapersLoadStateAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
-import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -38,69 +36,75 @@ class SearchFragment :
     override fun setupToolbar() {
 
         binding.apply {
-            toolbarLayout.searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
-                if (!hasFocus) {
-                    chipsRecyclerView.fadeOut()
-                    tintView.fadeOut()
-                    bottomNav.isVisible = true
-                    swipeRefreshLayout.isClickable = true
-                    toolbarLayout.backButton.visibility = View.GONE
-                } else {
-                    chipsRecyclerView.fadeIn()
-                    tintView.fadeIn()
-                    bottomNav.isVisible = false
-                    swipeRefreshLayout.isClickable = false
-                    toolbarLayout.apply {
-                        backButton.visibility = View.VISIBLE
-                        backButton.setOnClickListener {
-                            searchView.clearFocus()
-                            searchView.setQuery("", false)
+            toolbarLayout.apply {
+//                searchView.onQueryTextSubmit { query ->
+//                    newQuery(query)
+//                }
+                searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus) {
+                        chipsRecyclerView.fadeOut()
+                        tintView.fadeOut()
+                        bottomNav.isVisible = true
+                        swipeRefreshLayout.isClickable = true
+                        backButton.backButtonLayout.visibility = View.GONE
+
+
+                    } else {
+                        chipsRecyclerView.fadeIn()
+                        tintView.fadeIn()
+                        bottomNav.isVisible = false
+                        swipeRefreshLayout.isClickable = false
+                        backButton.apply {
+                            backButtonLayout.visibility = View.VISIBLE
+                            backImageView.setOnClickListener {
+                                searchView.clearFocus()
+                                searchView.setQuery("", false)
+                            }
                         }
                     }
                 }
-            }
+                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        newQuery(query!!)
+                        return true
+                    }
 
-            toolbarLayout.apply {
-                searchView.onQueryTextSubmit { query ->
-                    newQuery(query)
-                }
+                    override fun onQueryTextChange(query: String?): Boolean {
+                        val filteredModelList = ArrayList<String>()
+                        query?.let {
+                            suggestionList.forEachIndexed { index, suggestion ->
+                                if (suggestion.contains(query, true)) {
+                                    filteredModelList.add(suggestion)
+                                    if (filteredModelList.isNotEmpty()) {
+                                        chipListAdapter?.submitList(filteredModelList)
+                                    }
+                                }
+                            }
+                        }
+                        return true
+                    }
+                })
             }
         }
     }
 
     override fun setupAdapters() {
         mAdapter = WallpaperListPagingAdapter(
+            requireActivity = requireActivity(),
             onItemClick = { wallpaper ->
                 findNavController().navigate(
                     SearchFragmentDirections.actionSearchFragmentToPreviewFragment(
                         wallpaper
                     )
                 )
-            },
-            onShareClick = { wallpaper ->
-                wallpaper.url?.let {
-                    SharingTools(requireContext())
-                        .share(it)
-                }
-            },
-            onFavoriteClick = { wallpaper ->
-                viewModel.onFavoriteClick(wallpaper)
-            },
-            onPexelLogoClick = { wallpaper ->
-                val uri = Uri.parse(wallpaper.url)
-                val intent = Intent(Intent.ACTION_VIEW, uri)
-                requireActivity().startActivity(intent)
-            },
-            requireActivity = requireActivity(),
-            buttonsVisible = false
+            }
         )
-
         _chipListAdapter = ChipListAdapter(
             onItemClick = { query ->
                 newQuery(query)
             }
         )
-        _chipListAdapter!!.submitList(chipList.shuffled())
+        _chipListAdapter!!.submitList(suggestionList.shuffled())
     }
 
     override fun setupViews() {
@@ -116,7 +120,6 @@ class SearchFragment :
                 setHasFixedSize(true)
                 itemAnimator?.changeDuration = 0
             }
-
             chipsRecyclerView.apply {
                 adapter = chipListAdapter
                 layoutManager =
@@ -136,9 +139,9 @@ class SearchFragment :
             retryButton.setOnClickListener {
                 mAdapter?.retry()
             }
-            toolbarLayout.apply {
-                menuButton.setOnClickListener {
-                    showMenu(menuButton, R.menu.menu_search_wallpaper)
+            toolbarLayout.menuButton.apply {
+                menuImageView.setOnClickListener {
+                    showMenu(menuImageView, R.menu.menu_search_wallpaper)
                 }
             }
         }
@@ -152,7 +155,6 @@ class SearchFragment :
                     mAdapter?.submitData(data)
                 }
             }
-
             launchCoroutine {
                 viewModel.hasCurrentQuery.collect { hasCurrentQuery ->
                     instructionsTextview.isVisible = !hasCurrentQuery
@@ -162,7 +164,6 @@ class SearchFragment :
                     }
                 }
             }
-
             launchCoroutine {
                 mAdapter?.loadStateFlow
                     ?.distinctUntilChangedBy { it.source.refresh }
@@ -182,7 +183,6 @@ class SearchFragment :
                         }
                     }
             }
-
             launchCoroutine {
                 mAdapter?.loadStateFlow
                     ?.collect { loadState ->
@@ -289,7 +289,7 @@ class SearchFragment :
         _chipListAdapter = null
     }
 
-    private val chipList by lazy {
+    private val suggestionList by lazy {
         listOf(
             getString(R.string.nature),
             getString(R.string.food),

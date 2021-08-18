@@ -49,7 +49,7 @@
                         android:id="@+id/tint_view"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:background="@drawable/vertical_gradient"
+                        android:background="@drawable/background_gradient_vertical"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -135,7 +135,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/toolbar_layout">
 
-                <include layout="@layout/shimmer_placeholder_layout" />
+                <include layout="@layout/layout_shimmer_placeholder" />
 
             </com.facebook.shimmer.ShimmerFrameLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

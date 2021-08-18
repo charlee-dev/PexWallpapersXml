@@ -9,38 +9,34 @@
         android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_size"
-        android:paddingStart="@dimen/margin_medium"
         android:animateLayoutChanges="true"
+        android:background="@color/backgroundColor"
+        android:paddingStart="@dimen/margin_small"
         tools:ignore="RtlSymmetry">
 
-        <ImageButton
+        <include
             android:id="@+id/back_button"
-            android:layout_width="@dimen/toolbar_size"
-            android:layout_height="@dimen/toolbar_size"
+            layout="@layout/layout_back_button"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
             android:animateLayoutChanges="true"
-            android:background="@color/backgroundColor"
-            android:contentDescription="@string/back_button"
-            android:src="@drawable/ic_arrow_back"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/black"
             tools:visibility="visible" />
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_view"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@color/backgroundColor"
-            android:drawableStart="@drawable/ic_search"
-            android:drawablePadding="8dp"
+            android:layout_height="46dp"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:background="@color/transparent"
+            app:queryBackground="@drawable/background_rounded_stroke"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:lines="1"
             android:maxLines="1"
-            android:minHeight="48dp"
-            android:textAppearance="@style/TextStyle.Normal"
             app:iconifiedByDefault="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/menu_button"
@@ -48,13 +44,12 @@
             app:layout_constraintTop_toTopOf="parent"
             app:queryHint="@string/search" />
 
-        <ImageButton
+        <include
             android:id="@+id/menu_button"
-            android:layout_width="@dimen/toolbar_size"
-            android:layout_height="@dimen/toolbar_size"
-            android:background="@color/backgroundColor"
-            android:contentDescription="@string/menu"
-            android:src="@drawable/ic_menu_more"
+            layout="@layout/layout_menu_button"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginEnd="@dimen/margin_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

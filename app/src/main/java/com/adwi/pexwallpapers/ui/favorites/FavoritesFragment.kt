@@ -1,7 +1,5 @@
 package com.adwi.pexwallpapers.ui.favorites
 
-import android.content.Intent
-import android.net.Uri
 import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -13,7 +11,6 @@ import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentFavoritesBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
-import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.util.launchCoroutine
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -31,34 +28,20 @@ class FavoritesFragment :
     override fun setupToolbar() {
         binding.toolbarLayout.apply {
             titleTextView.text = getString(R.string.favorites)
-            backButton.isVisible = false
+            backButton.backButtonLayout.isVisible = false
         }
     }
 
     override fun setupAdapters() {
         mAdapter = WallpaperListAdapter(
+            requireActivity = requireActivity(),
             onItemClick = { wallpaper ->
                 findNavController().navigate(
                     FavoritesFragmentDirections.actionFavoritesFragmentToPreviewFragment(
                         wallpaper
                     )
                 )
-            },
-            onShareClick = { wallpaper ->
-                wallpaper.url?.let {
-                    SharingTools(requireContext()).share(it)
-                }
-            },
-            onFavoriteClick = { wallpaper ->
-                viewModel.onFavoriteClick(wallpaper)
-            },
-            onPexelLogoClick = { wallpaper ->
-                val uri = Uri.parse(wallpaper.url)
-                val intent = Intent(Intent.ACTION_VIEW, uri)
-                requireActivity().startActivity(intent)
-            },
-            requireActivity = requireActivity(),
-            buttonsVisible = true
+            }
         )
     }
 
@@ -84,8 +67,10 @@ class FavoritesFragment :
 
     override fun setupListeners() {
         binding.toolbarLayout.apply {
-            menuButton.setOnClickListener {
-                showMenu(menuButton, R.menu.menu_wallpapers)
+            menuButton.apply {
+                menuImageView.setOnClickListener {
+                    showMenu(menuImageView, R.menu.menu_wallpapers)
+                }
             }
         }
     }

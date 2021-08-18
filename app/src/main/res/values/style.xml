@@ -16,7 +16,7 @@
     </style>
 
     <style name="SplashScreenStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowBackground">@drawable/image_splash</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
@@ -70,7 +70,7 @@
     <style name="TextStyle.ToolbarTitle">
         <item name="android:textColor">@color/darkGray</item>
         <item name="fontFamily">@font/montserrat_bold</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">28sp</item>
     </style>
 
     <style name="TextStyle.Normal">

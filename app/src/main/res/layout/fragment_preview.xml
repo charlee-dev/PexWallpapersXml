@@ -26,7 +26,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/photo_placeholder" />
+            tools:src="@drawable/image_photo_placeholder" />
         <Button
             android:id="@+id/set_wallpaper_button"
             android:layout_width="wrap_content"

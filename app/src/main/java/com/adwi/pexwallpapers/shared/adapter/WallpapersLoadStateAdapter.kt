@@ -7,14 +7,14 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.adwi.pexwallpapers.R
-import com.adwi.pexwallpapers.databinding.LoadStateFooterBinding
+import com.adwi.pexwallpapers.databinding.LayoutLoadStateFooterBinding
 
 class WallpapersLoadStateAdapter(private val retry: () -> Unit) :
     LoadStateAdapter<WallpapersLoadStateAdapter.LoadStateViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): LoadStateViewHolder {
         val binding =
-            LoadStateFooterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            LayoutLoadStateFooterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return LoadStateViewHolder(binding)
     }
 
@@ -22,7 +22,7 @@ class WallpapersLoadStateAdapter(private val retry: () -> Unit) :
         holder.bind(loadState)
     }
 
-    inner class LoadStateViewHolder(private val binding: LoadStateFooterBinding) :
+    inner class LoadStateViewHolder(private val binding: LayoutLoadStateFooterBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {

@@ -43,7 +43,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     app:loadImageFromUrlStaggered="@{wallpaper.imageUrl}"
-                    tools:src="@drawable/photo_placeholder" />
+                    tools:src="@drawable/image_photo_placeholder" />
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
@@ -55,7 +55,7 @@
             android:layout_marginTop="@dimen/margin_small"
             android:contentDescription="@string/pexels_com_button"
             android:scaleType="fitXY"
-            android:src="@drawable/pexels_logo"
+            android:src="@drawable/image_pexels_logo"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="@id/card_view"
             app:layout_constraintTop_toBottomOf="@id/card_view" />

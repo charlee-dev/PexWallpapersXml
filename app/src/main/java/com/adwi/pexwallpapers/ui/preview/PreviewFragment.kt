@@ -84,7 +84,7 @@ class PreviewFragment :
     private fun showDialog(imageUrl: String) {
         val dialog = MaterialDialog(requireContext())
             .noAutoDismiss()
-            .customView(R.layout.wallpaper_dialog_chooser)
+            .customView(R.layout.layoyt_wallpaper_dialog_chooser)
 
         val home = dialog.findViewById<Button>(R.id.home_screen_button)
         val lock = dialog.findViewById<Button>(R.id.lock_screen_button)

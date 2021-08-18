@@ -5,49 +5,26 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.ListAdapter
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
-import com.adwi.pexwallpapers.databinding.WallpaperItemBinding
+import com.adwi.pexwallpapers.databinding.LayoytWallpaperItemBinding
 
 class WallpaperListAdapter(
-    private val onItemClick: (Wallpaper) -> Unit,
-    private val onShareClick: (Wallpaper) -> Unit,
-    private val onFavoriteClick: (Wallpaper) -> Unit,
-    private val onPexelLogoClick: (Wallpaper) -> Unit,
     private val requireActivity: FragmentActivity,
-    private val buttonsVisible: Boolean
+    private val onItemClick: (Wallpaper) -> Unit
 ) : ListAdapter<Wallpaper, WallpaperViewHolder>(WallpaperComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WallpaperViewHolder {
         val binding =
-            WallpaperItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            LayoytWallpaperItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return WallpaperViewHolder(
             binding,
+            requireActivity = requireActivity,
             onItemClick = { position ->
                 val wallpaper = getItem(position)
                 if (wallpaper != null) {
                     onItemClick(wallpaper)
                 }
-            },
-            onShareClick = { position ->
-                val wallpaper = getItem(position)
-                if (wallpaper != null) {
-                    onShareClick(wallpaper)
-                }
-            },
-            onFavoriteClick = { position ->
-                val wallpaper = getItem(position)
-                if (wallpaper != null) {
-                    onFavoriteClick(wallpaper)
-                }
-            },
-            onPexelsLogoClick = { position ->
-                val wallpaper = getItem(position)
-                if (wallpaper != null) {
-                    onPexelLogoClick(wallpaper)
-                }
-            },
-            requireActivity = requireActivity,
-            buttonsVisible = buttonsVisible
+            }
         )
     }
 

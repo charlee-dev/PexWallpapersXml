@@ -1,7 +1,5 @@
 package com.adwi.pexwallpapers.ui.wallpapers
 
-import android.content.Intent
-import android.net.Uri
 import android.view.MenuItem
 import android.widget.*
 import androidx.core.view.isVisible
@@ -12,7 +10,6 @@ import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentWallpapersBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
-import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -29,34 +26,20 @@ class WallpapersFragment :
     override fun setupToolbar() {
         binding.toolbarLayout.apply {
             titleTextView.text = getString(R.string.wallpapers)
-            backButton.isVisible = false
+            backButton.backButtonLayout.isVisible = false
         }
     }
 
     override fun setupAdapters() {
         mAdapter = WallpaperListAdapter(
+            requireActivity = requireActivity(),
             onItemClick = { wallpaper ->
                 findNavController().navigate(
                     WallpapersFragmentDirections.actionWallpapersFragmentToPreviewFragment(
                         wallpaper
                     )
                 )
-            },
-            onShareClick = { wallpaper ->
-                wallpaper.url?.let {
-                    SharingTools(requireContext()).share(it)
-                }
-            },
-            onFavoriteClick = { wallpaper ->
-                viewModel.onFavoriteClick(wallpaper)
-            },
-            onPexelLogoClick = { wallpaper ->
-                val uri = Uri.parse(wallpaper.url)
-                val intent = Intent(Intent.ACTION_VIEW, uri)
-                requireActivity().startActivity(intent)
-            },
-            requireActivity = requireActivity(),
-            buttonsVisible = false
+            }
         )
     }
 
@@ -128,9 +111,9 @@ class WallpapersFragment :
             retryButton.setOnClickListener {
                 viewModel.onManualRefresh()
             }
-            toolbarLayout.apply {
-                menuButton.setOnClickListener {
-                    showMenu(menuButton, R.menu.menu_wallpapers)
+            toolbarLayout.menuButton.apply {
+                menuImageView.setOnClickListener {
+                    showMenu(menuImageView, R.menu.menu_wallpapers)
                 }
             }
         }

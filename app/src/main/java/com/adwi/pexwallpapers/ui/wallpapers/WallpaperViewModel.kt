@@ -2,7 +2,6 @@ package com.adwi.pexwallpapers.ui.wallpapers
 
 import androidx.lifecycle.viewModelScope
 import com.adwi.pexwallpapers.data.WallpaperRepository
-import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.Resource
 import com.adwi.pexwallpapers.util.onIO
@@ -44,7 +43,7 @@ class WallpaperViewModel @Inject constructor(
     init {
         onIO {
             repository.deleteNonFavoriteWallpapersOlderThan(
-                System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7)
+                System.currentTimeMillis() - TimeUnit.DAYS.toMillis(14)
             )
         }
     }
@@ -61,14 +60,6 @@ class WallpaperViewModel @Inject constructor(
             onIO {
                 refreshTriggerChannel.send(Refresh.FORCE)
             }
-    }
-
-    fun onFavoriteClick(wallpaper: Wallpaper) {
-        val currentlyFavorite = wallpaper.isFavorite
-        val updatedWallpaper = wallpaper.copy(isFavorite = !currentlyFavorite)
-        onIO {
-            repository.updateWallpaper(updatedWallpaper)
-        }
     }
 
     enum class Refresh {

@@ -43,26 +43,9 @@ class SearchFragment :
         binding.apply {
             toolbarLayout.apply {
                 searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
-                    if (!hasFocus) {
-                        chipsRecyclerView.fadeOut()
-                        tintView.fadeOut()
-                        bottomNav.isVisible = true
-                        swipeRefreshLayout.isClickable = true
-                        backButton.backButtonLayout.visibility = View.GONE
-
-
-                    } else {
-                        chipsRecyclerView.fadeIn()
-                        tintView.fadeIn()
-                        bottomNav.isVisible = false
-                        swipeRefreshLayout.isClickable = false
-                        backButton.apply {
-                            backButtonLayout.visibility = View.VISIBLE
-                            backImageView.setOnClickListener {
-                                searchView.clearFocus()
-                                searchView.setQuery("", false)
-                            }
-                        }
+                    searchViewOnFocusBehaviour(hasFocus) {
+                        searchView.clearFocus()
+                        searchView.setQuery("", false)
                     }
                 }
                 searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

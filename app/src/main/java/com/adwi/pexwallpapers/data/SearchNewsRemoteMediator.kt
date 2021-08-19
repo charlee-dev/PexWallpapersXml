@@ -5,7 +5,6 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.adwi.pexwallpapers.data.local.WallpaperDatabase
-import com.adwi.pexwallpapers.data.local.WallpapersDao
 import com.adwi.pexwallpapers.data.local.entity.SearchQueryRemoteKey
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.remote.PexApi
@@ -23,7 +22,9 @@ class SearchNewsRemoteMediator(
     private val database: WallpaperDatabase
 ) : RemoteMediator<Int, Wallpaper>() {
 
-    private val wallpaperDao: WallpapersDao = database.wallpaperDao()
+    private val wallpaperDao = database.wallpaperDao()
+    private val favoritesDao = database.favoritesDao()
+    private val searchDao = database.searchDao()
     private val searchQueryRemoteKeyDao = database.searchQueryRemoteKeyDao()
 
     override suspend fun load(
@@ -41,7 +42,7 @@ class SearchNewsRemoteMediator(
             delay(3000)
             val searchServerResults = response.wallpaperList
 
-            val favoriteWallpapers = wallpaperDao.getAllFavorites().first()
+            val favoriteWallpapers = favoritesDao.getAllFavorites().first()
             val searchResultWallpapers = searchServerResults.map { serverSearchResultWallpaper ->
                 val isFavorite = favoriteWallpapers.any { favoriteWallpaper ->
                     favoriteWallpaper.id == serverSearchResultWallpaper.id
@@ -52,10 +53,10 @@ class SearchNewsRemoteMediator(
 
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    wallpaperDao.deleteSearchResultsForQuery(searchQuery)
+                    searchDao.deleteSearchResultsForQuery(searchQuery)
                 }
 
-                val lastQueryPosition = wallpaperDao.getLastQueryPosition(searchQuery) ?: 0
+                val lastQueryPosition = searchDao.getLastQueryPosition(searchQuery) ?: 0
                 var queryPosition = lastQueryPosition + 1
 
                 val searchResults = searchResultWallpapers.map { wallpaper ->
@@ -64,7 +65,7 @@ class SearchNewsRemoteMediator(
 
                 val nextPageKey = page + 1
                 wallpaperDao.insertWallpapers(searchResultWallpapers)
-                wallpaperDao.insertSearchResults(searchResults)
+                searchDao.insertSearchResults(searchResults)
                 searchQueryRemoteKeyDao.insertRemoteKey(
                     SearchQueryRemoteKey(searchQuery, nextPageKey)
                 )

@@ -7,10 +7,12 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.adwi.pexwallpapers.R
+import com.adwi.pexwallpapers.data.local.entity.Suggestion
 import com.adwi.pexwallpapers.databinding.FragmentSearchBinding
-import com.adwi.pexwallpapers.shared.adapter.ChipListAdapter
+import com.adwi.pexwallpapers.shared.adapter.SuggestionListAdapter
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListPagingAdapter
 import com.adwi.pexwallpapers.shared.adapter.WallpapersLoadStateAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
@@ -30,16 +32,16 @@ class SearchFragment :
     ) {
     override val viewModel: SearchViewModel by viewModels()
 
-    private var _chipListAdapter: ChipListAdapter? = null
-    private val chipListAdapter get() = _chipListAdapter
+    private lateinit var suggestionList: List<Suggestion>
+
+    private var _suggestionListAdapter: SuggestionListAdapter? = null
+    private val suggestionListAdapter get() = _suggestionListAdapter
+
+    private var filteredSuggestionList: ArrayList<Suggestion> = arrayListOf()
 
     override fun setupToolbar() {
-
         binding.apply {
             toolbarLayout.apply {
-//                searchView.onQueryTextSubmit { query ->
-//                    newQuery(query)
-//                }
                 searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
                     if (!hasFocus) {
                         chipsRecyclerView.fadeOut()
@@ -65,18 +67,30 @@ class SearchFragment :
                 }
                 searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
+                        searchViewOnFocusBehaviour(false) {}
                         newQuery(query!!)
+                        addSuggestion(query)
+                        searchView.clearFocus()
                         return true
                     }
 
                     override fun onQueryTextChange(query: String?): Boolean {
-                        val filteredModelList = ArrayList<String>()
-                        query?.let {
-                            suggestionList.forEachIndexed { index, suggestion ->
-                                if (suggestion.contains(query, true)) {
-                                    filteredModelList.add(suggestion)
-                                    if (filteredModelList.isNotEmpty()) {
-                                        chipListAdapter?.submitList(filteredModelList)
+                        filteredSuggestionList = ArrayList<Suggestion>()
+                        if (query.isNullOrBlank()) {
+                            suggestionListAdapter?.submitList(suggestionList)
+                        } else {
+                            launchCoroutine {
+                                query.let {
+                                    suggestionList.forEach { suggestion ->
+                                        if (suggestion.name.contains(query, true)) {
+                                            filteredSuggestionList.add(suggestion)
+                                            if (filteredSuggestionList.isNotEmpty()) {
+                                                suggestionListAdapter?.submitList(
+                                                    filteredSuggestionList.toList()
+                                                )
+                                            }
+                                            suggestionsRecyclerView.scrollToPosition(0)
+                                        }
                                     }
                                 }
                             }
@@ -99,18 +113,22 @@ class SearchFragment :
                 )
             }
         )
-        _chipListAdapter = ChipListAdapter(
-            onItemClick = { query ->
-                newQuery(query)
+        _suggestionListAdapter = SuggestionListAdapter(
+            onItemClick = { suggestion ->
+                newQuery(suggestion.name)
+            },
+            onSuggestionDeleteClick = { suggestion ->
+                launchCoroutine {
+                    viewModel.deleteSuggestion(suggestion.name)
+                    filteredSuggestionList.remove(suggestion)
+                }
             }
         )
-        _chipListAdapter!!.submitList(suggestionList.shuffled())
     }
 
     override fun setupViews() {
         binding.apply {
             shimmerFrameLayout.visibility = View.GONE
-
             recyclerView.apply {
                 adapter = mAdapter?.withLoadStateFooter(
                     WallpapersLoadStateAdapter(mAdapter!!::retry)
@@ -120,10 +138,10 @@ class SearchFragment :
                 setHasFixedSize(true)
                 itemAnimator?.changeDuration = 0
             }
-            chipsRecyclerView.apply {
-                adapter = chipListAdapter
+            suggestionsRecyclerView.apply {
+                adapter = suggestionListAdapter
                 layoutManager =
-                    StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                 setHasFixedSize(true)
                 itemAnimator = null
                 itemAnimator?.changeDuration = 0
@@ -149,6 +167,14 @@ class SearchFragment :
 
     override fun setupFlows() {
         binding.apply {
+            launchCoroutine {
+                viewModel.suggestions.collect {
+                    val suggestions = it ?: return@collect
+                    suggestionList = suggestions
+                    suggestionListAdapter?.submitList(suggestions)
+                    suggestionsRecyclerView.isVisible = suggestions.isNotEmpty()
+                }
+            }
             launchCoroutine {
                 // collectLatest - as soon new data received, current block will be suspended
                 viewModel.searchResults.collectLatest { data ->
@@ -260,10 +286,42 @@ class SearchFragment :
         }
     }
 
+    private fun addSuggestion(name: String) {
+        launchCoroutine {
+            viewModel.addSuggestion(TypeConverter.suggestionNameToSuggestion(name))
+        }
+    }
+
+    private fun searchViewOnFocusBehaviour(hasFocus: Boolean, sendQuery: () -> Unit) {
+        binding.apply {
+            toolbarLayout.apply {
+                if (!hasFocus) {
+                    suggestionsRecyclerView.fadeOut()
+                    tintView.fadeOut()
+                    bottomNav.isVisible = true
+                    swipeRefreshLayout.isClickable = true
+                    backButton.backButtonLayout.visibility = View.GONE
+                    filteredSuggestionList.clear()
+                } else {
+                    suggestionsRecyclerView.fadeIn()
+                    tintView.fadeIn()
+                    bottomNav.isVisible = false
+                    swipeRefreshLayout.isClickable = false
+                    backButton.apply {
+                        backButtonLayout.visibility = View.VISIBLE
+                        backImageView.setOnClickListener {
+                            sendQuery()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private fun newQuery(query: String) {
         viewModel.onSearchQuerySubmit(query)
         binding.apply {
-            chipsRecyclerView.fadeOut()
+            suggestionsRecyclerView.fadeOut()
             toolbarLayout.searchView.clearFocus()
         }
         hideKeyboard()
@@ -286,38 +344,6 @@ class SearchFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _chipListAdapter = null
-    }
-
-    private val suggestionList by lazy {
-        listOf(
-            getString(R.string.nature),
-            getString(R.string.food),
-            getString(R.string.photography),
-            getString(R.string.pretty),
-            getString(R.string.red),
-            getString(R.string.blue),
-            getString(R.string.orange),
-            getString(R.string.black),
-            getString(R.string.gray),
-            getString(R.string.christmas),
-            getString(R.string.animals),
-            getString(R.string.abstr),
-            getString(R.string.white),
-            getString(R.string.sea),
-            getString(R.string.landscape),
-            getString(R.string.art),
-            getString(R.string.creative),
-            getString(R.string.yellow),
-            getString(R.string.purple),
-            getString(R.string.cars),
-            getString(R.string.horses),
-            getString(R.string.dogs),
-            getString(R.string.cats),
-            getString(R.string.beach),
-            getString(R.string.butterfly),
-            getString(R.string.flowers),
-            getString(R.string.racing)
-        )
+        _suggestionListAdapter = null
     }
 }

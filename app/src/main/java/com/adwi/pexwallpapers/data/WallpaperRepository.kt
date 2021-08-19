@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.room.withTransaction
 import com.adwi.pexwallpapers.data.local.WallpaperDatabase
+import com.adwi.pexwallpapers.data.local.entity.Suggestion
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.remote.PexApi
 import com.adwi.pexwallpapers.util.Constants.Companion.PAGING_MAX_SIZE
@@ -23,7 +24,13 @@ class WallpaperRepository @Inject constructor(
     private val wallpapersDatabase: WallpaperDatabase
 ) {
 
-    private val dao = wallpapersDatabase.wallpaperDao()
+    private val wallpaperDao = wallpapersDatabase.wallpaperDao()
+    private val searchDao = wallpapersDatabase.searchDao()
+    private val favoritesDao = wallpapersDatabase.favoritesDao()
+    private val curatedDao = wallpapersDatabase.curatedDao()
+    private val suggestionsDao = wallpapersDatabase.suggestionsDao()
+
+    // Curated --------------------------------------------------------------------
 
     fun getCuratedWallpapers(
         forceRefresh: Boolean,
@@ -32,7 +39,7 @@ class WallpaperRepository @Inject constructor(
     ): Flow<Resource<List<Wallpaper>>> =
         networkBoundResource(
             query = {
-                dao.getAllCuratedWallpapers()
+                curatedDao.getAllCuratedWallpapers()
             },
             fetch = {
                 val response = pexApi.getCuratedWallpapers()
@@ -40,7 +47,7 @@ class WallpaperRepository @Inject constructor(
             },
             saveFetchResult = { remoteWallpaperList ->
                 // first() collects one list than cancels flow
-                val favoriteWallpapers = dao.getAllFavorites().first()
+                val favoriteWallpapers = favoritesDao.getAllFavorites().first()
 
                 val wallpaperList =
                     remoteWallpaperList.map { wallpaper ->
@@ -55,9 +62,9 @@ class WallpaperRepository @Inject constructor(
                 }
 
                 wallpapersDatabase.withTransaction {
-                    dao.deleteAllCuratedWallpapers()
-                    dao.insertWallpapers(wallpaperList)
-                    dao.insertCuratedWallpapers(curatedWallpapers)
+                    curatedDao.deleteAllCuratedWallpapers()
+                    wallpaperDao.insertWallpapers(wallpaperList)
+                    curatedDao.insertCuratedWallpapers(curatedWallpapers)
                 }
             },
             shouldFetch = { wallpapers ->
@@ -83,22 +90,45 @@ class WallpaperRepository @Inject constructor(
             }
         )
 
+    // Wallpaper --------------------------------------------------------------------
+
+    fun getWallpaperById(id: Int) = wallpaperDao.getWallpaperById(id)
+
+    // Favorites --------------------------------------------------------------------
+
+    fun getAllFavorites() = favoritesDao.getAllFavorites()
+
+    suspend fun deleteNonFavoriteWallpapersOlderThan(timestampInMillis: Long) =
+        favoritesDao.deleteNonFavoriteWallpapersOlderThan(timestampInMillis)
+
+    suspend fun updateWallpaper(wallpaper: Wallpaper) =
+        favoritesDao.updateWallpaperFavorite(wallpaper)
+
+    suspend fun resetAllFavorites() = favoritesDao.resetAllFavorites()
+
+    // Search --------------------------------------------------------------------
+
     fun getSearchResultsPaged(query: String): Flow<PagingData<Wallpaper>> =
         Pager(
             config = PagingConfig(pageSize = PAGING_SIZE, maxSize = PAGING_MAX_SIZE),
             remoteMediator = SearchNewsRemoteMediator(query, pexApi, wallpapersDatabase),
-            pagingSourceFactory = { dao.getSearchResultWallpaperPaged(query) }
+            pagingSourceFactory = { searchDao.getSearchResultWallpaperPaged(query) }
         ).flow
 
-    fun getAllFavorites() = dao.getAllFavorites()
+    // Suggestions
 
-    fun getWallpaperById(id: Int) = dao.getWallpaperById(id)
+    fun getAllSuggestions() = suggestionsDao.getAllSuggestions()
 
-    suspend fun deleteNonFavoriteWallpapersOlderThan(timestampInMillis: Long) =
-        dao.deleteNonFavoriteWallpapersOlderThan(timestampInMillis)
+    fun getAllSuggestionsContainingQuery(query: String) =
+        suggestionsDao.getAllSuggestionsContainingQuery(query)
 
-    suspend fun updateWallpaper(wallpaper: Wallpaper) =
-        dao.updateWallpaperFavorite(wallpaper)
+    suspend fun insertSuggestion(suggestion: Suggestion) {
+        suggestionsDao.insertSuggestion(suggestion)
+    }
 
-    suspend fun resetAllFavorites() = dao.resetAllFavorites()
+    suspend fun insertAllSuggestions(suggestions: List<Suggestion>) {
+        suggestionsDao.insertAllSuggestions(suggestions)
+    }
+
+    suspend fun deleteSuggestion(name: String) = suggestionsDao.deleteSuggestion(name)
 }

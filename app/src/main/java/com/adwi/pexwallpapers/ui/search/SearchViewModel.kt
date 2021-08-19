@@ -4,14 +4,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.adwi.pexwallpapers.data.WallpaperRepository
-import com.adwi.pexwallpapers.data.local.entity.Wallpaper
+import com.adwi.pexwallpapers.data.local.entity.Suggestion
+import com.adwi.pexwallpapers.data.local.entity.suggestionNameList
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
+import com.adwi.pexwallpapers.util.Constants.Companion.LAST_QUERY
+import com.adwi.pexwallpapers.util.TypeConverter
 import com.adwi.pexwallpapers.util.onIO
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,6 +24,9 @@ class SearchViewModel @Inject constructor(
 
     private val currentQuery = MutableStateFlow<String?>(null)
 
+    val suggestions = repository.getAllSuggestions()
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
+
     val hasCurrentQuery = currentQuery.map { it != null }
 
     val searchResults = currentQuery.flatMapLatest { query ->
@@ -31,6 +34,7 @@ class SearchViewModel @Inject constructor(
             repository.getSearchResultsPaged(query)
         } ?: emptyFlow()
     }.cachedIn(viewModelScope)
+
 
     var refreshInProgress = false
     var pendingScrollToTopAfterRefresh = false
@@ -43,6 +47,8 @@ class SearchViewModel @Inject constructor(
         if (savedQuery.isNullOrBlank()) {
             currentQuery.value = savedQuery
         }
+
+        initDefaultSuggestionList()
     }
 
     fun onSearchQuerySubmit(query: String) {
@@ -52,15 +58,31 @@ class SearchViewModel @Inject constructor(
         savedStateHandle.set(LAST_QUERY, query)
     }
 
-    fun onFavoriteClick(wallpaper: Wallpaper) {
-        val currentlyFavorite = wallpaper.isFavorite
-        val updatedWallpaper = wallpaper.copy(isFavorite = !currentlyFavorite)
+    fun deleteSuggestion(name: String) {
         onIO {
-            repository.updateWallpaper(updatedWallpaper)
+            repository.deleteSuggestion(name)
         }
     }
 
-    companion object {
-        private const val LAST_QUERY = "LAST_QUERY"
+    fun getAllSuggestionsContainingQuery(query: String) {
+        repository.getAllSuggestionsContainingQuery(query)
+    }
+
+    fun getAllSuggestions() {
+        repository.getAllSuggestions()
+    }
+
+    suspend fun addSuggestion(suggestion: Suggestion) {
+        repository.insertSuggestion(suggestion)
+    }
+
+    private fun initDefaultSuggestionList() {
+        if (suggestions.value.isNullOrEmpty()) {
+            onIO {
+                repository.insertAllSuggestions(
+                    TypeConverter.defaultSuggestionNameListToSuggestions(suggestionNameList)
+                )
+            }
+        }
     }
 }

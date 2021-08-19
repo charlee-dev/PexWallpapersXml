@@ -22,5 +22,8 @@ class Constants {
         // Args
         const val WALLPAPER_ID = "WALLPAPER_ID"
 
+        // Search
+
+        const val LAST_QUERY = "LAST_QUERY"
     }
 }

@@ -1,5 +1,6 @@
 package com.adwi.pexwallpapers.util
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -21,6 +22,12 @@ object BindingAdapters {
                 imageView.setImageResource(R.drawable.ic_favorite_unchecked)
             }
         }
+    }
+
+    @BindingAdapter("app:isVisible")
+    @JvmStatic
+    fun isVisible(view: View, isVisible: Boolean) {
+        view.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
     @BindingAdapter("app:byPhotographerText")

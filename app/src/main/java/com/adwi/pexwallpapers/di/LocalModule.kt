@@ -3,7 +3,7 @@ package com.adwi.pexwallpapers.di
 import android.app.Application
 import androidx.room.Room
 import com.adwi.pexwallpapers.data.local.WallpaperDatabase
-import com.adwi.pexwallpapers.data.local.WallpapersDao
+import com.adwi.pexwallpapers.data.local.dao.*
 import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_DATABASE
 import dagger.Module
 import dagger.Provides
@@ -30,6 +30,26 @@ object LocalModule {
 
     @Provides
     @Singleton
-    fun providePhotoDao(appDatabase: WallpaperDatabase): WallpapersDao =
+    fun provideWallpaperDao(appDatabase: WallpaperDatabase): WallpapersDao =
         appDatabase.wallpaperDao()
+
+    @Provides
+    @Singleton
+    fun provideFavoritesDao(appDatabase: WallpaperDatabase): FavoritesDao =
+        appDatabase.favoritesDao()
+
+    @Provides
+    @Singleton
+    fun provideSearchDao(appDatabase: WallpaperDatabase): SearchDao =
+        appDatabase.searchDao()
+
+    @Provides
+    @Singleton
+    fun provideSuggestionsDao(appDatabase: WallpaperDatabase): SuggestionsDao =
+        appDatabase.suggestionsDao()
+
+    @Provides
+    @Singleton
+    fun provideCuratedDao(appDatabase: WallpaperDatabase): CuratedDao =
+        appDatabase.curatedDao()
 }

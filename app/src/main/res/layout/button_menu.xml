@@ -25,7 +25,7 @@
             android:contentDescription="@{description}"
             android:focusable="true"
             android:src="@drawable/ic_menu_more"
-            app:tint="@color/darkGray" />
+            app:tint="@color/colorPrimary" />
 
     </RelativeLayout>
 </layout>

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.paging.PagingDataAdapter
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
-import com.adwi.pexwallpapers.databinding.LayoytWallpaperItemBinding
+import com.adwi.pexwallpapers.databinding.WallpaperItemBinding
 
 class WallpaperListPagingAdapter(
     private val requireActivity: FragmentActivity,
@@ -14,7 +14,7 @@ class WallpaperListPagingAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WallpaperViewHolder {
         val binding =
-            LayoytWallpaperItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            WallpaperItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return WallpaperViewHolder(
             binding,
             requireActivity = requireActivity,

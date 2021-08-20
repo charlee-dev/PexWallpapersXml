@@ -4,10 +4,10 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
-import com.adwi.pexwallpapers.databinding.LayoytWallpaperItemBinding
+import com.adwi.pexwallpapers.databinding.WallpaperItemBinding
 
 class WallpaperViewHolder(
-    private val binding: LayoytWallpaperItemBinding,
+    private val binding: WallpaperItemBinding,
     private val requireActivity: FragmentActivity,
     private val onItemClick: (Int) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {

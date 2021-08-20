@@ -16,7 +16,7 @@
 
         <include
             android:id="@+id/back_button"
-            layout="@layout/layout_back_button"
+            layout="@layout/button_back"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:animateLayoutChanges="true"
@@ -42,7 +42,7 @@
 
         <include
             android:id="@+id/menu_button"
-            layout="@layout/layout_menu_button"
+            layout="@layout/button_menu"
             android:layout_width="46dp"
             android:layout_height="46dp"
             app:layout_constraintBottom_toBottomOf="parent"

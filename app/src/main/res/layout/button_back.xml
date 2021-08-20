@@ -4,7 +4,6 @@
     android:id="@+id/back_button_layout"
     android:layout_width="46dp"
     android:layout_height="46dp"
-    android:layout_margin="5dp"
     android:background="@drawable/background_rounded_stroke">
 
     <ImageView
@@ -16,6 +15,6 @@
         android:contentDescription="@string/back_button"
         android:focusable="true"
         android:src="@drawable/ic_arrow_back"
-        app:tint="@color/darkGray" />
+        app:tint="@color/colorPrimary" />
 
 </RelativeLayout>

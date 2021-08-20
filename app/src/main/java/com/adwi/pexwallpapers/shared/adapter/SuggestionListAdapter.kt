@@ -6,17 +6,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.adwi.pexwallpapers.data.local.entity.Suggestion
-import com.adwi.pexwallpapers.databinding.LayoutSuggestionItemBinding
+import com.adwi.pexwallpapers.databinding.SuggestionItemBinding
 
 class SuggestionListAdapter(
     private val onItemClick: (Suggestion) -> Unit,
     private val onSuggestionDeleteClick: (Suggestion) -> Unit
 ) : ListAdapter<Suggestion, SuggestionListAdapter.SuggestionViewHolder>(SuggestionsComparator()) {
 
-    private lateinit var binding: LayoutSuggestionItemBinding
+    private lateinit var binding: SuggestionItemBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SuggestionViewHolder {
         binding =
-            LayoutSuggestionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            SuggestionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SuggestionViewHolder(
             binding,
             onItemClick = { position ->
@@ -41,7 +41,7 @@ class SuggestionListAdapter(
     }
 
     inner class SuggestionViewHolder(
-        private val binding: LayoutSuggestionItemBinding,
+        private val binding: SuggestionItemBinding,
         private val onItemClick: (Int) -> Unit,
         private val onSuggestionDeleteClick: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {

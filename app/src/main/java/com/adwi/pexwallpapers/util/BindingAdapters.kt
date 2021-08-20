@@ -37,15 +37,30 @@ object BindingAdapters {
         textView.text = text
     }
 
-    @BindingAdapter("loadImageFromUrlStaggered")
+    @BindingAdapter("app:PhotographersNameText")
     @JvmStatic
-    fun loadImageFromUrlStaggered(imageView: ImageView, imageUrl: String) {
+    fun photographersNameText(textView: TextView, photographerName: String) {
+        val text = "Photo by: $photographerName"
+        textView.text = text
+    }
+
+    @BindingAdapter("loadImageFromUrlStaggered", "randomHeight")
+    @JvmStatic
+    fun loadImageFromUrlStaggered(
+        imageView: ImageView,
+        imageUrl: String,
+        randomHeight: Boolean = true
+    ) {
         imageView.load(imageUrl) {
             placeholder(shimmerDrawable)
             placeholder(R.drawable.placeholder_item)
             crossfade(600)
         }
-        imageView.layoutParams.height = heights.random()
+        if (randomHeight) {
+            imageView.layoutParams.height = heights.random()
+        } else {
+            imageView.layoutParams.height = 500
+        }
     }
 
     @BindingAdapter("loadImageFromUrl")

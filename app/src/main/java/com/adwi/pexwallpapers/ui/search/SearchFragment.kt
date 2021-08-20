@@ -58,7 +58,7 @@ class SearchFragment :
                     }
 
                     override fun onQueryTextChange(query: String?): Boolean {
-                        filteredSuggestionList = ArrayList<Suggestion>()
+                        filteredSuggestionList = ArrayList()
                         if (query.isNullOrBlank()) {
                             suggestionListAdapter?.submitList(suggestionList)
                         } else {
@@ -94,7 +94,8 @@ class SearchFragment :
                         wallpaper
                     )
                 )
-            }
+            },
+            itemRandomHeight = true
         )
         _suggestionListAdapter = SuggestionListAdapter(
             onItemClick = { suggestion ->

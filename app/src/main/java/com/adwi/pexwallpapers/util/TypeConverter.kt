@@ -5,7 +5,11 @@ import com.adwi.pexwallpapers.data.remote.dto.WallpaperDto
 
 object TypeConverter {
 
-    fun wallpaperDtoToWallpaper(wallpaper: WallpaperDto, isFavorite: Boolean) =
+    fun wallpaperDtoToWallpaper(
+        wallpaper: WallpaperDto,
+        categoryName: String,
+        isFavorite: Boolean
+    ) =
         Wallpaper(
             id = wallpaper.id,
             photographer = wallpaper.photographer,
@@ -16,6 +20,7 @@ object TypeConverter {
             url = wallpaper.pexUrl,
             photographerUrl = wallpaper.photographerUrl,
             isFavorite = isFavorite,
+            categoryName = categoryName,
             src = Src(
                 original = wallpaper.src.original,
                 large2x = wallpaper.src.large2x,

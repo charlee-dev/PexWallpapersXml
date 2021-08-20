@@ -54,7 +54,7 @@ class WallpaperRepository @Inject constructor(
                         val isFavorite = favoriteWallpapers.any { favoriteWallpaper ->
                             favoriteWallpaper.id == wallpaper.id
                         }
-                        TypeConverter.wallpaperDtoToWallpaper(wallpaper, isFavorite)
+                        TypeConverter.wallpaperDtoToWallpaper(wallpaper, "Curated", isFavorite)
                     }
 
                 val curatedWallpapers = wallpaperList.map { wallpaper ->
@@ -90,10 +90,6 @@ class WallpaperRepository @Inject constructor(
             }
         )
 
-    // Wallpaper --------------------------------------------------------------------
-
-    fun getWallpaperById(id: Int) = wallpaperDao.getWallpaperById(id)
-
     // Favorites --------------------------------------------------------------------
 
     fun getAllFavorites() = favoritesDao.getAllFavorites()
@@ -119,9 +115,6 @@ class WallpaperRepository @Inject constructor(
 
     fun getAllSuggestions() = suggestionsDao.getAllSuggestions()
 
-    fun getAllSuggestionsContainingQuery(query: String) =
-        suggestionsDao.getAllSuggestionsContainingQuery(query)
-
     suspend fun insertSuggestion(suggestion: Suggestion) {
         suggestionsDao.insertSuggestion(suggestion)
     }
@@ -131,4 +124,9 @@ class WallpaperRepository @Inject constructor(
     }
 
     suspend fun deleteSuggestion(name: String) = suggestionsDao.deleteSuggestion(name)
+
+    // PreviewBottomSheet
+
+    suspend fun getWallpapersByCategory(categoryName: String) =
+        wallpaperDao.getWallpapersOfCategory(categoryName)
 }

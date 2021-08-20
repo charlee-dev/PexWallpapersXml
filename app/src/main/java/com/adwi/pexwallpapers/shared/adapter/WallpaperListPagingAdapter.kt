@@ -9,7 +9,8 @@ import com.adwi.pexwallpapers.databinding.WallpaperItemBinding
 
 class WallpaperListPagingAdapter(
     private val requireActivity: FragmentActivity,
-    private val onItemClick: (Wallpaper) -> Unit
+    private val onItemClick: (Wallpaper) -> Unit,
+    private val itemRandomHeight: Boolean
 ) : PagingDataAdapter<Wallpaper, WallpaperViewHolder>(WallpaperComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WallpaperViewHolder {
@@ -23,7 +24,8 @@ class WallpaperListPagingAdapter(
                 if (wallpaper != null) {
                     onItemClick(wallpaper)
                 }
-            }
+            },
+            itemRandomHeight = itemRandomHeight
         )
     }
 

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="wallpaper"
+            type="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_rounded_top"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/margin_small">
+
+        <ImageView
+            android:id="@+id/slider_button"
+            android:layout_width="300dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/margin_extra_large"
+            android:contentDescription="@string/close_wallpaper_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/background_rounded_stroke_gray" />
+
+        <Space
+            android:id="@+id/divider_view_top"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_medium"
+            app:layout_constraintTop_toBottomOf="@id/slider_button" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/info_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_view_top">
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/wallpaper_image_cardview"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                app:cardCornerRadius="@dimen/image_corner_radius"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/wallpaper_imageView"
+                    loadImageFromUrl="@{wallpaper.imageUrl}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/image_photo_placeholder" />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/photo_by_textview"
+                style="@style/TextStyle.Condensed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:text="Photo by:"
+                app:layout_constraintStart_toEndOf="@id/wallpaper_image_cardview"
+                app:layout_constraintTop_toTopOf="@id/wallpaper_image_cardview" />
+
+            <TextView
+                android:id="@+id/photographer_title_textview"
+                style="@style/TextStyle.Normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:singleLine="true"
+                android:text="@{wallpaper.photographer}"
+                app:layout_constraintStart_toStartOf="@id/photo_by_textview"
+                app:layout_constraintTop_toBottomOf="@id/photo_by_textview"
+                tools:text="Kammeran Gonzales" />
+
+            <LinearLayout
+                android:id="@+id/button_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/photos_provided_by_textview"
+                app:layout_constraintStart_toStartOf="@+id/photographer_title_textview"
+                app:layout_constraintTop_toBottomOf="@+id/photographer_title_textview">
+
+                <ImageView
+                    android:id="@+id/pexels_button"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="@string/pexels_com_button"
+                    android:src="@drawable/image_pexels_logo" />
+
+                <ImageView
+                    android:id="@+id/share_button"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="@dimen/margin_extra_large"
+                    android:contentDescription="@string/share_button"
+                    android:src="@drawable/ic_share" />
+
+                <ImageView
+                    android:id="@+id/favorites_bookmark"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="@dimen/margin_extra_large"
+                    android:contentDescription="@string/add_image_toFavorites"
+                    app:isFavorite="@{wallpaper.favorite}"
+                    app:layout_constraintTop_toTopOf="@+id/pexels_button"
+                    app:tint="@color/red"
+                    tools:layout_editor_absoluteX="36dp"
+                    tools:src="@drawable/ic_favorite_unchecked" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/photos_provided_by_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed-light"
+                android:gravity="bottom"
+                android:text="@string/photo_provided_by_pexels"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/wallpaper_image_cardview"
+                app:layout_constraintStart_toStartOf="@+id/photographer_title_textview" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Space
+            android:id="@+id/divider_view_middle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_medium"
+            app:layout_constraintTop_toBottomOf="@id/info_container" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/set_wallpaper_button"
+            style="@style/TextStyle.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_rounded_stroke"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/set_wallpaper"
+            app:layout_constraintEnd_toEndOf="@id/slider_button"
+            app:layout_constraintStart_toStartOf="@id/slider_button"
+            app:layout_constraintTop_toBottomOf="@+id/divider_view_middle"
+            tools:layout_editor_absoluteX="36dp" />
+
+        <Space
+            android:id="@+id/divider_view_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_large"
+            app:layout_constraintTop_toBottomOf="@id/set_wallpaper_button" />
+
+        <TextView
+            android:id="@+id/more_like_this_textview"
+            style="@style/TextStyle.Condensed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="More like this:"
+            app:layout_constraintStart_toStartOf="@id/set_wallpaper_button"
+            app:layout_constraintTop_toBottomOf="@id/divider_view_bottom" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/more_like_this_textview" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -43,12 +43,11 @@ class SearchViewModel @Inject constructor(
     var pendingScrollToTopAfterNewQuery = false
 
     init {
+        initDefaultSuggestionList()
         savedQuery = savedStateHandle.get(LAST_QUERY)
         if (savedQuery.isNullOrBlank()) {
             currentQuery.value = savedQuery
         }
-
-        initDefaultSuggestionList()
     }
 
     fun onSearchQuerySubmit(query: String) {
@@ -62,14 +61,6 @@ class SearchViewModel @Inject constructor(
         onIO {
             repository.deleteSuggestion(name)
         }
-    }
-
-    fun getAllSuggestionsContainingQuery(query: String) {
-        repository.getAllSuggestionsContainingQuery(query)
-    }
-
-    fun getAllSuggestions() {
-        repository.getAllSuggestions()
     }
 
     suspend fun addSuggestion(suggestion: Suggestion) {

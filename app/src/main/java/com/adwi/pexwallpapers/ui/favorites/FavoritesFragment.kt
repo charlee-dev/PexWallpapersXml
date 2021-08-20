@@ -41,7 +41,8 @@ class FavoritesFragment :
                         wallpaper
                     )
                 )
-            }
+            },
+            itemRandomHeight = false
         )
     }
 

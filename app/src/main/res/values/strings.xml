@@ -36,4 +36,7 @@
     <string name="back_button">Navigate back button</string>
     <string name="menu">Menu</string>
     <string name="delete_suggestion_button">Delete suggestion button</string>
+    <string name="photo_provided_by_pexels">Photo provided by Pexels</string>
+    <string name="close_wallpaper_info">Close wallpaper info</string>
+    <string name="wallpaper_info_button">Wallpaper info button</string>
 </resources>

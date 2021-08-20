@@ -39,7 +39,8 @@ class WallpapersFragment :
                         wallpaper
                     )
                 )
-            }
+            },
+            itemRandomHeight = true
         )
     }
 

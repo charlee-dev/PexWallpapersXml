@@ -7,8 +7,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.adwi.pexwallpapers.R
-import com.adwi.pexwallpapers.util.slideDown
-import com.adwi.pexwallpapers.util.slideUp
 import com.github.ajalt.timberkt.Timber
 import com.github.ajalt.timberkt.d
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -47,7 +45,7 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Timber.tag(TAG).d { resources.getString(R.string.init_class) }
-        if (!hasNavigation) bottomNav.slideDown()
+        if (!hasNavigation) bottomNav.visibility = View.GONE
         setupToolbar()
         setupAdapters()
         setupListeners()
@@ -59,7 +57,7 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
         super.onDestroyView()
         _binding = null
         mAdapter = null
-        if (!hasNavigation) bottomNav.slideUp()
+        if (!hasNavigation) bottomNav.visibility = View.VISIBLE
     }
 
     abstract fun setupToolbar()

@@ -9,7 +9,8 @@ import com.adwi.pexwallpapers.databinding.WallpaperItemBinding
 class WallpaperViewHolder(
     private val binding: WallpaperItemBinding,
     private val requireActivity: FragmentActivity,
-    private val onItemClick: (Int) -> Unit
+    private val onItemClick: (Int) -> Unit,
+    private val itemRandomHeight: Boolean
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(wallpaper: Wallpaper) {
@@ -19,6 +20,7 @@ class WallpaperViewHolder(
 
     init {
         binding.apply {
+            randomHeight = itemRandomHeight
             wallpaperImageView.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {

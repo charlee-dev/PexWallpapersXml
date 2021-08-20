@@ -48,7 +48,11 @@ class SearchNewsRemoteMediator(
                     favoriteWallpaper.id == serverSearchResultWallpaper.id
                 }
 
-                TypeConverter.wallpaperDtoToWallpaper(serverSearchResultWallpaper, isFavorite)
+                TypeConverter.wallpaperDtoToWallpaper(
+                    serverSearchResultWallpaper,
+                    searchQuery,
+                    isFavorite
+                )
             }
 
             database.withTransaction {

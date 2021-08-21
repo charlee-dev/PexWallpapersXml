@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Context
+import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
@@ -22,6 +23,10 @@ import timber.log.Timber
 
 val <T> T.exhaustive: T
     get() = this
+
+fun Int.toDp(context: Context): Int = TypedValue.applyDimension(
+    TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics
+).toInt()
 
 // Views --------------------------------------------------------------------------------
 

@@ -1,5 +1,6 @@
 package com.adwi.pexwallpapers.ui.setwallpaper
 
+import android.animation.ValueAnimator
 import android.view.MenuItem
 import android.widget.Button
 import androidx.fragment.app.viewModels
@@ -56,7 +57,14 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
                 )
             }
             openInFullButton.setOnClickListener {
-
+                rootLayout.transitionToEnd()
+                val animator = ValueAnimator.ofFloat(20f, 0f)
+                animator.setDuration(1000)
+                    .addUpdateListener { animation ->
+                        val value = animation.animatedValue as Float
+                        cardView.radius = value
+                    }
+                animator.start()
             }
             doneButton.setOnClickListener {
                 showDialog(wallpaperArgs.imageUrl)

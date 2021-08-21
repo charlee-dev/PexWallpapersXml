@@ -10,10 +10,11 @@
             type="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layoutDescription="@xml/fragment_set_wallpaper_xml_root_layout_scene"
         tools:context=".ui.setwallpaper.SetWallpaperFragment">
 
         <include
@@ -27,10 +28,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="250dp"
             android:layout_height="0dp"
             android:layout_margin="@dimen/margin_small"
             android:elevation="10dp"
+            android:animateLayoutChanges="true"
             android:translationZ="20dp"
             app:cardCornerRadius="@dimen/image_corner_radius"
             app:layout_constraintBottom_toTopOf="@id/bottom_guideline"
@@ -50,10 +53,6 @@
                     android:layout_height="match_parent"
                     android:contentDescription="@string/wallpaper_preview"
                     android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@drawable/image_photo_placeholder" />
 
@@ -96,6 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:elevation="10dp"
             android:paddingHorizontal="@dimen/margin_extra_large"
             app:layout_constraintBottom_toTopOf="@id/info_button"
             app:layout_constraintEnd_toEndOf="parent"
@@ -146,9 +146,10 @@
             android:id="@+id/done_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/backgroundColor"
+            android:background="@color/transparent"
             android:contentDescription="@string/done_button"
             android:minWidth="48dp"
+            android:elevation="10dp"
             android:minHeight="48dp"
             android:src="@drawable/ic_done"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -158,10 +159,11 @@
             android:id="@+id/open_in_full_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/transparent"
             android:contentDescription="@string/open_image_in_fullscreen_button"
             android:minWidth="48dp"
+            android:elevation="10dp"
             android:minHeight="48dp"
-            android:background="@color/backgroundColor"
             android:src="@drawable/ic_open_in_full"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/done_button"
@@ -171,13 +173,14 @@
             android:id="@+id/info_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/transparent"
             android:contentDescription="@string/info_button"
             android:minWidth="48dp"
+            android:elevation="10dp"
             android:minHeight="48dp"
-            android:background="@color/backgroundColor"
             android:src="@drawable/ic_info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

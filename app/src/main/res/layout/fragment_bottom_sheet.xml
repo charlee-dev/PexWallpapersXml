@@ -99,6 +99,8 @@
                     android:id="@+id/pexels_button"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:contentDescription="@string/pexels_com_button"
                     android:src="@drawable/image_pexels_logo" />
 
@@ -106,6 +108,8 @@
                     android:id="@+id/share_button"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:layout_marginStart="@dimen/margin_extra_large"
                     android:contentDescription="@string/share_button"
                     android:src="@drawable/ic_share" />
@@ -115,6 +119,8 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="@dimen/margin_extra_large"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:contentDescription="@string/add_image_toFavorites"
                     app:isFavorite="@{wallpaper.favorite}"
                     android:animateLayoutChanges="true"

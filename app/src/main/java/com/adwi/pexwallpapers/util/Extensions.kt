@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 val <T> T.exhaustive: T
     get() = this
@@ -69,6 +70,16 @@ fun ImageView.loadImageFromUrl(imageUrl: String) {
         placeholder(BindingAdapters.shimmerDrawable)
         placeholder(R.drawable.placeholder_item)
         crossfade(600)
+    }
+}
+
+fun ImageView.isFavorite(isFavorite: Boolean) {
+    if (isFavorite) {
+        this.setImageResource(R.drawable.ic_favorite_checked)
+        Timber.d("checked")
+    } else {
+        this.setImageResource(R.drawable.ic_favorite_unchecked)
+        Timber.d("unchecked")
     }
 }
 

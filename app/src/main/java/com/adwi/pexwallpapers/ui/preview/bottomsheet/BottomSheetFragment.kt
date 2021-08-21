@@ -88,14 +88,21 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                 SharingTools(requireContext()).share(wallpaperArgs.imageUrl)
             }
             favoritesBookmark.setOnClickListener {
-                viewModel.onFavoriteClick(wallpaperArgs)
-
+                launchCoroutine {
+                    viewModel.onFavoriteClick(wallpaperArgs)
+                }
             }
         }
     }
 
     private fun setupFlows() {
         binding.apply {
+            launchCoroutine {
+                viewModel.getWallpaper(wallpaperArgs.id).collect {
+                    val wallpaperFlow = it
+                    wallpaper = wallpaperFlow
+                }
+            }
             launchCoroutine {
                 viewModel.onCategoryNameSubmit(wallpaperArgs.categoryName)
                 viewModel.wallpaperResults.collect {

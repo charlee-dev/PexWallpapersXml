@@ -90,6 +90,12 @@ class WallpaperRepository @Inject constructor(
             }
         )
 
+    // Wallpaper --------------------------------------------------------------------
+
+
+    fun getWallpaper(wallpaperId: Int) = wallpaperDao.getWallpaperById(wallpaperId)
+
+
     // Favorites --------------------------------------------------------------------
 
     fun getAllFavorites() = favoritesDao.getAllFavorites()

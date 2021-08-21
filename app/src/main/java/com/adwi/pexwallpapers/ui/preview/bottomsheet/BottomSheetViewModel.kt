@@ -19,6 +19,7 @@ class BottomSheetViewModel @Inject constructor(
     private var savedCategoryName: String? = null
 
     private val categoryName = MutableStateFlow<String?>(null)
+    private val wallpaper = MutableStateFlow<Wallpaper?>(null)
 
     val wallpaperResults = categoryName.flatMapLatest { categoryName ->
         categoryName?.let {
@@ -39,12 +40,14 @@ class BottomSheetViewModel @Inject constructor(
     }
 
     fun onFavoriteClick(wallpaper: Wallpaper) {
-        val currentlyFavorite = wallpaper.isFavorite
-        val updatedWallpaper = wallpaper.copy(isFavorite = !currentlyFavorite)
+        val isFavorite = wallpaper.isFavorite
+        wallpaper.isFavorite = !isFavorite
         onIO {
-            repository.updateWallpaper(updatedWallpaper)
+            repository.updateWallpaper(wallpaper)
         }
     }
+
+    fun getWallpaper(wallpaperId: Int) = repository.getWallpaper(wallpaperId)
 
     companion object {
         private const val LAST_CATEGORY_NAME = "LAST_CATEGORY_NAME"

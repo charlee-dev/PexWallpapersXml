@@ -14,36 +14,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/background_rounded_top"
+        android:clipToPadding="true"
         android:elevation="@dimen/cardview_default_elevation"
         android:orientation="vertical"
         android:paddingTop="@dimen/margin_small">
-
-        <ImageView
-            android:id="@+id/slider_button"
-            android:layout_width="300dp"
-            android:layout_height="10dp"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="@dimen/margin_extra_large"
-            android:contentDescription="@string/close_wallpaper_info"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/background_rounded_stroke_gray" />
-
-        <Space
-            android:id="@+id/divider_view_top"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_medium"
-            app:layout_constraintTop_toBottomOf="@id/slider_button" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/info_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider_view_top">
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <androidx.cardview.widget.CardView
@@ -153,14 +136,14 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/set_wallpaper_button"
             style="@style/TextStyle.Button"
-            android:layout_width="0dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:background="@drawable/background_rounded_stroke"
             android:clickable="true"
             android:focusable="true"
             android:text="@string/set_wallpaper"
-            app:layout_constraintEnd_toEndOf="@id/slider_button"
-            app:layout_constraintStart_toStartOf="@id/slider_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider_view_middle"
             tools:layout_editor_absoluteX="36dp" />
 

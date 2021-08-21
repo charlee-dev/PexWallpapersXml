@@ -45,4 +45,7 @@
     <string name="map">Map</string>
     <string name="wallpaper_preview">Wallpaper preview</string>
     <string name="phone">Phone</string>
+    <string name="info_button">Info</string>
+    <string name="open_image_in_fullscreen_button">Open image in fullscreen</string>
+    <string name="done_button">Done</string>
 </resources>

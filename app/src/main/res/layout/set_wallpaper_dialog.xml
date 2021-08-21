@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/button_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/background_rounded_white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_image"
+            app:tint="@color/darkGray"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/dialog_title_textview"
+            style="@style/TextStyle.Normal"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_weight="1"
+            android:text="@string/set_wallpaper_on" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/set_home_button"
+            style="@style/TextStyle.Button"
+            android:layout_width="@dimen/dialogButtonWidth"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:background="@drawable/background_rounded_top_stroke"
+            android:padding="@dimen/margin_medium"
+            android:text="@string/home_screen" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/set_lock_button"
+            style="@style/TextStyle.Button"
+            android:layout_width="@dimen/dialogButtonWidth"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_extra_extra_small"
+            android:background="@drawable/background_square_stroke"
+            android:padding="@dimen/margin_medium"
+            android:text="@string/lock_screen" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/set_home_and_lock_button"
+            style="@style/TextStyle.Button"
+            android:layout_width="@dimen/dialogButtonWidth"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_extra_extra_small"
+            android:background="@drawable/background_rounded_bottom_stroke"
+            android:padding="@dimen/margin_medium"
+            android:text="@string/home_and_lock_screen" />
+
+    </LinearLayout>
+</layout>

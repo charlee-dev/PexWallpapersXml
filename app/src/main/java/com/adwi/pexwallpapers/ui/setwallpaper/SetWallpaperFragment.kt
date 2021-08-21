@@ -25,6 +25,7 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
     private lateinit var wallpaperArgs: Wallpaper
 
     private val args: SetWallpaperFragmentArgs by navArgs()
+
     private val currentDate = CalendarUtil().getTodayDate()
     private val currentDayOfWeek = "${CalendarUtil().getDayOfWeek()},"
 
@@ -39,29 +40,13 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
         }
     }
 
-    override fun setupFlows() {
-        binding.apply {
-
-        }
-    }
-
     override fun setupListeners() {
         binding.apply {
             setHomeButton.setOnClickListener {
-                launchCoroutine {
-                    WallpaperSetter(
-                        requireContext(),
-                        wallpaperArgs.imageUrl
-                    ).setWallpaperByImagePath(true)
-                }
+                setWallpaper(setHomeScreen = true, setLockScreen = false)
             }
             setLockButton.setOnClickListener {
-                launchCoroutine {
-                    WallpaperSetter(
-                        requireContext(),
-                        wallpaperArgs.imageUrl
-                    ).setWallpaperByImagePath(setLockScreen = true)
-                }
+                setWallpaper(setHomeScreen = false, setLockScreen = true)
             }
             infoButton.setOnClickListener {
                 findNavController().navigate(
@@ -82,47 +67,45 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
         }
     }
 
-    override fun setupToolbar() {}
-    override fun setupAdapters() {}
-
     private fun showDialog(imageUrl: String) {
         val dialog = MaterialDialog(requireContext())
             .noAutoDismiss()
-            .customView(R.layout.wallpaper_dialog_chooser)
+            .customView(R.layout.set_wallpaper_dialog)
+            .cornerRadius(res = R.dimen.image_corner_radius)
 
-        val home = dialog.findViewById<Button>(R.id.home_screen_button)
-        val lock = dialog.findViewById<Button>(R.id.lock_screen_button)
-        val homeAndLock = dialog.findViewById<Button>(R.id.home_and_lock_screen_button)
+        val home = dialog.findViewById<Button>(R.id.set_home_button)
+        val lock = dialog.findViewById<Button>(R.id.set_lock_button)
+        val homeAndLock = dialog.findViewById<Button>(R.id.set_home_and_lock_button)
 
         home.setOnClickListener {
-            launchCoroutine {
-                WallpaperSetter(requireContext(), imageUrl).setWallpaperByImagePath(true)
-            }
+            setWallpaper(setHomeScreen = true, setLockScreen = false)
             dialog.dismiss()
         }
-
         lock.setOnClickListener {
-            launchCoroutine {
-                WallpaperSetter(
-                    requireContext(),
-                    imageUrl
-                ).setWallpaperByImagePath(setLockScreen = true)
-            }
+            setWallpaper(setHomeScreen = false, setLockScreen = true)
             dialog.dismiss()
         }
-
         homeAndLock.setOnClickListener {
-            launchCoroutine {
-                WallpaperSetter(requireContext(), imageUrl).setWallpaperByImagePath(
-                    setHomeScreen = true,
-                    setLockScreen = true
-                )
-            }
+            setWallpaper(setHomeScreen = true, setLockScreen = true)
             dialog.dismiss()
         }
-
         dialog.show()
     }
 
+    fun setWallpaper(setHomeScreen: Boolean, setLockScreen: Boolean) {
+        launchCoroutine {
+            WallpaperSetter(
+                requireContext(),
+                wallpaperArgs.imageUrl
+            ).setWallpaperByImagePath(
+                setHomeScreen = setHomeScreen,
+                setLockScreen = setLockScreen
+            )
+        }
+    }
+
+    override fun setupToolbar() {}
+    override fun setupAdapters() {}
+    override fun setupFlows() {}
     override fun onMenuItemClick(item: MenuItem?) = false
 }

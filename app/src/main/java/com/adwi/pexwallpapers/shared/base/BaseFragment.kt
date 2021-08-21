@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import com.adwi.pexwallpapers.R
 import com.github.ajalt.timberkt.Timber
 import com.github.ajalt.timberkt.d
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
@@ -18,9 +17,6 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
 ) : Fragment(), PopupMenu.OnMenuItemClickListener {
 
     protected abstract val viewModel: BaseViewModel?
-
-    // Views
-    lateinit var bottomNav: BottomNavigationView
 
     // Binding
     private var _binding: VB? = null
@@ -37,7 +33,6 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
         savedInstanceState: Bundle?
     ): View? {
         _binding = inflate.invoke(inflater, container, false)
-        bottomNav = requireActivity().findViewById(R.id.bottom_nav)
         return binding.root
     }
 

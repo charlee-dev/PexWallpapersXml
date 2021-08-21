@@ -38,11 +38,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun showBottomNav() {
         binding.bottomNav.visibility = View.VISIBLE
-
     }
 
     private fun hideBottomNav() {
         binding.bottomNav.visibility = View.GONE
-
     }
 }

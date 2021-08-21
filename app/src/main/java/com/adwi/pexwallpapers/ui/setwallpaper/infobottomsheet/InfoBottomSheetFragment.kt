@@ -1,32 +1,25 @@
 package com.adwi.pexwallpapers.ui.setwallpaper.infobottomsheet
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.adwi.pexwallpapers.databinding.FragmentInfoBottomSheetBinding
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.adwi.pexwallpapers.shared.base.BaseBottomSheet
+import com.adwi.pexwallpapers.ui.preview.bottomsheet.BottomSheetViewModel
 
 
-class InfoBottomSheetFragment : BottomSheetDialogFragment() {
+class InfoBottomSheetFragment : BaseBottomSheet<FragmentInfoBottomSheetBinding, Any>(
+    inflate = FragmentInfoBottomSheetBinding::inflate
+) {
+    override val viewModel: BottomSheetViewModel by viewModels()
+    override val args: InfoBottomSheetFragmentArgs by navArgs()
 
-    private lateinit var binding: FragmentInfoBottomSheetBinding
-
-    private val args: InfoBottomSheetFragmentArgs by navArgs()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
-        binding = FragmentInfoBottomSheetBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun setupViews() {
+        binding.apply {
+            wallpaper = args.wallpaper
+        }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.wallpaper = args.wallpaper
-    }
+    override fun setupAdapters() {}
+    override fun setupFlows() {}
+    override fun setupListeners() {}
 }

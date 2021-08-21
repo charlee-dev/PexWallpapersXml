@@ -1,9 +1,5 @@
 package com.adwi.pexwallpapers.ui.preview.bottomsheet
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -12,44 +8,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.FragmentBottomSheetBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListAdapter
+import com.adwi.pexwallpapers.shared.base.BaseBottomSheet
 import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.shared.tools.UrlTools
 import com.adwi.pexwallpapers.util.launchCoroutine
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class BottomSheetFragment : BottomSheetDialogFragment() {
+class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, WallpaperListAdapter>(
+    inflate = FragmentBottomSheetBinding::inflate
+) {
+    override val viewModel: BottomSheetViewModel by viewModels()
+    override val args: BottomSheetFragmentArgs by navArgs()
 
     private lateinit var wallpaperArgs: Wallpaper
 
-    private var _binding: FragmentBottomSheetBinding? = null
-    private val binding get() = _binding!!
-
-    private var _mAdapter: WallpaperListAdapter? = null
-    private val mAdapter get() = _mAdapter!!
-
-    private val viewModel: BottomSheetViewModel by viewModels()
-    private val args: BottomSheetFragmentArgs by navArgs()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentBottomSheetBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupAdapters()
-        setupViews()
-        setupListeners()
-        setupFlows()
-    }
-
-    private fun setupAdapters() {
+    override fun setupAdapters() {
         _mAdapter = WallpaperListAdapter(
             requireActivity = requireActivity(),
             onItemClick = { wallpaper ->
@@ -63,7 +38,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         )
     }
 
-    private fun setupViews() {
+    override fun setupViews() {
         binding.apply {
             wallpaperArgs = args.wallpaper
             wallpaper = wallpaperArgs
@@ -71,7 +46,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             invalidateAll()
 
             recyclerView.apply {
-                adapter = mAdapter
+                adapter = _mAdapter
                 layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                 setHasFixedSize(true)
@@ -79,7 +54,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun setupListeners() {
+    override fun setupListeners() {
         binding.apply {
             pexelsButton.setOnClickListener {
                 UrlTools(requireContext()).openUrlInBrowser(wallpaperArgs.url!!)
@@ -102,7 +77,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun setupFlows() {
+    override fun setupFlows() {
         binding.apply {
             launchCoroutine {
                 viewModel.getWallpaper(wallpaperArgs.id).collect {
@@ -114,17 +89,11 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                 viewModel.onCategoryNameSubmit(wallpaperArgs.categoryName)
                 viewModel.wallpaperResults.collect {
                     val wallpapers = it ?: return@collect
-                    mAdapter.submitList(wallpapers)
+                    _mAdapter?.submitList(wallpapers)
                     noResultsTextview.isVisible = wallpapers.isEmpty()
                     recyclerView.isVisible = wallpapers.isNotEmpty()
                 }
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        _mAdapter = null
     }
 }

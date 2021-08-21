@@ -281,14 +281,12 @@ class SearchFragment :
                 if (!hasFocus) {
                     suggestionsRecyclerView.fadeOut()
                     tintView.fadeOut()
-                    bottomNav.isVisible = true
                     swipeRefreshLayout.isClickable = true
                     backButton.backButtonLayout.visibility = View.GONE
                     filteredSuggestionList.clear()
                 } else {
                     suggestionsRecyclerView.fadeIn()
                     tintView.fadeIn()
-                    bottomNav.isVisible = false
                     swipeRefreshLayout.isClickable = false
                     backButton.apply {
                         backButtonLayout.visibility = View.VISIBLE

@@ -5,8 +5,14 @@
       <map>
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable-v24/outline_download_24.xml" value="0.32051282051282054" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/background_round_blue.xml" value="0.6864583333333333" />
+        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/background_rounded_bottom.xml" value="0.6864583333333333" />
+        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/background_rounded_bottom_stroke.xml" value="0.6864583333333333" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/background_rounded_stroke.xml" value="0.3476923076923077" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/background_rounded_stroke_gray.xml" value="0.6148148148148148" />
+        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/background_rounded_top.xml" value="0.6864583333333333" />
+        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/background_rounded_top_stroke.xml" value="0.6864583333333333" />
+        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/background_rounded_white.xml" value="0.6864583333333333" />
+        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/background_square_stroke.xml" value="0.6864583333333333" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/circular_gradient.xml" value="0.30462962962962964" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/gradient_item.xml" value="0.36018518518518516" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/ic_arrow_back.xml" value="0.36018518518518516" />
@@ -61,6 +67,7 @@
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/sample_search_bar.xml" value="0.6703125" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/sample_ui_layout.xml" value="0.6703125" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/search_suggestions.xml" value="0.5296296296296297" />
+        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/set_wallpaper_dialog.xml" value="0.6703125" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/shimmer_placeholder_layout.xml" value="0.26481481481481484" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/shimmer_placerholder_layout.xml" value="0.5592592592592592" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/tool_bar.xml" value="0.5148148148148148" />

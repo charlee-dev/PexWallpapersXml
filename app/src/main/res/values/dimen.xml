@@ -14,4 +14,6 @@
     <dimen name="icon_background_size">28dp</dimen>
     <dimen name="icon_size">20dp</dimen>
     <dimen name="icon_text_size">8sp</dimen>
+
+    <dimen name="dialogButtonWidth">250dp</dimen>
 </resources>

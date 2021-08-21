@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/wallpapersFragment"
         android:name="com.adwi.pexwallpapers.ui.wallpapers.WallpapersFragment"
-        android:label="WallpapersFragment"
+        android:label="@string/wallpapers"
         tools:layout="@layout/fragment_wallpapers">
         <action
             android:id="@+id/action_wallpapersFragment_to_previewFragment"
@@ -16,7 +16,7 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.adwi.pexwallpapers.ui.search.SearchFragment"
-        android:label="SearchFragment"
+        android:label="@string/search"
         tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_previewFragment"
@@ -25,7 +25,7 @@
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.adwi.pexwallpapers.ui.favorites.FavoritesFragment"
-        android:label="FavoritesFragment"
+        android:label="@string/favorites"
         tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_favoritesFragment_to_previewFragment"
@@ -34,7 +34,7 @@
     <fragment
         android:id="@+id/previewFragment"
         android:name="com.adwi.pexwallpapers.ui.preview.PreviewFragment"
-        android:label="PreviewFragment"
+        android:label="@string/preview"
         tools:layout="@layout/fragment_preview">
         <argument
             android:name="wallpaper"
@@ -46,12 +46,25 @@
     <dialog
         android:id="@+id/bottomSheetFragment"
         android:name="com.adwi.pexwallpapers.ui.preview.bottomsheet.BottomSheetFragment"
-        android:label="BottomSheetFragment">
+        android:label=""
+        tools:layout="@layout/fragment_bottom_sheet">
         <action
             android:id="@+id/action_bottomSheetFragment_to_previewFragment"
             app:destination="@id/previewFragment" />
         <argument
             android:name="wallpaper"
             app:argType="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
+        <action
+            android:id="@+id/action_bottomSheetFragment_to_setWallpaperFragment"
+            app:destination="@id/setWallpaperFragment" />
     </dialog>
+    <fragment
+        android:id="@+id/setWallpaperFragment"
+        android:name="com.adwi.pexwallpapers.ui.setwallpaper.SetWallpaperFragment"
+        android:label=""
+        tools:layout="@layout/fragment_set_wallpaper">
+        <argument
+            android:name="wallpaper"
+            app:argType="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
+    </fragment>
 </navigation>

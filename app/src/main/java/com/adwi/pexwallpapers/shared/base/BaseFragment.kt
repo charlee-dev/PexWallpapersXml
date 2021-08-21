@@ -14,8 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
 abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
-    private val inflate: Inflate<VB>,
-    private val hasNavigation: Boolean
+    private val inflate: Inflate<VB>
 ) : Fragment(), PopupMenu.OnMenuItemClickListener {
 
     protected abstract val viewModel: BaseViewModel?
@@ -45,7 +44,6 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Timber.tag(TAG).d { resources.getString(R.string.init_class) }
-        if (!hasNavigation) bottomNav.visibility = View.GONE
         setupToolbar()
         setupAdapters()
         setupListeners()
@@ -57,7 +55,6 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
         super.onDestroyView()
         _binding = null
         mAdapter = null
-        if (!hasNavigation) bottomNav.visibility = View.VISIBLE
     }
 
     abstract fun setupToolbar()

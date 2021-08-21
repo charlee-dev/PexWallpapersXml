@@ -19,8 +19,7 @@ import kotlinx.coroutines.delay
 @AndroidEntryPoint
 class PreviewFragment :
     BaseFragment<FragmentPreviewBinding, WallpaperListAdapter>(
-        FragmentPreviewBinding::inflate,
-        hasNavigation = false
+        FragmentPreviewBinding::inflate
     ) {
     override val viewModel: PreviewViewModel by viewModels()
 
@@ -83,43 +82,4 @@ class PreviewFragment :
             viewModel.favoriteOnDoubleClicked(wallpaper)
         }
     }
-
-//    private fun showDialog(imageUrl: String) {
-//        val dialog = MaterialDialog(requireContext())
-//            .noAutoDismiss()
-//            .customView(R.layout.wallpaper_dialog_chooser)
-//
-//        val home = dialog.findViewById<Button>(R.id.home_screen_button)
-//        val lock = dialog.findViewById<Button>(R.id.lock_screen_button)
-//        val homeAndLock = dialog.findViewById<Button>(R.id.home_and_lock_screen_button)
-//
-//        home.setOnClickListener {
-//            launchCoroutine {
-//                WallpaperSetter(requireContext(), imageUrl).setWallpaperByImagePath(true)
-//            }
-//            dialog.dismiss()
-//        }
-//
-//        lock.setOnClickListener {
-//            launchCoroutine {
-//                WallpaperSetter(
-//                    requireContext(),
-//                    imageUrl
-//                ).setWallpaperByImagePath(setLockScreen = true)
-//            }
-//            dialog.dismiss()
-//        }
-//
-//        homeAndLock.setOnClickListener {
-//            launchCoroutine {
-//                WallpaperSetter(requireContext(), imageUrl).setWallpaperByImagePath(
-//                    setHomeScreen = true,
-//                    setLockScreen = true
-//                )
-//            }
-//            dialog.dismiss()
-//        }
-//
-//        dialog.show()
-//    }
 }

@@ -92,6 +92,13 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                     viewModel.onFavoriteClick(wallpaperArgs)
                 }
             }
+            setWallpaperButton.setOnClickListener {
+                findNavController().navigate(
+                    BottomSheetFragmentDirections.actionBottomSheetFragmentToSetWallpaperFragment(
+                        wallpaperArgs
+                    )
+                )
+            }
         }
     }
 

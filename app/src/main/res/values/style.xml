@@ -85,11 +85,16 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="TextStyle.Header">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/backgroundColor</item>
+    </style>
+
     <style name="TextStyle.Button">
         <item name="android:fontFamily">@font/montserrat</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/darkGray</item>
-        <item name="colorButtonNormal">@color/red</item>
         <item name="android:animateOnClick">true</item>
     </style>
 

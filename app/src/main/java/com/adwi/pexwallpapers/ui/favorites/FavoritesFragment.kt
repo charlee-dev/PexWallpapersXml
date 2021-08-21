@@ -19,8 +19,7 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class FavoritesFragment :
     BaseFragment<FragmentFavoritesBinding, WallpaperListAdapter>(
-        inflate = FragmentFavoritesBinding::inflate,
-        hasNavigation = true
+        inflate = FragmentFavoritesBinding::inflate
     ) {
 
     override val viewModel: FavoritesViewModel by viewModels()

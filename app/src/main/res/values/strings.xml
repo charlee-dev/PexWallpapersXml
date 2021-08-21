@@ -26,7 +26,7 @@
     <string name="home_and_lock_screen_wallpaper_set">Home and Lock screen wallpaper set</string>
     <string name="lock_screen_wallpaper_not_supported">Lock screen wallpaper not supported</string>
     <string name="home_screen">Home Screen</string>
-    <string name="lock_screen">lock screen</string>
+    <string name="lock_screen">Lock screen</string>
     <string name="home_and_lock_screen">Home and Lock screen</string>
     <string name="set_wallpaper_on">Set wallpaper on</string>
     <string name="delete_favorite">Delete Favorite</string>
@@ -39,4 +39,10 @@
     <string name="photo_provided_by_pexels">Photo provided by Pexels</string>
     <string name="close_wallpaper_info">Close wallpaper info</string>
     <string name="wallpaper_info_button">Wallpaper info button</string>
+    <string name="clock">Clock</string>
+    <string name="message">Message</string>
+    <string name="calendar">Calendar</string>
+    <string name="map">Map</string>
+    <string name="wallpaper_preview">Wallpaper preview</string>
+    <string name="phone">Phone</string>
 </resources>

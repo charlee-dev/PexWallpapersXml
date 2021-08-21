@@ -66,5 +66,13 @@
         <argument
             android:name="wallpaper"
             app:argType="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
+        <action
+            android:id="@+id/action_setWallpaperFragment_to_infoBottomSheetFragment"
+            app:destination="@id/infoBottomSheetFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/infoBottomSheetFragment"
+        android:name="com.adwi.pexwallpapers.ui.setwallpaper.infobottomsheet.InfoBottomSheetFragment"
+        android:label=""
+        tools:layout="@layout/fragment_info_bottom_sheet" />
 </navigation>

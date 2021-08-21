@@ -27,8 +27,7 @@ import kotlinx.coroutines.flow.filter
 @AndroidEntryPoint
 class SearchFragment :
     BaseFragment<FragmentSearchBinding, WallpaperListPagingAdapter>(
-        FragmentSearchBinding::inflate,
-        hasNavigation = true
+        FragmentSearchBinding::inflate
     ) {
     override val viewModel: SearchViewModel by viewModels()
 

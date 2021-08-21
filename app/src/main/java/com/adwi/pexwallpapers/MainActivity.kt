@@ -1,6 +1,7 @@
 package com.adwi.pexwallpapers
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -24,6 +25,24 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply {
             bottomNav.setupWithNavController(navController)
+
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                if (destination.id == R.id.wallpapersFragment ||
+                    destination.id == R.id.searchFragment ||
+                    destination.id == R.id.favoritesFragment
+                )
+                    showBottomNav() else hideBottomNav()
+            }
         }
+    }
+
+    private fun showBottomNav() {
+        binding.bottomNav.visibility = View.VISIBLE
+
+    }
+
+    private fun hideBottomNav() {
+        binding.bottomNav.visibility = View.GONE
+
     }
 }

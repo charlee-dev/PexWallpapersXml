@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="margin_extra_extra_small">2dp</dimen>
     <dimen name="margin_extra_small">4dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_medium">16dp</dimen>
@@ -9,4 +10,8 @@
     <dimen name="image_corner_radius">20dp</dimen>
     <dimen name="image_small_corner_radius">8dp</dimen>
     <dimen name="toolbar_size">56dp</dimen>
+
+    <dimen name="icon_background_size">28dp</dimen>
+    <dimen name="icon_size">20dp</dimen>
+    <dimen name="icon_text_size">8sp</dimen>
 </resources>

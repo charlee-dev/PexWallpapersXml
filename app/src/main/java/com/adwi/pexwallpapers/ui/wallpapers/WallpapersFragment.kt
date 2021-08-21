@@ -17,8 +17,7 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class WallpapersFragment :
     BaseFragment<FragmentWallpapersBinding, WallpaperListAdapter>(
-        inflate = FragmentWallpapersBinding::inflate,
-        hasNavigation = true
+        inflate = FragmentWallpapersBinding::inflate
     ) {
 
     override val viewModel: WallpaperViewModel by viewModels()

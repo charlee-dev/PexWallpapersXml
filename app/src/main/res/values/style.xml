@@ -87,7 +87,7 @@
 
     <style name="TextStyle.Button">
         <item name="android:fontFamily">@font/montserrat</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/darkGray</item>
         <item name="colorButtonNormal">@color/red</item>
         <item name="android:animateOnClick">true</item>

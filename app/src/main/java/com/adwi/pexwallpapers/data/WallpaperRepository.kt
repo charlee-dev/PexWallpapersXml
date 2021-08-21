@@ -127,6 +127,6 @@ class WallpaperRepository @Inject constructor(
 
     // PreviewBottomSheet
 
-    suspend fun getWallpapersByCategory(categoryName: String) =
+    fun getWallpapersByCategory(categoryName: String) =
         wallpaperDao.getWallpapersOfCategory(categoryName)
 }

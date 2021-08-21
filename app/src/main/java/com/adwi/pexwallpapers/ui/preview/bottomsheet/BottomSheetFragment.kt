@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
@@ -13,9 +15,9 @@ import com.adwi.pexwallpapers.shared.adapter.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.shared.tools.UrlTools
 import com.adwi.pexwallpapers.util.launchCoroutine
-import com.adwi.pexwallpapers.util.showToast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class BottomSheetFragment : BottomSheetDialogFragment() {
@@ -51,7 +53,11 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         _mAdapter = WallpaperListAdapter(
             requireActivity = requireActivity(),
             onItemClick = { wallpaper ->
-                showToast(requireContext(), wallpaper.photographer)
+                findNavController().navigate(
+                    BottomSheetFragmentDirections.actionBottomSheetFragmentToPreviewFragment(
+                        wallpaper
+                    )
+                )
             },
             itemRandomHeight = false
         )
@@ -62,6 +68,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             wallpaperArgs = args.wallpaper
             wallpaper = wallpaperArgs
             executePendingBindings()
+            invalidateAll()
 
             recyclerView.apply {
                 adapter = mAdapter
@@ -82,14 +89,22 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             }
             favoritesBookmark.setOnClickListener {
                 viewModel.onFavoriteClick(wallpaperArgs)
+
             }
         }
     }
 
     private fun setupFlows() {
-        launchCoroutine {
-            val wallpapers = viewModel.getWallpapersOfCategory(wallpaperArgs.categoryName)
-            mAdapter.submitList(wallpapers)
+        binding.apply {
+            launchCoroutine {
+                viewModel.onCategoryNameSubmit(wallpaperArgs.categoryName)
+                viewModel.wallpaperResults.collect {
+                    val wallpapers = it ?: return@collect
+                    mAdapter.submitList(wallpapers)
+                    noResultsTextview.isVisible = wallpapers.isEmpty()
+                    recyclerView.isVisible = wallpapers.isNotEmpty()
+                }
+            }
         }
     }
 

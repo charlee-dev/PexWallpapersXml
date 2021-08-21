@@ -117,6 +117,7 @@
                     android:layout_marginStart="@dimen/margin_extra_large"
                     android:contentDescription="@string/add_image_toFavorites"
                     app:isFavorite="@{wallpaper.favorite}"
+                    android:animateLayoutChanges="true"
                     app:layout_constraintTop_toTopOf="@+id/pexels_button"
                     app:tint="@color/red"
                     tools:layout_editor_absoluteX="36dp"
@@ -168,7 +169,7 @@
             style="@style/TextStyle.Condensed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="More like this:"
+            android:text="You may also like:"
             app:layout_constraintStart_toStartOf="@id/set_wallpaper_button"
             app:layout_constraintTop_toBottomOf="@id/divider_view_bottom" />
 
@@ -177,6 +178,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/more_like_this_textview" />
+
+        <TextView
+            android:id="@+id/no_results_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginBottom="@dimen/margin_extra_large"
+            android:text="@string/no_results_found"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/more_like_this_textview" />

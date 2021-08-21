@@ -74,5 +74,9 @@
         android:id="@+id/infoBottomSheetFragment"
         android:name="com.adwi.pexwallpapers.ui.setwallpaper.infobottomsheet.InfoBottomSheetFragment"
         android:label=""
-        tools:layout="@layout/fragment_info_bottom_sheet" />
+        tools:layout="@layout/fragment_info_bottom_sheet">
+        <argument
+            android:name="wallpaper"
+            app:argType="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
+    </dialog>
 </navigation>

@@ -79,6 +79,18 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="TextStyle.InfoTitle">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/darkGray</item>
+    </style>
+
+    <style name="TextStyle.InfoText">
+        <item name="android:fontFamily">sans-serif-condensed-light</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/darkGray</item>
+    </style>
+
     <style name="TextStyle.Condensed">
         <item name="android:fontFamily">sans-serif-condensed-light</item>
         <item name="android:textSize">18sp</item>

@@ -64,7 +64,11 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
                 }
             }
             infoButton.setOnClickListener {
-                findNavController().navigate(SetWallpaperFragmentDirections.actionSetWallpaperFragmentToInfoBottomSheetFragment())
+                findNavController().navigate(
+                    SetWallpaperFragmentDirections.actionSetWallpaperFragmentToInfoBottomSheetFragment(
+                        wallpaperArgs
+                    )
+                )
             }
             openInFullButton.setOnClickListener {
 

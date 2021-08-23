@@ -20,9 +20,10 @@
         <include
             android:id="@+id/back_button"
             layout="@layout/button_back"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:layout_margin="5dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
             android:elevation="2dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

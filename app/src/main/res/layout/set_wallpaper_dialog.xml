@@ -38,7 +38,9 @@
             style="@style/TextStyle.Button"
             android:layout_width="@dimen/dialogButtonWidth"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
+            android:layout_margin="2dp"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:translationZ="2dp"
             android:background="@drawable/background_rounded_top_stroke"
             android:padding="@dimen/margin_medium"
             android:text="@string/home_screen" />
@@ -48,7 +50,8 @@
             style="@style/TextStyle.Button"
             android:layout_width="@dimen/dialogButtonWidth"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_extra_extra_small"
+            android:layout_margin="2dp"
+            android:translationZ="2dp"
             android:background="@drawable/background_square_stroke"
             android:padding="@dimen/margin_medium"
             android:text="@string/lock_screen" />
@@ -58,7 +61,8 @@
             style="@style/TextStyle.Button"
             android:layout_width="@dimen/dialogButtonWidth"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_extra_extra_small"
+            android:layout_margin="2dp"
+            android:translationZ="2dp"
             android:background="@drawable/background_rounded_bottom_stroke"
             android:padding="@dimen/margin_medium"
             android:text="@string/home_and_lock_screen" />

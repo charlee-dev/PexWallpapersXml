@@ -12,13 +12,14 @@
 
         <Toolbar
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize">
+            android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/toolbar_size"
+                android:layout_height="match_parent"
                 android:animateLayoutChanges="true"
+                android:paddingEnd="@dimen/margin_medium"
                 android:background="@color/backgroundColor">
 
                 <include
@@ -57,7 +58,6 @@
                     layout="@layout/button_menu"
                     android:layout_width="46dp"
                     android:layout_height="46dp"
-                    android:layout_marginEnd="@dimen/margin_medium"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

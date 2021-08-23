@@ -8,6 +8,7 @@
 
     <ProgressBar
         android:id="@+id/progress_bar"
+        android:progressTint="@color/colorPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -18,10 +19,15 @@
         android:gravity="center_horizontal"
         tools:text="An error occured" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/retry_button"
+        android:layout_margin="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/retry" />
+        android:background="@drawable/background_rounded_stroke"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/retry"
+        android:translationZ="4dp" />
 
 </LinearLayout>

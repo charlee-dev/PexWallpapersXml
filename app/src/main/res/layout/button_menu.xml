@@ -6,15 +6,15 @@
         android:id="@+id/menu_layout"
         android:layout_width="46dp"
         android:layout_height="46dp"
-        android:layout_margin="5dp"
         android:background="@drawable/background_rounded_stroke">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/menu_imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:clickable="true"
+            android:background="@color/backgroundColor"
             android:contentDescription="@string/menu"
             android:focusable="true"
             android:src="@drawable/ic_menu_more"

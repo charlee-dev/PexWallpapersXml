@@ -8,7 +8,6 @@
         <variable
             name="wallpaper"
             type="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
-
         <variable
             name="randomHeight"
             type="Boolean" />
@@ -18,7 +17,7 @@
         android:id="@+id/wallpaper_item_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_extra_small"
+        android:layout_marginTop="@dimen/margin_small"
         android:layout_marginHorizontal="@dimen/margin_extra_small">
 
         <androidx.cardview.widget.CardView

@@ -119,6 +119,17 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/darkGray</item>
         <item name="android:animateOnClick">true</item>
+        <item name="background">@drawable/background_rounded_stroke</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="CustomButton">
+        <item name="android:textColor">@color/darkGray</item>
+        <item name="android:animateOnClick">true</item>
+        <item name="background">@drawable/background_rounded_stroke</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
     </style>
 
     <style name="AppTheme.Toolbar" parent="AppTheme">

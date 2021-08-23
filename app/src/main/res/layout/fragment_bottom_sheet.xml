@@ -33,7 +33,10 @@
                 android:id="@+id/wallpaper_image_cardview"
                 android:layout_width="100dp"
                 android:layout_height="150dp"
+                android:layout_margin="8dp"
+                android:translationZ="4dp"
                 app:cardCornerRadius="@dimen/image_corner_radius"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -42,8 +45,8 @@
                     loadImageFromUrl="@{wallpaper.imageUrl}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
                     android:contentDescription="@string/wallpaper_thumbnail"
+                    android:scaleType="centerCrop"
                     tools:src="@drawable/image_photo_placeholder" />
 
             </androidx.cardview.widget.CardView>
@@ -64,7 +67,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_small"
-
                 android:text="@{wallpaper.photographer}"
                 app:layout_constraintStart_toStartOf="@id/photo_by_textview"
                 app:layout_constraintTop_toBottomOf="@id/photo_by_textview"
@@ -105,12 +107,11 @@
                     android:layout_marginStart="@dimen/margin_extra_large"
                     android:clickable="true"
                     android:focusable="true"
-                    android:contentDescription="@string/add_image_toFavorites"
+                    android:contentDescription="@string/add_to_favorites"
                     app:isFavorite="@{wallpaper.favorite}"
                     android:animateLayoutChanges="true"
                     app:layout_constraintTop_toTopOf="@+id/pexels_button"
                     app:tint="@color/red"
-                    tools:layout_editor_absoluteX="36dp"
                     tools:src="@drawable/ic_favorite_unchecked" />
 
             </LinearLayout>
@@ -130,15 +131,17 @@
         <Space
             android:id="@+id/divider_view_middle"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_medium"
+            android:layout_height="@dimen/margin_small"
             app:layout_constraintTop_toBottomOf="@id/info_container" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/set_wallpaper_button"
             style="@style/TextStyle.Button"
             android:layout_width="300dp"
+            android:layout_margin="8dp"
             android:layout_height="wrap_content"
             android:background="@drawable/background_rounded_stroke"
+            android:translationZ="4dp"
             android:clickable="true"
             android:focusable="true"
             android:text="@string/set_wallpaper"

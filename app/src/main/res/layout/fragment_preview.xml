@@ -10,12 +10,13 @@
             type="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/preview_root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
         android:background="@color/black"
+        app:layoutDescription="@xml/fragment_preview_xml_preview_root_layout_scene"
         tools:context=".ui.preview.PreviewFragment">
 
         <ImageView
@@ -48,8 +49,8 @@
         <include
             android:id="@+id/back_button"
             layout="@layout/button_back"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginStart="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_small"
             android:elevation="2dp"
@@ -58,8 +59,8 @@
 
         <RelativeLayout
             android:id="@+id/back_button_layout"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginTop="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_medium"
             android:background="@drawable/background_rounded_stroke"
@@ -69,11 +70,11 @@
 
             <ImageButton
                 android:id="@+id/favorite_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:animateLayoutChanges="true"
-                android:background="@color/backgroundColor"
+                android:background="@color/transparent"
                 android:clickable="true"
                 android:contentDescription="@string/add_to_favorites"
                 android:focusable="true"
@@ -115,9 +116,9 @@
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="@dimen/margin_extra_large"
                 android:layout_marginVertical="10dp"
+                android:contentDescription="@string/close_wallpaper_info"
                 android:elevation="5dp"
                 android:translationZ="5dp"
-                android:contentDescription="@string/close_wallpaper_info"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -126,5 +127,5 @@
                 app:srcCompat="@drawable/background_rounded_stroke_gray" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

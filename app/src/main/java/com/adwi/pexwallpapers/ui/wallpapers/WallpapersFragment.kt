@@ -67,8 +67,8 @@ class WallpapersFragment :
                     swipeRefreshLayout.isRefreshing = result is Resource.Loading
                     shimmerFrameLayout.apply {
                         if (result.data.isNullOrEmpty()) startShimmer() else stopShimmer()
+                        isVisible = result.data.isNullOrEmpty()
                     }
-                    shimmerFrameLayout.isVisible = result.data.isNullOrEmpty()
                     recyclerView.isVisible = !result.data.isNullOrEmpty()
                     errorTextview.isVisible = result.error != null && result.data.isNullOrEmpty()
                     retryButton.isVisible = result.error != null && result.data.isNullOrEmpty()

@@ -8,7 +8,9 @@
         motion:constraintSetStart="@id/start"
         motion:duration="500"
         motion:motionInterpolator="easeInOut">
-        <KeyFrameSet></KeyFrameSet>
+        <KeyFrameSet>
+
+        </KeyFrameSet>
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
@@ -20,5 +22,7 @@
             motion:layout_editor_absoluteX="-16dp" />
     </ConstraintSet>
 
-    <ConstraintSet android:id="@+id/end"></ConstraintSet>
+    <ConstraintSet android:id="@+id/end">
+
+    </ConstraintSet>
 </MotionScene>

@@ -2,16 +2,21 @@
 <MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:motion="http://schemas.android.com/apk/res-auto">
 
-    <Transition
-        motion:constraintSetEnd="@+id/end"
-        motion:constraintSetStart="@id/start"
-        motion:duration="500"
-        motion:motionInterpolator="easeInOut">
-        <KeyFrameSet></KeyFrameSet>
-        <OnClick />
-    </Transition>
-
-    <ConstraintSet android:id="@+id/start"></ConstraintSet>
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/cardView"
+            android:layout_width="250dp"
+            android:layout_height="0dp"
+            android:elevation="0dp"
+            android:scaleX=".97"
+            android:scaleY=".97"
+            android:translationZ="0dp"
+            motion:layout_constraintBottom_toTopOf="@id/bottom_guideline"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintHorizontal_bias="0.5"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@id/back_button" />
+    </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
         <Constraint
@@ -52,4 +57,37 @@
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintStart_toStartOf="parent" />
     </ConstraintSet>
+    <ConstraintSet
+        android:id="@+id/cardview_elevation"
+        motion:deriveConstraintsFrom="@+id/start">
+        <Constraint
+            android:id="@+id/cardView"
+            android:layout_width="250dp"
+            android:layout_height="0dp"
+            android:elevation="0dp"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:translationZ="10dp"
+            motion:layout_constraintBottom_toTopOf="@id/bottom_guideline"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintHorizontal_bias="0.5"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@id/back_button" />
+    </ConstraintSet>
+    <Transition
+        motion:autoTransition="animateToEnd"
+        motion:constraintSetEnd="@+id/cardview_elevation"
+        motion:constraintSetStart="@+id/start"
+        motion:duration="1000" />
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@+id/cardview_elevation"
+        motion:duration="500">
+        <OnClick motion:targetId="@+id/open_in_full_button" />
+    </Transition>
+    <Transition
+        motion:constraintSetEnd="@+id/cardview_elevation"
+        motion:constraintSetStart="@+id/end">
+        <OnClick motion:targetId="@+id/cardView" />
+    </Transition>
 </MotionScene>

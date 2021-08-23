@@ -17,7 +17,6 @@
     <string name="search_instructions">Tap the magnifying glass to start searching</string>
     <string name="delete_all_favorites">Delete all favorites</string>
     <string name="add_image_toFavorites">Add image to favorites</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="share_text">Share text</string>
     <string name="set_wallpaper">Set wallpaper</string>
@@ -30,13 +29,13 @@
     <string name="home_and_lock_screen">Home and Lock screen</string>
     <string name="set_wallpaper_on">Set wallpaper on</string>
     <string name="delete_favorite">Delete Favorite</string>
-    <string name="pexels_com_button">Pexels.com button</string>
+    <string name="pexels_com_button">Open Pexels.com</string>
     <string name="share_button">Share button</string>
     <string name="heart_image">Heart image</string>
     <string name="back_button">Navigate back button</string>
     <string name="menu">Menu</string>
     <string name="delete_suggestion_button">Delete suggestion button</string>
-    <string name="photo_provided_by_pexels">Photo provided by Pexels</string>
+    <string name="photo_provided_by_pexels">Photo provided by Pexels.com</string>
     <string name="close_wallpaper_info">Close wallpaper info</string>
     <string name="wallpaper_info_button">Wallpaper info button</string>
     <string name="clock">Clock</string>

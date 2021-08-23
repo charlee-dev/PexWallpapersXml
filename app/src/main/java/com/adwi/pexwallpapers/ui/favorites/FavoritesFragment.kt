@@ -25,7 +25,7 @@ class FavoritesFragment :
     override fun setupToolbar() {
         binding.toolbarLayout.apply {
             titleTextView.text = getString(R.string.favorites)
-            backButton.backButtonLayout.isVisible = false
+            backButton.isVisible = false
         }
     }
 
@@ -56,10 +56,8 @@ class FavoritesFragment :
 
     override fun setupListeners() {
         binding.toolbarLayout.apply {
-            menuButton.apply {
-                menuImageView.setOnClickListener {
-                    showMenu(menuImageView, R.menu.menu_wallpapers)
-                }
+            menuButton.setOnClickListener {
+                showMenu(it, R.menu.menu_wallpapers)
             }
         }
     }

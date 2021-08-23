@@ -25,7 +25,7 @@ class WallpapersFragment :
     override fun setupToolbar() {
         binding.toolbarLayout.apply {
             titleTextView.text = getString(R.string.wallpapers)
-            backButton.backButtonLayout.isVisible = false
+            backButton.isVisible = false
         }
     }
 
@@ -111,10 +111,8 @@ class WallpapersFragment :
             retryButton.setOnClickListener {
                 viewModel.onManualRefresh()
             }
-            toolbarLayout.menuButton.apply {
-                menuImageView.setOnClickListener {
-                    showMenu(menuImageView, R.menu.menu_wallpapers)
-                }
+            toolbarLayout.menuButton.setOnClickListener {
+                showMenu(it, R.menu.menu_wallpapers)
             }
         }
     }

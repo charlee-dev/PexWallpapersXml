@@ -140,10 +140,8 @@ class SearchFragment :
             retryButton.setOnClickListener {
                 mAdapter?.retry()
             }
-            toolbarLayout.menuButton.apply {
-                menuImageView.setOnClickListener {
-                    showMenu(menuImageView, R.menu.menu_search_wallpaper)
-                }
+            toolbarLayout.menuButton.setOnClickListener {
+                showMenu(it, R.menu.menu_search_wallpaper)
             }
         }
     }
@@ -278,21 +276,17 @@ class SearchFragment :
     private fun searchViewOnFocusBehaviour(hasFocus: Boolean, sendQuery: () -> Unit) {
         binding.apply {
             toolbarLayout.apply {
+                backButton.isVisible = hasFocus
+                swipeRefreshLayout.isClickable = hasFocus
                 if (!hasFocus) {
                     suggestionsRecyclerView.fadeOut()
                     tintView.fadeOut()
-                    swipeRefreshLayout.isClickable = true
-                    backButton.backButtonLayout.visibility = View.GONE
                     filteredSuggestionList.clear()
                 } else {
                     suggestionsRecyclerView.fadeIn()
                     tintView.fadeIn()
-                    swipeRefreshLayout.isClickable = false
-                    backButton.apply {
-                        backButtonLayout.visibility = View.VISIBLE
-                        backImageView.setOnClickListener {
-                            sendQuery()
-                        }
+                    backButton.setOnClickListener {
+                        sendQuery()
                     }
                 }
             }

@@ -22,11 +22,14 @@
                 android:paddingEnd="@dimen/margin_medium"
                 android:background="@color/backgroundColor">
 
-                <include
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/back_button"
-                    layout="@layout/button_back"
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/background_rounded_stroke"
+                    android:drawableStart="@drawable/ic_arrow_back"
+                    android:paddingStart="12dp"
+                    app:drawableTint="@color/darkGray"
                     android:animateLayoutChanges="true"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -53,11 +56,15 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:queryHint="@string/search" />
 
-                <include
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/menu_button"
-                    layout="@layout/button_menu"
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:animateLayoutChanges="true"
+                    android:background="@drawable/background_rounded_stroke"
+                    android:drawableStart="@drawable/ic_menu_more"
+                    android:paddingStart="12dp"
+                    app:drawableTint="@color/darkGray"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

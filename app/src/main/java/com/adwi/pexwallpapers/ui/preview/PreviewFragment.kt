@@ -57,7 +57,7 @@ class PreviewFragment :
                     wallpaperImageView.isClickable = true
                 }
             }
-            backButton.backImageView.setOnClickListener {
+            backButton.setOnClickListener {
                 findNavController().popBackStack()
             }
             infoContainer.setOnClickListener {
@@ -70,7 +70,6 @@ class PreviewFragment :
             favoriteButton.setOnClickListener {
                 launchCoroutine {
                     viewModel.onFavoriteClick(wallpaperArgs)
-//                    executePendingBindings()
                     invalidateAll()
                 }
             }

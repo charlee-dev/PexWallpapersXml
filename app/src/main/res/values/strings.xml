@@ -48,4 +48,7 @@
     <string name="info_button">Info</string>
     <string name="open_image_in_fullscreen_button">Open image in fullscreen</string>
     <string name="done_button">Done</string>
+    <string name="you_may_also_like">You may also like:</string>
+    <string name="wallpaper_thumbnail">Wallpaper thumbnail</string>
+    <string name="photo_by">Photo by:</string>
 </resources>

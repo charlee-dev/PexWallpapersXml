@@ -76,6 +76,8 @@
         <item name="android:textColor">@color/darkGray</item>
         <item name="fontFamily">@font/montserrat_bold</item>
         <item name="android:textSize">28sp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="maxLines">1</item>
     </style>
 
     <style name="TextStyle.Normal">
@@ -94,12 +96,16 @@
         <item name="android:fontFamily">sans-serif-condensed-light</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/darkGray</item>
+        <item name="android:ellipsize">end</item>
+        <item name="maxLines">1</item>
     </style>
 
     <style name="TextStyle.Condensed">
         <item name="android:fontFamily">sans-serif-condensed-light</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/black</item>
+        <item name="android:ellipsize">end</item>
+        <item name="maxLines">1</item>
     </style>
 
     <style name="TextStyle.Header">

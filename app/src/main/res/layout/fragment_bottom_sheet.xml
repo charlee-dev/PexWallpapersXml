@@ -43,27 +43,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
+                    android:contentDescription="@string/wallpaper_thumbnail"
                     tools:src="@drawable/image_photo_placeholder" />
 
             </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/photo_by_textview"
-                style="@style/TextStyle.Condensed"
+                style="@style/TextStyle.InfoText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small"
-                android:text="Photo by:"
+                android:text="@string/photo_by"
                 app:layout_constraintStart_toEndOf="@id/wallpaper_image_cardview"
                 app:layout_constraintTop_toTopOf="@id/wallpaper_image_cardview" />
 
             <TextView
                 android:id="@+id/photographer_title_textview"
-                style="@style/TextStyle.Normal"
+                style="@style/TextStyle.InfoTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_small"
-                android:singleLine="true"
+
                 android:text="@{wallpaper.photographer}"
                 app:layout_constraintStart_toStartOf="@id/photo_by_textview"
                 app:layout_constraintTop_toBottomOf="@id/photo_by_textview"
@@ -116,12 +117,11 @@
 
             <TextView
                 android:id="@+id/photos_provided_by_textview"
+                style="@style/TextStyle.InfoText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed-light"
-                android:gravity="bottom"
                 android:text="@string/photo_provided_by_pexels"
-                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/wallpaper_image_cardview"
                 app:layout_constraintStart_toStartOf="@+id/photographer_title_textview" />
 
@@ -155,10 +155,10 @@
 
         <TextView
             android:id="@+id/more_like_this_textview"
-            style="@style/TextStyle.Condensed"
+            style="@style/TextStyle.InfoTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You may also like:"
+            android:text="@string/you_may_also_like"
             app:layout_constraintStart_toStartOf="@id/set_wallpaper_button"
             app:layout_constraintTop_toBottomOf="@id/divider_view_bottom" />
 

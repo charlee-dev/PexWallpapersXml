@@ -16,6 +16,7 @@
         android:background="@drawable/background_rounded_top"
         android:clipToPadding="true"
         android:elevation="@dimen/cardview_default_elevation"
+        android:paddingBottom="@dimen/margin_small"
         android:orientation="vertical"
         android:paddingTop="@dimen/margin_small">
 
@@ -56,7 +57,7 @@
                 style="@style/TextStyle.InfoText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginStart="@dimen/margin_medium"
                 android:text="@string/photo_by"
                 app:layout_constraintStart_toEndOf="@id/wallpaper_image_cardview"
                 app:layout_constraintTop_toTopOf="@id/wallpaper_image_cardview" />
@@ -86,18 +87,18 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:clickable="true"
-                    android:focusable="true"
                     android:contentDescription="@string/pexels_com_button"
+                    android:focusable="true"
                     android:src="@drawable/image_pexels_logo" />
 
                 <ImageView
                     android:id="@+id/share_button"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:layout_marginStart="@dimen/margin_extra_large"
+                    android:clickable="true"
                     android:contentDescription="@string/share_button"
+                    android:focusable="true"
                     android:src="@drawable/ic_share" />
 
                 <ImageView
@@ -105,11 +106,11 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="@dimen/margin_extra_large"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:contentDescription="@string/add_to_favorites"
-                    app:isFavorite="@{wallpaper.favorite}"
                     android:animateLayoutChanges="true"
+                    android:clickable="true"
+                    android:contentDescription="@string/add_to_favorites"
+                    android:focusable="true"
+                    app:isFavorite="@{wallpaper.favorite}"
                     app:layout_constraintTop_toTopOf="@+id/pexels_button"
                     app:tint="@color/red"
                     tools:src="@drawable/ic_favorite_unchecked" />
@@ -138,13 +139,13 @@
             android:id="@+id/set_wallpaper_button"
             style="@style/TextStyle.Button"
             android:layout_width="300dp"
-            android:layout_margin="8dp"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:background="@drawable/background_rounded_stroke"
-            android:translationZ="4dp"
             android:clickable="true"
             android:focusable="true"
             android:text="@string/set_wallpaper"
+            android:translationZ="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider_view_middle"
@@ -162,17 +163,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/you_may_also_like"
-            app:layout_constraintStart_toStartOf="@id/set_wallpaper_button"
+            android:layout_marginStart="@dimen/margin_medium"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/divider_view_bottom" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/more_like_this_textview" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/more_like_this_textview">
+
+            <include layout="@layout/layout_shimmer_placeholder_horizontal" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
         <TextView
             android:id="@+id/no_results_textview"

@@ -89,9 +89,13 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
                 viewModel.onCategoryNameSubmit(wallpaperArgs.categoryName)
                 viewModel.wallpaperResults.collect {
                     val wallpapers = it ?: return@collect
-                    _mAdapter?.submitList(wallpapers)
-                    noResultsTextview.isVisible = wallpapers.isEmpty()
+                    shimmerHorizontal.apply {
+                        if (wallpapers.isNullOrEmpty()) startShimmer() else stopShimmer()
+                        isVisible = wallpapers.isNullOrEmpty()
+                    }
                     recyclerView.isVisible = wallpapers.isNotEmpty()
+                    noResultsTextview.isVisible = wallpapers.isEmpty()
+                    _mAdapter?.submitList(wallpapers)
                 }
             }
         }

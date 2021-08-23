@@ -50,9 +50,38 @@
             layout="@layout/button_back"
             android:layout_width="46dp"
             android:layout_height="46dp"
-            android:layout_margin="@dimen/margin_medium"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
+            android:elevation="2dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/back_button_layout"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:background="@drawable/background_rounded_stroke"
+            android:elevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/favorite_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:animateLayoutChanges="true"
+                android:background="@color/backgroundColor"
+                android:clickable="true"
+                android:contentDescription="@string/add_to_favorites"
+                android:focusable="true"
+                app:isFavorite="@{wallpaper.favorite}"
+                app:tint="@color/red"
+                tools:src="@drawable/ic_favorite_unchecked" />
+
+        </RelativeLayout>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/bottom_guideline"
@@ -62,25 +91,32 @@
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintGuide_percent=".95"
+            app:layout_constraintGuide_percent=".9"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/info_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="25dp"
             android:background="@drawable/background_rounded_top"
-            android:elevation="@dimen/cardview_default_elevation"
+            android:elevation="10dp"
             android:orientation="vertical"
+            android:translationZ="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="@id/bottom_guideline">
+            app:layout_constraintTop_toTopOf="@id/bottom_guideline"
+            app:layout_constraintVertical_bias="1.0"
+            tools:layout_editor_absoluteX="-16dp">
 
             <ImageView
                 android:id="@+id/slider_button"
                 android:layout_width="300dp"
-                android:layout_height="10dp"
+                android:layout_height="15dp"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="@dimen/margin_extra_large"
+                android:layout_marginVertical="10dp"
+                android:elevation="5dp"
+                android:translationZ="5dp"
                 android:contentDescription="@string/close_wallpaper_info"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

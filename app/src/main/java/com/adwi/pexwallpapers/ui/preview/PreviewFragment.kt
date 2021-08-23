@@ -67,6 +67,13 @@ class PreviewFragment :
                     )
                 )
             }
+            favoriteButton.setOnClickListener {
+                launchCoroutine {
+                    viewModel.onFavoriteClick(wallpaperArgs)
+//                    executePendingBindings()
+                    invalidateAll()
+                }
+            }
         }
     }
 

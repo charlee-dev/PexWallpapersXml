@@ -19,4 +19,12 @@ class PreviewViewModel @Inject constructor(private val repository: WallpaperRepo
             }
         }
     }
+
+    fun onFavoriteClick(wallpaper: Wallpaper) {
+        val isFavorite = wallpaper.isFavorite
+        wallpaper.isFavorite = !isFavorite
+        onIO {
+            repository.updateWallpaper(wallpaper)
+        }
+    }
 }

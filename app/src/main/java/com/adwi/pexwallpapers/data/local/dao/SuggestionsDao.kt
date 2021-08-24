@@ -25,6 +25,6 @@ interface SuggestionsDao {
     @Query("SELECT * FROM suggestions_table WHERE isAddedOnSubmit = 1")
     fun getAllSuggestionsAddedOnSubmit(): Flow<List<Suggestion>>
 
-    @Query("DELETE FROM search_results WHERE searchQuery = :suggestion")
-    suspend fun deleteSuggestion(suggestion: String)
+    @Query("DELETE FROM suggestions_table WHERE name = :name")
+    suspend fun deleteSuggestion(name: String)
 }

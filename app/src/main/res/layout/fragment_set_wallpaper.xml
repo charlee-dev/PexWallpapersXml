@@ -17,16 +17,19 @@
         app:layoutDescription="@xml/fragment_set_wallpaper_xml_root_layout_scene"
         tools:context=".ui.setwallpaper.SetWallpaperFragment">
 
-        <include
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/back_button"
-            layout="@layout/button_back"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/background_rounded_stroke"
+            android:drawableStart="@drawable/ic_arrow_back"
             android:layout_marginStart="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_small"
-            android:elevation="2dp"
+            android:paddingStart="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"

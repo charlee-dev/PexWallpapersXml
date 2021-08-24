@@ -67,15 +67,15 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
                 animator.start()
             }
             doneButton.setOnClickListener {
-                showDialog(wallpaperArgs.imageUrl)
+                showDialog()
             }
-            backButton.backImageView.setOnClickListener {
+            backButton.setOnClickListener {
                 findNavController().popBackStack()
             }
         }
     }
 
-    private fun showDialog(imageUrl: String) {
+    private fun showDialog() {
         val dialog = MaterialDialog(requireContext())
             .noAutoDismiss()
             .customView(R.layout.set_wallpaper_dialog)
@@ -100,7 +100,7 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
         dialog.show()
     }
 
-    fun setWallpaper(setHomeScreen: Boolean, setLockScreen: Boolean) {
+    private fun setWallpaper(setHomeScreen: Boolean, setLockScreen: Boolean) {
         launchCoroutine {
             WallpaperSetter(
                 requireContext(),

@@ -28,8 +28,6 @@ class PreviewFragment :
     private var doubleClickCounter = 0
     private val args: PreviewFragmentArgs by navArgs()
 
-    override fun setupToolbar() {}
-
     override fun setupViews() {
         wallpaperArgs = args.wallpaper
         binding.apply {
@@ -76,12 +74,10 @@ class PreviewFragment :
         }
     }
 
+    override fun setupToolbar() {}
     override fun setupAdapters() {}
     override fun setupFlows() {}
-
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-        return false
-    }
+    override fun onMenuItemClick(item: MenuItem?) = false
 
     private fun favoriteOnDoubleClicked(wallpaper: Wallpaper) {
         launchCoroutine {

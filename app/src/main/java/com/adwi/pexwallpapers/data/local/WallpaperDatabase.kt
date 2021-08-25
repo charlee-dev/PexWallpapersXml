@@ -11,7 +11,8 @@ import com.adwi.pexwallpapers.data.local.entity.*
         CuratedWallpapers::class,
         SearchResult::class,
         SearchQueryRemoteKey::class,
-        Suggestion::class
+        Suggestion::class,
+        Settings::class
     ],
     version = 1
 )
@@ -23,4 +24,5 @@ abstract class WallpaperDatabase : RoomDatabase() {
     abstract fun searchQueryRemoteKeyDao(): SearchQueryRemoteKeyDao
     abstract fun suggestionsDao(): SuggestionsDao
     abstract fun wallpaperDao(): WallpapersDao
+    abstract fun settingsDao(): SettingsDao
 }

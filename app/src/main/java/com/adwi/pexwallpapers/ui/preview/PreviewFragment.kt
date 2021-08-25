@@ -2,9 +2,11 @@ package com.adwi.pexwallpapers.ui.preview
 
 import android.view.MenuItem
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.FragmentPreviewBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListAdapter
@@ -42,8 +44,8 @@ class PreviewFragment :
                 doubleClickCounter++
                 Timber.tag(TAG).d { "clicked: $doubleClickCounter" }
                 if (doubleClickCounter > 1) {
-                    wallpaperImageView.isClickable = false
                     doubleClickCounter = 0
+                    wallpaperImageView.isClickable = false
                     heartImageView.visibility = View.VISIBLE
                     heartImageView.playAnimation()
                     favoriteOnDoubleClicked(wallpaperArgs)
@@ -51,16 +53,16 @@ class PreviewFragment :
                 launchCoroutine {
                     delay(1000)
                     doubleClickCounter = 0
-                    heartImageView.visibility = View.GONE
+                    heartImageView.visibility = View.INVISIBLE
                     wallpaperImageView.isClickable = true
                 }
             }
             backButton.setOnClickListener {
                 findNavController().popBackStack()
             }
-            infoContainer.setOnClickListener {
+            setWallpaperButton.setOnClickListener {
                 findNavController().navigate(
-                    PreviewFragmentDirections.actionPreviewFragmentToBottomSheetFragment(
+                    PreviewFragmentDirections.actionPreviewFragmentToSetWallpaperFragment(
                         wallpaperArgs
                     )
                 )
@@ -82,6 +84,10 @@ class PreviewFragment :
     private fun favoriteOnDoubleClicked(wallpaper: Wallpaper) {
         launchCoroutine {
             viewModel.favoriteOnDoubleClicked(wallpaper)
+            val img = ContextCompat.getDrawable(requireContext(), R.drawable.ic_favorite_checked)
+            binding.apply {
+                favoriteButton.setImageDrawable(img)
+            }
         }
     }
 }

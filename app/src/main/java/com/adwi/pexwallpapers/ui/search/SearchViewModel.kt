@@ -7,7 +7,6 @@ import com.adwi.pexwallpapers.data.WallpaperRepository
 import com.adwi.pexwallpapers.data.local.entity.Suggestion
 import com.adwi.pexwallpapers.data.local.entity.suggestionNameList
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
-import com.adwi.pexwallpapers.util.Constants.Companion.LAST_QUERY
 import com.adwi.pexwallpapers.util.TypeConverter
 import com.adwi.pexwallpapers.util.onIO
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,7 +43,7 @@ class SearchViewModel @Inject constructor(
 
     init {
         initDefaultSuggestionList()
-        savedQuery = savedStateHandle.get(LAST_QUERY)
+        savedQuery = savedStateHandle.get(SAVED_QUERY)
         if (savedQuery.isNullOrBlank()) {
             currentQuery.value = savedQuery
         }
@@ -54,7 +53,7 @@ class SearchViewModel @Inject constructor(
         currentQuery.value = query
         newQueryInProgress = true
         pendingScrollToTopAfterNewQuery = true
-        savedStateHandle.set(LAST_QUERY, query)
+        savedStateHandle.set(SAVED_QUERY, query)
     }
 
     fun deleteSuggestion(name: String) {
@@ -75,5 +74,9 @@ class SearchViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    companion object {
+        private const val SAVED_QUERY = "savedQuery"
     }
 }

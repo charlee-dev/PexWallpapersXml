@@ -67,13 +67,6 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
                     viewModel.onFavoriteClick(wallpaperArgs)
                 }
             }
-            setWallpaperButton.setOnClickListener {
-                findNavController().navigate(
-                    BottomSheetFragmentDirections.actionBottomSheetFragmentToSetWallpaperFragment(
-                        wallpaperArgs
-                    )
-                )
-            }
         }
     }
 

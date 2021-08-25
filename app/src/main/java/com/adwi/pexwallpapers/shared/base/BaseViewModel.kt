@@ -1,12 +1,13 @@
 package com.adwi.pexwallpapers.shared.base
 
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
 import com.github.ajalt.timberkt.Timber
 import com.github.ajalt.timberkt.d
 
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel : ViewModel(), LifecycleObserver {
 
-    private val TAG = javaClass.simpleName
+    val TAG = javaClass.simpleName
 
     init {
         Timber.tag(TAG).d { "Initialized" }

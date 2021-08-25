@@ -135,27 +135,6 @@
             android:layout_height="@dimen/margin_small"
             app:layout_constraintTop_toBottomOf="@id/info_container" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/set_wallpaper_button"
-            style="@style/TextStyle.Button"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@drawable/background_rounded_stroke"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/set_wallpaper"
-            android:translationZ="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider_view_middle"
-            tools:layout_editor_absoluteX="36dp" />
-
-        <Space
-            android:id="@+id/divider_view_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_large"
-            app:layout_constraintTop_toBottomOf="@id/set_wallpaper_button" />
 
         <TextView
             android:id="@+id/more_like_this_textview"
@@ -165,12 +144,12 @@
             android:text="@string/you_may_also_like"
             android:layout_marginStart="@dimen/margin_medium"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider_view_bottom" />
+            app:layout_constraintTop_toBottomOf="@id/divider_view_middle" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/more_like_this_textview" />

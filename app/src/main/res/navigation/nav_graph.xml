@@ -40,8 +40,8 @@
             android:name="wallpaper"
             app:argType="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
         <action
-            android:id="@+id/action_previewFragment_to_bottomSheetFragment"
-            app:destination="@id/bottomSheetFragment" />
+            android:id="@+id/action_previewFragment_to_setWallpaperFragment"
+            app:destination="@id/setWallpaperFragment" />
     </fragment>
     <dialog
         android:id="@+id/bottomSheetFragment"
@@ -54,9 +54,6 @@
         <argument
             android:name="wallpaper"
             app:argType="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
-        <action
-            android:id="@+id/action_bottomSheetFragment_to_setWallpaperFragment"
-            app:destination="@id/setWallpaperFragment" />
     </dialog>
     <fragment
         android:id="@+id/setWallpaperFragment"
@@ -67,28 +64,8 @@
             android:name="wallpaper"
             app:argType="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
         <action
-            android:id="@+id/action_setWallpaperFragment_to_infoBottomSheetFragment"
-            app:destination="@id/infoBottomSheetFragment" />
-        <action
-            android:id="@+id/action_setWallpaperFragment_to_setWallpaperDialog"
-            app:destination="@id/setWallpaperDialog" />
+            android:id="@+id/action_setWallpaperFragment_to_bottomSheetFragment"
+            app:destination="@id/bottomSheetFragment" />
     </fragment>
-    <dialog
-        android:id="@+id/infoBottomSheetFragment"
-        android:name="com.adwi.pexwallpapers.ui.setwallpaper.infobottomsheet.InfoBottomSheetFragment"
-        android:label=""
-        tools:layout="@layout/fragment_info_bottom_sheet">
-        <argument
-            android:name="wallpaper"
-            app:argType="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
-    </dialog>
-    <dialog
-        android:id="@+id/setWallpaperDialog"
-        android:name="com.adwi.pexwallpapers.ui.setwallpaper.setwallpaperdialor.SetWallpaperDialog"
-        android:label="SetWallpaperDialog"
-        tools:layout="@layout/wallpaper_dialog_chooser">
-        <argument
-            android:name="wallpaper"
-            app:argType="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
-    </dialog>
+
 </navigation>

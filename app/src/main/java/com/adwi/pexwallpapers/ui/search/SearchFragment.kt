@@ -199,7 +199,7 @@ class SearchFragment :
                                 shimmerFrameLayout.startShimmer()
                                 errorTextview.isVisible = false
                                 retryButton.isVisible = false
-                                swipeRefreshLayout.isRefreshing = true
+                                swipeRefreshLayout.isRefreshing = !viewModel.restoringSavedQuery
                                 noResultsTextview.isVisible = false
                                 recyclerView.isVisible = mAdapter!!.itemCount > 0
 

@@ -9,6 +9,8 @@ import com.adwi.pexwallpapers.data.local.entity.suggestionNameList
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.TypeConverter
 import com.adwi.pexwallpapers.util.onIO
+import com.github.ajalt.timberkt.Timber
+import com.github.ajalt.timberkt.d
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -19,9 +21,9 @@ class SearchViewModel @Inject constructor(
     private val repository: WallpaperRepository
 ) : BaseViewModel() {
 
-    private var savedQuery: String? = null
-
     private val currentQuery = MutableStateFlow<String?>(null)
+
+    var restoringSavedQuery: Boolean = false
 
     val suggestions = repository.getAllSuggestions()
         .stateIn(viewModelScope, SharingStarted.Lazily, null)
@@ -43,17 +45,32 @@ class SearchViewModel @Inject constructor(
 
     init {
         initDefaultSuggestionList()
-        savedQuery = savedStateHandle.get(SAVED_QUERY)
-        if (savedQuery.isNullOrBlank()) {
-            currentQuery.value = savedQuery
-        }
+        restoreLastQuery()
     }
 
     fun onSearchQuerySubmit(query: String) {
         currentQuery.value = query
         newQueryInProgress = true
         pendingScrollToTopAfterNewQuery = true
-        savedStateHandle.set(SAVED_QUERY, query)
+        restoringSavedQuery = true
+        updateSavedQuery(query)
+    }
+
+    private fun updateSavedQuery(query: String) {
+        onIO {
+            repository.updateLastQuery(query)
+        }
+    }
+
+    private fun restoreLastQuery() {
+        onIO {
+            val lastQuery = repository.getSettings().lastQuery
+            Timber.tag(TAG).d { "restored: $lastQuery" }
+            currentQuery.value = lastQuery
+            newQueryInProgress = false
+            pendingScrollToTopAfterNewQuery = false
+            restoringSavedQuery = true
+        }
     }
 
     fun deleteSuggestion(name: String) {

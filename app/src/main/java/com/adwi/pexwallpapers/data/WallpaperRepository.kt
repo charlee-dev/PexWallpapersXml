@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.room.withTransaction
 import com.adwi.pexwallpapers.data.local.WallpaperDatabase
+import com.adwi.pexwallpapers.data.local.entity.Settings
 import com.adwi.pexwallpapers.data.local.entity.Suggestion
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.remote.PexApi
@@ -29,6 +30,7 @@ class WallpaperRepository @Inject constructor(
     private val favoritesDao = wallpapersDatabase.favoritesDao()
     private val curatedDao = wallpapersDatabase.curatedDao()
     private val suggestionsDao = wallpapersDatabase.suggestionsDao()
+    private val settingsDao = wallpapersDatabase.settingsDao()
 
     // Curated --------------------------------------------------------------------
 
@@ -135,4 +137,12 @@ class WallpaperRepository @Inject constructor(
 
     fun getWallpapersByCategory(categoryName: String) =
         wallpaperDao.getWallpapersOfCategory(categoryName)
+
+    // Settings
+
+    suspend fun getSettings() = settingsDao.getSettings()
+
+    suspend fun updateLastQuery(query: String) = settingsDao.updateLastQuery(query)
+
+    suspend fun insertSettings(settings: Settings) = settingsDao.insertSettings(settings)
 }

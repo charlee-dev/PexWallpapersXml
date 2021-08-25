@@ -3,6 +3,7 @@ package com.adwi.pexwallpapers
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.adwi.pexwallpapers.databinding.ActivityMainBinding
@@ -13,6 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,26 +23,29 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
+        setupViews()
+        setupListeners()
+    }
 
+    private fun setupViews() {
         binding.apply {
             bottomNav.setupWithNavController(navController)
-
-            navController.addOnDestinationChangedListener { _, destination, _ ->
-                if (destination.id == R.id.wallpapersFragment ||
-                    destination.id == R.id.searchFragment ||
-                    destination.id == R.id.favoritesFragment
-                )
-                    showBottomNav() else hideBottomNav()
-            }
         }
     }
 
-    private fun showBottomNav() {
-        binding.bottomNav.visibility = View.VISIBLE
+    private fun setupListeners() {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.wallpapersFragment ||
+                destination.id == R.id.searchFragment ||
+                destination.id == R.id.favoritesFragment ||
+                destination.id == R.id.previewFragment
+            )
+                bottomNavIsVisible(true) else bottomNavIsVisible(false)
+        }
     }
 
-    private fun hideBottomNav() {
-        binding.bottomNav.visibility = View.GONE
+    private fun bottomNavIsVisible(isVisible: Boolean) {
+        binding.bottomNav.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 }

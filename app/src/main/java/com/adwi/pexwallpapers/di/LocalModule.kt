@@ -52,4 +52,9 @@ object LocalModule {
     @Singleton
     fun provideCuratedDao(appDatabase: WallpaperDatabase): CuratedDao =
         appDatabase.curatedDao()
+
+    @Provides
+    @Singleton
+    fun provideSettingsDao(appDatabase: WallpaperDatabase): SettingsDao =
+        appDatabase.settingsDao()
 }

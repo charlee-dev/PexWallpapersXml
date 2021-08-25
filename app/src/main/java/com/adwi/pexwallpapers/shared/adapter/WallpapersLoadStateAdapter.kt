@@ -41,7 +41,6 @@ class WallpapersLoadStateAdapter(private val retry: () -> Unit) :
                     errorTextview.text = loadState.error.localizedMessage
                         ?: binding.root.context.getString(R.string.unknown_error_occurred)
                 }
-
             }
         }
     }

@@ -14,7 +14,7 @@ import com.adwi.pexwallpapers.data.local.entity.*
         Suggestion::class,
         Settings::class
     ],
-    version = 1
+    version = 2
 )
 abstract class WallpaperDatabase : RoomDatabase() {
 

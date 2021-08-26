@@ -59,8 +59,14 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
             pexelsButton.setOnClickListener {
                 UrlTools(requireContext()).openUrlInBrowser(wallpaperArgs.url!!)
             }
+
             shareButton.setOnClickListener {
-                SharingTools(requireContext()).share(wallpaperArgs.imageUrl)
+                launchCoroutine {
+                    SharingTools(requireContext()).share(
+                        wallpaperArgs.imageUrl,
+                        wallpaperArgs.photographer
+                    )
+                }
             }
             favoritesBookmark.setOnClickListener {
                 launchCoroutine {

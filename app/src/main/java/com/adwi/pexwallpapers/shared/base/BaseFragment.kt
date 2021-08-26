@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.adwi.pexwallpapers.R
 import com.github.ajalt.timberkt.Timber
 import com.github.ajalt.timberkt.d
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
@@ -18,12 +19,11 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
 
     protected abstract val viewModel: BaseViewModel?
 
-    // Binding
     private var _binding: VB? = null
     val binding get() = _binding!!
 
-    // Adapter
     var mAdapter: AD? = null
+    val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)
 
     val TAG = this::class.java.simpleName
 

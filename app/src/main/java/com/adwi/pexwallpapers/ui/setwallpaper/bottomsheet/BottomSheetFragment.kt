@@ -1,4 +1,4 @@
-package com.adwi.pexwallpapers.ui.preview.bottomsheet
+package com.adwi.pexwallpapers.ui.setwallpaper.bottomsheet
 
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels

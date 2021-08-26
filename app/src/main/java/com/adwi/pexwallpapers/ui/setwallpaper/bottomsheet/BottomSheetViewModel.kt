@@ -1,4 +1,4 @@
-package com.adwi.pexwallpapers.ui.preview.bottomsheet
+package com.adwi.pexwallpapers.ui.setwallpaper.bottomsheet
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
@@ -19,7 +19,6 @@ class BottomSheetViewModel @Inject constructor(
     private var savedCategoryName: String? = null
 
     private val categoryName = MutableStateFlow<String?>(null)
-    private val wallpaper = MutableStateFlow<Wallpaper?>(null)
 
     val wallpaperResults = categoryName.flatMapLatest { categoryName ->
         categoryName?.let {

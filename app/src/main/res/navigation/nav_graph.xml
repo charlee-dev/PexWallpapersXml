@@ -45,7 +45,7 @@
     </fragment>
     <dialog
         android:id="@+id/bottomSheetFragment"
-        android:name="com.adwi.pexwallpapers.ui.preview.bottomsheet.BottomSheetFragment"
+        android:name="com.adwi.pexwallpapers.ui.setwallpaper.bottomsheet.BottomSheetFragment"
         android:label=""
         tools:layout="@layout/fragment_bottom_sheet">
         <action

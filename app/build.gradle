@@ -53,6 +53,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.test.espresso:espresso-idling-resource:3.4.0"
     implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
 
 
     // Lifecycle

@@ -321,4 +321,8 @@ class SearchFragment :
         super.onDestroyView()
         _suggestionListAdapter = null
     }
+
+    fun scrollToTop() {
+        binding.recyclerView.smoothScrollToPosition(0)
+    }
 }

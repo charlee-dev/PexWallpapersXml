@@ -59,7 +59,9 @@ class SearchFragment :
                     override fun onQueryTextChange(query: String?): Boolean {
                         filteredSuggestionList = ArrayList()
                         if (query.isNullOrBlank()) {
-                            suggestionListAdapter?.submitList(suggestionList)
+                            if (this@SearchFragment::suggestionList.isInitialized) {
+                                suggestionListAdapter?.submitList(suggestionList)
+                            }
                         } else {
                             launchCoroutine {
                                 query.let {
@@ -148,6 +150,7 @@ class SearchFragment :
 
     override fun setupFlows() {
         binding.apply {
+
             launchCoroutine {
                 viewModel.suggestions.collect {
                     val suggestions = it ?: return@collect
@@ -313,16 +316,14 @@ class SearchFragment :
     }
 
     override fun onPause() {
-        binding.shimmerFrameLayout.stopShimmer()
         super.onPause()
+        binding.apply {
+            shimmerFrameLayout.stopShimmer()
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _suggestionListAdapter = null
-    }
-
-    fun scrollToTop() {
-        binding.recyclerView.smoothScrollToPosition(0)
     }
 }

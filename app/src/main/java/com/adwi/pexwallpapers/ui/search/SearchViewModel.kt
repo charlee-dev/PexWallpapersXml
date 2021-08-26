@@ -1,6 +1,5 @@
 package com.adwi.pexwallpapers.ui.search
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.adwi.pexwallpapers.data.WallpaperRepository
@@ -17,7 +16,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
     private val repository: WallpaperRepository
 ) : BaseViewModel() {
 
@@ -35,7 +33,6 @@ class SearchViewModel @Inject constructor(
             repository.getSearchResultsPaged(query)
         } ?: emptyFlow()
     }.cachedIn(viewModelScope)
-
 
     var refreshInProgress = false
     var pendingScrollToTopAfterRefresh = false
@@ -57,9 +54,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun updateSavedQuery(query: String) {
-        onIO {
-            repository.updateLastQuery(query)
-        }
+        onIO { repository.updateLastQuery(query) }
     }
 
     private fun restoreLastQuery() {
@@ -74,9 +69,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun deleteSuggestion(name: String) {
-        onIO {
-            repository.deleteSuggestion(name)
-        }
+        onIO { repository.deleteSuggestion(name) }
     }
 
     suspend fun addSuggestion(suggestion: Suggestion) {
@@ -91,9 +84,5 @@ class SearchViewModel @Inject constructor(
                 )
             }
         }
-    }
-
-    companion object {
-        private const val SAVED_QUERY = "savedQuery"
     }
 }

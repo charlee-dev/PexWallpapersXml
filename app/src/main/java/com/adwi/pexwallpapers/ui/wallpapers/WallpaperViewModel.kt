@@ -1,5 +1,6 @@
 package com.adwi.pexwallpapers.ui.wallpapers
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.adwi.pexwallpapers.data.WallpaperRepository
 import com.adwi.pexwallpapers.data.local.entity.Settings
@@ -17,6 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WallpaperViewModel @Inject constructor(
+    private val state: SavedStateHandle,
     private val repository: WallpaperRepository
 ) : BaseViewModel() {
 

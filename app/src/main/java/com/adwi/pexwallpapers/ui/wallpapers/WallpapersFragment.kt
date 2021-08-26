@@ -47,7 +47,6 @@ class WallpapersFragment :
         setHasOptionsMenu(true)
         binding.apply {
             shimmerFrameLayout.startShimmer()
-
             recyclerView.apply {
                 adapter = mAdapter
                 layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -60,10 +59,10 @@ class WallpapersFragment :
     }
 
     override fun setupFlows() {
-        launchCoroutine {
-            viewModel.wallpaperList.collect {
-                val result = it ?: return@collect
-                binding.apply {
+        binding.apply {
+            launchCoroutine {
+                viewModel.wallpaperList.collect {
+                    val result = it ?: return@collect
                     swipeRefreshLayout.isRefreshing = result is Resource.Loading
                     shimmerFrameLayout.apply {
                         if (result.data.isNullOrEmpty()) startShimmer() else stopShimmer()
@@ -86,19 +85,19 @@ class WallpapersFragment :
                     }
                 }
             }
-        }
 
-        launchCoroutine {
-            viewModel.events.collect { event ->
-                when (event) {
-                    is WallpaperViewModel.Event.ShowErrorMessage -> showSnackbar(
-                        getString(
-                            R.string.could_not_refresh,
-                            event.error.localizedMessage
-                                ?: getString(R.string.unknown_error_occurred)
+            launchCoroutine {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is WallpaperViewModel.Event.ShowErrorMessage -> showSnackbar(
+                            getString(
+                                R.string.could_not_refresh,
+                                event.error.localizedMessage
+                                    ?: getString(R.string.unknown_error_occurred)
+                            )
                         )
-                    )
-                }.exhaustive
+                    }.exhaustive
+                }
             }
         }
     }
@@ -124,12 +123,16 @@ class WallpapersFragment :
 
     override fun onResume() {
         super.onResume()
-        binding.shimmerFrameLayout.startShimmer()
+        binding.apply {
+            shimmerFrameLayout.startShimmer()
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        binding.shimmerFrameLayout.stopShimmer()
+        binding.apply {
+            shimmerFrameLayout.stopShimmer()
+        }
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {

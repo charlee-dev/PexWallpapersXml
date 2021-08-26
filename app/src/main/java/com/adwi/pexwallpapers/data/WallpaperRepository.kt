@@ -141,8 +141,6 @@ class WallpaperRepository @Inject constructor(
     // Settings
 
     suspend fun getSettings() = settingsDao.getSettings()
-
-    suspend fun updateLastQuery(query: String) = settingsDao.updateLastQuery(query)
-
     suspend fun insertSettings(settings: Settings) = settingsDao.insertSettings(settings)
+    suspend fun updateLastQuery(query: String) = settingsDao.updateLastQuery(query)
 }

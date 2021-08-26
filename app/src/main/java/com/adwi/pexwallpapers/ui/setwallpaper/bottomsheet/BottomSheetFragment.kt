@@ -73,6 +73,14 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
                     viewModel.onFavoriteClick(wallpaperArgs)
                 }
             }
+            downloadButton.setOnClickListener {
+                launchCoroutine {
+                    SharingTools(requireContext()).saveImageLocally(
+                        wallpaperArgs.imageUrl,
+                        wallpaperArgs.photographer
+                    )
+                }
+            }
         }
     }
 

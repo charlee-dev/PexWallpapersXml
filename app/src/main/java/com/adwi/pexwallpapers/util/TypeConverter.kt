@@ -15,7 +15,7 @@ object TypeConverter {
             photographer = wallpaper.photographer,
             color = wallpaper.color,
             imageUrl = wallpaper.src.portrait,
-            height = wallpaper.height,
+            height = heights.random(),
             width = wallpaper.width,
             url = wallpaper.pexUrl,
             photographerUrl = wallpaper.photographerUrl,
@@ -59,4 +59,6 @@ object TypeConverter {
         }
         return suggestionList
     }
+
+    private val heights = listOf(830, 1220, 975, 513, 600, 790)
 }

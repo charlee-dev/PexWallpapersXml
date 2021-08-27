@@ -12,7 +12,7 @@ import kotlinx.parcelize.RawValue
 data class Wallpaper(
     @PrimaryKey val id: Int,
     val width: Int? = null,
-    var height: Int? = null,
+    var height: Int,
     val url: String? = null,
     val photographer: String,
     val photographerUrl: String? = null,

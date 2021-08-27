@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import coil.load
 import com.adwi.pexwallpapers.R
+import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 
@@ -48,16 +49,16 @@ object BindingAdapters {
     @JvmStatic
     fun loadImageFromUrlStaggered(
         imageView: ImageView,
-        imageUrl: String,
+        wallpaper: Wallpaper,
         randomHeight: Boolean = true
     ) {
-        imageView.load(imageUrl) {
+        imageView.load(wallpaper.imageUrl) {
             placeholder(shimmerDrawable)
             placeholder(R.drawable.placeholder_item)
             crossfade(600)
         }
         if (randomHeight) {
-            imageView.layoutParams.height = heights.random()
+            imageView.layoutParams.height = wallpaper.height
         } else {
             imageView.layoutParams.height = 500
         }
@@ -86,6 +87,4 @@ object BindingAdapters {
     val shimmerDrawable = ShimmerDrawable().apply {
         setShimmer(shimmer)
     }
-
-    private val heights = listOf(830, 1220, 975, 513, 600, 790)
 }

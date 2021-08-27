@@ -1,13 +1,428 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.adwi.pexwallpapers.data.local.entity.Settings" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/settings_scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_layout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/margin_medium">
+
+                    <LinearLayout
+                        android:id="@+id/notifications_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:layout_marginVertical="@dimen/margin_medium"
+                        android:background="@drawable/background_rounded_stroke"
+                        android:orientation="vertical"
+                        android:padding="@dimen/margin_medium"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:id="@+id/push_notifications_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/push_notifications_title"
+                                style="@style/TextStyle.Normal.Condensed"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/push_notifications" />
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/push_notifications_switch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/switchHeight"
+                                tools:checked="true" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/new_notification_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/new_notification_title"
+                                style="@style/TextStyle.Normal.Condensed"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/new_wallpaper_set" />
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/new_notification_switch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/switchHeight"
+                                tools:checked="true" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/wallpaper_recomendations_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/wallpaper_recomendations_title"
+                                style="@style/TextStyle.Normal.Condensed"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/wallpaper_recomendations" />
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/wallpaper_recomendations_switch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/switchHeight"
+                                tools:checked="false" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/TextStyle.Header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:background="@color/backgroundColor"
+                        android:text="@string/notifications"
+                        app:layout_constraintBottom_toTopOf="@id/notifications_layout"
+                        app:layout_constraintStart_toStartOf="@id/notifications_layout"
+                        app:layout_constraintTop_toTopOf="@id/notifications_layout" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/margin_medium">
+
+                    <LinearLayout
+                        android:id="@+id/auto_wallpaper_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:layout_marginVertical="@dimen/margin_medium"
+                        android:background="@drawable/background_rounded_stroke"
+                        android:orientation="vertical"
+                        android:padding="@dimen/margin_medium"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:id="@+id/auto_wallpaper_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/auto_wallpaper_title"
+                                style="@style/TextStyle.Normal.Condensed"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/auto_change_wallpaper" />
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/auto_wallpaper_switch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/switchHeight"
+                                tools:checked="true" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/period_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/period_title"
+                                style="@style/TextStyle.Normal.Condensed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_small"
+                                android:text="@string/change_wallpaper_every" />
+
+                            <RadioGroup
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="@dimen/margin_small"
+                                android:orientation="horizontal">
+
+                                <RadioButton
+                                    android:id="@+id/minutes_radio_button"
+                                    style="@style/RadioWithTextOnTop"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/minutes" />
+
+                                <RadioButton
+                                    android:id="@+id/hours_radio_button"
+                                    style="@style/RadioWithTextOnTop"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/hours" />
+
+                                <RadioButton
+                                    android:id="@+id/days_radio_button"
+                                    style="@style/RadioWithTextOnTop"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/days" />
+
+
+                                <RadioButton
+                                    android:id="@+id/weeks_radio_button"
+                                    style="@style/RadioWithTextOnTop"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/weeks" />
+
+                            </RadioGroup>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/period_duration_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/period_duration_title"
+                                style="@style/TextStyle.Normal.Condensed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/time_range" />
+
+                            <LinearLayout
+                                android:id="@+id/period_weeks_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="1"
+                                    tools:ignore="HardcodedText" />
+
+                                <com.google.android.material.slider.Slider
+                                    android:id="@+id/period_weeks_slider"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/sliderHeight"
+                                    android:layout_weight="1"
+                                    android:stepSize="1.0"
+                                    android:value="10"
+                                    android:valueFrom="1.0"
+                                    android:valueTo="12.0" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="24"
+                                    tools:ignore="HardcodedText" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/TextStyle.Header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:background="@color/backgroundColor"
+                        android:text="@string/automation"
+                        app:layout_constraintBottom_toTopOf="@id/auto_wallpaper_layout"
+                        app:layout_constraintStart_toStartOf="@id/auto_wallpaper_layout"
+                        app:layout_constraintTop_toTopOf="@id/auto_wallpaper_layout" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/margin_medium">
+
+                    <LinearLayout
+                        android:id="@+id/data_usage_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:layout_marginVertical="@dimen/margin_medium"
+                        android:background="@drawable/background_rounded_stroke"
+                        android:orientation="vertical"
+                        android:padding="@dimen/margin_medium"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:id="@+id/download_over_wifi_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            tools:ignore="UselessParent">
+
+                            <TextView
+                                android:id="@+id/download_over_wifi_title"
+                                style="@style/TextStyle.Normal.Condensed"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/download_wallpapers_only_over_wi_fi" />
+
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/download_over_wifi_switch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/switchHeight"
+                                tools:checked="true" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/data_usage_header"
+                        style="@style/TextStyle.Header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:background="@color/backgroundColor"
+                        android:text="@string/data_usage"
+                        app:layout_constraintBottom_toTopOf="@id/data_usage_layout"
+                        app:layout_constraintStart_toStartOf="@id/data_usage_layout"
+                        app:layout_constraintTop_toTopOf="@id/data_usage_layout" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/margin_medium">
+
+                    <LinearLayout
+                        android:id="@+id/info_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:layout_marginVertical="@dimen/margin_medium"
+                        android:background="@drawable/background_rounded_stroke"
+                        android:orientation="vertical"
+                        android:padding="@dimen/margin_medium"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/about_button"
+                            style="@style/TextStyle.Normal.Condensed"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_medium"
+                            android:drawablePadding="@dimen/margin_medium"
+                            android:text="@string/about_us"
+                            app:drawableStartCompat="@drawable/ic_info" />
+
+                        <TextView
+                            android:id="@+id/support_button"
+                            style="@style/TextStyle.Normal.Condensed"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_medium"
+                            android:drawablePadding="@dimen/margin_medium"
+                            android:text="@string/support"
+                            app:drawableStartCompat="@drawable/ic_email" />
+
+                        <TextView
+                            android:id="@+id/privacy_policy_button"
+                            style="@style/TextStyle.Normal.Condensed"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_medium"
+                            android:drawablePadding="@dimen/margin_medium"
+                            android:text="@string/privacy_policy"
+                            app:drawableStartCompat="@drawable/ic_privacy" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/info_header"
+                        style="@style/TextStyle.Header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:background="@color/backgroundColor"
+                        android:text="@string/info"
+                        app:layout_constraintBottom_toTopOf="@id/info_layout"
+                        app:layout_constraintStart_toStartOf="@id/info_layout"
+                        app:layout_constraintTop_toTopOf="@id/info_layout" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_medium" />
+
+            </LinearLayout>
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

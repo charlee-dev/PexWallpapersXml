@@ -81,9 +81,17 @@
     </style>
 
     <style name="TextStyle.Normal">
-        <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/darkGray</item>
+    </style>
+
+    <style name="TextStyle.Normal.Regular">
+        <item name="android:fontFamily">@font/montserrat</item>
+
+    </style>
+
+    <style name="TextStyle.Normal.Condensed">
+        <item name="android:fontFamily">sans-serif-condensed-light</item>
     </style>
 
     <style name="TextStyle.InfoTitle">
@@ -109,9 +117,9 @@
     </style>
 
     <style name="TextStyle.Header">
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/backgroundColor</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/darkGray</item>
     </style>
 
     <style name="TextStyle.Button">
@@ -146,5 +154,13 @@
     <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/image_corner_radius</item>
+    </style>
+
+    <style name="RadioWithTextOnTop">
+        <item name="android:button">@null</item>
+        <item name="android:drawableBottom">?android:attr/listChoiceIndicatorSingle</item>
+        <item name="android:gravity">center_horizontal|bottom</item>
+        <item name="textAllCaps">true</item>
+        <item name="fontFamily">sans-serif-condensed-light</item>
     </style>
 </resources>

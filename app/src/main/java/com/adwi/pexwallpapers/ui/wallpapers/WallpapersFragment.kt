@@ -31,7 +31,6 @@ class WallpapersFragment :
 
     override fun setupAdapters() {
         mAdapter = WallpaperListAdapter(
-            requireActivity = requireActivity(),
             onItemClick = { wallpaper ->
                 findNavController().navigate(
                     WallpapersFragmentDirections.actionWallpapersFragmentToPreviewFragment(
@@ -39,7 +38,10 @@ class WallpapersFragment :
                     )
                 )
             },
-            itemRandomHeight = true
+            onItemLongClick = { wallpaper ->
+                viewModel.onFavoriteClick(wallpaper)
+            },
+            itemRandomHeight = true,
         )
     }
 

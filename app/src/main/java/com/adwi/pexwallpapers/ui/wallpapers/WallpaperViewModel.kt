@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.adwi.pexwallpapers.data.WallpaperRepository
 import com.adwi.pexwallpapers.data.local.entity.Settings
+import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.Resource
 import com.adwi.pexwallpapers.util.onIO
@@ -68,6 +69,14 @@ class WallpaperViewModel @Inject constructor(
             onIO {
                 refreshTriggerChannel.send(Refresh.FORCE)
             }
+    }
+
+    fun onFavoriteClick(wallpaper: Wallpaper) {
+        val isFavorite = wallpaper.isFavorite
+        wallpaper.isFavorite = !isFavorite
+        onIO {
+            repository.updateWallpaper(wallpaper)
+        }
     }
 
     enum class Refresh {

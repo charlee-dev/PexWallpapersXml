@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="wallpaper"
+            type="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/buttons_container_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/button_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/pexels_button_bottom_sheet"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:clickable="true"
+                android:contentDescription="@string/pexels_com_button"
+                android:focusable="true"
+                android:src="@drawable/image_pexels_logo" />
+
+            <ImageView
+                android:id="@+id/share_button_bottom_sheet"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="@dimen/margin_small"
+                android:clickable="true"
+                android:contentDescription="@string/share_button"
+                android:focusable="true"
+                android:src="@drawable/ic_share" />
+
+            <ImageView
+                android:id="@+id/download_button_bottom_sheet"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="@dimen/margin_small"
+                android:clickable="true"
+                android:contentDescription="@string/download"
+                android:focusable="true"
+                android:src="@drawable/ic_download" />
+
+            <ImageView
+                android:id="@+id/favorites_bookmark_bottom_sheet"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="@dimen/margin_small"
+                android:animateLayoutChanges="true"
+                android:clickable="true"
+                android:contentDescription="@string/add_to_favorites"
+                android:focusable="true"
+                app:isFavorite="@{wallpaper.favorite}"
+                app:tint="@color/red" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

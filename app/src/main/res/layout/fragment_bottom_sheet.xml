@@ -16,9 +16,9 @@
         android:background="@drawable/background_rounded_top"
         android:clipToPadding="true"
         android:elevation="@dimen/cardview_default_elevation"
-        android:paddingBottom="@dimen/margin_small"
         android:orientation="vertical"
-        android:paddingTop="@dimen/margin_small">
+        android:paddingTop="@dimen/margin_small"
+        android:paddingBottom="@dimen/margin_small">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/info_container"
@@ -97,71 +97,26 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:id="@+id/button_container"
+        <include
+            android:id="@+id/buttons_bottom_sheet"
+            layout="@layout/buttons_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/info_container">
-
-            <ImageView
-                android:id="@+id/pexels_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:clickable="true"
-                android:contentDescription="@string/pexels_com_button"
-                android:focusable="true"
-                android:src="@drawable/image_pexels_logo" />
-
-            <ImageView
-                android:id="@+id/share_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="@dimen/margin_medium"
-                android:clickable="true"
-                android:contentDescription="@string/share_button"
-                android:focusable="true"
-                android:src="@drawable/ic_share" />
-
-            <ImageView
-                android:id="@+id/download_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="@dimen/margin_medium"
-                android:clickable="true"
-                android:contentDescription="@string/download"
-                android:focusable="true"
-                android:src="@drawable/ic_download" />
-
-            <ImageView
-                android:id="@+id/favorites_bookmark"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="@dimen/margin_medium"
-                android:animateLayoutChanges="true"
-                android:clickable="true"
-                android:contentDescription="@string/add_to_favorites"
-                android:focusable="true"
-                app:isFavorite="@{wallpaper.favorite}"
-                app:layout_constraintTop_toTopOf="@+id/pexels_button"
-                app:tint="@color/red"
-                tools:src="@drawable/ic_favorite_unchecked" />
-
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@id/info_container"
+            app:wallpaper="@{wallpaper}" />
 
         <TextView
             android:id="@+id/more_like_this_textview"
             style="@style/TextStyle.InfoTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/you_may_also_like"
-            android:layout_marginTop="@dimen/margin_medium"
             android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/you_may_also_like"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_container" />
+            app:layout_constraintTop_toBottomOf="@id/buttons_bottom_sheet" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -176,8 +131,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_medium"
-            android:visibility="gone"
             android:orientation="horizontal"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/more_like_this_textview">

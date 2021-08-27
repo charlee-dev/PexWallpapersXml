@@ -2,6 +2,7 @@ package com.adwi.pexwallpapers.ui.favorites
 
 import androidx.lifecycle.viewModelScope
 import com.adwi.pexwallpapers.data.WallpaperRepository
+import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.onIO
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +21,14 @@ class FavoritesViewModel @Inject constructor(
     fun onDeleteAllFavorites() {
         onIO {
             repository.resetAllFavorites()
+        }
+    }
+
+    fun onFavoriteClick(wallpaper: Wallpaper) {
+        val isFavorite = wallpaper.isFavorite
+        wallpaper.isFavorite = !isFavorite
+        onIO {
+            repository.updateWallpaper(wallpaper)
         }
     }
 }

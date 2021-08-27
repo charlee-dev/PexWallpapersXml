@@ -13,7 +13,6 @@ import com.adwi.pexwallpapers.util.launchCoroutine
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
-
 @AndroidEntryPoint
 class FavoritesFragment :
     BaseFragment<FragmentFavoritesBinding, WallpaperListAdapter>(
@@ -31,13 +30,15 @@ class FavoritesFragment :
 
     override fun setupAdapters() {
         mAdapter = WallpaperListAdapter(
-            requireActivity = requireActivity(),
             onItemClick = { wallpaper ->
                 findNavController().navigate(
                     FavoritesFragmentDirections.actionFavoritesFragmentToPreviewFragment(
                         wallpaper
                     )
                 )
+            },
+            onItemLongClick = { wallpaper ->
+                viewModel.onFavoriteClick(wallpaper)
             },
             itemRandomHeight = false
         )

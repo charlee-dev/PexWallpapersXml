@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.adwi.pexwallpapers.data.WallpaperRepository
 import com.adwi.pexwallpapers.data.local.entity.Suggestion
+import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.local.entity.suggestionNameList
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.TypeConverter
@@ -83,6 +84,14 @@ class SearchViewModel @Inject constructor(
                     TypeConverter.defaultSuggestionNameListToSuggestions(suggestionNameList)
                 )
             }
+        }
+    }
+
+    fun onFavoriteClick(wallpaper: Wallpaper) {
+        val isFavorite = wallpaper.isFavorite
+        wallpaper.isFavorite = !isFavorite
+        onIO {
+            repository.updateWallpaper(wallpaper)
         }
     }
 }

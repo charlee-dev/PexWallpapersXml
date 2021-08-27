@@ -12,6 +12,7 @@ import com.adwi.pexwallpapers.shared.base.BaseBottomSheet
 import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.shared.tools.UrlTools
 import com.adwi.pexwallpapers.util.launchCoroutine
+import com.adwi.pexwallpapers.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -26,7 +27,6 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
 
     override fun setupAdapters() {
         _mAdapter = WallpaperListAdapter(
-            requireActivity = requireActivity(),
             onItemClick = { wallpaper ->
                 findNavController().navigate(
                     BottomSheetFragmentDirections.actionBottomSheetFragmentToPreviewFragment(
@@ -34,7 +34,10 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
                     )
                 )
             },
-            itemRandomHeight = false
+            onItemLongClick = { wallpaper ->
+                viewModel.onFavoriteClick(wallpaper)
+            },
+            itemRandomHeight = false,
         )
     }
 
@@ -56,29 +59,35 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
 
     override fun setupListeners() {
         binding.apply {
-            pexelsButton.setOnClickListener {
-                UrlTools(requireContext()).openUrlInBrowser(wallpaperArgs.url!!)
-            }
+            buttonsBottomSheet.apply {
+                pexelsButtonBottomSheet.setOnClickListener {
+                    UrlTools(requireContext()).openUrlInBrowser(wallpaperArgs.url!!)
+                }
 
-            shareButton.setOnClickListener {
-                launchCoroutine {
-                    SharingTools(requireContext()).share(
-                        wallpaperArgs.imageUrl,
-                        wallpaperArgs.photographer
-                    )
+                shareButtonBottomSheet.setOnClickListener {
+                    launchCoroutine {
+                        SharingTools(requireContext()).share(
+                            wallpaperArgs.imageUrl,
+                            wallpaperArgs.photographer
+                        )
+                    }
                 }
-            }
-            favoritesBookmark.setOnClickListener {
-                launchCoroutine {
-                    viewModel.onFavoriteClick(wallpaperArgs)
+                favoritesBookmarkBottomSheet.setOnClickListener {
+                    launchCoroutine {
+                        viewModel.onFavoriteClick(wallpaperArgs)
+                    }
                 }
-            }
-            downloadButton.setOnClickListener {
-                launchCoroutine {
-                    SharingTools(requireContext()).saveImageLocally(
-                        wallpaperArgs.imageUrl,
-                        wallpaperArgs.photographer
-                    )
+                downloadButtonBottomSheet.setOnClickListener {
+                    launchCoroutine {
+                        SharingTools(requireContext()).saveImageLocally(
+                            wallpaperArgs.imageUrl,
+                            wallpaperArgs.photographer
+                        )
+                        showToast(
+                            requireContext(),
+                            "Saved to Gallery - Photo by ${wallpaperArgs.photographer}"
+                        )
+                    }
                 }
             }
         }

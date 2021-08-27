@@ -13,7 +13,6 @@ import androidx.core.content.ContextCompat.startActivity
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
-import com.adwi.pexwallpapers.util.showToast
 import java.io.File
 import java.io.File.separator
 import java.io.FileOutputStream
@@ -41,7 +40,6 @@ class SharingTools(private val context: Context) {
             photographer,
             "Image of $photographer"
         )
-        showToast(context, "Saved to Gallery - Photo by $photographer")
     }
 
     private suspend fun saveImageToInternalStorage(url: String): Uri? {

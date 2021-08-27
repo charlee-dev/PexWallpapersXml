@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
 
-
 @AndroidEntryPoint
 class SearchFragment :
     BaseFragment<FragmentSearchBinding, WallpaperListPagingAdapter>(
@@ -88,7 +87,6 @@ class SearchFragment :
 
     override fun setupAdapters() {
         mAdapter = WallpaperListPagingAdapter(
-            requireActivity = requireActivity(),
             onItemClick = { wallpaper ->
                 findNavController().navigate(
                     SearchFragmentDirections.actionSearchFragmentToPreviewFragment(
@@ -96,7 +94,10 @@ class SearchFragment :
                     )
                 )
             },
-            itemRandomHeight = true
+            onItemLongClick = { wallpaper ->
+                viewModel.onFavoriteClick(wallpaper)
+            },
+            itemRandomHeight = true,
         )
         _suggestionListAdapter = SuggestionListAdapter(
             onItemClick = { suggestion ->

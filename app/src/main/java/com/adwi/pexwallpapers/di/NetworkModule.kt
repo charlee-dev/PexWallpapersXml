@@ -28,7 +28,7 @@ object NetworkModule {
         val logging = HttpLoggingInterceptor { message ->
             Timber.d(message)
         }
-        logging.level = HttpLoggingInterceptor.Level.BODY
+        logging.level = HttpLoggingInterceptor.Level.BASIC
         return logging
     }
 

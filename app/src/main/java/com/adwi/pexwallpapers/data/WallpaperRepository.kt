@@ -5,7 +5,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.room.withTransaction
 import com.adwi.pexwallpapers.data.local.WallpaperDatabase
-import com.adwi.pexwallpapers.data.local.entity.ChangeWallpaperPeriod
 import com.adwi.pexwallpapers.data.local.entity.Settings
 import com.adwi.pexwallpapers.data.local.entity.Suggestion
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
@@ -141,7 +140,7 @@ class WallpaperRepository @Inject constructor(
 
     // Settings
 
-    fun getSettings() = settingsDao.getSettings()
+    suspend fun getSettings() = settingsDao.getSettings()
 
     suspend fun insertSettings(settings: Settings) =
         settingsDao.insertSettings(settings)
@@ -164,9 +163,11 @@ class WallpaperRepository @Inject constructor(
     suspend fun updateDownloadOverWiFi(enabled: Boolean) =
         settingsDao.updateDownloadOverWiFi(enabled)
 
-    suspend fun updateChangePeriodType(period: ChangeWallpaperPeriod) =
-        settingsDao.updateChangePeriodType(period)
+    suspend fun updateChangePeriodType(radioButton: Int) =
+        settingsDao.updateChangePeriodType(radioButton)
 
-    suspend fun updateChangePeriodValue(periodValue: Int) =
+    suspend fun updateChangePeriodValue(periodValue: Float) =
         settingsDao.updateChangePeriodValue(periodValue)
+
+    suspend fun resetAllSettings() = settingsDao.insertSettings(Settings())
 }

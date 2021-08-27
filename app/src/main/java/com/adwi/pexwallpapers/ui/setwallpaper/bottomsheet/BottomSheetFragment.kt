@@ -10,7 +10,6 @@ import com.adwi.pexwallpapers.databinding.FragmentBottomSheetBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseBottomSheet
 import com.adwi.pexwallpapers.shared.tools.SharingTools
-import com.adwi.pexwallpapers.shared.tools.UrlTools
 import com.adwi.pexwallpapers.util.launchCoroutine
 import com.adwi.pexwallpapers.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,12 +60,12 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
         binding.apply {
             buttonsBottomSheet.apply {
                 pexelsButtonBottomSheet.setOnClickListener {
-                    UrlTools(requireContext()).openUrlInBrowser(wallpaperArgs.url!!)
+                    SharingTools(requireContext()).openUrlInBrowser(wallpaperArgs.url!!)
                 }
 
                 shareButtonBottomSheet.setOnClickListener {
                     launchCoroutine {
-                        SharingTools(requireContext()).share(
+                        SharingTools(requireContext()).shareImage(
                             wallpaperArgs.imageUrl,
                             wallpaperArgs.photographer
                         )

@@ -12,7 +12,6 @@ import com.adwi.pexwallpapers.databinding.FragmentPreviewBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.shared.tools.SharingTools
-import com.adwi.pexwallpapers.shared.tools.UrlTools
 import com.adwi.pexwallpapers.util.launchCoroutine
 import com.adwi.pexwallpapers.util.showSnackbar
 import com.github.ajalt.timberkt.Timber
@@ -76,11 +75,11 @@ class PreviewFragment :
                 )
             }
             pexelsButton.setOnClickListener {
-                UrlTools(requireContext()).openUrlInBrowser(wallpaperArgs.url!!)
+                SharingTools(requireContext()).openUrlInBrowser(wallpaperArgs.url!!)
             }
             shareButton.setOnClickListener {
                 launchCoroutine {
-                    SharingTools(requireContext()).share(
+                    SharingTools(requireContext()).shareImage(
                         wallpaperArgs.imageUrl,
                         wallpaperArgs.photographer
                     )

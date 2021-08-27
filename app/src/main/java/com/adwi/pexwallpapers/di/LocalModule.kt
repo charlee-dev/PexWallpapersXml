@@ -24,7 +24,6 @@ object LocalModule {
                 WallpaperDatabase::class.java,
                 WALLPAPER_DATABASE
             )
-//                TODO("specify autoMigrations")
             .fallbackToDestructiveMigration()
             .build()
 

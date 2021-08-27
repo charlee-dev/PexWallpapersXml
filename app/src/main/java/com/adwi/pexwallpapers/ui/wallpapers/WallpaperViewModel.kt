@@ -1,10 +1,9 @@
 package com.adwi.pexwallpapers.ui.wallpapers
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.adwi.pexwallpapers.data.WallpaperRepository
-import com.adwi.pexwallpapers.data.local.entity.Settings
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
+import com.adwi.pexwallpapers.data.local.entity.defaultSettings
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.Resource
 import com.adwi.pexwallpapers.util.onIO
@@ -19,7 +18,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WallpaperViewModel @Inject constructor(
-    private val state: SavedStateHandle,
     private val repository: WallpaperRepository
 ) : BaseViewModel() {
 
@@ -59,7 +57,7 @@ class WallpaperViewModel @Inject constructor(
             }
         onIO {
             if (repository.getSettings() == null) {
-                repository.insertSettings(Settings())
+                repository.insertSettings(defaultSettings)
             }
         }
     }

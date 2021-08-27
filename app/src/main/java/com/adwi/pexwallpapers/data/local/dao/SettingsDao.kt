@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.adwi.pexwallpapers.data.local.entity.ChangeWallpaperPeriod
 import com.adwi.pexwallpapers.data.local.entity.Settings
 
 @Dao
@@ -13,8 +12,8 @@ interface SettingsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSettings(setting: Settings)
 
-    @Query("SELECT * FROM settings WHERE id = :id")
-    fun getSettings(id: Int = 1): Settings
+    @Query("SELECT * FROM settings WHERE id = 1")
+    suspend fun getSettings(): Settings
 
     @Query("UPDATE settings SET lastQuery = :query")
     suspend fun updateLastQuery(query: String)
@@ -34,9 +33,9 @@ interface SettingsDao {
     @Query("UPDATE settings SET downloadOverWiFi = :enabled")
     suspend fun updateDownloadOverWiFi(enabled: Boolean)
 
-    @Query("UPDATE settings SET changeWallpaperPeriod = :period")
-    suspend fun updateChangePeriodType(period: ChangeWallpaperPeriod)
+    @Query("UPDATE settings SET selectedButton = :radioButton")
+    suspend fun updateChangePeriodType(radioButton: Int)
 
-    @Query("UPDATE settings SET changePeriod = :periodValue")
-    suspend fun updateChangePeriodValue(periodValue: Int)
+    @Query("UPDATE settings SET sliderValue = :periodValue")
+    suspend fun updateChangePeriodValue(periodValue: Float)
 }

@@ -2,19 +2,31 @@ package com.adwi.pexwallpapers.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.adwi.pexwallpapers.R
+
 
 @Entity(tableName = "settings")
 class Settings(
     @PrimaryKey(autoGenerate = false)
     val id: Int = 1,
-    val lastQuery: String = "",
+    val lastQuery: String = "Flowers",
     var pushNotification: Boolean = true,
-    var newWallpaperSet: Boolean = true,
+    var newWallpaperSet: Boolean = false,
     var wallpaperRecommendations: Boolean = true,
-    var autoChangeWallpaper: Boolean = true,
-    var changeWallpaperPeriod: ChangeWallpaperPeriod = ChangeWallpaperPeriod.MINUTES,
-    val changePeriod: Int = 5,
+    var autoChangeWallpaper: Boolean = false,
+    var selectedButton: Int = R.id.hours_radio_button,
+    val sliderValue: Float = 5f,
     var downloadOverWiFi: Boolean = true
 )
 
-enum class ChangeWallpaperPeriod { MINUTES, HOURS, DAYS, WEEKS }
+val defaultSettings = Settings(
+    id = 1,
+    lastQuery = "Flowers",
+    pushNotification = true,
+    newWallpaperSet = false,
+    wallpaperRecommendations = true,
+    autoChangeWallpaper = false,
+    selectedButton = R.id.hours_radio_button,
+    sliderValue = 5f,
+    downloadOverWiFi = false
+)

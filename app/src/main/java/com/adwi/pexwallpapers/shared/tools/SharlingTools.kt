@@ -20,16 +20,30 @@ import java.io.OutputStream
 
 class SharingTools(private val context: Context) {
 
-    suspend fun share(imageUrl: String, photographer: String) {
+    fun openUrlInBrowser(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        startActivity(context, intent, null)
+    }
+
+    fun contactSupport() {
+        val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:adrianwitaszak@gmial.com")
+            putExtra(Intent.EXTRA_SUBJECT, "Support request Nr. 12345678")
+        }
+        startActivity(context, Intent.createChooser(emailIntent, "Choose an app"), null)
+    }
+
+    suspend fun shareImage(imageUrl: String, photographer: String) {
         val uri = saveImageToInternalStorage(imageUrl)
-        val intent = Intent()
-        intent.action = Intent.ACTION_SEND
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        intent.setDataAndType(uri, "image/*")
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Picture by $photographer")
-        intent.putExtra(Intent.EXTRA_STREAM, uri)
-        startActivity(context, Intent.createChooser(intent, "Choose an app"), null)
+        val imageIntent = Intent(Intent.ACTION_SEND).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            setDataAndType(uri, "image/*")
+            putExtra(Intent.EXTRA_SUBJECT, "Picture by $photographer")
+            putExtra(Intent.EXTRA_STREAM, uri)
+        }
+        startActivity(context, Intent.createChooser(imageIntent, "Choose an app"), null)
     }
 
     suspend fun saveImageLocally(imageUrl: String, photographer: String) {

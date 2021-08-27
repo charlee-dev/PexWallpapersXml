@@ -16,6 +16,6 @@
     <dimen name="icon_text_size">8sp</dimen>
 
     <dimen name="dialogButtonWidth">250dp</dimen>
-    <dimen name="switchHeight">35dp</dimen>
-    <dimen name="sliderHeight">35dp</dimen>
+    <dimen name="switchHeight">48dp</dimen>
+    <dimen name="sliderHeight">48dp</dimen>
 </resources>

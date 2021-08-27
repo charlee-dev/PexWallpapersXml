@@ -75,7 +75,7 @@
     <string name="automation">Automation</string>
     <string name="data_usage">Data usage</string>
     <string name="download_wallpapers_only_over_wi_fi">Download wallpapers only over Wi-Fi</string>
-    <string name="time_range">Time range</string>
+    <string name="time_range">Time range: </string>
     <string name="push_notifications">Push notifications</string>
     <string name="new_wallpaper_set">New wallpaper set</string>
     <string name="wallpaper_recomendations">Wallpaper recomendations</string>
@@ -85,4 +85,7 @@
     <string name="hours">Hours</string>
     <string name="days">Days</string>
     <string name="weeks">Weeks</string>
+    <string name="set_period">Set period</string>
+    <string name="sign_out">Sign out</string>
+    <string name="reset_settings">Reset settings</string>
 </resources>

@@ -51,7 +51,7 @@
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_preview_bottom_sheet.xml" value="0.5722222222222222" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_search.xml" value="0.36" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_set_wallpaper.xml" value="0.40925925925925927" />
-        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_settings.xml" value="0.5217391304347826" />
+        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_settings.xml" value="0.440625" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_wallpapers.xml" value="0.27469135802469136" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/layout_back_button.xml" value="0.4962962962962963" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/layout_chip_item.xml" value="0.33697916666666666" />
@@ -88,6 +88,7 @@
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/menu/menu_favorites.xml" value="0.6697916666666667" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/menu/menu_search_wallpaper.xml" value="0.309375" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/menu/menu_wallpapers.xml" value="0.6697916666666667" />
+        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/menu/settings_menu.xml" value="0.6697916666666667" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/menu/wallpaper_popup_menu.xml" value="0.6594871794871795" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/mipmap-anydpi-v26/ic_phone.xml" value="0.6864583333333333" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/xml/file_provider.xml" value="0.6594871794871795" />

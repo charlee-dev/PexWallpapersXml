@@ -1,11 +1,30 @@
 package com.adwi.pexwallpapers.ui.settings
 
+import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.WallpaperRepository
-import com.adwi.pexwallpapers.data.local.entity.ChangeWallpaperPeriod
+import com.adwi.pexwallpapers.data.local.entity.Settings
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.onIO
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
 
-class SettingsViewModel(private val repository: WallpaperRepository) : BaseViewModel() {
+@HiltViewModel
+class SettingsViewModel @Inject constructor(private val repository: WallpaperRepository) :
+    BaseViewModel() {
+
+    val currentChangePeriodType =
+        MutableStateFlow(R.id.hours_radio_button)
+
+    private val _currentSettings = MutableStateFlow(Settings())
+    val currentSettings: StateFlow<Settings> = _currentSettings
+
+    init {
+        onIO {
+            _currentSettings.value = repository.getSettings()
+        }
+    }
 
     fun updatePushNotification(enabled: Boolean) {
         onIO { repository.updatePushNotification(enabled) }
@@ -27,11 +46,16 @@ class SettingsViewModel(private val repository: WallpaperRepository) : BaseViewM
         onIO { repository.updateDownloadOverWiFi(enabled) }
     }
 
-    fun updateChangeWallpaperPeriod(period: ChangeWallpaperPeriod) {
-        onIO { repository.updateChangePeriodType(period) }
+    fun updateChangePeriodType(radioButton: Int) {
+        currentChangePeriodType.value = radioButton
+        onIO { repository.updateChangePeriodType(radioButton) }
     }
 
-    fun updateChangePeriodValue(periodValue: Int) {
+    fun updateChangePeriodValue(periodValue: Float) {
         onIO { repository.updateChangePeriodValue(periodValue) }
+    }
+
+    fun resetSettings() {
+        onIO { repository.resetAllSettings() }
     }
 }

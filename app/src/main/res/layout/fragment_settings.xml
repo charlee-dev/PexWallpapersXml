@@ -5,9 +5,11 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
-            name="viewModel"
-            type="com.adwi.pexwallpapers.data.local.entity.Settings" />
+            name="settingsViewModel"
+            type="com.adwi.pexwallpapers.ui.settings.SettingsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,6 +51,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_medium"
                         android:layout_marginVertical="@dimen/margin_medium"
+                        android:animateLayoutChanges="true"
                         android:background="@drawable/background_rounded_stroke"
                         android:orientation="vertical"
                         android:padding="@dimen/margin_medium"
@@ -75,7 +78,7 @@
                                 android:id="@+id/push_notifications_switch"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/switchHeight"
-                                tools:checked="true" />
+                                android:checked="@{settingsViewModel.currentSettings.pushNotification}" />
 
                         </LinearLayout>
 
@@ -87,7 +90,7 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/new_notification_title"
+                                android:id="@+id/new_wallpaper_title"
                                 style="@style/TextStyle.Normal.Condensed"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -95,10 +98,10 @@
                                 android:text="@string/new_wallpaper_set" />
 
                             <com.google.android.material.switchmaterial.SwitchMaterial
-                                android:id="@+id/new_notification_switch"
+                                android:id="@+id/new_wallpaper_switch"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/switchHeight"
-                                tools:checked="true" />
+                                android:checked="@{settingsViewModel.currentSettings.newWallpaperSet}" />
 
                         </LinearLayout>
 
@@ -121,6 +124,7 @@
                                 android:id="@+id/wallpaper_recomendations_switch"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/switchHeight"
+                                android:checked="@{settingsViewModel.currentSettings.wallpaperRecommendations}"
                                 tools:checked="false" />
 
                         </LinearLayout>
@@ -176,7 +180,7 @@
                                 android:id="@+id/auto_wallpaper_switch"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/switchHeight"
-                                tools:checked="true" />
+                                android:checked="@{settingsViewModel.currentSettings.autoChangeWallpaper}" />
 
                         </LinearLayout>
 
@@ -195,6 +199,7 @@
                                 android:text="@string/change_wallpaper_every" />
 
                             <RadioGroup
+                                android:id="@+id/change_period_radio_group"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginVertical="@dimen/margin_small"
@@ -243,12 +248,25 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/period_duration_title"
-                                style="@style/TextStyle.Normal.Condensed"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/time_range" />
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/period_duration_title"
+                                    style="@style/TextStyle.Normal.Condensed"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/time_range" />
+
+                                <TextView
+                                    android:id="@+id/period_duration_value"
+                                    style="@style/TextStyle.Normal.Condensed"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/margin_small" />
+                            </LinearLayout>
+
 
                             <LinearLayout
                                 android:id="@+id/period_weeks_layout"
@@ -258,29 +276,31 @@
                                 android:orientation="horizontal">
 
                                 <TextView
+                                    android:id="@+id/slider_min_vlue"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="1"
                                     tools:ignore="HardcodedText" />
 
                                 <com.google.android.material.slider.Slider
-                                    android:id="@+id/period_weeks_slider"
+                                    android:id="@+id/period_slider"
                                     android:layout_width="0dp"
                                     android:layout_height="@dimen/sliderHeight"
                                     android:layout_weight="1"
+                                    android:contentDescription="@string/set_period"
                                     android:stepSize="1.0"
-                                    android:value="10"
+                                    android:value="5"
                                     android:valueFrom="1.0"
                                     android:valueTo="12.0" />
 
                                 <TextView
+                                    android:id="@+id/slider_max_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="24"
                                     tools:ignore="HardcodedText" />
 
                             </LinearLayout>
-
                         </LinearLayout>
                     </LinearLayout>
 
@@ -335,7 +355,7 @@
                                 android:id="@+id/download_over_wifi_switch"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/switchHeight"
-                                tools:checked="true" />
+                                android:checked="@{settingsViewModel.currentSettings.downloadOverWiFi}" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -355,47 +375,49 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+                <LinearLayout
+                    android:id="@+id/info_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_medium"
+                    android:layout_marginVertical="@dimen/margin_medium"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_medium">
 
-                    <LinearLayout
-                        android:id="@+id/info_layout"
+                    <TextView
+                        android:id="@+id/about_button"
+                        style="@style/TextStyle.Normal.Condensed"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/margin_medium"
-                        android:layout_marginVertical="@dimen/margin_medium"
-                        android:orientation="vertical"
-                        android:padding="@dimen/margin_medium">
+                        android:layout_marginTop="@dimen/margin_large"
+                        android:drawablePadding="@dimen/margin_medium"
+                        android:text="@string/about_us"
+                        app:drawableStartCompat="@drawable/ic_info"
+                        app:drawableTint="@color/colorPrimary" />
 
-                        <TextView
-                            android:id="@+id/about_button"
-                            style="@style/TextStyle.Normal.Condensed"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_medium"
-                            android:drawablePadding="@dimen/margin_medium"
-                            android:text="@string/about_us"
-                            app:drawableStartCompat="@drawable/ic_info" />
+                    <TextView
+                        android:id="@+id/support_button"
+                        style="@style/TextStyle.Normal.Condensed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_large"
+                        android:drawablePadding="@dimen/margin_medium"
+                        android:text="@string/support"
+                        app:drawableStartCompat="@drawable/ic_email"
+                        app:drawableTint="@color/colorPrimary" />
 
-                        <TextView
-                            android:id="@+id/support_button"
-                            style="@style/TextStyle.Normal.Condensed"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_medium"
-                            android:drawablePadding="@dimen/margin_medium"
-                            android:text="@string/support"
-                            app:drawableStartCompat="@drawable/ic_email" />
+                    <TextView
+                        android:id="@+id/privacy_policy_button"
+                        style="@style/TextStyle.Normal.Condensed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_large"
+                        android:drawablePadding="@dimen/margin_medium"
+                        android:text="@string/privacy_policy"
+                        app:drawableStartCompat="@drawable/ic_privacy"
+                        app:drawableTint="@color/colorPrimary" />
 
-                        <TextView
-                            android:id="@+id/privacy_policy_button"
-                            style="@style/TextStyle.Normal.Condensed"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_medium"
-                            android:drawablePadding="@dimen/margin_medium"
-                            android:text="@string/privacy_policy"
-                            app:drawableStartCompat="@drawable/ic_privacy" />
-
-                    </LinearLayout>
+                </LinearLayout>
 
                 <Space
                     android:layout_width="match_parent"

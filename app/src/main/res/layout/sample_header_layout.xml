@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/day_of_week_textview"
-        style="@style/TextStyle.Header"
+        style="@style/TextStyle.Normal"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:translationZ="2dp"
@@ -14,7 +14,7 @@
 
     <TextView
         android:id="@+id/date_textview"
-        style="@style/TextStyle.Header"
+        style="@style/TextStyle.Normal"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/margin_extra_small"
@@ -32,7 +32,7 @@
 
     <TextView
         android:id="@+id/temp_textview"
-        style="@style/TextStyle.Header"
+        style="@style/TextStyle.Normal"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/margin_extra_small"

@@ -72,11 +72,6 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
                         )
                     }
                 }
-                favoritesBookmarkBottomSheet.setOnClickListener {
-                    launchCoroutine {
-                        viewModel.onFavoriteClick(wallpaperArgs)
-                    }
-                }
                 downloadButtonBottomSheet.setOnClickListener {
                     launchCoroutine {
                         SharingTools(requireContext()).saveImageLocally(
@@ -87,6 +82,11 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
                             "Saved to Gallery - Photo by ${wallpaperArgs.photographer}",
                             view = root.rootView
                         )
+                    }
+                }
+                favoritesBookmarkBottomSheet.setOnClickListener {
+                    launchCoroutine {
+                        viewModel.onFavoriteClick(wallpaperArgs)
                     }
                 }
             }

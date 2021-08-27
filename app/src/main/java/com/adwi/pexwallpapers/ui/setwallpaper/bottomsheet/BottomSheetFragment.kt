@@ -12,7 +12,7 @@ import com.adwi.pexwallpapers.shared.base.BaseBottomSheet
 import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.shared.tools.UrlTools
 import com.adwi.pexwallpapers.util.launchCoroutine
-import com.adwi.pexwallpapers.util.showToast
+import com.adwi.pexwallpapers.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -83,9 +83,9 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
                             wallpaperArgs.imageUrl,
                             wallpaperArgs.photographer
                         )
-                        showToast(
-                            requireContext(),
-                            "Saved to Gallery - Photo by ${wallpaperArgs.photographer}"
+                        showSnackbar(
+                            "Saved to Gallery - Photo by ${wallpaperArgs.photographer}",
+                            view = root.rootView
                         )
                     }
                 }

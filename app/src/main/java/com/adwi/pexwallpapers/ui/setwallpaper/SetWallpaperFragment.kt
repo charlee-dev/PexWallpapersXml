@@ -13,6 +13,7 @@ import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.shared.tools.WallpaperSetter
 import com.adwi.pexwallpapers.util.CalendarUtil
 import com.adwi.pexwallpapers.util.launchCoroutine
+import com.adwi.pexwallpapers.util.showSnackbar
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,9 +46,17 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
         binding.apply {
             setHomeButton.setOnClickListener {
                 setWallpaper(setHomeScreen = true, setLockScreen = false)
+                showSnackbar(
+                    requireContext().getString(R.string.home_wallpaper_set),
+                    view = binding.root
+                )
             }
             setLockButton.setOnClickListener {
                 setWallpaper(setHomeScreen = false, setLockScreen = true)
+                showSnackbar(
+                    requireContext().getString(R.string.lock_wallpaper_set),
+                    view = binding.root
+                )
             }
             infoButton.setOnClickListener {
                 findNavController().navigate(
@@ -87,14 +96,26 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
 
         home.setOnClickListener {
             setWallpaper(setHomeScreen = true, setLockScreen = false)
+            showSnackbar(
+                requireContext().getString(R.string.home_wallpaper_set),
+                view = binding.root
+            )
             dialog.dismiss()
         }
         lock.setOnClickListener {
             setWallpaper(setHomeScreen = false, setLockScreen = true)
+            showSnackbar(
+                requireContext().getString(R.string.lock_wallpaper_set),
+                view = binding.root
+            )
             dialog.dismiss()
         }
         homeAndLock.setOnClickListener {
             setWallpaper(setHomeScreen = true, setLockScreen = true)
+            showSnackbar(
+                requireContext().getString(R.string.home_and_lock_screen_wallpaper_set),
+                view = binding.root
+            )
             dialog.dismiss()
         }
         dialog.show()

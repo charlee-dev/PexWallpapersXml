@@ -31,7 +31,6 @@ class WallpaperSetter(private val context: Context, private val imageURL: String
     ) {
         coroutineScope {
             launch {
-                Timber.tag(TAG).d { "setWallpaperByImagePath" }
                 val bitmap = getImageUsingCoil()
                 setWallpaper(bitmap, setHomeScreen, setLockScreen)
             }
@@ -39,7 +38,6 @@ class WallpaperSetter(private val context: Context, private val imageURL: String
     }
 
     private suspend fun getImageUsingCoil(): Bitmap {
-        Timber.tag(TAG).d { "getImageUsingCoil" }
         val loader = ImageLoader(context)
         val request = ImageRequest.Builder(context)
             .data(imageURL)
@@ -51,7 +49,6 @@ class WallpaperSetter(private val context: Context, private val imageURL: String
     }
 
     private fun setWallpaper(bitmap: Bitmap, setHomeScreen: Boolean, setLockScreen: Boolean) {
-        Timber.tag(TAG).d { "setWallpaper" }
         wallpaperManager = WallpaperManager.getInstance(context)
         try {
             if (setHomeScreen && !setLockScreen) setHomeScreenWallpaper(bitmap)
@@ -63,28 +60,19 @@ class WallpaperSetter(private val context: Context, private val imageURL: String
     }
 
     private fun setHomeScreenWallpaper(
-        bitmap: Bitmap,
-        message: String? = context.getString(R.string.home_wallpaper_set)
+        bitmap: Bitmap
     ) {
-        Timber.tag(TAG).d { "setHomeScreenWallpaper" }
         wallpaperManager.setBitmap(bitmap)
-        if (message != null) {
-            showToast(context, message)
-        }
+
     }
 
-    private fun setLockScreenWallpaper(
-        bitmap: Bitmap,
-        message: String = context.getString(R.string.lock_wallpaper_set)
-    ) {
-        Timber.tag(TAG).d { "setLockScreenWallpaper" }
+    private fun setLockScreenWallpaper(bitmap: Bitmap) {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 wallpaperManager.setBitmap(
                     bitmap, null, true,
                     WallpaperManager.FLAG_LOCK
                 )
-                showToast(context, message)
             } else {
                 showToast(
                     context,
@@ -98,10 +86,7 @@ class WallpaperSetter(private val context: Context, private val imageURL: String
 
     private fun setHomeAndLockScreenWallpaper(bitmap: Bitmap) {
         Timber.tag(TAG).d { "setHomeAndLockScreenWallpaper" }
-        setHomeScreenWallpaper(bitmap, null)
-        setLockScreenWallpaper(
-            bitmap,
-            context.getString(R.string.home_and_lock_screen_wallpaper_set)
-        )
+        setHomeScreenWallpaper(bitmap)
+        setLockScreenWallpaper(bitmap)
     }
 }

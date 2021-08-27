@@ -5,9 +5,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.adwi.pexwallpapers.databinding.ActivityMainBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -16,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-    private lateinit var bottomNav: BottomNavigationView
+    private lateinit var bottomNav: ChipNavigationBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +32,20 @@ class MainActivity : AppCompatActivity() {
     private fun setupViews() {
         bottomNav = binding.bottomNav
         binding.apply {
-            bottomNav.setupWithNavController(navController)
+            bottomNav.setItemSelected(R.id.wallpapersFragment)
+            bottomNav.setOnItemSelectedListener { itemId ->
+                when (itemId) {
+                    R.id.wallpapersFragment -> {
+                        navController.navigate(R.id.wallpapersFragment)
+                    }
+                    R.id.searchFragment -> {
+                        navController.navigate(R.id.searchFragment)
+                    }
+                    R.id.favoritesFragment -> {
+                        navController.navigate(R.id.favoritesFragment)
+                    }
+                }
+            }
         }
     }
 

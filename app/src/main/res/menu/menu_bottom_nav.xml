@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/wallpapersFragment"
         android:icon="@drawable/ic_wallpapers"
+        android:enabled="true"
+        app:cnb_backgroundColor="@color/colorPrimary"
+        app:cnb_iconColor="@color/backgroundColor"
+        app:cnb_textColor="@color/backgroundColor"
         android:title="@string/wallpapers" />
     <item
         android:id="@+id/searchFragment"
         android:icon="@drawable/ic_search"
+        android:enabled="true"
+        app:cnb_backgroundColor="@color/colorPrimary"
+        app:cnb_iconColor="@color/backgroundColor"
+        app:cnb_textColor="@color/backgroundColor"
         android:title="@string/search" />
     <item
         android:id="@+id/favoritesFragment"
         android:icon="@drawable/ic_favorite_checked"
+        android:enabled="true"
+        app:cnb_backgroundColor="@color/colorPrimary"
+        app:cnb_iconColor="@color/backgroundColor"
+        app:cnb_textColor="@color/backgroundColor"
         android:title="@string/favorites" />
 </menu>

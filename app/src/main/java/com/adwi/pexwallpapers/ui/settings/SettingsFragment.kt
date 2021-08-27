@@ -1,6 +1,7 @@
 package com.adwi.pexwallpapers.ui.settings
 
 import android.view.MenuItem
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.adwi.pexwallpapers.R

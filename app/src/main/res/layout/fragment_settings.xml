@@ -354,10 +354,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/margin_medium">
+
 
                     <LinearLayout
                         android:id="@+id/info_layout"
@@ -365,12 +362,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_medium"
                         android:layout_marginVertical="@dimen/margin_medium"
-                        android:background="@drawable/background_rounded_stroke"
                         android:orientation="vertical"
-                        android:padding="@dimen/margin_medium"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:padding="@dimen/margin_medium">
 
                         <TextView
                             android:id="@+id/about_button"
@@ -404,23 +397,9 @@
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/info_header"
-                        style="@style/TextStyle.Header"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_medium"
-                        android:background="@color/backgroundColor"
-                        android:text="@string/info"
-                        app:layout_constraintBottom_toTopOf="@id/info_layout"
-                        app:layout_constraintStart_toStartOf="@id/info_layout"
-                        app:layout_constraintTop_toTopOf="@id/info_layout" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin_medium" />
+                    android:layout_height="@dimen/margin_small" />
 
             </LinearLayout>
         </ScrollView>

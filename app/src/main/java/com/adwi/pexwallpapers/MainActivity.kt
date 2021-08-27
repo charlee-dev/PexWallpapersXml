@@ -41,8 +41,8 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.wallpapersFragment ||
                 destination.id == R.id.searchFragment ||
-                destination.id == R.id.favoritesFragment ||
-                destination.id == R.id.previewFragment
+                destination.id == R.id.favoritesFragment
+//                destination.id == R.id.previewFragment
             )
                 bottomNavIsVisible(true) else bottomNavIsVisible(false)
         }

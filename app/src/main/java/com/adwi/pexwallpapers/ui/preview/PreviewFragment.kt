@@ -57,6 +57,11 @@ class PreviewFragment :
                     wallpaperImageView.isClickable = true
                 }
             }
+            wallpaperImageView.setOnLongClickListener {
+                viewModel.onFavoriteClick(wallpaperArgs)
+                invalidateAll()
+                true
+            }
             backButton.setOnClickListener {
                 findNavController().popBackStack()
             }

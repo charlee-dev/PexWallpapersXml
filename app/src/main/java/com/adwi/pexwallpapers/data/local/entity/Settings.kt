@@ -7,5 +7,14 @@ import androidx.room.PrimaryKey
 class Settings(
     @PrimaryKey(autoGenerate = false)
     val id: Int = 1,
-    val lastQuery: String = ""
+    val lastQuery: String = "",
+    var pushNotification: Boolean = true,
+    var newWallpaperSet: Boolean = true,
+    var wallpaperRecommendations: Boolean = true,
+    var autoChangeWallpaper: Boolean = true,
+    var changeWallpaperPeriod: ChangeWallpaperPeriod = ChangeWallpaperPeriod.MINUTES,
+    val changePeriod: Int = 5,
+    var downloadOverWiFi: Boolean = true
 )
+
+enum class ChangeWallpaperPeriod { MINUTES, HOURS, DAYS, WEEKS }

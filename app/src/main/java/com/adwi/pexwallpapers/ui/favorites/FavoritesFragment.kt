@@ -82,6 +82,10 @@ class FavoritesFragment :
                 viewModel.onDeleteAllFavorites()
                 true
             }
+            R.id.settingsFragment -> {
+                findNavController().navigate(R.id.settingsFragment)
+                true
+            }
             else -> false
         }
     }

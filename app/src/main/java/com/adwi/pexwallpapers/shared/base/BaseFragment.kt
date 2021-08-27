@@ -7,6 +7,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.adwi.pexwallpapers.R
+import com.adwi.pexwallpapers.util.showIcons
 import com.github.ajalt.timberkt.Timber
 import com.github.ajalt.timberkt.d
 
@@ -62,6 +63,7 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
 
     fun showMenu(v: View, menuId: Int) {
         PopupMenu(requireContext(), v).apply {
+            menu.showIcons()
             setOnMenuItemClickListener(this@BaseFragment)
             inflate(menuId)
             show()

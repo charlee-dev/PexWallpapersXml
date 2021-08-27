@@ -2,13 +2,16 @@ package com.adwi.pexwallpapers.util
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.util.TypedValue
+import android.view.Menu
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
@@ -73,6 +76,11 @@ inline fun <T : View> T.showIfOrVisible(condition: (T) -> Boolean) {
     } else {
         this.visibility = View.INVISIBLE
     }
+}
+
+@SuppressLint("RestrictedApi")
+fun Menu.showIcons() {
+    (this as? MenuBuilder)?.setOptionalIconsVisible(true)
 }
 
 // Context --------------------------------------------------------------------------------

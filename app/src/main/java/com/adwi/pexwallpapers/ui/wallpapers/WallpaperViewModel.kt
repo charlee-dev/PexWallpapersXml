@@ -32,7 +32,13 @@ class WallpaperViewModel @Inject constructor(
     var pendingScrollToTopAfterRefresh = false
 
     val wallpaperList = refreshTrigger.flatMapLatest { refresh ->
-        getWallpapers(refresh == Refresh.FORCE)
+        getWallpapers(
+            refresh == Refresh.FORCE,
+            { pendingScrollToTopAfterRefresh = true },
+            { t ->
+                onIO { eventChannel.send(Event.ShowErrorMessage(t)) }
+            }
+        )
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     init {
@@ -43,15 +49,15 @@ class WallpaperViewModel @Inject constructor(
         }
     }
 
-    fun getWallpapers(refresh: Boolean): Flow<Resource<List<Wallpaper>>> = flow {
+    fun getWallpapers(
+        refresh: Boolean,
+        onFetchSuccess: () -> Unit,
+        onFetchRemoteFailed: (Throwable) -> Unit
+    ): Flow<Resource<List<Wallpaper>>> = flow {
         wallpaperRepository.getCuratedWallpapers(
             refresh,
-            onFetchSuccess = {
-                pendingScrollToTopAfterRefresh = true
-            },
-            onFetchRemoteFailed = { t ->
-                onIO { eventChannel.send(Event.ShowErrorMessage(t)) }
-            }
+            onFetchSuccess = onFetchSuccess,
+            onFetchRemoteFailed = onFetchRemoteFailed
         )
     }
 

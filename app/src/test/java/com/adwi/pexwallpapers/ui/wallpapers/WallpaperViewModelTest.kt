@@ -6,9 +6,11 @@ import com.adwi.pexwallpapers.mock.WallpapersMock
 import com.adwi.pexwallpapers.repository.FakeFavoritesRepository
 import com.adwi.pexwallpapers.repository.FakeSettingsRepository
 import com.adwi.pexwallpapers.repository.FakeWallpaperRepository
-import com.adwi.pexwallpapers.util.TestCoroutineRule
+import com.adwi.pexwallpapers.util.MainCoroutineScopeRule
+import com.adwi.pexwallpapers.util.Resource
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -32,9 +34,8 @@ class WallpaperViewModelTest {
     private val wallpaper2 = WallpapersMock.second
     private val wallpaper3 = WallpapersMock.third
 
-
     @get:Rule
-    val testCoroutineRule = TestCoroutineRule()
+    val coroutineScope = MainCoroutineScopeRule()
 
     @Before
     fun setup() {
@@ -48,14 +49,14 @@ class WallpaperViewModelTest {
 
     @After
     fun tearDown() {
-        testCoroutineRule.testDispatcher.runBlockingTest {
+        coroutineScope.dispatcher.runBlockingTest {
             repository.deleteAllWallpaper()
         }
     }
 
     @Test
     fun `onFavoriteClick changes isFavorite returns true`() {
-        testCoroutineRule.testDispatcher.runBlockingTest {
+        coroutineScope.dispatcher.runBlockingTest {
             repository.insert(wallpaper1)
             viewModel.onFavoriteClick(wallpaper1)
             assertThat(wallpaper1.isFavorite).isTrue()
@@ -64,7 +65,7 @@ class WallpaperViewModelTest {
 
     @Test
     fun `onManualRefresh changes triggerChannel to FORCE return true`() {
-        testCoroutineRule.testDispatcher.runBlockingTest {
+        coroutineScope.dispatcher.runBlockingTest {
             viewModel.onManualRefresh()
             viewModel.refreshTrigger.test {
                 assertEquals(awaitItem(), Refresh.FORCE)
@@ -75,7 +76,7 @@ class WallpaperViewModelTest {
 
     @Test
     fun `onStart triggerChannel NORMAL return true`() {
-        testCoroutineRule.testDispatcher.runBlockingTest {
+        coroutineScope.dispatcher.runBlockingTest {
             viewModel.onStart()
             viewModel.refreshTrigger.test {
                 assertEquals(awaitItem(), Refresh.NORMAL)
@@ -84,15 +85,15 @@ class WallpaperViewModelTest {
         }
     }
 
-//    @Test
-//    fun `repository insert wallpaper get list returns true`() {
-//        runBlocking {
-//            repository.insert(wallpaper1)
-//            val list = mutableListOf(wallpaper1)
-//            viewModel.getWallpapers(true).test {
-//                assertEquals(Resource.Success(list), awaitItem())
-//                cancelAndIgnoreRemainingEvents()
-//            }
-//        }
-//    }
+    @Test
+    fun `repository insert wallpaper get list returns true`() {
+        runBlocking {
+            repository.insert(wallpaper1)
+            val list = mutableListOf(wallpaper1)
+            viewModel.getWallpapers(true, {}, {}).test {
+                assertEquals(Resource.Success(list), awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
+        }
+    }
 }

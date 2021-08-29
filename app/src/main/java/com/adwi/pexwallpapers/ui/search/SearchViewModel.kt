@@ -2,10 +2,12 @@ package com.adwi.pexwallpapers.ui.search
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.adwi.pexwallpapers.data.WallpaperRepository
 import com.adwi.pexwallpapers.data.local.entity.Suggestion
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.local.entity.suggestionNameList
+import com.adwi.pexwallpapers.data.repository.SearchRepository
+import com.adwi.pexwallpapers.data.repository.SettingsRepository
+import com.adwi.pexwallpapers.data.repository.SuggestionsRepository
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.TypeConverter
 import com.adwi.pexwallpapers.util.onIO
@@ -17,21 +19,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val repository: WallpaperRepository
+    private val searchRepository: SearchRepository,
+    private val settingsRepository: SettingsRepository,
+    private val suggestionsRepository: SuggestionsRepository
 ) : BaseViewModel() {
 
     private val currentQuery = MutableStateFlow<String?>(null)
 
     var restoringSavedQuery: Boolean = false
 
-    val suggestions = repository.getAllSuggestions()
+    val suggestions = suggestionsRepository.getAllSuggestions()
         .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     val hasCurrentQuery = currentQuery.map { it != null }
 
     val searchResults = currentQuery.flatMapLatest { query ->
         query?.let {
-            repository.getSearchResultsPaged(query)
+            searchRepository.getSearchResultsPaged(query)
         } ?: emptyFlow()
     }.cachedIn(viewModelScope)
 
@@ -55,12 +59,12 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun updateSavedQuery(query: String) {
-        onIO { repository.updateLastQuery(query) }
+        onIO { settingsRepository.updateLastQuery(query) }
     }
 
     private fun restoreLastQuery() {
         onIO {
-            val lastQuery = repository.getSettings().lastQuery
+            val lastQuery = settingsRepository.getSettings().lastQuery
             Timber.tag(TAG).d { "restored: $lastQuery" }
             currentQuery.value = lastQuery
             newQueryInProgress = false
@@ -70,17 +74,17 @@ class SearchViewModel @Inject constructor(
     }
 
     fun deleteSuggestion(name: String) {
-        onIO { repository.deleteSuggestion(name) }
+        onIO { suggestionsRepository.deleteSuggestion(name) }
     }
 
     suspend fun addSuggestion(suggestion: Suggestion) {
-        repository.insertSuggestion(suggestion)
+        suggestionsRepository.insertSuggestion(suggestion)
     }
 
     private fun initDefaultSuggestionList() {
         if (suggestions.value.isNullOrEmpty()) {
             onIO {
-                repository.insertAllSuggestions(
+                suggestionsRepository.insertAllSuggestions(
                     TypeConverter.defaultSuggestionNameListToSuggestions(suggestionNameList)
                 )
             }
@@ -91,7 +95,7 @@ class SearchViewModel @Inject constructor(
         val isFavorite = wallpaper.isFavorite
         wallpaper.isFavorite = !isFavorite
         onIO {
-            repository.updateWallpaper(wallpaper)
+            searchRepository.updateWallpaper(wallpaper)
         }
     }
 }

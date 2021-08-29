@@ -1,7 +1,7 @@
 package com.adwi.pexwallpapers.ui.preview
 
-import com.adwi.pexwallpapers.data.WallpaperRepository
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
+import com.adwi.pexwallpapers.data.repository.WallpaperRepository
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.onIO
 import dagger.hilt.android.lifecycle.HiltViewModel

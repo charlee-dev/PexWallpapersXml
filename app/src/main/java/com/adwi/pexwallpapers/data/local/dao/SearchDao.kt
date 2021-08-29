@@ -1,10 +1,7 @@
 package com.adwi.pexwallpapers.data.local.dao
 
 import androidx.paging.PagingSource
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.adwi.pexwallpapers.data.local.entity.SearchResult
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 
@@ -22,4 +19,7 @@ interface SearchDao {
 
     @Query("DELETE FROM search_results WHERE searchQuery = :query")
     suspend fun deleteSearchResultsForQuery(query: String)
+
+    @Update
+    suspend fun updateWallpaperFavorite(wallpaper: Wallpaper)
 }

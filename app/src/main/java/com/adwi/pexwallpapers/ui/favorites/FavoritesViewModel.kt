@@ -1,8 +1,8 @@
 package com.adwi.pexwallpapers.ui.favorites
 
 import androidx.lifecycle.viewModelScope
-import com.adwi.pexwallpapers.data.WallpaperRepository
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
+import com.adwi.pexwallpapers.data.repository.FavoritesRepository
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.onIO
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
-    private val repository: WallpaperRepository
+    private val repository: FavoritesRepository
 ) : BaseViewModel() {
 
     val favorites = repository.getAllFavorites()

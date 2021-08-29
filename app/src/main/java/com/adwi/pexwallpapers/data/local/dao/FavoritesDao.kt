@@ -9,9 +9,6 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface FavoritesDao {
 
-    @Update
-    suspend fun updateWallpaperFavorite(wallpaper: Wallpaper)
-
     @Query("SELECT * FROM wallpaper_table WHERE isFavorite = 1")
     fun getAllFavorites(): Flow<List<Wallpaper>>
 
@@ -20,4 +17,7 @@ interface FavoritesDao {
 
     @Query("UPDATE wallpaper_table SET isFavorite = 0")
     suspend fun resetAllFavorites()
+
+    @Update
+    suspend fun updateWallpaper(wallpaper: Wallpaper)
 }

@@ -1,9 +1,11 @@
 package com.adwi.pexwallpapers.ui.wallpapers
 
 import androidx.lifecycle.viewModelScope
-import com.adwi.pexwallpapers.data.WallpaperRepository
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.local.entity.defaultSettings
+import com.adwi.pexwallpapers.data.repository.FavoritesRepository
+import com.adwi.pexwallpapers.data.repository.SettingsRepository
+import com.adwi.pexwallpapers.data.repository.WallpaperRepository
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.Resource
 import com.adwi.pexwallpapers.util.onIO
@@ -18,7 +20,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WallpaperViewModel @Inject constructor(
-    private val repository: WallpaperRepository
+    private val wallpaperRepository: WallpaperRepository,
+    private val favoritesRepository: FavoritesRepository,
+    private val settingsRepository: SettingsRepository
 ) : BaseViewModel() {
 
     // Hot flow - produces value no matter if there is collector or not
@@ -31,7 +35,7 @@ class WallpaperViewModel @Inject constructor(
     var pendingScrollToTopAfterRefresh = false
 
     val wallpaperList = refreshTrigger.flatMapLatest { refresh ->
-        repository.getCuratedWallpapers(
+        wallpaperRepository.getCuratedWallpapers(
             refresh == Refresh.FORCE,
             onFetchSuccess = {
                 pendingScrollToTopAfterRefresh = true
@@ -44,7 +48,7 @@ class WallpaperViewModel @Inject constructor(
 
     init {
         onIO {
-            repository.deleteNonFavoriteWallpapersOlderThan(
+            favoritesRepository.deleteNonFavoriteWallpapersOlderThan(
                 System.currentTimeMillis() - TimeUnit.DAYS.toMillis(14)
             )
         }
@@ -56,8 +60,8 @@ class WallpaperViewModel @Inject constructor(
                 refreshTriggerChannel.send(Refresh.NORMAL)
             }
         onIO {
-            if (repository.getSettings() == null) {
-                repository.insertSettings(defaultSettings)
+            if (settingsRepository.getSettings() == null) {
+                settingsRepository.insertSettings(defaultSettings)
             }
         }
     }
@@ -73,7 +77,7 @@ class WallpaperViewModel @Inject constructor(
         val isFavorite = wallpaper.isFavorite
         wallpaper.isFavorite = !isFavorite
         onIO {
-            repository.updateWallpaper(wallpaper)
+            wallpaperRepository.updateWallpaper(wallpaper)
         }
     }
 

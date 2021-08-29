@@ -41,6 +41,7 @@ class SharingTools(private val context: Context) {
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             setDataAndType(uri, "image/*")
             putExtra(Intent.EXTRA_SUBJECT, "Picture by $photographer")
+            putExtra(Intent.EXTRA_TITLE, "Picture by PexWallpapers")
             putExtra(Intent.EXTRA_STREAM, uri)
         }
         startActivity(context, Intent.createChooser(imageIntent, "Choose an app"), null)

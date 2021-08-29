@@ -5,9 +5,7 @@ import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInte
 import com.adwi.pexwallpapers.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
 
 class FakeWallpaperRepository : WallpaperRepositoryInterface {
 
@@ -18,7 +16,9 @@ class FakeWallpaperRepository : WallpaperRepositoryInterface {
         return wallpapersFlow
     }
 
-    suspend fun insertAll(wallpaper: Wallpaper) {
+    fun getWallpapers(): Flow<List<Wallpaper>> = flow { emit(wallpapers.toList()) }
+
+    suspend fun insert(wallpaper: Wallpaper) {
         wallpapers.add(wallpaper)
         refreshData()
     }
@@ -41,23 +41,8 @@ class FakeWallpaperRepository : WallpaperRepositoryInterface {
         forceRefresh: Boolean,
         onFetchSuccess: () -> Unit,
         onFetchRemoteFailed: (Throwable) -> Unit
-    ): Flow<Resource<List<Wallpaper>>> {
-        var wallpapersResourceFlow: Flow<Resource<List<Wallpaper>>> = flow {
-            emit(
-                Resource.Success(
-                    emptyList()
-                )
-            )
-        }
-        runBlocking {
-            wallpapersFlow.collect {
-                wallpapersResourceFlow = flow {
-                    emit((Resource.Success(it)))
-                }
-            }
-        }
-        return wallpapersResourceFlow
-    }
+    ): Flow<Resource<List<Wallpaper>>> = flow { Resource.Success(wallpapers.toList()) }
+
 
     private fun refreshData() {
         wallpapersFlow.value = wallpapers

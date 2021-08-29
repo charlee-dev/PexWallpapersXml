@@ -9,13 +9,13 @@ import com.adwi.pexwallpapers.R
 class Settings(
     @PrimaryKey(autoGenerate = false)
     val id: Int = 1,
-    val lastQuery: String = "Flowers",
+    var lastQuery: String = "Flowers",
     var pushNotification: Boolean = true,
     var newWallpaperSet: Boolean = false,
     var wallpaperRecommendations: Boolean = true,
     var autoChangeWallpaper: Boolean = false,
     var selectedButton: Int = R.id.hours_radio_button,
-    val sliderValue: Float = 5f,
+    var sliderValue: Float = 5f,
     var downloadOverWiFi: Boolean = true
 )
 

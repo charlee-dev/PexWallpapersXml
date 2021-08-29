@@ -34,7 +34,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideNetworkInterceptor(): Interceptor =
+    fun provideNetworkInterceptor() =
         Interceptor {
             val request = it.request().newBuilder()
                 .addHeader(AUTHORIZATION, API_KEY)
@@ -47,17 +47,16 @@ object NetworkModule {
     fun provideHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
         networkInterceptor: Interceptor
-    ): OkHttpClient =
-        OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .addNetworkInterceptor(networkInterceptor)
-            .readTimeout(15, TimeUnit.SECONDS)
-            .connectTimeout(15, TimeUnit.SECONDS)
-            .build()
+    ) = OkHttpClient.Builder()
+        .addInterceptor(loggingInterceptor)
+        .addNetworkInterceptor(networkInterceptor)
+        .readTimeout(15, TimeUnit.SECONDS)
+        .connectTimeout(15, TimeUnit.SECONDS)
+        .build()
 
     @Singleton
     @Provides
-    fun provideRetrofitInstance(okHttpClient: OkHttpClient): Retrofit =
+    fun provideRetrofitInstance(okHttpClient: OkHttpClient) =
         Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(BASE_URL)

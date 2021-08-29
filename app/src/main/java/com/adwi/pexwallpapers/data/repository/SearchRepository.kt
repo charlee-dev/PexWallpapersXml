@@ -15,7 +15,7 @@ class SearchRepository @Inject constructor(
     private val wallpapersDatabase: WallpaperDatabase
 ) : SearchRepositoryInterface {
 
-    override val dao = wallpapersDatabase.searchDao()
+    private val dao = wallpapersDatabase.searchDao()
 
     override fun getSearchResultsPaged(query: String) =
         Pager(

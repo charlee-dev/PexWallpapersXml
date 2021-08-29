@@ -2,7 +2,7 @@ package com.adwi.pexwallpapers.ui.settings
 
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Settings
-import com.adwi.pexwallpapers.data.repository.SettingsRepository
+import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.onIO
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,8 +11,9 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsViewModel @Inject constructor(private val repository: SettingsRepository) :
-    BaseViewModel() {
+class SettingsViewModel @Inject constructor(
+    private val repository: SettingsRepositoryInterface
+) : BaseViewModel() {
 
     val currentChangePeriodType =
         MutableStateFlow(R.id.hours_radio_button)

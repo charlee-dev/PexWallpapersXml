@@ -17,7 +17,7 @@ class WallpaperRepository @Inject constructor(
     private val wallpapersDatabase: WallpaperDatabase
 ) : WallpaperRepositoryInterface {
 
-    override val wallpaperDao = wallpapersDatabase.wallpaperDao()
+    private val wallpaperDao = wallpapersDatabase.wallpaperDao()
     private val curatedDao = wallpapersDatabase.curatedDao()
     private val favoritesDao = wallpapersDatabase.favoritesDao()
 
@@ -78,8 +78,6 @@ class WallpaperRepository @Inject constructor(
                 onFetchRemoteFailed(t)
             }
         )
-
-    override fun getWallpaper(wallpaperId: Int) = wallpaperDao.getWallpaperById(wallpaperId)
 
     override fun getWallpapersByCategory(categoryName: String) =
         wallpaperDao.getWallpapersOfCategory(categoryName)

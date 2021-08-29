@@ -3,9 +3,9 @@ package com.adwi.pexwallpapers.ui.wallpapers
 import androidx.lifecycle.viewModelScope
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.local.entity.defaultSettings
-import com.adwi.pexwallpapers.data.repository.FavoritesRepository
-import com.adwi.pexwallpapers.data.repository.SettingsRepository
-import com.adwi.pexwallpapers.data.repository.WallpaperRepository
+import com.adwi.pexwallpapers.data.repository.interfaces.FavoritesRepositoryInterface
+import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
+import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.Resource
 import com.adwi.pexwallpapers.util.onIO
@@ -20,9 +20,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WallpaperViewModel @Inject constructor(
-    private val wallpaperRepository: WallpaperRepository,
-    private val favoritesRepository: FavoritesRepository,
-    private val settingsRepository: SettingsRepository
+    private val wallpaperRepository: WallpaperRepositoryInterface,
+    private val favoritesRepository: FavoritesRepositoryInterface,
+    private val settingsRepository: SettingsRepositoryInterface
 ) : BaseViewModel() {
 
     // Hot flow - produces value no matter if there is collector or not

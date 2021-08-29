@@ -1,11 +1,8 @@
 package com.adwi.pexwallpapers.data.repository.interfaces
 
-import com.adwi.pexwallpapers.data.local.dao.SettingsDao
 import com.adwi.pexwallpapers.data.local.entity.Settings
 
 interface SettingsRepositoryInterface {
-
-    val dao: SettingsDao
 
     suspend fun getSettings(): Settings
     suspend fun insertSettings(settings: Settings)

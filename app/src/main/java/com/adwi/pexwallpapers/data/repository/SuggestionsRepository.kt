@@ -9,7 +9,7 @@ class SuggestionsRepository @Inject constructor(
     private val wallpapersDatabase: WallpaperDatabase
 ) : SuggestionsRepositoryInterface {
 
-    override val dao = wallpapersDatabase.suggestionsDao()
+    private val dao = wallpapersDatabase.suggestionsDao()
 
     override fun getAllSuggestions() = dao.getAllSuggestions()
 

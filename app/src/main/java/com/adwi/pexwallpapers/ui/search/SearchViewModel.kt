@@ -5,9 +5,9 @@ import androidx.paging.cachedIn
 import com.adwi.pexwallpapers.data.local.entity.Suggestion
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.local.entity.suggestionNameList
-import com.adwi.pexwallpapers.data.repository.SearchRepository
-import com.adwi.pexwallpapers.data.repository.SettingsRepository
-import com.adwi.pexwallpapers.data.repository.SuggestionsRepository
+import com.adwi.pexwallpapers.data.repository.interfaces.SearchRepositoryInterface
+import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
+import com.adwi.pexwallpapers.data.repository.interfaces.SuggestionsRepositoryInterface
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.TypeConverter
 import com.adwi.pexwallpapers.util.onIO
@@ -19,9 +19,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val searchRepository: SearchRepository,
-    private val settingsRepository: SettingsRepository,
-    private val suggestionsRepository: SuggestionsRepository
+    private val searchRepository: SearchRepositoryInterface,
+    private val settingsRepository: SettingsRepositoryInterface,
+    private val suggestionsRepository: SuggestionsRepositoryInterface
 ) : BaseViewModel() {
 
     private val currentQuery = MutableStateFlow<String?>(null)

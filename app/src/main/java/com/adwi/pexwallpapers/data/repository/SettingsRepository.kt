@@ -9,7 +9,7 @@ class SettingsRepository @Inject constructor(
     private val wallpapersDatabase: WallpaperDatabase
 ) : SettingsRepositoryInterface {
 
-    override val dao = wallpapersDatabase.settingsDao()
+    private val dao = wallpapersDatabase.settingsDao()
 
     override suspend fun getSettings() = dao.getSettings()
 

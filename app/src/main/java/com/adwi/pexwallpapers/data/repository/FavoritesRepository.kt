@@ -9,7 +9,7 @@ class FavoritesRepository @Inject constructor(
     private val wallpapersDatabase: WallpaperDatabase
 ) : FavoritesRepositoryInterface {
 
-    override val dao = wallpapersDatabase.favoritesDao()
+    private val dao = wallpapersDatabase.favoritesDao()
 
     override fun getAllFavorites() = dao.getAllFavorites()
 

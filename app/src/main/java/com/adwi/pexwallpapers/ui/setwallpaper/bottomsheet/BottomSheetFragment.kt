@@ -42,6 +42,7 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
 
     override fun setupViews() {
         binding.apply {
+            lifecycleOwner = viewLifecycleOwner
             wallpaperArgs = args.wallpaper
             wallpaper = wallpaperArgs
             executePendingBindings()
@@ -94,12 +95,6 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
 
     override fun setupFlows() {
         binding.apply {
-            launchCoroutine {
-                viewModel.getWallpaper(wallpaperArgs.id).collect {
-                    val wallpaperFlow = it
-                    wallpaper = wallpaperFlow
-                }
-            }
             launchCoroutine {
                 viewModel.onCategoryNameSubmit(wallpaperArgs.categoryName)
                 viewModel.wallpaperResults.collect {

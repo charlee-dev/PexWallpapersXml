@@ -3,7 +3,7 @@ package com.adwi.pexwallpapers.ui.setwallpaper.bottomsheet
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
-import com.adwi.pexwallpapers.data.repository.WallpaperRepository
+import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.onIO
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BottomSheetViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val wallpaperRepository: WallpaperRepository
+    private val wallpaperRepository: WallpaperRepositoryInterface
 ) : BaseViewModel() {
 
     private var savedCategoryName: String? = null
@@ -45,8 +45,6 @@ class BottomSheetViewModel @Inject constructor(
             wallpaperRepository.updateWallpaper(wallpaper)
         }
     }
-
-    fun getWallpaper(wallpaperId: Int) = wallpaperRepository.getWallpaper(wallpaperId)
 
     companion object {
         private const val LAST_CATEGORY_NAME = "LAST_CATEGORY_NAME"

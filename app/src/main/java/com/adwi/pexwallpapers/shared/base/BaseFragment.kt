@@ -13,6 +13,7 @@ import com.github.ajalt.timberkt.d
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
+// add @AndroidEntryPoint in each fragment
 abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
     private val inflate: Inflate<VB>
 ) : Fragment(), PopupMenu.OnMenuItemClickListener {

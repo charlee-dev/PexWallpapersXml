@@ -3,6 +3,7 @@ package com.adwi.pexwallpapers.repository
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
 import com.adwi.pexwallpapers.util.Resource
+import com.adwi.pexwallpapers.util.networkBoundResource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
@@ -41,7 +42,16 @@ class FakeWallpaperRepository : WallpaperRepositoryInterface {
         forceRefresh: Boolean,
         onFetchSuccess: () -> Unit,
         onFetchRemoteFailed: (Throwable) -> Unit
-    ): Flow<Resource<List<Wallpaper>>> = flow { Resource.Success(wallpapers.toList()) }
+    ): Flow<Resource<List<Wallpaper>>> = networkBoundResource(
+        query = { wallpapersFlow },
+        fetch = {},
+        saveFetchResult = {
+
+        },
+        shouldFetch = { true },
+        onFetchSuccess = {},
+        onFetchFailed = {}
+    )
 
 
     private fun refreshData() {

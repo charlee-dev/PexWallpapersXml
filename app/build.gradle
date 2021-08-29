@@ -125,6 +125,7 @@ dependencies {
     // Unit tests
     testImplementation "junit:junit:4.13.2"
     testImplementation "androidx.test.ext:junit-ktx:1.1.3"
+    testImplementation "com.google.truth:truth:1.1.2"
 
 
     // Android Test

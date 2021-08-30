@@ -2,6 +2,7 @@ package com.adwi.pexwallpapers.ui.wallpapers
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
+import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.mock.WallpapersMock
 import com.adwi.pexwallpapers.repository.FakeFavoritesRepository
 import com.adwi.pexwallpapers.repository.FakeSettingsRepository
@@ -10,7 +11,9 @@ import com.adwi.pexwallpapers.util.MainCoroutineScopeRule
 import com.adwi.pexwallpapers.util.Resource
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -87,12 +90,16 @@ class WallpaperViewModelTest {
 
     @Test
     fun `repository insert wallpaper get list returns true`() {
-        runBlocking {
+        coroutineScope.dispatcher.runBlockingTest {
             repository.insert(wallpaper1)
-            val list = mutableListOf(wallpaper1)
-            viewModel.getWallpapers(true, {}, {}).test {
-                assertEquals(Resource.Success(list), awaitItem())
-                cancelAndIgnoreRemainingEvents()
+            val list = ArrayList<Wallpaper>()
+            list.add(wallpaper1)
+
+            var flowList = emptyList<Wallpaper>()
+
+            viewModel.getWallpapers(true, {}, {}).onEach {
+                if (it is Resource.Success) currentCoroutineContext().cancel()
+//                flowList += it.data[0]
             }
         }
     }

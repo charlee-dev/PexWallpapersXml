@@ -4,7 +4,7 @@ import com.adwi.pexwallpapers.data.local.entity.Settings
 import com.adwi.pexwallpapers.data.local.entity.defaultSettings
 import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 
 class FakeSettingsRepository : SettingsRepositoryInterface {
 
@@ -12,11 +12,7 @@ class FakeSettingsRepository : SettingsRepositoryInterface {
     private val settingsFlow = MutableStateFlow(settingsItem)
 
     override suspend fun getSettings(): Settings {
-        var setting = Settings()
-        settingsFlow.collect {
-            setting = it
-        }
-        return setting
+        return settingsFlow.first()
     }
 
     override suspend fun insertSettings(settings: Settings) {
@@ -57,5 +53,9 @@ class FakeSettingsRepository : SettingsRepositoryInterface {
 
     override suspend fun resetAllSettings() {
         settingsItem = defaultSettings
+    }
+
+    private fun refreshFlow() {
+        settingsFlow.value = settingsItem
     }
 }

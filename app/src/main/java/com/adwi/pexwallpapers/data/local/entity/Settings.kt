@@ -22,7 +22,7 @@ class Settings(
 val defaultSettings = Settings(
     id = 1,
     lastQuery = "Flowers",
-    pushNotification = true,
+    pushNotification = false,
     newWallpaperSet = false,
     wallpaperRecommendations = true,
     autoChangeWallpaper = false,

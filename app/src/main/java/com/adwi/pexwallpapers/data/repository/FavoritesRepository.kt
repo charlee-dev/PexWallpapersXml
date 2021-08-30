@@ -18,5 +18,5 @@ class FavoritesRepository @Inject constructor(
 
     override suspend fun resetAllFavorites() = dao.resetAllFavorites()
 
-    override suspend fun updateWallpaper(wallpaper: Wallpaper) = dao.updateWallpaper(wallpaper)
+    override suspend fun updateFavorites(wallpaper: Wallpaper) = dao.updateWallpaper(wallpaper)
 }

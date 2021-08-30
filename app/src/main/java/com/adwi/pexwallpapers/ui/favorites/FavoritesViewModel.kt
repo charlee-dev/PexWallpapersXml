@@ -15,7 +15,7 @@ class FavoritesViewModel @Inject constructor(
     private val repository: FavoritesRepositoryInterface
 ) : BaseViewModel() {
 
-    val favorites = repository.getAllFavorites()
+    val favorites = getFavorites()
         .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     fun onDeleteAllFavorites() {
@@ -24,11 +24,12 @@ class FavoritesViewModel @Inject constructor(
         }
     }
 
+    fun getFavorites() = repository.getAllFavorites()
+
     fun onFavoriteClick(wallpaper: Wallpaper) {
-        val isFavorite = wallpaper.isFavorite
-        wallpaper.isFavorite = !isFavorite
+        wallpaper.isFavorite = !wallpaper.isFavorite
         onIO {
-            repository.updateWallpaper(wallpaper)
+            repository.updateFavorites(wallpaper)
         }
     }
 }

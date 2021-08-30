@@ -8,5 +8,5 @@ interface FavoritesRepositoryInterface {
     fun getAllFavorites(): Flow<List<Wallpaper>>
     suspend fun deleteNonFavoriteWallpapersOlderThan(timestampInMillis: Long)
     suspend fun resetAllFavorites()
-    suspend fun updateWallpaper(wallpaper: Wallpaper)
+    suspend fun updateFavorites(wallpaper: Wallpaper)
 }

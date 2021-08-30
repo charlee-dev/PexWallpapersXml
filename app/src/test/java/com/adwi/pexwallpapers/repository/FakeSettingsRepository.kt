@@ -17,42 +17,52 @@ class FakeSettingsRepository : SettingsRepositoryInterface {
 
     override suspend fun insertSettings(settings: Settings) {
         settingsItem = settings
+        refreshFlow()
     }
 
     override suspend fun updateLastQuery(query: String) {
         settingsItem.lastQuery = query
+        refreshFlow()
     }
 
     override suspend fun updatePushNotification(enabled: Boolean) {
         settingsItem.pushNotification = enabled
+        refreshFlow()
     }
 
     override suspend fun updateNewWallpaperSet(enabled: Boolean) {
         settingsItem.newWallpaperSet = enabled
+        refreshFlow()
     }
 
     override suspend fun updateWallpaperRecommendations(enabled: Boolean) {
         settingsItem.wallpaperRecommendations = enabled
+        refreshFlow()
     }
 
     override suspend fun updateAutoChangeWallpaper(enabled: Boolean) {
         settingsItem.autoChangeWallpaper = enabled
+        refreshFlow()
     }
 
     override suspend fun updateDownloadOverWiFi(enabled: Boolean) {
         settingsItem.downloadOverWiFi = enabled
+        refreshFlow()
     }
 
     override suspend fun updateChangePeriodType(radioButton: Int) {
         settingsItem.selectedButton = radioButton
+        refreshFlow()
     }
 
     override suspend fun updateChangePeriodValue(periodValue: Float) {
         settingsItem.sliderValue = periodValue
+        refreshFlow()
     }
 
     override suspend fun resetAllSettings() {
         settingsItem = defaultSettings
+        refreshFlow()
     }
 
     private fun refreshFlow() {

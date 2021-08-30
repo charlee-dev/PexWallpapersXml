@@ -11,9 +11,6 @@ import com.adwi.pexwallpapers.util.MainCoroutineScopeRule
 import com.adwi.pexwallpapers.util.Resource
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -34,8 +31,7 @@ class WallpaperViewModelTest {
     private lateinit var repository: FakeWallpaperRepository
 
     private val wallpaper1 = WallpapersMock.first
-    private val wallpaper2 = WallpapersMock.second
-    private val wallpaper3 = WallpapersMock.third
+
 
     @get:Rule
     val coroutineScope = MainCoroutineScopeRule()
@@ -53,7 +49,7 @@ class WallpaperViewModelTest {
     @After
     fun tearDown() {
         coroutineScope.dispatcher.runBlockingTest {
-            repository.deleteAllWallpaper()
+            repository.deleteAllWallpapers()
         }
     }
 
@@ -71,7 +67,7 @@ class WallpaperViewModelTest {
         coroutineScope.dispatcher.runBlockingTest {
             viewModel.onManualRefresh()
             viewModel.refreshTrigger.test {
-                assertEquals(awaitItem(), Refresh.FORCE)
+                assertEquals(Refresh.FORCE, awaitItem())
                 cancelAndIgnoreRemainingEvents()
             }
         }
@@ -82,7 +78,7 @@ class WallpaperViewModelTest {
         coroutineScope.dispatcher.runBlockingTest {
             viewModel.onStart()
             viewModel.refreshTrigger.test {
-                assertEquals(awaitItem(), Refresh.NORMAL)
+                assertEquals(Refresh.NORMAL, awaitItem())
                 cancelAndIgnoreRemainingEvents()
             }
         }
@@ -91,15 +87,16 @@ class WallpaperViewModelTest {
     @Test
     fun `repository insert wallpaper get list returns true`() {
         coroutineScope.dispatcher.runBlockingTest {
+
+            repository.deleteAllWallpapers()
             repository.insert(wallpaper1)
-            val list = ArrayList<Wallpaper>()
+
+            val list = mutableListOf<Wallpaper>()
             list.add(wallpaper1)
 
-            var flowList = emptyList<Wallpaper>()
-
-            viewModel.getWallpapers(true, {}, {}).onEach {
-                if (it is Resource.Success) currentCoroutineContext().cancel()
-//                flowList += it.data[0]
+            viewModel.getWallpapers(false).test {
+                assertThat(awaitItem() is Resource.Success).isTrue()
+                awaitComplete()
             }
         }
     }

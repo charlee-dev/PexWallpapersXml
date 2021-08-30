@@ -11,7 +11,10 @@ import com.adwi.pexwallpapers.util.Resource
 import com.adwi.pexwallpapers.util.onIO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -32,13 +35,7 @@ class WallpaperViewModel @Inject constructor(
     var pendingScrollToTopAfterRefresh = false
 
     val wallpaperList = refreshTrigger.flatMapLatest { refresh ->
-        getWallpapers(
-            refresh == Refresh.FORCE,
-            { pendingScrollToTopAfterRefresh = true },
-            { t ->
-                onIO { eventChannel.send(Event.ShowErrorMessage(t)) }
-            }
-        )
+        getWallpapers(refresh == Refresh.FORCE)
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     init {
@@ -49,17 +46,13 @@ class WallpaperViewModel @Inject constructor(
         }
     }
 
-    fun getWallpapers(
-        refresh: Boolean,
-        onFetchSuccess: () -> Unit,
-        onFetchRemoteFailed: (Throwable) -> Unit
-    ): Flow<Resource<List<Wallpaper>>> = flow {
-        wallpaperRepository.getCuratedWallpapers(
-            refresh,
-            onFetchSuccess = onFetchSuccess,
-            onFetchRemoteFailed = onFetchRemoteFailed
-        )
-    }
+    fun getWallpapers(refresh: Boolean) = wallpaperRepository.getCuratedWallpapers(
+        forceRefresh = refresh,
+        onFetchSuccess = { pendingScrollToTopAfterRefresh = true },
+        onFetchRemoteFailed = { t ->
+            onIO { eventChannel.send(Event.ShowErrorMessage(t)) }
+        }
+    )
 
     fun onStart() {
         if (wallpaperList.value !is Resource.Loading)

@@ -2,6 +2,7 @@ package com.adwi.pexwallpapers.ui.settings
 
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Settings
+import com.adwi.pexwallpapers.data.local.entity.defaultSettings
 import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.onIO
@@ -18,7 +19,7 @@ class SettingsViewModel @Inject constructor(
     val currentChangePeriodType =
         MutableStateFlow(R.id.hours_radio_button)
 
-    private val _currentSettings = MutableStateFlow(Settings())
+    private val _currentSettings = MutableStateFlow(defaultSettings)
     val currentSettings: StateFlow<Settings> = _currentSettings
 
     init {

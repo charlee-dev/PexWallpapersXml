@@ -11,6 +11,7 @@ import com.adwi.pexwallpapers.util.MainCoroutineScopeRule
 import com.adwi.pexwallpapers.util.Resource
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -18,6 +19,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 import org.robolectric.annotation.Config
 import kotlin.time.ExperimentalTime
 
@@ -38,7 +41,7 @@ class WallpaperViewModelTest {
 
     @Before
     fun setup() {
-        repository = FakeWallpaperRepository()
+        repository = mock()
         viewModel = WallpaperViewModel(
             FakeWallpaperRepository(),
             FakeFavoritesRepository(),
@@ -85,19 +88,22 @@ class WallpaperViewModelTest {
     }
 
     @Test
-    fun `repository insert wallpaper get list returns true`() {
+    fun `check if getWallpapers returns Resource Success returns true`() =
         coroutineScope.dispatcher.runBlockingTest {
 
-            repository.deleteAllWallpapers()
             repository.insert(wallpaper1)
-
             val list = mutableListOf<Wallpaper>()
             list.add(wallpaper1)
+
+            whenever(repository.getWallpapers()).thenReturn(
+                flowOf(
+                    list.toList()
+                )
+            )
 
             viewModel.getWallpapers(false).test {
                 assertThat(awaitItem() is Resource.Success).isTrue()
                 awaitComplete()
             }
         }
-    }
 }

@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.adwi.pexwallpapers.R
+import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.FragmentWallpapersBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListAdapter
 import com.adwi.pexwallpapers.shared.base.BaseFragment
@@ -21,6 +22,8 @@ class WallpapersFragment :
     ) {
 
     override val viewModel: WallpaperViewModel by viewModels()
+
+    private lateinit var wallpaperList: List<Wallpaper>
 
     override fun setupToolbar() {
         binding.toolbarLayout.apply {
@@ -85,6 +88,7 @@ class WallpapersFragment :
                             viewModel.pendingScrollToTopAfterRefresh = false
                         }
                     }
+                    wallpaperList = result.data!!
                 }
             }
 

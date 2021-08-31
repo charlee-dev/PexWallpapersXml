@@ -12,7 +12,7 @@ open class FakeWallpaperRepository : WallpaperRepositoryInterface {
     private val wallpapers = mutableListOf<Wallpaper>()
     private val wallpapersFlow = MutableStateFlow<List<Wallpaper>>(wallpapers)
 
-    override fun getWallpapersByCategory(categoryName: String): Flow<List<Wallpaper>> {
+    override fun getWallpapersOfCategory(categoryName: String): Flow<List<Wallpaper>> {
         return wallpapersFlow
     }
 

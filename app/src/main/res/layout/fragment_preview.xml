@@ -3,167 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="wallpaper"
-            type="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
-    </data>
-
-    <androidx.constraintlayout.motion.widget.MotionLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/preview_root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
-        android:background="@color/black"
-        app:layoutDescription="@xml/fragment_preview_xml_preview_root_layout_scene"
+        android:background="@color/backgroundColor"
         tools:context=".ui.preview.PreviewFragment">
 
-        <ImageView
-            android:id="@+id/wallpaper_imageView"
-            loadImageFromUrl="@{wallpaper.imageUrl}"
+        <include
+            android:id="@+id/toolbar_container"
+            layout="@layout/toolbar_layout"
+            android:layout_height="@dimen/toolbar_size"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@{wallpaper.photographer}"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/image_photo_placeholder" />
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/heart_imageView"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_rawRes="@raw/heart"
-            app:lottie_repeatCount="1" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/back_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:animateLayoutChanges="true"
-            android:background="@drawable/background_rounded_stroke"
-            android:drawableStart="@drawable/ic_arrow_back"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_small"
-            android:paddingStart="12dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible" />
-
-        <LinearLayout
-            android:id="@+id/action_buttons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="3dp"
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerFrameLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:orientation="vertical"
-            android:paddingEnd="@dimen/margin_medium"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/wallpaper_imageView"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <RelativeLayout
-                android:id="@+id/pexels_button_preview"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/background_rounded_stroke"
-                android:elevation="2dp">
-
-                <ImageButton
-                    android:id="@+id/pexels_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:background="@color/transparent"
-                    android:clipToPadding="true"
-                    android:contentDescription="@string/pexels_com_button"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/image_pexels_logo" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/share_button_preview"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:background="@drawable/background_rounded_stroke"
-                android:elevation="2dp">
-
-                <ImageButton
-                    android:id="@+id/share_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:background="@color/transparent"
-                    android:contentDescription="@string/share_button"
-                    android:src="@drawable/ic_share" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/download_button_preview"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:background="@drawable/background_rounded_stroke"
-                android:elevation="2dp">
-
-                <ImageButton
-                    android:id="@+id/download_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:background="@color/transparent"
-                    android:contentDescription="@string/download"
-                    android:src="@drawable/ic_download" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/favorite_button_layout"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:background="@drawable/background_rounded_stroke"
-                android:elevation="2dp">
-
-                <ImageButton
-                    android:id="@+id/favorite_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:animateLayoutChanges="true"
-                    android:background="@color/transparent"
-                    android:clickable="true"
-                    android:contentDescription="@string/add_to_favorites"
-                    android:focusable="true"
-                    app:isFavorite="@{wallpaper.favorite}"
-                    app:tint="@color/red"
-                    tools:src="@drawable/ic_favorite_unchecked" />
-            </RelativeLayout>
-        </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/set_wallpaper_button"
-            style="@style/TextStyle.Button"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_medium"
-            android:background="@drawable/background_rounded_stroke"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/set_wallpaper"
-            android:translationZ="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_container">
 
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+            <include layout="@layout/layout_shimmer_placeholder_view_pager" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/backgroundColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_container" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

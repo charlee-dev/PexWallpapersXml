@@ -79,7 +79,7 @@ class WallpaperRepository @Inject constructor(
             }
         )
 
-    override fun getWallpapersByCategory(categoryName: String) =
+    override fun getWallpapersOfCategory(categoryName: String) =
         wallpaperDao.getWallpapersOfCategory(categoryName)
 
     override suspend fun updateWallpaper(wallpaper: Wallpaper) =

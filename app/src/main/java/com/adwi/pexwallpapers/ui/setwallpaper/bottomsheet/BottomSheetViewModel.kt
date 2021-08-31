@@ -22,7 +22,7 @@ class BottomSheetViewModel @Inject constructor(
 
     val wallpaperResults = categoryName.flatMapLatest { categoryName ->
         categoryName?.let {
-            wallpaperRepository.getWallpapersByCategory(categoryName)
+            wallpaperRepository.getWallpapersOfCategory(categoryName)
         } ?: emptyFlow()
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 

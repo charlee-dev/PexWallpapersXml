@@ -11,8 +11,6 @@ import com.adwi.pexwallpapers.data.repository.interfaces.SuggestionsRepositoryIn
 import com.adwi.pexwallpapers.shared.base.BaseViewModel
 import com.adwi.pexwallpapers.util.TypeConverter
 import com.adwi.pexwallpapers.util.onIO
-import com.github.ajalt.timberkt.Timber
-import com.github.ajalt.timberkt.d
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -25,8 +23,6 @@ class SearchViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val currentQuery = MutableStateFlow<String?>(null)
-
-    var restoringSavedQuery: Boolean = false
 
     val suggestions = suggestionsRepository.getAllSuggestions()
         .stateIn(viewModelScope, SharingStarted.Lazily, null)
@@ -41,7 +37,7 @@ class SearchViewModel @Inject constructor(
 
     var refreshInProgress = false
     var pendingScrollToTopAfterRefresh = false
-
+    var restoringSavedQuery = false
     var newQueryInProgress = false
     var pendingScrollToTopAfterNewQuery = false
 
@@ -65,7 +61,6 @@ class SearchViewModel @Inject constructor(
     private fun restoreLastQuery() {
         onIO {
             val lastQuery = settingsRepository.getSettings().lastQuery
-            Timber.tag(TAG).d { "restored: $lastQuery" }
             currentQuery.value = lastQuery
             newQueryInProgress = false
             pendingScrollToTopAfterNewQuery = false

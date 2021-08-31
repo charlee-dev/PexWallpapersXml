@@ -94,6 +94,96 @@
         </androidx.cardview.widget.CardView>
 
         <LinearLayout
+            android:id="@+id/action_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="3dp"
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/margin_medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:id="@+id/pexels_button_preview"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/background_rounded_stroke"
+                android:elevation="2dp">
+
+                <ImageButton
+                    android:id="@+id/pexels_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:background="@color/transparent"
+                    android:clipToPadding="true"
+                    android:contentDescription="@string/pexels_com_button"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/image_pexels_logo" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/share_button_preview"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="@drawable/background_rounded_stroke"
+                android:elevation="2dp">
+
+                <ImageButton
+                    android:id="@+id/share_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:background="@color/transparent"
+                    android:contentDescription="@string/share_button"
+                    android:src="@drawable/ic_share" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/download_button_preview"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="@drawable/background_rounded_stroke"
+                android:elevation="2dp">
+
+                <ImageButton
+                    android:id="@+id/download_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:background="@color/transparent"
+                    android:contentDescription="@string/download"
+                    android:src="@drawable/ic_download" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/favorite_button_layout"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="@drawable/background_rounded_stroke"
+                android:elevation="2dp">
+
+                <ImageButton
+                    android:id="@+id/favorite_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:animateLayoutChanges="true"
+                    android:background="@color/transparent"
+                    android:clickable="true"
+                    android:contentDescription="@string/add_to_favorites"
+                    android:focusable="true"
+                    app:isFavorite="@{wallpaper.favorite}"
+                    app:tint="@color/red"
+                    tools:src="@drawable/ic_favorite_unchecked" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/set_wallpaper_buttons_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

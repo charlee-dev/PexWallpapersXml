@@ -10,6 +10,7 @@ import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.FragmentSetWallpaperBinding
 import com.adwi.pexwallpapers.shared.base.BaseFragment
+import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.shared.tools.WallpaperSetter
 import com.adwi.pexwallpapers.util.CalendarUtil
 import com.adwi.pexwallpapers.util.launchCoroutine
@@ -80,6 +81,35 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
             }
             backButton.setOnClickListener {
                 findNavController().popBackStack()
+            }
+            pexelsButton.setOnClickListener {
+                SharingTools(requireContext()).openUrlInBrowser(wallpaperArgs.url!!)
+            }
+            shareButton.setOnClickListener {
+                launchCoroutine {
+                    SharingTools(requireContext()).shareImage(
+                        wallpaperArgs.imageUrl,
+                        wallpaperArgs.photographer
+                    )
+                }
+            }
+            downloadButton.setOnClickListener {
+                launchCoroutine {
+                    SharingTools(requireContext()).saveImageLocally(
+                        wallpaperArgs.imageUrl,
+                        wallpaperArgs.photographer
+                    )
+                    showSnackbar(
+                        "Saved to Gallery - Photo by ${wallpaperArgs.photographer}",
+                        view = root.rootView
+                    )
+                }
+            }
+            favoriteButton.setOnClickListener {
+                launchCoroutine {
+                    viewModel.onFavoriteClick(wallpaperArgs)
+                    invalidateAll()
+                }
             }
         }
     }

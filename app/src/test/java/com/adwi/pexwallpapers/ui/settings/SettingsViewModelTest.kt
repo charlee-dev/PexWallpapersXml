@@ -45,7 +45,7 @@ class SettingsViewModelTest {
     }
 
     @Test
-    fun `updatePushNotification changes pushNotification returns true`() {
+    fun `updatePushNotification changes pushNotification returns true`() =
         coroutineScope.dispatcher.runBlockingTest {
             repository.insertSettings(settingsMock)
             viewModel.updatePushNotification(true)
@@ -54,10 +54,9 @@ class SettingsViewModelTest {
                 cancelAndIgnoreRemainingEvents()
             }
         }
-    }
 
     @Test
-    fun `updateNewWallpaperSet changes newWallpaperSet returns true`() {
+    fun `updateNewWallpaperSet changes newWallpaperSet returns true`() =
         coroutineScope.dispatcher.runBlockingTest {
             repository.insertSettings(settingsMock)
             viewModel.updateNewWallpaperSet(true)
@@ -66,10 +65,9 @@ class SettingsViewModelTest {
                 cancelAndIgnoreRemainingEvents()
             }
         }
-    }
 
     @Test
-    fun `updateAutoChangeWallpaper changes autoChangeWallpaper returns true`() {
+    fun `updateAutoChangeWallpaper changes autoChangeWallpaper returns true`() =
         coroutineScope.dispatcher.runBlockingTest {
             repository.insertSettings(settingsMock)
             viewModel.updateAutoChangeWallpaper(true)
@@ -78,10 +76,9 @@ class SettingsViewModelTest {
                 cancelAndIgnoreRemainingEvents()
             }
         }
-    }
 
     @Test
-    fun `updateWallpaperRecommendations changes wallpaperRecommendations returns true`() {
+    fun `updateWallpaperRecommendations changes wallpaperRecommendations returns true`() =
         coroutineScope.dispatcher.runBlockingTest {
             repository.insertSettings(settingsMock)
             viewModel.updateWallpaperRecommendations(true)
@@ -90,10 +87,9 @@ class SettingsViewModelTest {
                 cancelAndIgnoreRemainingEvents()
             }
         }
-    }
 
     @Test
-    fun `updateDownloadOverWiFi changes downloadOverWiFi returns true`() {
+    fun `updateDownloadOverWiFi changes downloadOverWiFi returns true`() =
         coroutineScope.dispatcher.runBlockingTest {
             repository.insertSettings(settingsMock)
             viewModel.updateDownloadOverWiFi(true)
@@ -102,10 +98,9 @@ class SettingsViewModelTest {
                 cancelAndIgnoreRemainingEvents()
             }
         }
-    }
 
     @Test
-    fun `updateChangePeriodValue changes sliderValue returns true`() {
+    fun `updateChangePeriodValue changes sliderValue returns true`() =
         coroutineScope.dispatcher.runBlockingTest {
             repository.insertSettings(settingsMock)
             viewModel.updateChangePeriodValue(30f)
@@ -114,10 +109,9 @@ class SettingsViewModelTest {
                 cancelAndIgnoreRemainingEvents()
             }
         }
-    }
 
     @Test
-    fun `updateChangePeriodType changes selectedButton returns true`() {
+    fun `updateChangePeriodType changes selectedButton returns true`() =
         coroutineScope.dispatcher.runBlockingTest {
             repository.insertSettings(settingsMock)
             viewModel.updateChangePeriodType(R.id.minutes_radio_button)
@@ -126,5 +120,4 @@ class SettingsViewModelTest {
                 cancelAndIgnoreRemainingEvents()
             }
         }
-    }
 }

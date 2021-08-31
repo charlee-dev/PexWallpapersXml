@@ -59,7 +59,7 @@ class WallpaperViewModelTest {
     @Test
     fun `onFavoriteClick changes isFavorite returns true`() {
         coroutineScope.dispatcher.runBlockingTest {
-            repository.insert(wallpaper1)
+            wallpaper1.isFavorite = false
             viewModel.onFavoriteClick(wallpaper1)
             assertThat(wallpaper1.isFavorite).isTrue()
         }

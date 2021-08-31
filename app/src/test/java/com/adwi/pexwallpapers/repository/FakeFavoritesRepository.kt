@@ -4,18 +4,19 @@ import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.repository.interfaces.FavoritesRepositoryInterface
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 
 class FakeFavoritesRepository : FavoritesRepositoryInterface {
 
     private val wallpapers = mutableListOf<Wallpaper>()
-    private val wallpapersFlow = MutableStateFlow<List<Wallpaper>>(wallpapers)
+    val wallpapersFlow = MutableStateFlow<List<Wallpaper>>(wallpapers)
 
     fun insertWallpaper(wallpaper: Wallpaper) {
         wallpapers.add(wallpaper)
         refreshFlow()
     }
 
-    override fun getAllFavorites() = wallpapersFlow
+    override fun getAllFavorites() = flow { emit(wallpapers.toList()) }
 
     override suspend fun deleteNonFavoriteWallpapersOlderThan(timestampInMillis: Long) {
         wallpapersFlow.collect { wallpapers ->

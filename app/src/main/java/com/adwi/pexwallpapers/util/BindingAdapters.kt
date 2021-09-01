@@ -31,6 +31,18 @@ object BindingAdapters {
         view.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
+    @BindingAdapter("app:isFirst")
+    @JvmStatic
+    fun isFirst(view: View, isFirst: Boolean) {
+        view.visibility = if (!isFirst) View.VISIBLE else View.GONE
+    }
+
+    @BindingAdapter("app:isLast")
+    @JvmStatic
+    fun isLast(view: View, isLast: Boolean) {
+        view.visibility = if (!isLast) View.VISIBLE else View.GONE
+    }
+
     @BindingAdapter("app:byPhotographerText")
     @JvmStatic
     fun byPhotographerText(textView: TextView, photographerName: String) {

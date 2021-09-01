@@ -21,7 +21,9 @@ data class Wallpaper(
     val categoryName: String,
     @Embedded val src: @RawValue Src?,
     var isFavorite: Boolean = false,
-    val updatedAt: Long = System.currentTimeMillis()
+    val updatedAt: Long = System.currentTimeMillis(),
+    var isFirst: Boolean = false,
+    var isLast: Boolean = false
 ) : Parcelable
 
 @Entity(tableName = "curated_wallpapers")

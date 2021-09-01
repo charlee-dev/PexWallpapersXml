@@ -65,5 +65,36 @@
             app:layout_constraintTop_toTopOf="@id/card_view"
             app:tint="@color/red"
             tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/slide_left"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="@dimen/margin_extra_extra_small"
+            android:contentDescription="@string/slide_next"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_double_arrow"
+            app:isFirst="@{wallpaper.first}"
+            app:layout_constraintBottom_toBottomOf="@id/card_view"
+            app:layout_constraintEnd_toStartOf="@id/card_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/card_view"
+            app:tint="@color/lightMediumGray" />
+
+        <ImageView
+            android:id="@+id/slide_right"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginEnd="@dimen/margin_extra_extra_small"
+            android:contentDescription="@string/slide_next"
+            android:rotation="180"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_double_arrow"
+            app:isLast="@{wallpaper.last}"
+            app:layout_constraintBottom_toBottomOf="@id/card_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/card_view"
+            app:layout_constraintTop_toTopOf="@id/card_view"
+            app:tint="@color/lightMediumGray" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

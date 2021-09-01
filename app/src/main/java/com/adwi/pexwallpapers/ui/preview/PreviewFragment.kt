@@ -22,7 +22,6 @@ class PreviewFragment :
     ) {
 
     override val viewModel: PreviewViewModel by viewModels()
-
     private val args: PreviewFragmentArgs by navArgs()
 
     override fun setupToolbar() {
@@ -80,6 +79,8 @@ class PreviewFragment :
                     val index = indexOf(args.wallpaper)
                     removeAt(index)
                     add(0, args.wallpaper)
+                    first().isFirst = true
+                    last().isLast = true
                 }
 
                 binding.apply {

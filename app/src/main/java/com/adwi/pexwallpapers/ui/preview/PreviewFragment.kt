@@ -89,8 +89,8 @@ class PreviewFragment :
                         if (list.isNullOrEmpty()) startShimmer() else stopShimmer()
                         isVisible = list.isNullOrEmpty()
                     }
-                    mAdapter?.submitList(list)
                 }
+                mAdapter?.submitList(list)
             }
         }
     }

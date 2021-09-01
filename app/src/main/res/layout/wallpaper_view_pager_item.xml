@@ -59,6 +59,7 @@
             android:layout_margin="@dimen/margin_medium"
             android:animateLayoutChanges="true"
             android:elevation="10dp"
+            android:contentDescription="@string/favorites"
             android:src="@drawable/ic_favorite_checked"
             app:isVisible="@{wallpaper.favorite}"
             app:layout_constraintEnd_toEndOf="@id/card_view"
@@ -96,5 +97,16 @@
             app:layout_constraintStart_toEndOf="@id/card_view"
             app:layout_constraintTop_toTopOf="@id/card_view"
             app:tint="@color/lightMediumGray" />
+
+        <TextView
+            android:id="@+id/by_photographer_textview"
+            style="@style/TextStyle.InfoTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:byPhotographerText="@{wallpaper.photographer}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/card_view"
+            app:layout_constraintTop_toBottomOf="@id/card_view"
+            tools:text="by Ad Wi" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

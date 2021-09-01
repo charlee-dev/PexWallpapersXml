@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:layout_margin="@dimen/margin_medium"
+            android:layout_margin="@dimen/margin_large"
             android:clipChildren="true"
             android:clipToPadding="true"
             android:translationZ="4dp"

@@ -14,11 +14,11 @@
         <include
             android:id="@+id/toolbar_container"
             layout="@layout/toolbar_layout"
-            android:layout_height="@dimen/toolbar_size"
             android:layout_width="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="@dimen/toolbar_size"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmerFrameLayout"
@@ -42,7 +42,34 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_container" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar_container">
+
+        </androidx.viewpager2.widget.ViewPager2>
+
+        <ImageView
+            android:id="@+id/slide_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_extra_extra_small"
+            android:contentDescription="@string/slide_next"
+            android:src="@drawable/ic_double_arrow"
+            app:layout_constraintBottom_toBottomOf="@id/pager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/pager"
+            app:tint="@color/lightMediumGray" />
+
+        <ImageView
+            android:id="@+id/slide_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_extra_extra_small"
+            android:contentDescription="@string/slide_next"
+            android:rotation="180"
+            android:src="@drawable/ic_double_arrow"
+            app:layout_constraintBottom_toBottomOf="@id/pager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/pager"
+            app:tint="@color/lightMediumGray" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

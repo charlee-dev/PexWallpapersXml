@@ -5,7 +5,7 @@ import com.github.ajalt.timberkt.Timber
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class PexApp: Application() {
+class PexApp : Application() {
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {

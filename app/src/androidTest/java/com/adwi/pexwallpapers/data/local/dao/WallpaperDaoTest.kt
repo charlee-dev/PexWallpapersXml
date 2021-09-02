@@ -31,14 +31,14 @@ class WallpaperDaoTest {
     @Named("test_database")
     lateinit var database: WallpaperDatabase
 
-    private lateinit var dao: WallpapersDao
+    private lateinit var wallpaperDao: WallpapersDao
     private val firstWallpaper = WallpaperMockAndroid.first
     private val secondWallpaper = WallpaperMockAndroid.second
 
     @Before
     fun setup() {
         hiltRule.inject()
-        dao = database.wallpaperDao()
+        wallpaperDao = database.wallpaperDao()
     }
 
     @After
@@ -52,9 +52,9 @@ class WallpaperDaoTest {
 
             val expected = listOf(firstWallpaper)
 
-            dao.insertWallpapers(expected)
+            wallpaperDao.insertWallpapers(expected)
 
-            val actual = dao.getAllWallpapers().first()
+            val actual = wallpaperDao.getAllWallpapers().first()
             assertThat(actual).isEqualTo(expected)
         }
 
@@ -64,20 +64,20 @@ class WallpaperDaoTest {
             val list = listOf(firstWallpaper, secondWallpaper)
             val expected = listOf(firstWallpaper)
 
-            dao.insertWallpapers(list)
+            wallpaperDao.insertWallpapers(list)
 
-            val actual = dao.getWallpapersOfCategory("Flowers").first()
+            val actual = wallpaperDao.getWallpapersOfCategory("Flowers").first()
             assertEquals(expected, actual)
         }
 
     @Test
     fun updateWallpaperFavorite_returnsTrue() = coroutineScope.dispatcher.runBlockingTest {
 
-        dao.insertWallpapers(listOf(firstWallpaper))
+        wallpaperDao.insertWallpapers(listOf(firstWallpaper))
         firstWallpaper.isFavorite = true
-        dao.updateWallpaperFavorite(firstWallpaper)
+        wallpaperDao.updateWallpaperFavorite(firstWallpaper)
 
-        val actual = dao.getAllWallpapers().first()[0]
+        val actual = wallpaperDao.getAllWallpapers().first()[0]
         assertEquals(firstWallpaper, actual)
     }
 }

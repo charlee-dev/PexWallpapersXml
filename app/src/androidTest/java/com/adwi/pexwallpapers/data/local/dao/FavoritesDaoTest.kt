@@ -93,6 +93,6 @@ class FavoritesDaoTest {
 
             val actual = wallpaperDao.getAllWallpapers().first()
             // Check if all old isFavorite has been removed, returns list size 2
-            Assert.assertEquals(4, actual.size)
+            Assert.assertEquals(2, actual.size)
         }
 }

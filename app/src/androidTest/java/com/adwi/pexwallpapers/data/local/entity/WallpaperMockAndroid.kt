@@ -14,7 +14,7 @@ object WallpaperMockAndroid {
         categoryName = "Flowers",
         src = null,
         isFavorite = false,
-        updatedAt = 1234567890
+        updatedAt = 163066497202
     )
     val second = Wallpaper(
         id = 2,
@@ -28,7 +28,7 @@ object WallpaperMockAndroid {
         categoryName = "Cars",
         src = null,
         isFavorite = true,
-        updatedAt = 123456756
+        updatedAt = 1630664958796
     )
     val third = Wallpaper(
         id = 3,
@@ -42,7 +42,7 @@ object WallpaperMockAndroid {
         categoryName = "Cars",
         src = null,
         isFavorite = true,
-        updatedAt = 123456756
+        updatedAt = 1630664975234
     )
     val forth = Wallpaper(
         id = 4,
@@ -56,7 +56,7 @@ object WallpaperMockAndroid {
         categoryName = "Flowers",
         src = null,
         isFavorite = false,
-        updatedAt = 123456756
+        updatedAt = 163066495879
     )
 
     val list = listOf(first, second, third, forth)

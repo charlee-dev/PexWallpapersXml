@@ -45,21 +45,23 @@ class FavoritesDaoTest {
     }
 
     @Test
-    fun updateWallpaperFavorite_returnsTrue() = coroutineScope.dispatcher.runBlockingTest {
+    fun updateWallpaperFavorite_getAllFavorites_returnsTrue() =
+        coroutineScope.dispatcher.runBlockingTest {
 
-        wallpaperDao.insertWallpapers(wallpaperList)
-        val wallpaper = WallpaperMockAndroid.first
-        wallpaper.isFavorite = true
-        favoritesDao.updateWallpaper(wallpaper)
+            wallpaperDao.insertWallpapers(wallpaperList)
+            val wallpaper = WallpaperMockAndroid.first
+            wallpaper.isFavorite = true
+            favoritesDao.updateWallpaper(wallpaper)
 
-        val actual = wallpaperDao.getAllWallpapers().first()[0]
-        Assert.assertEquals(wallpaper, actual)
-    }
+            val actual = wallpaperDao.getAllWallpapers().first()[0]
+            Assert.assertEquals(wallpaper, actual)
+        }
 
     @Test
     fun resetAllFavorites_returnsTrue() = coroutineScope.dispatcher.runBlockingTest {
 
         wallpaperDao.insertWallpapers(wallpaperList)
+
         val checked = favoritesDao.getAllFavorites().first()
         // Check if 2 isFavorite wallpapers inserted
         Assert.assertEquals(checked.size, 2)
@@ -75,8 +77,22 @@ class FavoritesDaoTest {
     fun deleteNonFavoriteWallpapersOlderThan_returnsTrue() =
         coroutineScope.dispatcher.runBlockingTest {
 
+            // Inserting 4 wallpapers, two of them are isFavorite = true
             wallpaperDao.insertWallpapers(wallpaperList)
 
-//        TODO()
+            val list = wallpaperDao.getAllWallpapers().first()
+            // Confirm list.size = 4
+            Assert.assertEquals(4, list.size)
+
+            val checked = favoritesDao.getAllFavorites().first()
+            // Confirm that 2 favorites in the list
+            Assert.assertEquals(2, checked.size)
+
+            // Delete all old non-favorites
+            favoritesDao.deleteNonFavoriteWallpapersOlderThan(1630665095293)
+
+            val actual = wallpaperDao.getAllWallpapers().first()
+            // Check if all old isFavorite has been removed, returns list size 2
+            Assert.assertEquals(4, actual.size)
         }
 }

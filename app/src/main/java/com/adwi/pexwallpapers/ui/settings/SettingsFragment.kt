@@ -7,8 +7,8 @@ import androidx.navigation.fragment.findNavController
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Settings
 import com.adwi.pexwallpapers.databinding.FragmentSettingsBinding
-import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.shared.tools.SharingTools
+import com.adwi.pexwallpapers.ui.base.BaseFragment
 import com.adwi.pexwallpapers.util.launchCoroutine
 import com.google.android.material.slider.Slider
 import dagger.hilt.android.AndroidEntryPoint

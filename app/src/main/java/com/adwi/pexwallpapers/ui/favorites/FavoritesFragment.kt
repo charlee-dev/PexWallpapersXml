@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.databinding.FragmentFavoritesBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListAdapter
-import com.adwi.pexwallpapers.shared.base.BaseFragment
+import com.adwi.pexwallpapers.ui.base.BaseFragment
 import com.adwi.pexwallpapers.util.launchCoroutine
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect

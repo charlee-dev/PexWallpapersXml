@@ -4,16 +4,19 @@ import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Settings
 import com.adwi.pexwallpapers.data.local.entity.defaultSettings
 import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
-import com.adwi.pexwallpapers.shared.base.BaseViewModel
-import com.adwi.pexwallpapers.util.onIO
+import com.adwi.pexwallpapers.di.IoDispatcher
+import com.adwi.pexwallpapers.ui.base.BaseViewModel
+import com.adwi.pexwallpapers.util.onDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val repository: SettingsRepositoryInterface
+    private val repository: SettingsRepositoryInterface,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
     val currentChangePeriodType =
@@ -23,41 +26,41 @@ class SettingsViewModel @Inject constructor(
     val currentSettings: StateFlow<Settings> = _currentSettings
 
     init {
-        onIO {
+        onDispatcher(ioDispatcher) {
             _currentSettings.value = repository.getSettings()
         }
     }
 
     fun updatePushNotification(enabled: Boolean) {
-        onIO { repository.updatePushNotification(enabled) }
+        onDispatcher(ioDispatcher) { repository.updatePushNotification(enabled) }
     }
 
     fun updateNewWallpaperSet(enabled: Boolean) {
-        onIO { repository.updateNewWallpaperSet(enabled) }
+        onDispatcher(ioDispatcher) { repository.updateNewWallpaperSet(enabled) }
     }
 
     fun updateWallpaperRecommendations(enabled: Boolean) {
-        onIO { repository.updateWallpaperRecommendations(enabled) }
+        onDispatcher(ioDispatcher) { repository.updateWallpaperRecommendations(enabled) }
     }
 
     fun updateAutoChangeWallpaper(enabled: Boolean) {
-        onIO { repository.updateAutoChangeWallpaper(enabled) }
+        onDispatcher(ioDispatcher) { repository.updateAutoChangeWallpaper(enabled) }
     }
 
     fun updateDownloadOverWiFi(enabled: Boolean) {
-        onIO { repository.updateDownloadOverWiFi(enabled) }
+        onDispatcher(ioDispatcher) { repository.updateDownloadOverWiFi(enabled) }
     }
 
     fun updateChangePeriodType(radioButton: Int) {
         currentChangePeriodType.value = radioButton
-        onIO { repository.updateChangePeriodType(radioButton) }
+        onDispatcher(ioDispatcher) { repository.updateChangePeriodType(radioButton) }
     }
 
     fun updateChangePeriodValue(periodValue: Float) {
-        onIO { repository.updateChangePeriodValue(periodValue) }
+        onDispatcher(ioDispatcher) { repository.updateChangePeriodValue(periodValue) }
     }
 
     fun resetSettings() {
-        onIO { repository.resetAllSettings() }
+        onDispatcher(ioDispatcher) { repository.resetAllSettings() }
     }
 }

@@ -9,9 +9,9 @@ import androidx.navigation.fragment.navArgs
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.FragmentSetWallpaperBinding
-import com.adwi.pexwallpapers.shared.base.BaseFragment
 import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.shared.tools.WallpaperSetter
+import com.adwi.pexwallpapers.ui.base.BaseFragment
 import com.adwi.pexwallpapers.util.CalendarUtil
 import com.adwi.pexwallpapers.util.launchCoroutine
 import com.adwi.pexwallpapers.util.showSnackbar

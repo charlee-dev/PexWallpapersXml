@@ -1,4 +1,4 @@
-package com.adwi.pexwallpapers.shared.base
+package com.adwi.pexwallpapers.ui.base
 
 import android.os.Bundle
 import android.view.*

@@ -9,6 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
+import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -18,9 +19,14 @@ object ViewModelModule {
     @ViewModelScoped
     fun provideWallpaperRepository(
         pexApi: PexApi,
-        wallpapersDatabase: WallpaperDatabase
+        wallpapersDatabase: WallpaperDatabase,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
     ) =
-        WallpaperRepository(pexApi, wallpapersDatabase) as WallpaperRepositoryInterface
+        WallpaperRepository(
+            pexApi,
+            wallpapersDatabase,
+            ioDispatcher
+        ) as WallpaperRepositoryInterface
 
     @Provides
     @ViewModelScoped

@@ -3,7 +3,7 @@ package com.adwi.pexwallpapers.data.local.dao
 import androidx.test.filters.SmallTest
 import com.adwi.pexwallpapers.data.local.WallpaperDatabase
 import com.adwi.pexwallpapers.data.local.entity.WallpaperMockAndroid
-import com.adwi.pexwallpapers.util.MainCoroutineScopeRuleAndroid
+import com.adwi.pexwallpapers.util.CoroutineAndroidTestRule
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -25,7 +25,7 @@ class WallpaperDaoTest {
     var hiltRule = HiltAndroidRule(this)
 
     @get:Rule(order = 1)
-    val coroutineScope = MainCoroutineScopeRuleAndroid()
+    val coroutineScope = CoroutineAndroidTestRule()
 
     @Inject
     @Named("test_database")

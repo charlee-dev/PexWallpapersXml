@@ -15,7 +15,7 @@ import com.adwi.pexwallpapers.databinding.FragmentSearchBinding
 import com.adwi.pexwallpapers.shared.adapter.SuggestionListAdapter
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListPagingAdapter
 import com.adwi.pexwallpapers.shared.adapter.WallpapersLoadStateAdapter
-import com.adwi.pexwallpapers.shared.base.BaseFragment
+import com.adwi.pexwallpapers.ui.base.BaseFragment
 import com.adwi.pexwallpapers.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect

@@ -19,7 +19,7 @@ import androidx.lifecycle.viewModelScope
 import coil.load
 import com.adwi.pexwallpapers.R
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -116,8 +116,8 @@ fun Fragment.showSnackbar(
 
 // ViewModel --------------------------------------------------------------------------------
 
-fun ViewModel.onIO(body: suspend () -> Unit): Job {
-    return viewModelScope.launch(Dispatchers.IO) {
+fun ViewModel.onDispatcher(dispatcher: CoroutineDispatcher, body: suspend () -> Unit): Job {
+    return viewModelScope.launch(dispatcher) {
         body()
     }
 }

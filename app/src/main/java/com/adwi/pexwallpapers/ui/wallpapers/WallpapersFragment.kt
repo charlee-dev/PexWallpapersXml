@@ -10,7 +10,7 @@ import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.FragmentWallpapersBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListAdapter
-import com.adwi.pexwallpapers.shared.base.BaseFragment
+import com.adwi.pexwallpapers.ui.base.BaseFragment
 import com.adwi.pexwallpapers.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect

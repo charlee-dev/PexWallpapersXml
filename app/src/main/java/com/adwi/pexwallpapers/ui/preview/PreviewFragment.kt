@@ -8,7 +8,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.adwi.pexwallpapers.databinding.FragmentPreviewBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperViewPager2Adapter
-import com.adwi.pexwallpapers.shared.base.BaseFragment
+import com.adwi.pexwallpapers.ui.base.BaseFragment
 import com.adwi.pexwallpapers.util.ZoomOutPageTransformer
 import com.adwi.pexwallpapers.util.launchCoroutine
 import dagger.hilt.android.AndroidEntryPoint

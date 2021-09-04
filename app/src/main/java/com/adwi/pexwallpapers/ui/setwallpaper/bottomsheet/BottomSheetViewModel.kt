@@ -4,16 +4,19 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
-import com.adwi.pexwallpapers.shared.base.BaseViewModel
-import com.adwi.pexwallpapers.util.onIO
+import com.adwi.pexwallpapers.di.IoDispatcher
+import com.adwi.pexwallpapers.ui.base.BaseViewModel
+import com.adwi.pexwallpapers.util.onDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
 class BottomSheetViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val wallpaperRepository: WallpaperRepositoryInterface
+    private val wallpaperRepository: WallpaperRepositoryInterface,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
     private var savedCategoryName: String? = null
@@ -41,7 +44,7 @@ class BottomSheetViewModel @Inject constructor(
     fun onFavoriteClick(wallpaper: Wallpaper) {
         val isFavorite = wallpaper.isFavorite
         wallpaper.isFavorite = !isFavorite
-        onIO {
+        onDispatcher(ioDispatcher) {
             wallpaperRepository.updateWallpaper(wallpaper)
         }
     }

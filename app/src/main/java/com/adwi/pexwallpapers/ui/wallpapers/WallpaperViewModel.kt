@@ -6,10 +6,12 @@ import com.adwi.pexwallpapers.data.local.entity.defaultSettings
 import com.adwi.pexwallpapers.data.repository.interfaces.FavoritesRepositoryInterface
 import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
 import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
-import com.adwi.pexwallpapers.shared.base.BaseViewModel
+import com.adwi.pexwallpapers.di.IoDispatcher
+import com.adwi.pexwallpapers.ui.base.BaseViewModel
 import com.adwi.pexwallpapers.util.Resource
-import com.adwi.pexwallpapers.util.onIO
+import com.adwi.pexwallpapers.util.onDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
@@ -22,7 +24,8 @@ import javax.inject.Inject
 class WallpaperViewModel @Inject constructor(
     private val wallpaperRepository: WallpaperRepositoryInterface,
     private val favoritesRepository: FavoritesRepositoryInterface,
-    private val settingsRepository: SettingsRepositoryInterface
+    private val settingsRepository: SettingsRepositoryInterface,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
     // Hot flow - produces value no matter if there is collector or not
@@ -39,7 +42,7 @@ class WallpaperViewModel @Inject constructor(
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     init {
-        onIO {
+        onDispatcher(ioDispatcher) {
             favoritesRepository.deleteNonFavoriteWallpapersOlderThan(
                 System.currentTimeMillis() - TimeUnit.DAYS.toMillis(14)
             )
@@ -50,16 +53,16 @@ class WallpaperViewModel @Inject constructor(
         forceRefresh = refresh,
         onFetchSuccess = { pendingScrollToTopAfterRefresh = true },
         onFetchRemoteFailed = { t ->
-            onIO { eventChannel.send(Event.ShowErrorMessage(t)) }
+            onDispatcher(ioDispatcher) { eventChannel.send(Event.ShowErrorMessage(t)) }
         }
     )
 
     fun onStart() {
         if (wallpaperList.value !is Resource.Loading)
-            onIO {
+            onDispatcher(ioDispatcher) {
                 refreshTriggerChannel.send(Refresh.NORMAL)
             }
-        onIO {
+        onDispatcher(ioDispatcher) {
             if (settingsRepository.getSettings() == null) {
                 settingsRepository.insertSettings(defaultSettings)
             }
@@ -68,7 +71,7 @@ class WallpaperViewModel @Inject constructor(
 
     fun onManualRefresh() {
         if (wallpaperList.value !is Resource.Loading)
-            onIO {
+            onDispatcher(ioDispatcher) {
                 refreshTriggerChannel.send(Refresh.FORCE)
             }
     }
@@ -76,7 +79,7 @@ class WallpaperViewModel @Inject constructor(
     fun onFavoriteClick(wallpaper: Wallpaper) {
         val isFavorite = wallpaper.isFavorite
         wallpaper.isFavorite = !isFavorite
-        onIO {
+        onDispatcher(ioDispatcher) {
             wallpaperRepository.updateWallpaper(wallpaper)
         }
     }

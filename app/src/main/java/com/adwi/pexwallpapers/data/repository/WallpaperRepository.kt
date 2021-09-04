@@ -5,16 +5,21 @@ import com.adwi.pexwallpapers.data.local.WallpaperDatabase
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.remote.PexApi
 import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
+import com.adwi.pexwallpapers.di.IoDispatcher
 import com.adwi.pexwallpapers.util.TypeConverter
 import com.adwi.pexwallpapers.util.networkBoundResource
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOn
 import retrofit2.HttpException
 import java.io.IOException
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class WallpaperRepository @Inject constructor(
     private val pexApi: PexApi,
-    private val wallpapersDatabase: WallpaperDatabase
+    private val wallpapersDatabase: WallpaperDatabase,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : WallpaperRepositoryInterface {
 
     private val wallpaperDao = wallpapersDatabase.wallpaperDao()
@@ -66,7 +71,7 @@ class WallpaperRepository @Inject constructor(
                     val oldestTimestamp = sortedWallpapers.firstOrNull()?.updatedAt
                     val needsRefresh = oldestTimestamp == null ||
                             oldestTimestamp < System.currentTimeMillis() -
-                            java.util.concurrent.TimeUnit.MINUTES.toMillis(5)
+                            TimeUnit.MINUTES.toMillis(5)
                     needsRefresh
                 }
             },
@@ -77,10 +82,10 @@ class WallpaperRepository @Inject constructor(
                 }
                 onFetchRemoteFailed(t)
             }
-        )
+        ).flowOn(ioDispatcher)
 
     override fun getWallpapersOfCategory(categoryName: String) =
-        wallpaperDao.getWallpapersOfCategory(categoryName)
+        wallpaperDao.getWallpapersOfCategory(categoryName).flowOn(ioDispatcher)
 
     override suspend fun updateWallpaper(wallpaper: Wallpaper) =
         wallpaperDao.updateWallpaperFavorite(wallpaper)

@@ -8,10 +8,12 @@ import com.adwi.pexwallpapers.data.local.entity.suggestionNameList
 import com.adwi.pexwallpapers.data.repository.interfaces.SearchRepositoryInterface
 import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
 import com.adwi.pexwallpapers.data.repository.interfaces.SuggestionsRepositoryInterface
-import com.adwi.pexwallpapers.shared.base.BaseViewModel
+import com.adwi.pexwallpapers.di.IoDispatcher
+import com.adwi.pexwallpapers.ui.base.BaseViewModel
 import com.adwi.pexwallpapers.util.TypeConverter
-import com.adwi.pexwallpapers.util.onIO
+import com.adwi.pexwallpapers.util.onDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -19,7 +21,8 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val searchRepository: SearchRepositoryInterface,
     private val settingsRepository: SettingsRepositoryInterface,
-    private val suggestionsRepository: SuggestionsRepositoryInterface
+    private val suggestionsRepository: SuggestionsRepositoryInterface,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
     private val currentQuery = MutableStateFlow<String?>(null)
@@ -55,11 +58,11 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun updateSavedQuery(query: String) {
-        onIO { settingsRepository.updateLastQuery(query) }
+        onDispatcher(ioDispatcher) { settingsRepository.updateLastQuery(query) }
     }
 
     private fun restoreLastQuery() {
-        onIO {
+        onDispatcher(ioDispatcher) {
             val lastQuery = settingsRepository.getSettings().lastQuery
             currentQuery.value = lastQuery
             newQueryInProgress = false
@@ -69,7 +72,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun deleteSuggestion(name: String) {
-        onIO { suggestionsRepository.deleteSuggestion(name) }
+        onDispatcher(ioDispatcher) { suggestionsRepository.deleteSuggestion(name) }
     }
 
     suspend fun addSuggestion(suggestion: Suggestion) {
@@ -78,7 +81,7 @@ class SearchViewModel @Inject constructor(
 
     private fun initDefaultSuggestionList() {
         if (suggestions.value.isNullOrEmpty()) {
-            onIO {
+            onDispatcher(ioDispatcher) {
                 suggestionsRepository.insertAllSuggestions(
                     TypeConverter.defaultSuggestionNameListToSuggestions(suggestionNameList)
                 )
@@ -89,7 +92,7 @@ class SearchViewModel @Inject constructor(
     fun onFavoriteClick(wallpaper: Wallpaper) {
         val isFavorite = wallpaper.isFavorite
         wallpaper.isFavorite = !isFavorite
-        onIO {
+        onDispatcher(ioDispatcher) {
             searchRepository.updateWallpaper(wallpaper)
         }
     }

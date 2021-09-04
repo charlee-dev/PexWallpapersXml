@@ -32,20 +32,23 @@ object ViewModelModule {
     @ViewModelScoped
     fun provideSearchRepository(
         pexApi: PexApi,
-        wallpapersDatabase: WallpaperDatabase
-    ) = SearchRepository(pexApi, wallpapersDatabase) as SearchRepositoryInterface
+        wallpapersDatabase: WallpaperDatabase,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ) = SearchRepository(pexApi, wallpapersDatabase, ioDispatcher) as SearchRepositoryInterface
 
     @Provides
     @ViewModelScoped
     fun provideFavoritesRepository(
-        wallpapersDatabase: WallpaperDatabase
-    ) = FavoritesRepository(wallpapersDatabase) as FavoritesRepositoryInterface
+        wallpapersDatabase: WallpaperDatabase,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ) = FavoritesRepository(wallpapersDatabase, ioDispatcher) as FavoritesRepositoryInterface
 
     @Provides
     @ViewModelScoped
     fun provideSuggestionsRepository(
-        wallpapersDatabase: WallpaperDatabase
-    ) = SuggestionsRepository(wallpapersDatabase) as SuggestionsRepositoryInterface
+        wallpapersDatabase: WallpaperDatabase,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ) = SuggestionsRepository(wallpapersDatabase, ioDispatcher) as SuggestionsRepositoryInterface
 
     @Provides
     @ViewModelScoped

@@ -33,7 +33,7 @@ class WallpaperViewModelTest {
     private val wallpaper1 = WallpapersMock.first
 
     @get:Rule
-    val coroutineScope = CoroutineTestRule().testDispatcher
+    val coroutineScope = CoroutineTestRule()
 
     @Before
     fun setup() {
@@ -42,20 +42,20 @@ class WallpaperViewModelTest {
             FakeWallpaperRepository(),
             FakeFavoritesRepository(),
             FakeSettingsRepository(),
-            coroutineScope
+            coroutineScope.testDispatcher
         )
     }
 
     @After
     fun tearDown() {
-        coroutineScope.runBlockingTest {
+        coroutineScope.testDispatcher.runBlockingTest {
             repository.deleteAllWallpapers()
         }
     }
 
     @Test
     fun `onFavoriteClick changes isFavorite returns true`() {
-        coroutineScope.runBlockingTest {
+        coroutineScope.testDispatcher.runBlockingTest {
             wallpaper1.isFavorite = false
             viewModel.onFavoriteClick(wallpaper1)
             assertThat(wallpaper1.isFavorite).isTrue()
@@ -64,7 +64,7 @@ class WallpaperViewModelTest {
 
     @Test
     fun `onManualRefresh changes triggerChannel to FORCE return true`() {
-        coroutineScope.runBlockingTest {
+        coroutineScope.testDispatcher.runBlockingTest {
             viewModel.onManualRefresh()
             viewModel.refreshTrigger.test {
                 assertEquals(Refresh.FORCE, awaitItem())
@@ -75,7 +75,7 @@ class WallpaperViewModelTest {
 
     @Test
     fun `onStart triggerChannel NORMAL return true`() {
-        coroutineScope.runBlockingTest {
+        coroutineScope.testDispatcher.runBlockingTest {
             viewModel.onStart()
             viewModel.refreshTrigger.test {
                 assertEquals(Refresh.NORMAL, awaitItem())
@@ -86,7 +86,7 @@ class WallpaperViewModelTest {
 
     @Test
     fun `check if getWallpapers returns Resource Success returns true`() =
-        coroutineScope.runBlockingTest {
+        coroutineScope.testDispatcher.runBlockingTest {
 
             repository.insert(wallpaper1)
             val list = mutableListOf<Wallpaper>()

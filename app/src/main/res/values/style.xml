@@ -132,6 +132,12 @@
         <item name="android:focusable">true</item>
     </style>
 
+    <style name="TextStyle.Clock">
+        <item name="android:textSize">100sp</item>
+        <item name="fontFamily">sans-serif-condensed-light</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
     <style name="CustomButton">
         <item name="android:textColor">@color/darkGray</item>
         <item name="android:animateOnClick">true</item>

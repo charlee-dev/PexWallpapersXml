@@ -3,6 +3,7 @@ package com.adwi.pexwallpapers.ui.setwallpaper
 import android.animation.ValueAnimator
 import android.view.MenuItem
 import android.widget.Button
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -31,33 +32,24 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
 
     private val currentDate = CalendarUtil().getTodayDate()
     private val currentDayOfWeek = "${CalendarUtil().getDayOfWeek()},"
+    private val currentHour = CalendarUtil().getCurrentHour()
+    private val currentMinute = CalendarUtil().getCurrentMinutes()
 
     override fun setupViews() {
         wallpaperArgs = args.wallpaper
+        homeLayerVisibility(true)
         binding.apply {
             wallpaper = wallpaperArgs
-            sampleHeaderLayout.apply {
-                dateTextview.text = currentDate
-                dayOfWeekTextview.text = currentDayOfWeek
-            }
         }
     }
 
     override fun setupListeners() {
         binding.apply {
             setHomeButton.setOnClickListener {
-                setWallpaper(setHomeScreen = true, setLockScreen = false)
-                showSnackbar(
-                    requireContext().getString(R.string.home_wallpaper_set),
-                    view = binding.root
-                )
+                homeLayerVisibility(true)
             }
             setLockButton.setOnClickListener {
-                setWallpaper(setHomeScreen = false, setLockScreen = true)
-                showSnackbar(
-                    requireContext().getString(R.string.lock_wallpaper_set),
-                    view = binding.root
-                )
+                homeLayerVisibility(false)
             }
             infoButton.setOnClickListener {
                 findNavController().navigate(
@@ -111,6 +103,28 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
                     invalidateAll()
                 }
             }
+        }
+    }
+
+    private fun homeLayerVisibility(isVisible: Boolean) {
+        binding.apply {
+            if (isVisible) {
+                sampleHeaderLayout.apply {
+                    dateTextview.text = currentDate
+                    dayOfWeekTextview.text = currentDayOfWeek
+                }
+            } else {
+                sampleLockscreen.apply {
+                    hoursTextview.text = currentHour
+                    minutesTextview.text = currentMinute
+                    dayOfWeekTextview.text = currentDayOfWeek
+                    dateTextview.text = currentDate
+                }
+            }
+            sampleHeaderLayout.sampleHeaderLayoutRoot.isVisible = isVisible
+            sampleAppRowLayout.sampleAppRowLayoutRoot.isVisible = isVisible
+            sampleSearchLayout.sampleSearchLayoutRoot.isVisible = isVisible
+            sampleLockscreen.sampleLockscreenLayoutRoot.isVisible = !isVisible
         }
     }
 

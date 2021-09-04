@@ -43,6 +43,7 @@ class PreviewFragment :
                         wallpaper
                     )
                 )
+
             },
             onItemLongClick = { wallpaper ->
                 viewModel.onFavoriteClick(wallpaper)

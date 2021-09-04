@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sample_lockscreen_layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/clock_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/hours_textview"
+            style="@style/TextStyle.Clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/margin_small"
+            tools:text="17" />
+
+        <TextView
+            android:id="@+id/minutes_textview"
+            style="@style/TextStyle.Clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            tools:text="28" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/weather_layout"
+        app:layout_constraintEnd_toEndOf="@id/weather_layout"
+        app:layout_constraintStart_toStartOf="@id/weather_layout">
+
+        <TextView
+            android:id="@+id/day_of_week_textview"
+            style="@style/TextStyle.Normal.Condensed"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:translationZ="2dp"
+            tools:text="Saturday," />
+
+        <TextView
+            android:id="@+id/date_textview"
+            style="@style/TextStyle.Normal.Condensed"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_extra_small"
+            android:translationZ="2dp"
+            tools:text="21 Aug" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/weather_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/margin_large"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/clock_layout"
+        app:layout_constraintEnd_toEndOf="@id/clock_layout"
+        app:layout_constraintStart_toStartOf="@id/clock_layout">
+
+        <ImageView
+            android:id="@+id/weather_imageview"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/margin_extra_small"
+            android:src="@drawable/ic_weather"
+            android:translationZ="2dp" />
+
+        <TextView
+            android:id="@+id/temp_textview"
+            style="@style/TextStyle.Normal.Condensed"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_extra_small"
+            android:translationZ="2dp"
+            tools:text="24&#176;C" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

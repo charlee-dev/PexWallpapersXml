@@ -5,6 +5,7 @@ import com.adwi.pexwallpapers.data.local.WallpaperDatabase
 import com.adwi.pexwallpapers.data.remote.PexApi
 import com.adwi.pexwallpapers.data.repository.*
 import com.adwi.pexwallpapers.data.repository.interfaces.*
+import com.adwi.pexwallpapers.shared.tools.NotificationTools
 import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.shared.tools.WallpaperSetter
 import dagger.Module
@@ -18,6 +19,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 @Module
 @InstallIn(ViewModelComponent::class)
 object ViewModelModule {
+
+    @Provides
+    @ViewModelScoped
+    fun provideNotificationTools(
+        @ApplicationContext context: Context,
+        sharingTools: SharingTools
+    ) = NotificationTools(context, sharingTools)
 
     @Provides
     @ViewModelScoped

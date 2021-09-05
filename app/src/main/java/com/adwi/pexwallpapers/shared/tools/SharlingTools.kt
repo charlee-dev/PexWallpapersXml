@@ -75,7 +75,7 @@ class SharingTools @Inject constructor(
         return bitmap.saveImage(context)
     }
 
-    private suspend fun getBitmap(url: String): Bitmap {
+    suspend fun getBitmap(url: String): Bitmap {
         val loader = ImageLoader(context)
         val request = ImageRequest.Builder(context)
             .data(url)

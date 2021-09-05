@@ -1,5 +1,6 @@
 package com.adwi.pexwallpapers
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -62,5 +63,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun bottomNavIsVisible(isVisible: Boolean) {
         binding.bottomNav.visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        navController.handleDeepLink(intent)
     }
 }

@@ -5,6 +5,8 @@ import com.adwi.pexwallpapers.data.local.entity.Settings
 import com.adwi.pexwallpapers.data.local.entity.defaultSettings
 import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
 import com.adwi.pexwallpapers.di.IoDispatcher
+import com.adwi.pexwallpapers.shared.tools.NotificationTools
+import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.ui.base.BaseViewModel
 import com.adwi.pexwallpapers.util.onDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val repository: SettingsRepositoryInterface,
+    private val sharingTools: SharingTools,
+    private val notificationTools: NotificationTools,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
@@ -31,8 +35,15 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+
     fun updatePushNotification(enabled: Boolean) {
-        onDispatcher(ioDispatcher) { repository.updatePushNotification(enabled) }
+        onDispatcher(ioDispatcher) {
+            repository.updatePushNotification(enabled)
+            if (enabled) {
+                notificationTools.createNotificationChannel()
+                notificationTools.sendNotification()
+            }
+        }
     }
 
     fun updateNewWallpaperSet(enabled: Boolean) {
@@ -62,5 +73,9 @@ class SettingsViewModel @Inject constructor(
 
     fun resetSettings() {
         onDispatcher(ioDispatcher) { repository.resetAllSettings() }
+    }
+
+    fun contactSupport() {
+        sharingTools.contactSupport()
     }
 }

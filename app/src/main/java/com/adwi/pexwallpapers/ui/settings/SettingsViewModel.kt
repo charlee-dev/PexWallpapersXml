@@ -5,6 +5,7 @@ import com.adwi.pexwallpapers.data.local.entity.Settings
 import com.adwi.pexwallpapers.data.local.entity.defaultSettings
 import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
 import com.adwi.pexwallpapers.di.IoDispatcher
+import com.adwi.pexwallpapers.shared.tools.Channel
 import com.adwi.pexwallpapers.shared.tools.NotificationTools
 import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.ui.base.BaseViewModel
@@ -35,13 +36,12 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-
     fun updatePushNotification(enabled: Boolean) {
         onDispatcher(ioDispatcher) {
             repository.updatePushNotification(enabled)
             if (enabled) {
-                notificationTools.createNotificationChannel()
-                notificationTools.sendNotification()
+                notificationTools.createNotificationChannel(Channel.NEW_WALLPAPER)
+                notificationTools.sendNotification(Channel.INFO)
             }
         }
     }

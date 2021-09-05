@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adwi.pexwallpapers.R
+import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.FragmentFavoritesBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListAdapter
 import com.adwi.pexwallpapers.ui.base.BaseFragment
@@ -21,6 +22,8 @@ class FavoritesFragment :
 
     override val viewModel: FavoritesViewModel by viewModels()
 
+    private lateinit var wallpaperList: List<Wallpaper>
+
     override fun setupToolbar() {
         binding.toolbarLayout.apply {
             titleTextView.text = getString(R.string.favorites)
@@ -31,9 +34,18 @@ class FavoritesFragment :
     override fun setupAdapters() {
         mAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
+                var list = wallpaperList
+                list = list.toMutableList()
+                list.apply {
+                    val index = indexOf(wallpaper)
+                    removeAt(index)
+                    add(0, wallpaper)
+                    first().isFirst = true
+                    last().isLast = true
+                }
                 findNavController().navigate(
                     FavoritesFragmentDirections.actionFavoritesFragmentToPreviewFragment(
-                        wallpaper
+                        wallpaper, list.toTypedArray()
                     )
                 )
             },
@@ -68,6 +80,7 @@ class FavoritesFragment :
             launchCoroutine {
                 viewModel.favorites.collect {
                     val favorites = it ?: return@collect
+                    wallpaperList = favorites
                     mAdapter?.submitList(favorites)
                     noFavoritesTextview.isVisible = favorites.isEmpty()
                     recyclerView.isVisible = favorites.isNotEmpty()

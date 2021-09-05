@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
 import com.adwi.pexwallpapers.di.IoDispatcher
+import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.ui.base.BaseViewModel
 import com.adwi.pexwallpapers.util.onDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,11 +17,11 @@ import javax.inject.Inject
 class BottomSheetViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val wallpaperRepository: WallpaperRepositoryInterface,
+    private val sharingTools: SharingTools,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
     private var savedCategoryName: String? = null
-
     private val categoryName = MutableStateFlow<String?>(null)
 
     val wallpaperResults = categoryName.flatMapLatest { categoryName ->
@@ -46,6 +47,28 @@ class BottomSheetViewModel @Inject constructor(
         wallpaper.isFavorite = !isFavorite
         onDispatcher(ioDispatcher) {
             wallpaperRepository.updateWallpaper(wallpaper)
+        }
+    }
+
+    fun goToPexels(wallpaper: Wallpaper) {
+        sharingTools.openUrlInBrowser(wallpaper.url!!)
+    }
+
+    fun shareWallpaper(wallpaper: Wallpaper) {
+        onDispatcher(ioDispatcher) {
+            sharingTools.shareImage(
+                wallpaper.imageUrl,
+                wallpaper.photographer
+            )
+        }
+    }
+
+    fun downloadWallpaper(wallpaper: Wallpaper) {
+        onDispatcher(ioDispatcher) {
+            sharingTools.saveImageLocally(
+                wallpaper.imageUrl,
+                wallpaper.photographer
+            )
         }
     }
 

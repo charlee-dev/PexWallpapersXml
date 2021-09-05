@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.FragmentBottomSheetBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListAdapter
-import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.ui.base.BaseBottomSheet
 import com.adwi.pexwallpapers.util.launchCoroutine
 import com.adwi.pexwallpapers.util.showSnackbar
@@ -23,13 +22,23 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
     override val args: BottomSheetFragmentArgs by navArgs()
 
     private lateinit var wallpaperArgs: Wallpaper
+    private lateinit var wallpaperList: List<Wallpaper>
 
     override fun setupAdapters() {
         _mAdapter = WallpaperListAdapter(
             onItemClick = { wallpaper ->
+                var list = wallpaperList
+                list = list.toMutableList()
+                list.apply {
+                    val index = indexOf(wallpaper)
+                    removeAt(index)
+                    add(0, wallpaper)
+                    first().isFirst = true
+                    last().isLast = true
+                }
                 findNavController().navigate(
                     BottomSheetFragmentDirections.actionBottomSheetFragmentToPreviewFragment(
-                        wallpaper
+                        wallpaper, list.toTypedArray()
                     )
                 )
             },
@@ -61,28 +70,18 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
         binding.apply {
             buttonsBottomSheet.apply {
                 pexelsButtonBottomSheet.setOnClickListener {
-                    SharingTools(requireContext()).openUrlInBrowser(wallpaperArgs.url!!)
+                    viewModel.goToPexels(wallpaperArgs)
                 }
 
                 shareButtonBottomSheet.setOnClickListener {
-                    launchCoroutine {
-                        SharingTools(requireContext()).shareImage(
-                            wallpaperArgs.imageUrl,
-                            wallpaperArgs.photographer
-                        )
-                    }
+                    viewModel.shareWallpaper(wallpaperArgs)
                 }
                 downloadButtonBottomSheet.setOnClickListener {
-                    launchCoroutine {
-                        SharingTools(requireContext()).saveImageLocally(
-                            wallpaperArgs.imageUrl,
-                            wallpaperArgs.photographer
-                        )
-                        showSnackbar(
-                            "Saved to Gallery - Photo by ${wallpaperArgs.photographer}",
-                            view = root.rootView
-                        )
-                    }
+                    viewModel.downloadWallpaper(wallpaperArgs)
+                    showSnackbar(
+                        "Saved to Gallery - Photo by ${wallpaperArgs.photographer}",
+                        view = root.rootView
+                    )
                 }
                 favoritesBookmarkBottomSheet.setOnClickListener {
                     launchCoroutine {

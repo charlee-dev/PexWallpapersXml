@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Suggestion
+import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.FragmentSearchBinding
 import com.adwi.pexwallpapers.shared.adapter.SuggestionListAdapter
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListPagingAdapter
@@ -30,6 +31,7 @@ class SearchFragment :
     ) {
     override val viewModel: SearchViewModel by viewModels()
 
+    private lateinit var wallpaperList: List<Wallpaper>
     private lateinit var suggestionList: List<Suggestion>
 
     private var _suggestionListAdapter: SuggestionListAdapter? = null
@@ -88,9 +90,18 @@ class SearchFragment :
     override fun setupAdapters() {
         mAdapter = WallpaperListPagingAdapter(
             onItemClick = { wallpaper ->
+                var list = wallpaperList
+                list = list.toMutableList()
+                list.apply {
+                    val index = indexOf(wallpaper)
+                    removeAt(index)
+                    add(0, wallpaper)
+                    first().isFirst = true
+                    last().isLast = true
+                }
                 findNavController().navigate(
                     SearchFragmentDirections.actionSearchFragmentToPreviewFragment(
-                        wallpaper
+                        wallpaper, list.toTypedArray()
                     )
                 )
             },
@@ -151,7 +162,12 @@ class SearchFragment :
 
     override fun setupFlows() {
         binding.apply {
-
+            launchCoroutine {
+                viewModel.wallpaperList.collect {
+                    val list = it ?: return@collect
+                    wallpaperList = list
+                }
+            }
             launchCoroutine {
                 viewModel.suggestions.collect {
                     val suggestions = it ?: return@collect

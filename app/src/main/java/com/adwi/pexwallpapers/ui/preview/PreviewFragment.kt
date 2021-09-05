@@ -12,7 +12,6 @@ import com.adwi.pexwallpapers.ui.base.BaseFragment
 import com.adwi.pexwallpapers.util.ZoomOutPageTransformer
 import com.adwi.pexwallpapers.util.launchCoroutine
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 
 
 @AndroidEntryPoint
@@ -73,26 +72,26 @@ class PreviewFragment :
     override fun setupFlows() {
         viewModel.setCategoryName(args.wallpaper.categoryName)
         launchCoroutine {
-            viewModel.wallpaperList.collect {
-                var list = it ?: return@collect
-                list = list.toMutableList()
-                list.apply {
-                    val index = indexOf(args.wallpaper)
-                    removeAt(index)
-                    add(0, args.wallpaper)
-                    first().isFirst = true
-                    last().isLast = true
+//            viewModel.wallpaperList.collect {
+//                var list = it ?: return@collect
+//                list = list.toMutableList()
+//                list.apply {
+//                    val index = indexOf(args.wallpaper)
+//                    removeAt(index)
+//                    add(0, args.wallpaper)
+//                    first().isFirst = true
+//                    last().isLast = true
+//                }
+            val list = args.wallaperLIst.toList()
+            binding.apply {
+                pager.isVisible = !list.isNullOrEmpty()
+                shimmerFrameLayout.apply {
+                    if (list.isNullOrEmpty()) startShimmer() else stopShimmer()
+                    isVisible = list.isNullOrEmpty()
                 }
-
-                binding.apply {
-                    pager.isVisible = !list.isNullOrEmpty()
-                    shimmerFrameLayout.apply {
-                        if (list.isNullOrEmpty()) startShimmer() else stopShimmer()
-                        isVisible = list.isNullOrEmpty()
-                    }
-                }
-                mAdapter?.submitList(list)
             }
+            mAdapter?.submitList(list)
+//            }
         }
     }
 

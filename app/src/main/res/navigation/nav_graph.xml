@@ -44,6 +44,9 @@
             app:destination="@id/setWallpaperFragment"
             app:popUpTo="@id/previewFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="wallaperLIst"
+            app:argType="com.adwi.pexwallpapers.data.local.entity.Wallpaper[]" />
     </fragment>
     <dialog
         android:id="@+id/bottomSheetFragment"

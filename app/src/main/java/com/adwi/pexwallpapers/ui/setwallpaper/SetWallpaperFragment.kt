@@ -10,8 +10,6 @@ import androidx.navigation.fragment.navArgs
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.FragmentSetWallpaperBinding
-import com.adwi.pexwallpapers.shared.tools.SharingTools
-import com.adwi.pexwallpapers.shared.tools.WallpaperSetter
 import com.adwi.pexwallpapers.ui.base.BaseFragment
 import com.adwi.pexwallpapers.util.CalendarUtil
 import com.adwi.pexwallpapers.util.launchCoroutine
@@ -72,30 +70,20 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
                 showDialog()
             }
             backButton.setOnClickListener {
-                findNavController().popBackStack()
+                navigateBack()
             }
             pexelsButton.setOnClickListener {
-                SharingTools(requireContext()).openUrlInBrowser(wallpaperArgs.url!!)
+                viewModel.goToPexels(wallpaperArgs)
             }
             shareButton.setOnClickListener {
-                launchCoroutine {
-                    SharingTools(requireContext()).shareImage(
-                        wallpaperArgs.imageUrl,
-                        wallpaperArgs.photographer
-                    )
-                }
+                viewModel.shareWallpaper(wallpaperArgs)
             }
             downloadButton.setOnClickListener {
-                launchCoroutine {
-                    SharingTools(requireContext()).saveImageLocally(
-                        wallpaperArgs.imageUrl,
-                        wallpaperArgs.photographer
-                    )
-                    showSnackbar(
-                        "Saved to Gallery - Photo by ${wallpaperArgs.photographer}",
-                        view = root.rootView
-                    )
-                }
+                viewModel.downloadWallpaper(wallpaperArgs)
+                showSnackbar(
+                    "Saved to Gallery - Photo by ${wallpaperArgs.photographer}",
+                    view = root.rootView
+                )
             }
             favoriteButton.setOnClickListener {
                 launchCoroutine {
@@ -139,7 +127,9 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
         val homeAndLock = dialog.findViewById<Button>(R.id.set_home_and_lock_button)
 
         home.setOnClickListener {
-            setWallpaper(setHomeScreen = true, setLockScreen = false)
+            viewModel.setWallpaper(
+                wallpaperArgs.imageUrl, setHomeScreen = true, setLockScreen = false
+            )
             showSnackbar(
                 requireContext().getString(R.string.home_wallpaper_set),
                 view = binding.root
@@ -147,7 +137,9 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
             dialog.dismiss()
         }
         lock.setOnClickListener {
-            setWallpaper(setHomeScreen = false, setLockScreen = true)
+            viewModel.setWallpaper(
+                wallpaperArgs.imageUrl, setHomeScreen = false, setLockScreen = true
+            )
             showSnackbar(
                 requireContext().getString(R.string.lock_wallpaper_set),
                 view = binding.root
@@ -155,7 +147,11 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
             dialog.dismiss()
         }
         homeAndLock.setOnClickListener {
-            setWallpaper(setHomeScreen = true, setLockScreen = true)
+            viewModel.setWallpaper(
+                wallpaperArgs.imageUrl,
+                setHomeScreen = true,
+                setLockScreen = true
+            )
             showSnackbar(
                 requireContext().getString(R.string.home_and_lock_screen_wallpaper_set),
                 view = binding.root
@@ -163,18 +159,6 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
             dialog.dismiss()
         }
         dialog.show()
-    }
-
-    private fun setWallpaper(setHomeScreen: Boolean, setLockScreen: Boolean) {
-        launchCoroutine {
-            WallpaperSetter(
-                requireContext(),
-                wallpaperArgs.imageUrl
-            ).setWallpaperByImagePath(
-                setHomeScreen = setHomeScreen,
-                setLockScreen = setLockScreen
-            )
-        }
     }
 
     override fun setupToolbar() {}

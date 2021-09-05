@@ -13,30 +13,37 @@ import androidx.core.content.ContextCompat.startActivity
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import dagger.hilt.android.qualifiers.ActivityContext
 import java.io.File
 import java.io.File.separator
 import java.io.FileOutputStream
 import java.io.OutputStream
+import javax.inject.Inject
 
-class SharingTools(private val context: Context) {
+class SharingTools @Inject constructor(
+    @ActivityContext private val context: Context
+) {
 
     fun openUrlInBrowser(url: String) {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            data = Uri.parse(url)
+        }
         startActivity(context, intent, null)
     }
 
     fun contactSupport() {
-        val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             data = Uri.parse("mailto:adrianwitaszak@gmial.com")
             putExtra(Intent.EXTRA_SUBJECT, "Support request Nr. 12345678")
         }
-        startActivity(context, Intent.createChooser(emailIntent, "Choose an app"), null)
+        startActivity(context, Intent.createChooser(intent, "Choose an app"), null)
     }
 
     suspend fun shareImage(imageUrl: String, photographer: String) {
         val uri = saveImageToInternalStorage(imageUrl)
-        val imageIntent = Intent(Intent.ACTION_SEND).apply {
+        val intent = Intent(Intent.ACTION_SEND).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             setDataAndType(uri, "image/*")
@@ -44,7 +51,13 @@ class SharingTools(private val context: Context) {
             putExtra(Intent.EXTRA_TITLE, "Picture by PexWallpapers")
             putExtra(Intent.EXTRA_STREAM, uri)
         }
-        startActivity(context, Intent.createChooser(imageIntent, "Choose an app"), null)
+        // TODO() sort out startActivity FLAG_ACTIVITY_NEW_TASK not working
+        startActivity(
+            context,
+            intent,
+//            Intent.createChooser(intent, "Choose an app"),
+            null
+        )
     }
 
     suspend fun saveImageLocally(imageUrl: String, photographer: String) {

@@ -50,6 +50,7 @@
             style="@style/TextStyle.Normal.Condensed"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:textColor="@color/backgroundColor"
             android:translationZ="2dp"
             tools:text="Saturday," />
 
@@ -59,6 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/margin_extra_small"
+            android:textColor="@color/backgroundColor"
             android:translationZ="2dp"
             tools:text="21 Aug" />
 
@@ -90,6 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/margin_extra_small"
+            android:textColor="@color/backgroundColor"
             android:translationZ="2dp"
             tools:text="24&#176;C" />
 

@@ -1,19 +1,35 @@
 package com.adwi.pexwallpapers.di
 
+import android.content.Context
 import com.adwi.pexwallpapers.data.local.WallpaperDatabase
 import com.adwi.pexwallpapers.data.remote.PexApi
 import com.adwi.pexwallpapers.data.repository.*
 import com.adwi.pexwallpapers.data.repository.interfaces.*
+import com.adwi.pexwallpapers.shared.tools.SharingTools
+import com.adwi.pexwallpapers.shared.tools.WallpaperSetter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
 @InstallIn(ViewModelComponent::class)
 object ViewModelModule {
+
+    @Provides
+    @ViewModelScoped
+    fun provideWallpaperSetter(
+        @ApplicationContext context: Context
+    ) = WallpaperSetter(context)
+
+    @Provides
+    @ViewModelScoped
+    fun provideSharingTools(
+        @ApplicationContext context: Context
+    ) = SharingTools(context)
 
     @Provides
     @ViewModelScoped

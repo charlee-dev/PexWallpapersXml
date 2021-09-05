@@ -12,32 +12,34 @@ import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.util.showToast
 import com.github.ajalt.timberkt.Timber
 import com.github.ajalt.timberkt.d
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.io.IOException
+import javax.inject.Inject
 
+private const val TAG = "WallpaperSetter"
 
-class WallpaperSetter(private val context: Context, private val imageURL: String) {
+class WallpaperSetter @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
 
     private lateinit var wallpaperManager: WallpaperManager
 
-    companion object {
-        private const val TAG = "WallpaperSetter"
-    }
-
     suspend fun setWallpaperByImagePath(
+        imageURL: String,
         setHomeScreen: Boolean = false,
         setLockScreen: Boolean = false
     ) {
         coroutineScope {
             launch {
-                val bitmap = getImageUsingCoil()
+                val bitmap = getImageUsingCoil(imageURL)
                 setWallpaper(bitmap, setHomeScreen, setLockScreen)
             }
         }
     }
 
-    private suspend fun getImageUsingCoil(): Bitmap {
+    private suspend fun getImageUsingCoil(imageURL: String): Bitmap {
         val loader = ImageLoader(context)
         val request = ImageRequest.Builder(context)
             .data(imageURL)

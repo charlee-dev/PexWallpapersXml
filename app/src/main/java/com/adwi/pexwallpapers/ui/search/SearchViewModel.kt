@@ -8,6 +8,7 @@ import com.adwi.pexwallpapers.data.local.entity.suggestionNameList
 import com.adwi.pexwallpapers.data.repository.interfaces.SearchRepositoryInterface
 import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
 import com.adwi.pexwallpapers.data.repository.interfaces.SuggestionsRepositoryInterface
+import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
 import com.adwi.pexwallpapers.di.IoDispatcher
 import com.adwi.pexwallpapers.ui.base.BaseViewModel
 import com.adwi.pexwallpapers.util.TypeConverter
@@ -19,6 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
+    private val wallpaperRepository: WallpaperRepositoryInterface,
     private val searchRepository: SearchRepositoryInterface,
     private val settingsRepository: SettingsRepositoryInterface,
     private val suggestionsRepository: SuggestionsRepositoryInterface,
@@ -37,6 +39,12 @@ class SearchViewModel @Inject constructor(
             searchRepository.getSearchResultsPaged(query)
         } ?: emptyFlow()
     }.cachedIn(viewModelScope)
+
+    val wallpaperList = currentQuery.flatMapLatest { query ->
+        query.let {
+            wallpaperRepository.getWallpapersOfCategory(query!!)
+        }
+    }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     var refreshInProgress = false
     var pendingScrollToTopAfterRefresh = false

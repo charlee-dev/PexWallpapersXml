@@ -40,6 +40,9 @@ android {
         dataBinding true
         viewBinding true
     }
+    kapt {
+        correctErrorTypes true
+    }
     packagingOptions {
         exclude "**/attach_hotspot_windows.dll"
         exclude "META-INF/licenses/**"

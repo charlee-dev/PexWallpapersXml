@@ -44,7 +44,7 @@ class SharingTools @Inject constructor(
     suspend fun shareImage(imageUrl: String, photographer: String) {
         val uri = saveImageToInternalStorage(imageUrl)
         val intent = Intent(Intent.ACTION_SEND).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             setDataAndType(uri, "image/*")
             putExtra(Intent.EXTRA_SUBJECT, "Picture by $photographer")

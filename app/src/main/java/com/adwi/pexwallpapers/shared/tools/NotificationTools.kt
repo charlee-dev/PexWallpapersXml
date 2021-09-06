@@ -74,7 +74,6 @@ class NotificationTools @Inject constructor(
             .setContentText("test description")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setLargeIcon(smallBitmap)
-
             .setContentIntent(pendingIntent)
 
         when (channel) {

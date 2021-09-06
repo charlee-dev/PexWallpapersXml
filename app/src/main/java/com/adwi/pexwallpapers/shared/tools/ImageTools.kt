@@ -1,17 +1,15 @@
 package com.adwi.pexwallpapers.shared.tools
 
-import android.Manifest
+import android.annotation.SuppressLint
 import android.app.WallpaperManager
 import android.content.ContentValues
 import android.content.Context
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Environment
 import android.os.SystemClock
 import android.provider.MediaStore
-import androidx.core.app.ActivityCompat
 import androidx.core.graphics.drawable.toBitmap
 import coil.ImageLoader
 import coil.request.ImageRequest
@@ -23,7 +21,8 @@ import java.io.OutputStream
 import javax.inject.Inject
 
 class ImageTools @Inject constructor(
-    @ActivityContext private val context: Context
+    @ActivityContext private val context: Context,
+    private val permissionTools: PermissionTools
 ) {
     suspend fun getImageUsingCoil(imageURL: String): Bitmap {
         val loader = ImageLoader(context)
@@ -62,33 +61,30 @@ class ImageTools @Inject constructor(
         )
     }
 
+    @SuppressLint("MissingPermission")
     private fun backupCurrentWallpaper() {
         val wallpaperManager = WallpaperManager.getInstance(context)
 
-        if (ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return
+        permissionTools.storagePermissionsCheck {
+            val bitmap = wallpaperManager
+                .drawable
+                .toBitmap()
+            saveBackupBitmapToLocal(bitmap)
         }
-        val v = wallpaperManager
-            .drawable
-            .toBitmap()
-//            .compress(Bitmap.CompressFormat.PNG, 100,
-//                FileOutputStream("/storage/emulated/0/output.png")
-//            )
     }
 
+    private fun saveBackupBitmapToLocal(bitmap: Bitmap) {
+        MediaStore.Images.Media.insertImage(
+            context.contentResolver,
+            bitmap,
+            "backup_wallpaper",
+            "Backup of last set wallpaper"
+        )
+    }
+
+    @SuppressLint("InlinedApi")
     private fun Bitmap.saveImage(context: Context): Uri? {
-        if (android.os.Build.VERSION.SDK_INT >= 29) {
+        if (PermissionTools.runningQOrLater) {
             val values = ContentValues()
             values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
             values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000)
@@ -106,11 +102,10 @@ class ImageTools @Inject constructor(
                 return uri
             }
         } else {
-            val directory =
-                File(
-                    context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                        .toString() + File.separator + "test_pictures"
-                )
+            val directory = File(
+                context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                    .toString() + File.separator + "pex_wallpapers"
+            )
             if (!directory.exists()) {
                 directory.mkdirs()
             }

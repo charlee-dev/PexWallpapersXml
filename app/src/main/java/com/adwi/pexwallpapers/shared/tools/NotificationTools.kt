@@ -1,5 +1,6 @@
 package com.adwi.pexwallpapers.shared.tools
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationChannelGroup
 import android.app.NotificationManager
@@ -7,7 +8,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.adwi.pexwallpapers.MainActivity
@@ -19,6 +19,7 @@ enum class Channel {
     NEW_WALLPAPER, RECOMMENDATIONS, INFO
 }
 
+@SuppressLint("NewApi")
 class NotificationTools @Inject constructor(
     @ApplicationContext private val context: Context,
     private val imageTools: ImageTools
@@ -28,8 +29,9 @@ class NotificationTools @Inject constructor(
     private val wallpaperGroupId = "wallpaper_group"
     private val appGroupId = "app_group"
 
+
     fun setupNotifications() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (PermissionTools.runningOOrLater) {
             val wallpaperGroupName = context.getString(R.string.wallpapers)
             val appGroupName = context.getString(R.string.other)
 
@@ -56,7 +58,7 @@ class NotificationTools @Inject constructor(
 
 
     private fun createNotificationChannel(channel: Channel) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (PermissionTools.runningOOrLater) {
             var name = ""
             var importance = 0
             val channelGroup: String

@@ -90,4 +90,10 @@
     <string name="reset_settings">Reset settings</string>
     <string name="slide_next">Slide next</string>
     <string name="other">Other</string>
+    <!-- Permissions -->
+    <string name="rationale_title">We need permission to read external storage</string>
+    <string name="rationale_desc">This app relies on read external storage.
+We require access to this permission to be able to backup your previous wallpaper, just in case you want to revert to it.
+        We don't use it to do any changes in system.
+For further info read our privacy policy.</string>
 </resources>

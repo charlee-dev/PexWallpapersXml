@@ -11,7 +11,6 @@ class SharingTools @Inject constructor(
     @ActivityContext private val context: Context,
     private val imageTools: ImageTools
 ) {
-
     fun openUrlInBrowser(url: String) {
         val intent = Intent(Intent.ACTION_VIEW).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

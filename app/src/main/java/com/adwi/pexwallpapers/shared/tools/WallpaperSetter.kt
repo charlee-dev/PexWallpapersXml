@@ -1,9 +1,9 @@
 package com.adwi.pexwallpapers.shared.tools
 
+import android.annotation.SuppressLint
 import android.app.WallpaperManager
 import android.content.Context
 import android.graphics.Bitmap
-import android.os.Build
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.util.showToast
 import com.github.ajalt.timberkt.Timber
@@ -14,6 +14,7 @@ import javax.inject.Inject
 
 private const val TAG = "WallpaperSetter"
 
+@SuppressLint("NewApi")
 class WallpaperSetter @Inject constructor(
     @ApplicationContext private val context: Context,
     private val imageTools: ImageTools
@@ -48,7 +49,7 @@ class WallpaperSetter @Inject constructor(
 
     private fun setLockScreenWallpaper(bitmap: Bitmap) {
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (PermissionTools.runningNOrLater) {
                 wallpaperManager.setBitmap(
                     bitmap, null, true,
                     WallpaperManager.FLAG_LOCK

@@ -3,27 +3,21 @@ package com.adwi.pexwallpapers.shared.tools
 import android.app.WallpaperManager
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Build
-import coil.ImageLoader
-import coil.request.ImageRequest
-import coil.request.SuccessResult
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.util.showToast
 import com.github.ajalt.timberkt.Timber
 import com.github.ajalt.timberkt.d
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
 
 private const val TAG = "WallpaperSetter"
 
 class WallpaperSetter @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val imageTools: ImageTools
 ) {
-
     private lateinit var wallpaperManager: WallpaperManager
 
     suspend fun setWallpaperByImagePath(
@@ -31,23 +25,8 @@ class WallpaperSetter @Inject constructor(
         setHomeScreen: Boolean = false,
         setLockScreen: Boolean = false
     ) {
-        coroutineScope {
-            launch {
-                val bitmap = getImageUsingCoil(imageURL)
-                setWallpaper(bitmap, setHomeScreen, setLockScreen)
-            }
-        }
-    }
-
-    private suspend fun getImageUsingCoil(imageURL: String): Bitmap {
-        val loader = ImageLoader(context)
-        val request = ImageRequest.Builder(context)
-            .data(imageURL)
-            .allowHardware(false)
-            .build()
-
-        val result = (loader.execute(request) as SuccessResult).drawable
-        return (result as BitmapDrawable).bitmap
+        val bitmap = imageTools.getImageUsingCoil(imageURL)
+        setWallpaper(bitmap, setHomeScreen, setLockScreen)
     }
 
     private fun setWallpaper(bitmap: Bitmap, setHomeScreen: Boolean, setLockScreen: Boolean) {
@@ -65,7 +44,6 @@ class WallpaperSetter @Inject constructor(
         bitmap: Bitmap
     ) {
         wallpaperManager.setBitmap(bitmap)
-
     }
 
     private fun setLockScreenWallpaper(bitmap: Bitmap) {

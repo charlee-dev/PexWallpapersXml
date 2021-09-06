@@ -3,6 +3,7 @@ package com.adwi.pexwallpapers.ui.setwallpaper
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
 import com.adwi.pexwallpapers.di.IoDispatcher
+import com.adwi.pexwallpapers.shared.tools.ImageTools
 import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.shared.tools.WallpaperSetter
 import com.adwi.pexwallpapers.ui.base.BaseViewModel
@@ -16,6 +17,7 @@ class SetWallpaperViewModel @Inject constructor(
     private val repository: WallpaperRepositoryInterface,
     private val sharingTools: SharingTools,
     private val wallpaperSetter: WallpaperSetter,
+    private val imageTools: ImageTools,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
@@ -42,7 +44,7 @@ class SetWallpaperViewModel @Inject constructor(
 
     fun downloadWallpaper(wallpaper: Wallpaper) {
         onDispatcher(ioDispatcher) {
-            sharingTools.saveImageLocally(
+            imageTools.saveImageLocally(
                 wallpaper.imageUrl,
                 wallpaper.photographer
             )

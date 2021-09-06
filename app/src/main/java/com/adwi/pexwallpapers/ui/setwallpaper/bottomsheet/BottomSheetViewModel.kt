@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
 import com.adwi.pexwallpapers.di.IoDispatcher
+import com.adwi.pexwallpapers.shared.tools.ImageTools
 import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.ui.base.BaseViewModel
 import com.adwi.pexwallpapers.util.onDispatcher
@@ -19,6 +20,7 @@ class BottomSheetViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val wallpaperRepository: WallpaperRepositoryInterface,
     private val sharingTools: SharingTools,
+    private val imageTools: ImageTools,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
@@ -67,7 +69,7 @@ class BottomSheetViewModel @Inject constructor(
 
     fun downloadWallpaper(wallpaper: Wallpaper) {
         onDispatcher(ioDispatcher) {
-            sharingTools.saveImageLocally(
+            imageTools.saveImageLocally(
                 wallpaper.imageUrl,
                 wallpaper.photographer
             )

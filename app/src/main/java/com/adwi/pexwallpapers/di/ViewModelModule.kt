@@ -5,6 +5,7 @@ import com.adwi.pexwallpapers.data.local.WallpaperDatabase
 import com.adwi.pexwallpapers.data.remote.PexApi
 import com.adwi.pexwallpapers.data.repository.*
 import com.adwi.pexwallpapers.data.repository.interfaces.*
+import com.adwi.pexwallpapers.shared.tools.ImageTools
 import com.adwi.pexwallpapers.shared.tools.NotificationTools
 import com.adwi.pexwallpapers.shared.tools.SharingTools
 import com.adwi.pexwallpapers.shared.tools.WallpaperSetter
@@ -22,22 +23,28 @@ object ViewModelModule {
 
     @Provides
     @ViewModelScoped
+    fun provideImageTools(@ApplicationContext context: Context) = ImageTools(context)
+
+    @Provides
+    @ViewModelScoped
     fun provideNotificationTools(
         @ApplicationContext context: Context,
-        sharingTools: SharingTools
-    ) = NotificationTools(context, sharingTools)
+        imageTools: ImageTools
+    ) = NotificationTools(context, imageTools)
 
     @Provides
     @ViewModelScoped
     fun provideWallpaperSetter(
-        @ApplicationContext context: Context
-    ) = WallpaperSetter(context)
+        @ApplicationContext context: Context,
+        imageTools: ImageTools
+    ) = WallpaperSetter(context, imageTools)
 
     @Provides
     @ViewModelScoped
     fun provideSharingTools(
-        @ApplicationContext context: Context
-    ) = SharingTools(context)
+        @ApplicationContext context: Context,
+        imageTools: ImageTools
+    ) = SharingTools(context, imageTools)
 
     @Provides
     @ViewModelScoped

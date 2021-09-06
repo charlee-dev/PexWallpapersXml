@@ -31,9 +31,7 @@ class SettingsViewModel @Inject constructor(
     val currentSettings: StateFlow<Settings> = _currentSettings
 
     init {
-        notificationTools.createNotificationChannel(Channel.NEW_WALLPAPER)
-        notificationTools.createNotificationChannel(Channel.RECOMMENDATIONS)
-        notificationTools.createNotificationChannel(Channel.INFO)
+        notificationTools.setupNotifications()
         onDispatcher(ioDispatcher) {
             _currentSettings.value = repository.getSettings()
         }
@@ -45,7 +43,8 @@ class SettingsViewModel @Inject constructor(
             if (enabled) {
                 notificationTools.sendNotification(
                     Channel.NEW_WALLPAPER,
-                    "https://images.pexels.com/photos/5273316/pexels-photo-5273316.jpeg?cs=srgb&dl=pexels-julia-volk-5273316.jpg&fm=jpg"
+                    "https://images.pexels.com/photos/5273316/pexels-photo-5273316.jpeg?cs=srgb&dl=pexels-julia-volk-5273316.jpg&fm=jpg",
+                    ""
                 )
             }
         }

@@ -11,7 +11,6 @@ import com.adwi.pexwallpapers.ui.base.BaseViewModel
 import com.adwi.pexwallpapers.util.onDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -57,7 +56,6 @@ class BottomSheetViewModel @Inject constructor(
         sharingTools.openUrlInBrowser(wallpaper.url!!)
     }
 
-    @DelicateCoroutinesApi
     fun shareWallpaper(wallpaper: Wallpaper) {
         onDispatcher(ioDispatcher) {
             sharingTools.shareImage(

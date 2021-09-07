@@ -14,16 +14,17 @@ import androidx.core.graphics.drawable.toBitmap
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
-import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
 import javax.inject.Inject
 
 class ImageTools @Inject constructor(
-    @ActivityContext private val context: Context,
-    private val permissionTools: PermissionTools
+    @ApplicationContext private val context: Context
 ) {
+    private val permissionTools = PermissionTools(context)
+
     suspend fun getImageUsingCoil(imageURL: String): Bitmap {
         val loader = ImageLoader(context)
         val request = ImageRequest.Builder(context)
@@ -102,6 +103,7 @@ class ImageTools @Inject constructor(
                 return uri
             }
         } else {
+
             val directory = File(
                 context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
                     .toString() + File.separator + "pex_wallpapers"

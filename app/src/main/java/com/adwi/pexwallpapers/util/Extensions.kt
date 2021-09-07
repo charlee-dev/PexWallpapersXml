@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.util.TypedValue
 import android.view.Menu
 import android.view.View
@@ -93,6 +94,9 @@ fun Context.hideKeyboard(view: View) {
 fun showToast(context: Context, message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
+
+tailrec fun Context?.activity(): Activity? = this as? Activity
+    ?: (this as? ContextWrapper)?.baseContext?.activity()
 
 // Fragment --------------------------------------------------------------------------------
 

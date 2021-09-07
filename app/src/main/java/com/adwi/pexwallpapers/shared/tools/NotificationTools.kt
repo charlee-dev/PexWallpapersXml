@@ -8,6 +8,10 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.Color.RED
+import android.media.AudioAttributes
+import android.media.RingtoneManager.TYPE_NOTIFICATION
+import android.media.RingtoneManager.getDefaultUri
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.adwi.pexwallpapers.MainActivity
@@ -24,7 +28,7 @@ class NotificationTools @Inject constructor(
     @ApplicationContext private val context: Context,
     private val imageTools: ImageTools
 ) {
-    private lateinit var CHANNEL_ID: String
+    private lateinit var channelId: String
 
     private val wallpaperGroupId = "wallpaper_group"
     private val appGroupId = "app_group"
@@ -56,7 +60,6 @@ class NotificationTools @Inject constructor(
         }
     }
 
-
     private fun createNotificationChannel(channel: Channel) {
         if (PermissionTools.runningOOrLater) {
             var name = ""
@@ -64,34 +67,50 @@ class NotificationTools @Inject constructor(
             val channelGroup: String
             when (channel) {
                 Channel.NEW_WALLPAPER -> {
-                    CHANNEL_ID = "pex_new_wallpaper"
+                    channelId = "pex_new_wallpaper"
                     name = "New wallpaper"
                     importance = NotificationManager.IMPORTANCE_DEFAULT
                     channelGroup = wallpaperGroupId
                 }
                 Channel.RECOMMENDATIONS -> {
-                    CHANNEL_ID = "pex_recommendations"
+                    channelId = "pex_recommendations"
                     name = "Recommendations"
                     importance = NotificationManager.IMPORTANCE_DEFAULT
                     channelGroup = wallpaperGroupId
                 }
                 Channel.INFO -> {
-                    CHANNEL_ID = "info"
+                    channelId = "info"
                     name = "Info"
                     importance = NotificationManager.IMPORTANCE_HIGH
                     channelGroup = appGroupId
                 }
             }
-            val notificationChannel = NotificationChannel(CHANNEL_ID, name, importance)
-            notificationChannel.group = channelGroup
-            val notificationManager: NotificationManager =
+            val ringtoneManager = getDefaultUri(TYPE_NOTIFICATION)
+            val audioAttributes =
+                AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build()
+            val notificationChannel = NotificationChannel(channelId, name, importance)
+            notificationChannel.apply {
+                group = channelGroup
+                enableLights(true)
+                lightColor = RED
+                enableVibration(true)
+                vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
+                setSound(ringtoneManager, audioAttributes)
+            }
+            val notificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(notificationChannel)
         }
     }
 
-    suspend fun sendNotification(channel: Channel, imageUrl: String, longMessage: String) {
-        var notificationNewWallpaperId = 101
+    @SuppressLint("UnspecifiedImmutableFlag")
+    suspend fun sendNotification(
+        id: Int,
+        channel: Channel,
+        imageUrl: String,
+        longMessage: String = ""
+    ) {
         var requestCode = 1
         val intentDestination: Class<*>
 
@@ -99,7 +118,7 @@ class NotificationTools @Inject constructor(
         val smallBitmap =
             BitmapFactory.decodeResource(context.resources, R.drawable.ic_launcher_foreground)
 
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+        val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
 
         when (channel) {
@@ -115,7 +134,6 @@ class NotificationTools @Inject constructor(
             }
             Channel.RECOMMENDATIONS -> {
                 val largeBitmap = imageTools.getBitmapFromRemote(imageUrl)
-                notificationNewWallpaperId = 102
                 requestCode = 2
                 intentDestination = MainActivity::class.java
                 builder
@@ -126,7 +144,6 @@ class NotificationTools @Inject constructor(
                     .priority = NotificationCompat.PRIORITY_DEFAULT
             }
             Channel.INFO -> {
-                notificationNewWallpaperId = 103
                 requestCode = 3
                 intentDestination = MainActivity::class.java
                 builder.setStyle(NotificationCompat.BigTextStyle().bigText(longMessage))
@@ -141,7 +158,7 @@ class NotificationTools @Inject constructor(
             .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(context)) {
-            notify(notificationNewWallpaperId, builder.build())
+            notify(id, builder.build())
         }
     }
 }

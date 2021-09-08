@@ -80,10 +80,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
                         viewModel.updateChangePeriodType(itemId)
                         setSlider(itemId)
                     }
-                    R.id.days_radio_button -> {
-                        viewModel.updateChangePeriodType(itemId)
-                        setSlider(itemId)
-                    }
                     else -> {
                         viewModel.updateChangePeriodType(itemId)
                         setSlider(itemId)
@@ -127,18 +123,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
     private fun setCheckedRadioButton(radioButton: Int) {
         binding.apply {
             val button = when (radioButton) {
-                R.id.minutes_radio_button -> {
-                    minutesRadioButton
-                }
-                R.id.hours_radio_button -> {
-                    hoursRadioButton
-                }
-                R.id.days_radio_button -> {
-                    daysRadioButton
-                }
-                else -> {
-                    weeksRadioButton
-                }
+                R.id.minutes_radio_button -> minutesRadioButton
+                R.id.hours_radio_button -> hoursRadioButton
+                else -> daysRadioButton
             }
             button.isChecked = true
         }
@@ -155,15 +142,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
                     max = 60f
                     step = 5f
                 }
-                R.id.hours_radio_button -> {
-                    max = 24f
-                }
-                R.id.days_radio_button -> {
-                    max = 7f
-                }
-                else -> {
-                    max = 12f
-                }
+                R.id.hours_radio_button -> max = 24f
+                else -> max = 7f
             }
             sliderMinVlue.text = "$min"
             sliderMaxValue.text = "$max"

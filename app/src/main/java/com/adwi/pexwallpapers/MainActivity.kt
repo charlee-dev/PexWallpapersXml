@@ -18,6 +18,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var bottomNav: ChipNavigationBar
 
+    private val wallpaperFragment = R.id.wallpapersFragment
+    private val searchFragment = R.id.searchFragment
+    private val favoritesFragment = R.id.favoritesFragment
+    private val bottomNavDirections = listOf(wallpaperFragment, searchFragment, favoritesFragment)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -36,14 +41,14 @@ class MainActivity : AppCompatActivity() {
             bottomNav.setItemSelected(R.id.wallpapersFragment)
             bottomNav.setOnItemSelectedListener { itemId ->
                 when (itemId) {
-                    R.id.wallpapersFragment -> {
-                        navController.navigate(R.id.wallpapersFragment)
+                    wallpaperFragment -> {
+                        navController.navigate(wallpaperFragment)
                     }
-                    R.id.searchFragment -> {
-                        navController.navigate(R.id.searchFragment)
+                    searchFragment -> {
+                        navController.navigate(searchFragment)
                     }
-                    R.id.favoritesFragment -> {
-                        navController.navigate(R.id.favoritesFragment)
+                    favoritesFragment -> {
+                        navController.navigate(favoritesFragment)
                     }
                 }
             }
@@ -52,11 +57,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.wallpapersFragment ||
-                destination.id == R.id.searchFragment ||
-                destination.id == R.id.favoritesFragment
-//                destination.id == R.id.previewFragment
-            )
+            when (destination.id) {
+                wallpaperFragment -> bottomNav.setItemSelected(wallpaperFragment, true)
+                searchFragment -> bottomNav.setItemSelected(searchFragment, true)
+                favoritesFragment -> bottomNav.setItemSelected(favoritesFragment, true)
+            }
+        }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (bottomNavDirections.contains(destination.id))
                 bottomNavIsVisible(true) else bottomNavIsVisible(false)
         }
     }

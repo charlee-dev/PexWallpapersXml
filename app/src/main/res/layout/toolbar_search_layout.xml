@@ -8,7 +8,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/backgroundColor">
+        android:background="@color/backgroundColorTransparent">
 
         <Toolbar
             android:layout_width="match_parent"
@@ -19,19 +19,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:animateLayoutChanges="true"
-                android:paddingEnd="@dimen/margin_medium"
-                android:background="@color/backgroundColor">
+                android:paddingEnd="@dimen/margin_medium">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/back_button"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
+                    android:animateLayoutChanges="true"
                     android:background="@drawable/background_rounded_stroke"
                     android:drawableStart="@drawable/ic_arrow_back"
                     android:paddingStart="12dp"
-                    app:drawableTint="@color/darkGray"
-                    android:animateLayoutChanges="true"
                     android:visibility="gone"
+                    app:drawableTint="@color/darkGray"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

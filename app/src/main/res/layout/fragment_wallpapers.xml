@@ -26,13 +26,14 @@
                 android:id="@+id/swipe_refresh_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:indicator_overlay="false"
+                app:indicator_overlay="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/toolbar_layout"
-                app:lottie_rawRes="@raw/loading_dots">
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_rawRes="@raw/loading_dots"
+                app:trigger_offset_top="130dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout4"
@@ -44,6 +45,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:orientation="vertical"
+                        android:paddingTop="@dimen/toolbar_size"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -58,6 +60,7 @@
                         android:id="@+id/recycler_view"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:paddingTop="@dimen/toolbar_size"
                         android:paddingHorizontal="@dimen/margin_extra_small"
                         android:clipToPadding="false"
                         android:paddingBottom="8dp"

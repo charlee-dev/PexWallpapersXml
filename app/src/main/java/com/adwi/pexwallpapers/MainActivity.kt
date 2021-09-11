@@ -2,8 +2,8 @@ package com.adwi.pexwallpapers
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.adwi.pexwallpapers.databinding.ActivityMainBinding
@@ -21,7 +21,9 @@ class MainActivity : AppCompatActivity() {
     private val wallpaperFragment = R.id.wallpapersFragment
     private val searchFragment = R.id.searchFragment
     private val favoritesFragment = R.id.favoritesFragment
-    private val bottomNavDirections = listOf(wallpaperFragment, searchFragment, favoritesFragment)
+    private val settingsFragment = R.id.settingsFragment
+    private val bottomNavDirections =
+        listOf(wallpaperFragment, searchFragment, favoritesFragment, settingsFragment)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,15 +43,10 @@ class MainActivity : AppCompatActivity() {
             bottomNav.setItemSelected(R.id.wallpapersFragment)
             bottomNav.setOnItemSelectedListener { itemId ->
                 when (itemId) {
-                    wallpaperFragment -> {
-                        navController.navigate(wallpaperFragment)
-                    }
-                    searchFragment -> {
-                        navController.navigate(searchFragment)
-                    }
-                    favoritesFragment -> {
-                        navController.navigate(favoritesFragment)
-                    }
+                    wallpaperFragment -> navController.navigate(wallpaperFragment)
+                    searchFragment -> navController.navigate(searchFragment)
+                    favoritesFragment -> navController.navigate(favoritesFragment)
+                    settingsFragment -> navController.navigate(settingsFragment)
                 }
             }
         }
@@ -61,16 +58,12 @@ class MainActivity : AppCompatActivity() {
                 wallpaperFragment -> bottomNav.setItemSelected(wallpaperFragment, true)
                 searchFragment -> bottomNav.setItemSelected(searchFragment, true)
                 favoritesFragment -> bottomNav.setItemSelected(favoritesFragment, true)
+                settingsFragment -> bottomNav.setItemSelected(settingsFragment, true)
             }
         }
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (bottomNavDirections.contains(destination.id))
-                bottomNavIsVisible(true) else bottomNavIsVisible(false)
+            binding.bottomNav.isVisible = bottomNavDirections.contains(destination.id)
         }
-    }
-
-    private fun bottomNavIsVisible(isVisible: Boolean) {
-        binding.bottomNav.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
     override fun onNewIntent(intent: Intent?) {

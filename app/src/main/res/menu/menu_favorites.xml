@@ -7,9 +7,4 @@
         android:icon="@drawable/ic_delete"
         android:title="@string/delete_all_favorites"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/settingsFragment"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/settings"
-        app:showAsAction="never" />
 </menu>

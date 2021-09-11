@@ -307,10 +307,6 @@ class SearchFragment :
                 mAdapter?.refresh()
                 true
             }
-            R.id.settingsFragment -> {
-                findNavController().navigate(R.id.settingsFragment)
-                true
-            }
             else -> false
         }
     }

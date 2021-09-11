@@ -7,9 +7,4 @@
         android:title="@string/refresh"
         android:icon="@drawable/ic_refresh"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/settingsFragment"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/settings"
-        app:showAsAction="never" />
 </menu>

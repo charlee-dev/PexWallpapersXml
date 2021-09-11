@@ -26,4 +26,12 @@
         app:cnb_iconColor="@color/backgroundColor"
         app:cnb_textColor="@color/backgroundColor"
         android:title="@string/favorites" />
+    <item
+        android:id="@+id/settingsFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/settings"
+        app:cnb_backgroundColor="@color/colorPrimary"
+        app:cnb_iconColor="@color/backgroundColor"
+        app:cnb_textColor="@color/backgroundColor" />
 </menu>

@@ -150,10 +150,6 @@ class WallpapersFragment :
                 viewModel.onManualRefresh()
                 true
             }
-            R.id.settingsFragment -> {
-                findNavController().navigate(R.id.settingsFragment)
-                true
-            }
             else -> false
         }
     }

@@ -3,72 +3,67 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
+    <data>
 
-    <com.google.android.material.appbar.AppBarLayout
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/backgroundColorTransparent">
+        android:layout_height="@dimen/toolbar_size"
+        android:animateLayoutChanges="true"
+        android:background="@color/backgroundColorTransparent"
+        android:paddingStart="@dimen/margin_medium"
+        android:paddingEnd="@dimen/margin_medium">
 
-        <Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/back_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/background_rounded_stroke"
+            android:drawableStart="@drawable/ic_arrow_back"
+            android:paddingStart="12dp"
+            android:visibility="gone"
+            app:drawableTint="@color/darkGray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/toolbar_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:animateLayoutChanges="true"
-                android:paddingEnd="@dimen/margin_medium">
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:background="@drawable/background_rounded_stroke"
+            android:focusable="false"
+            android:focusableInTouchMode="true"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLines="1"
+            android:theme="@style/AppTheme.Toolbar"
+            app:iconifiedByDefault="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/menu_button"
+            app:layout_constraintStart_toEndOf="@id/back_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:queryHint="@string/search" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/back_button"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:animateLayoutChanges="true"
-                    android:background="@drawable/background_rounded_stroke"
-                    android:drawableStart="@drawable/ic_arrow_back"
-                    android:paddingStart="12dp"
-                    android:visibility="gone"
-                    app:drawableTint="@color/darkGray"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:visibility="visible" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/menu_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/background_rounded_stroke"
+            android:drawableStart="@drawable/ic_menu_more"
+            android:paddingStart="12dp"
+            app:drawableTint="@color/darkGray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.SearchView
-                    android:id="@+id/search_view"
-                    android:layout_width="0dp"
-                    android:layout_height="46dp"
-                    android:layout_marginStart="@dimen/margin_medium"
-                    android:layout_marginEnd="@dimen/margin_medium"
-                    android:background="@drawable/background_rounded_stroke"
-                    android:imeOptions="actionDone"
-                    android:inputType="text"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:theme="@style/AppTheme.Toolbar"
-                    app:iconifiedByDefault="false"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/menu_button"
-                    app:layout_constraintStart_toEndOf="@id/back_button"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:queryHint="@string/search" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/menu_button"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:animateLayoutChanges="true"
-                    android:background="@drawable/background_rounded_stroke"
-                    android:drawableStart="@drawable/ic_menu_more"
-                    android:paddingStart="12dp"
-                    app:drawableTint="@color/darkGray"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

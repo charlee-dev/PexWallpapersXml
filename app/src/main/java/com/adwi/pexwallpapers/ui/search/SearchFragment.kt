@@ -43,17 +43,12 @@ class SearchFragment :
         binding.apply {
             toolbarLayout.apply {
                 searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
-                    searchViewOnFocusBehaviour(hasFocus) {
-                        searchView.clearFocus()
-                        searchView.setQuery("", false)
-                    }
+                    searchViewOnFocusBehaviour(hasFocus)
                 }
                 searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
-                        searchViewOnFocusBehaviour(false) {}
                         newQuery(query!!)
                         addSuggestion(query)
-                        searchView.clearFocus()
                         return true
                     }
 
@@ -109,6 +104,7 @@ class SearchFragment :
         _suggestionListAdapter = SuggestionListAdapter(
             onItemClick = { suggestion ->
                 newQuery(suggestion.name)
+                searchViewOnFocusBehaviour(false)
             },
             onSuggestionDeleteClick = { suggestion ->
                 launchCoroutine {
@@ -144,14 +140,17 @@ class SearchFragment :
 
     override fun setupListeners() {
         binding.apply {
-            swipeRefreshLayout.setOnRefreshListener {
-                mAdapter?.refresh()
-            }
             retryButton.setOnClickListener {
                 mAdapter?.retry()
             }
-            toolbarLayout.menuButton.setOnClickListener {
-                showMenu(it, R.menu.menu_search_wallpaper)
+            toolbarLayout.apply {
+                menuButton.setOnClickListener {
+                    showMenu(it, R.menu.menu_search_wallpaper)
+                }
+                backButton.setOnClickListener {
+                    searchView.setQuery("", false)
+                    searchViewOnFocusBehaviour(false)
+                }
             }
         }
     }
@@ -163,7 +162,6 @@ class SearchFragment :
                     val suggestions = it ?: return@collect
                     suggestionList = suggestions
                     suggestionListAdapter?.submitList(suggestions)
-                    suggestionsRecyclerView.isVisible = suggestions.isNotEmpty()
                 }
             }
             launchCoroutine {
@@ -175,10 +173,7 @@ class SearchFragment :
             launchCoroutine {
                 viewModel.hasCurrentQuery.collect { hasCurrentQuery ->
                     instructionsTextview.isVisible = !hasCurrentQuery
-                    swipeRefreshLayout.isEnabled = hasCurrentQuery
-                    if (!hasCurrentQuery) {
-                        recyclerView.isVisible = false
-                    }
+                    recyclerView.isVisible = hasCurrentQuery
                 }
             }
             launchCoroutine {
@@ -209,7 +204,6 @@ class SearchFragment :
                                 shimmerFrameLayout.startShimmer()
                                 errorTextview.isVisible = false
                                 retryButton.isVisible = false
-                                swipeRefreshLayout.isRefreshing = !viewModel.restoringSavedQuery
                                 noResultsTextview.isVisible = false
                                 recyclerView.isVisible = mAdapter!!.itemCount > 0
 
@@ -230,7 +224,6 @@ class SearchFragment :
                                 shimmerFrameLayout.isVisible = false
                                 errorTextview.isVisible = false
                                 retryButton.isVisible = false
-                                swipeRefreshLayout.isRefreshing = false
                                 recyclerView.isVisible = mAdapter!!.itemCount > 0
 
                                 val noResults =
@@ -245,7 +238,6 @@ class SearchFragment :
                             is LoadState.Error -> {
                                 shimmerFrameLayout.stopShimmer()
                                 shimmerFrameLayout.isVisible = false
-                                swipeRefreshLayout.isRefreshing = false
                                 noResultsTextview.isVisible = false
                                 recyclerView.isVisible = mAdapter!!.itemCount > 0
 
@@ -278,6 +270,7 @@ class SearchFragment :
                 viewModel.wallpaperList.collect {
                     val list = it ?: return@collect
                     wallpaperList = list
+                    headerTextview.text = wallpaperList.first().categoryName
                 }
             }
         }
@@ -289,31 +282,21 @@ class SearchFragment :
         }
     }
 
-    private fun searchViewOnFocusBehaviour(hasFocus: Boolean, sendQuery: () -> Unit) {
+    private fun searchViewOnFocusBehaviour(hasFocus: Boolean) {
         binding.apply {
-            toolbarLayout.apply {
-                backButton.isVisible = hasFocus
-                swipeRefreshLayout.isClickable = hasFocus
-                if (!hasFocus) {
-                    suggestionsRecyclerView.fadeOut()
-                    tintView.fadeOut()
-                    filteredSuggestionList.clear()
-                } else {
-                    suggestionsRecyclerView.fadeIn()
-                    tintView.fadeIn()
-                    backButton.setOnClickListener {
-                        sendQuery()
-                    }
-                }
-            }
+            suggestionsRecyclerView.isVisible = hasFocus
+            toolbarLayout.backButton.isVisible = hasFocus
+            if (!hasFocus) filteredSuggestionList.clear()
         }
     }
 
     private fun newQuery(query: String) {
         viewModel.onSearchQuerySubmit(query)
+        searchViewOnFocusBehaviour(false)
         binding.apply {
-            suggestionsRecyclerView.fadeOut()
             toolbarLayout.searchView.clearFocus()
+            searchConstrainLayout.transitionToStart()
+            recyclerView.scrollToPosition(0)
         }
         hideKeyboard()
     }

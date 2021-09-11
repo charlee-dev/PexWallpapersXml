@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-    </data>
+    <data></data>
 
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/constraintLayout3"
@@ -15,15 +14,20 @@
 
         <TextView
             android:id="@+id/header_textview"
-            style="@style/TextStyle.Header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="@dimen/margin_small"
-            android:clipToOutline="true"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:autoSizeMaxTextSize="80sp"
+            android:autoSizeMinTextSize="24sp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/darkGray"
             android:text="@string/favorites"
-            android:textSize="70sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/recycler_view"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_layout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -58,14 +62,14 @@
             layout="@layout/toolbar_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recycler_view" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/toolbar_title"
             style="@style/TextStyle.ToolbarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
+            android:layout_marginStart="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_small"
             android:alpha="0"
             android:fontFamily="sans-serif"

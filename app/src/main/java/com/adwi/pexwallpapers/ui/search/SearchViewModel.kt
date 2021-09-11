@@ -48,7 +48,6 @@ class SearchViewModel @Inject constructor(
 
     var refreshInProgress = false
     var pendingScrollToTopAfterRefresh = false
-    var restoringSavedQuery = false
     var newQueryInProgress = false
     var pendingScrollToTopAfterNewQuery = false
 
@@ -61,7 +60,6 @@ class SearchViewModel @Inject constructor(
         currentQuery.value = query
         newQueryInProgress = true
         pendingScrollToTopAfterNewQuery = true
-        restoringSavedQuery = false
         updateSavedQuery(query)
     }
 
@@ -74,7 +72,6 @@ class SearchViewModel @Inject constructor(
             currentQuery.value = settingsRepository.getSettings().lastQuery
             newQueryInProgress = false
             pendingScrollToTopAfterNewQuery = false
-            restoringSavedQuery = true
         }
     }
 

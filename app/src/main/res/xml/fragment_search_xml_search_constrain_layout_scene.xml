@@ -58,4 +58,7 @@
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toTopOf="parent" />
     </ConstraintSet>
+    <Transition
+        motion:constraintSetEnd="@+id/start"
+        motion:constraintSetStart="@+id/end" />
 </MotionScene>

@@ -75,7 +75,6 @@ class WallpapersFragment :
             launchCoroutine {
                 viewModel.wallpaperList.collect {
                     val result = it ?: return@collect
-                    swipeRefreshLayout.isRefreshing = result is Resource.Loading
                     shimmerFrameLayout.apply {
                         if (result.data.isNullOrEmpty()) startShimmer() else stopShimmer()
                         isVisible = result.data.isNullOrEmpty()
@@ -117,9 +116,6 @@ class WallpapersFragment :
 
     override fun setupListeners() {
         binding.apply {
-            swipeRefreshLayout.setOnRefreshListener {
-                viewModel.onManualRefresh()
-            }
             retryButton.setOnClickListener {
                 viewModel.onManualRefresh()
             }

@@ -49,12 +49,12 @@
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_info_bottom_sheet.xml" value="0.38981481481481484" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_preview.xml" value="0.3325740318906606" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_preview_bottom_sheet.xml" value="0.5722222222222222" />
-        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_search.xml" value="0.36" />
+        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_search.xml" value="0.268" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_set_wallpaper.xml" value="0.32135416666666666" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_settings.xml" value="0.440625" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_wallpaper_view_pager.xml" value="1.840625" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_wallpaper_view_pager_preview.xml" value="0.32760416666666664" />
-        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_wallpapers.xml" value="0.27469135802469136" />
+        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_wallpapers.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/layout_back_button.xml" value="0.4962962962962963" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/layout_chip_item.xml" value="0.33697916666666666" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/layout_load_state_footer.xml" value="0.6697916666666667" />
@@ -81,7 +81,7 @@
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/suggestion_item.xml" value="0.3277777777777778" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/tool_bar.xml" value="0.5148148148148148" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/toolbar_layout.xml" value="0.4537037037037037" />
-        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/toolbar_search_layout.xml" value="0.4537037037037037" />
+        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/toolbar_search_layout.xml" value="0.26944444444444443" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/wallpaper_bottom_sheet.xml" value="0.4787037037037037" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/wallpaper_bottom_sheet_layout.xml" value="0.33697916666666666" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/wallpaper_dialog_chooser.xml" value="0.38425925925925924" />

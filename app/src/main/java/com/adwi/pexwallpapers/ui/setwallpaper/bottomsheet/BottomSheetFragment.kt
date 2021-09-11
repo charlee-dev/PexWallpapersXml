@@ -46,6 +46,7 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
                 viewModel.onFavoriteClick(wallpaper)
             },
             itemRandomHeight = false,
+            isStaticWidth = true
         )
     }
 

@@ -51,7 +51,7 @@ class WallpapersFragment :
             onItemLongClick = { wallpaper ->
                 viewModel.onFavoriteClick(wallpaper)
             },
-            itemRandomHeight = true,
+            itemRandomHeight = true
         )
     }
 

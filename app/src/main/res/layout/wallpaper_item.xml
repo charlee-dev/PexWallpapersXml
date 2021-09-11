@@ -8,8 +8,13 @@
         <variable
             name="wallpaper"
             type="com.adwi.pexwallpapers.data.local.entity.Wallpaper" />
+
         <variable
             name="randomHeight"
+            type="Boolean" />
+
+        <variable
+            name="staticWidth"
             type="Boolean" />
     </data>
 
@@ -47,6 +52,7 @@
                     android:scaleType="centerCrop"
                     app:loadImageFromUrlStaggered="@{wallpaper}"
                     app:randomHeight="@{randomHeight}"
+                    app:staticWidth="@{staticWidth}"
                     tools:ignore="ContentDescription"
                     tools:src="@drawable/image_photo_placeholder" />
 

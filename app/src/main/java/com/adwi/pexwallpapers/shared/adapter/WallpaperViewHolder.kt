@@ -8,7 +8,8 @@ class WallpaperViewHolder(
     private val binding: WallpaperItemBinding,
     private val onItemClick: (Int) -> Unit,
     private val onItemLongClick: (Int) -> Unit,
-    private val itemRandomHeight: Boolean
+    private val itemRandomHeight: Boolean,
+    private val isStaticWidth: Boolean
 ) : RecyclerView.ViewHolder(binding.root) {
 
 
@@ -20,6 +21,7 @@ class WallpaperViewHolder(
     init {
         binding.apply {
             randomHeight = itemRandomHeight
+            staticWidth = isStaticWidth
             wallpaperImageView.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {

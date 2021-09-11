@@ -9,7 +9,8 @@ import com.adwi.pexwallpapers.databinding.WallpaperItemBinding
 class WallpaperListAdapter(
     private val onItemClick: (Wallpaper) -> Unit,
     private val onItemLongClick: (Wallpaper) -> Unit,
-    private val itemRandomHeight: Boolean
+    private val itemRandomHeight: Boolean = true,
+    private val isStaticWidth: Boolean = false
 ) : ListAdapter<Wallpaper, WallpaperViewHolder>(WallpaperComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WallpaperViewHolder {
@@ -31,7 +32,8 @@ class WallpaperListAdapter(
                     this.notifyItemChanged(position)
                 }
             },
-            itemRandomHeight = itemRandomHeight
+            itemRandomHeight = itemRandomHeight,
+            isStaticWidth = isStaticWidth
         )
     }
 

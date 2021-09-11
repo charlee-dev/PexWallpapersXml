@@ -104,8 +104,7 @@ class SearchFragment :
             },
             onItemLongClick = { wallpaper ->
                 viewModel.onFavoriteClick(wallpaper)
-            },
-            itemRandomHeight = true,
+            }
         )
         _suggestionListAdapter = SuggestionListAdapter(
             onItemClick = { suggestion ->

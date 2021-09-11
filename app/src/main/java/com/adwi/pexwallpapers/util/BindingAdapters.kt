@@ -57,23 +57,21 @@ object BindingAdapters {
         textView.text = text
     }
 
-    @BindingAdapter("loadImageFromUrlStaggered", "randomHeight")
+    @BindingAdapter("loadImageFromUrlStaggered", "randomHeight", "staticWidth")
     @JvmStatic
     fun loadImageFromUrlStaggered(
         imageView: ImageView,
         wallpaper: Wallpaper,
-        randomHeight: Boolean = true
+        randomHeight: Boolean = true,
+        staticWidth: Boolean = false
     ) {
         imageView.load(wallpaper.imageUrl) {
             placeholder(shimmerDrawable)
             placeholder(R.drawable.placeholder_item)
             crossfade(600)
         }
-        if (randomHeight) {
-            imageView.layoutParams.height = wallpaper.height
-        } else {
-            imageView.layoutParams.height = 500
-        }
+        imageView.layoutParams.height = if (randomHeight) wallpaper.height else 500
+        if (staticWidth) imageView.layoutParams.width = 400
     }
 
     @BindingAdapter("loadImageFromUrl")

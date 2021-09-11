@@ -41,9 +41,9 @@ class SearchViewModel @Inject constructor(
     }.cachedIn(viewModelScope)
 
     val wallpaperList = currentQuery.flatMapLatest { query ->
-        query.let {
-            wallpaperRepository.getWallpapersOfCategory(query!!)
-        }
+        query?.let {
+            wallpaperRepository.getWallpapersOfCategory(query)
+        } ?: emptyFlow()
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     var refreshInProgress = false
@@ -71,8 +71,7 @@ class SearchViewModel @Inject constructor(
 
     private fun restoreLastQuery() {
         onDispatcher(ioDispatcher) {
-            val lastQuery = settingsRepository.getSettings().lastQuery
-            currentQuery.value = lastQuery
+            currentQuery.value = settingsRepository.getSettings().lastQuery
             newQueryInProgress = false
             pendingScrollToTopAfterNewQuery = false
             restoringSavedQuery = true

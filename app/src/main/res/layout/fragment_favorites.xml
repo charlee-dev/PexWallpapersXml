@@ -6,26 +6,32 @@
     <data>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layoutDescription="@xml/fragment_favorites_xml_constraintlayout3_scene"
         tools:context=".ui.favorites.FavoritesFragment">
 
-        <include
-            android:id="@+id/toolbar_layout"
-            layout="@layout/toolbar_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recycler_view" />
+        <TextView
+            android:id="@+id/header_textview"
+            style="@style/TextStyle.Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:clipToOutline="true"
+            android:text="@string/favorites"
+            android:textSize="70sp"
+            app:layout_constraintBottom_toTopOf="@id/recycler_view"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="56dp"
-            android:paddingHorizontal="@dimen/margin_extra_small"
+            android:layout_marginTop="160dp"
             android:clipToPadding="false"
+            android:paddingHorizontal="@dimen/margin_extra_small"
             android:paddingBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,5 +53,27 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar_layout"
             tools:visibility="visible" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            style="@style/TextStyle.ToolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:alpha="0"
+            android:fontFamily="sans-serif"
+            android:text="@string/favorites"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@id/toolbar_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

@@ -1,9 +1,7 @@
 package com.adwi.pexwallpapers.ui.settings
 
 import android.content.Context
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Settings
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
@@ -26,7 +24,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.single
+import kotlinx.coroutines.flow.first
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -55,7 +53,7 @@ class SettingsViewModel @Inject constructor(
         notificationTools.setupNotifications()
         onDispatcher(ioDispatcher) { _currentSettings.value = repository.getSettings() }
         onDispatcher(ioDispatcher) {
-            favorites.value = favoritesRepository.getAllFavorites().single()
+            favorites.value = favoritesRepository.getAllFavorites().first()
         }
     }
 
@@ -116,16 +114,32 @@ class SettingsViewModel @Inject constructor(
     private fun createAutoChangeWallpaperWork(
         wallpaper: Wallpaper,
         delayTimeUnit: TimeUnit,
-        delay: Long
+        delay: Long,
+        repeatInterval: Long
     ) {
-        val work = OneTimeWorkRequestBuilder<AutoChangeWallpaperWork>()
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiresStorageNotLow(true)
+            .setRequiresBatteryNotLow(true)
+            .build()
+        val work = PeriodicWorkRequestBuilder<AutoChangeWallpaperWork>(
+            repeatInterval = repeatInterval,
+            repeatIntervalTimeUnit = delayTimeUnit
+        )
             .setInputData(createDataForAutoChangeWallpaperWorker(wallpaper))
             .setInitialDelay(delay, delayTimeUnit)
+//            .setConstraints(constraints)
             .addTag(TAG_NEW_WALLPAPER)
             .build()
 
+        WorkManager.getInstance(this.application.applicationContext).enqueueUniquePeriodicWork(
+            "MyUniqueWorkName",
+            ExistingPeriodicWorkPolicy.REPLACE,
+            work
+        )
+
         Timber.tag(TAG)
-            .d { "Created work: wallpaperId = ${wallpaper.id}, delay = $delay, delayTimeUnit = $delayTimeUnit" }
+            .d { "Created work: wallpaperId = ${wallpaper.id}, delay = $delay, delayTimeUnit = $delayTimeUnit, repeatInterval = $repeatInterval" }
         workManager.enqueue(work)
     }
 
@@ -142,20 +156,30 @@ class SettingsViewModel @Inject constructor(
     private fun setupAllWorks() {
         Timber.tag(TAG).d { "setupAllWorks" }
 
-        // Get wallpapers and current settings
+        // Get current settings
         val settings = currentSettings.value
         val timeUnit = getTimeUnit(settings.selectedButton)
         val sliderValue = settings.sliderValue.toLong()
+        var repeatValue = sliderValue * favorites.value.size
+        if (timeUnit == TimeUnit.MINUTES && repeatValue < 15) {
+            repeatValue = 15
+        }
 
         // Auto change wallpaper
         if (settings.autoChangeWallpaper) {
-            Timber.tag(TAG).d { "autoChangeWallpaper - true" }
+            Timber.tag(TAG).d { "setupAllWorks - autoChangeWallpaper - true" }
+            Timber.tag(TAG).d { "favorites list size = ${favorites.value.size}" }
+            workManager.cancelAllWorkByTag(TAG_NEW_WALLPAPER)
             favorites.value.forEachIndexed { index, wallpaper ->
-                val delay = sliderValue * index
+                Timber.tag(TAG)
+                    .d { "setupAllWorks - wallpaperPhotographer = ${wallpaper.photographer}" }
+                val delay = sliderValue * (index + 1) / 15
+
                 createAutoChangeWallpaperWork(
                     wallpaper,
                     timeUnit,
-                    delay
+                    delay,
+                    repeatValue
                 )
             }
         } else {

@@ -61,7 +61,7 @@ class SearchViewModel @Inject constructor(
         currentQuery.value = query
         newQueryInProgress = true
         pendingScrollToTopAfterNewQuery = true
-        restoringSavedQuery = true
+        restoringSavedQuery = false
         updateSavedQuery(query)
     }
 

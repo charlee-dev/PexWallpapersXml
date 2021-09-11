@@ -138,7 +138,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
             var step = 1f
             when (radioButton) {
                 R.id.minutes_radio_button -> {
-                    min = 5f
+                    min = 15f
                     max = 60f
                     step = 5f
                 }

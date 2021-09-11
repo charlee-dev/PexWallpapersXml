@@ -118,14 +118,14 @@ class NotificationTools @Inject constructor(
         val smallBitmap =
             BitmapFactory.decodeResource(context.resources, R.drawable.ic_launcher_foreground)
 
-        val builder = NotificationCompat.Builder(context, channelId)
+        val notification = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
 
         when (channel) {
             Channel.NEW_WALLPAPER -> {
                 val largeBitmap = imageTools.getBitmapFromRemote(imageUrl)
                 intentDestination = MainActivity::class.java
-                builder
+                notification
                     .setStyle(NotificationCompat.BigPictureStyle().bigPicture(largeBitmap))
                     .setContentTitle("New wallpaper set")
                     .setContentText("PexWallpapers just set an amazing wallpaper for you")
@@ -136,7 +136,7 @@ class NotificationTools @Inject constructor(
                 val largeBitmap = imageTools.getBitmapFromRemote(imageUrl)
                 requestCode = 2
                 intentDestination = MainActivity::class.java
-                builder
+                notification
                     .setStyle(NotificationCompat.BigPictureStyle().bigPicture(largeBitmap))
                     .setContentTitle("Recommendations")
                     .setContentText("PexWallpapers have some amazing wallpapers to offer for you")
@@ -146,7 +146,7 @@ class NotificationTools @Inject constructor(
             Channel.INFO -> {
                 requestCode = 3
                 intentDestination = MainActivity::class.java
-                builder.setStyle(NotificationCompat.BigTextStyle().bigText(longMessage))
+                notification.setStyle(NotificationCompat.BigTextStyle().bigText(longMessage))
             }
         }
         val intent = Intent(context, intentDestination).apply {
@@ -154,11 +154,14 @@ class NotificationTools @Inject constructor(
         }
         val pendingIntent = PendingIntent.getActivity(context, requestCode, intent, 0)
 
-        builder.setContentIntent(pendingIntent)
+        notification.setContentIntent(pendingIntent)
+            .setGroup(GROUP_NAME)
             .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(context)) {
-            notify(id, builder.build())
+            notify(id, notification.build())
         }
     }
 }
+
+private const val GROUP_NAME = "PexWallpapers"

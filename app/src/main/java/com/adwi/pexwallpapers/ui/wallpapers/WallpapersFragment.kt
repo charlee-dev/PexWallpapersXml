@@ -38,9 +38,6 @@ class WallpapersFragment :
                 var list = wallpaperList
                 list = list.toMutableList()
                 list.apply {
-                    val index = indexOf(wallpaper)
-                    removeAt(index)
-                    add(0, wallpaper)
                     first().isFirst = true
                     last().isLast = true
                 }

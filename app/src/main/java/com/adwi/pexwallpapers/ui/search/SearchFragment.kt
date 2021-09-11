@@ -93,9 +93,6 @@ class SearchFragment :
                 var list = wallpaperList
                 list = list.toMutableList()
                 list.apply {
-                    val index = indexOf(wallpaper)
-                    removeAt(index)
-                    add(0, wallpaper)
                     first().isFirst = true
                     last().isLast = true
                 }
@@ -162,12 +159,6 @@ class SearchFragment :
 
     override fun setupFlows() {
         binding.apply {
-            launchCoroutine {
-                viewModel.wallpaperList.collect {
-                    val list = it ?: return@collect
-                    wallpaperList = list
-                }
-            }
             launchCoroutine {
                 viewModel.suggestions.collect {
                     val suggestions = it ?: return@collect
@@ -283,6 +274,12 @@ class SearchFragment :
                             }
                         }
                     }
+            }
+            launchCoroutine {
+                viewModel.wallpaperList.collect {
+                    val list = it ?: return@collect
+                    wallpaperList = list
+                }
             }
         }
     }

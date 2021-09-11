@@ -10,7 +10,6 @@ import com.adwi.pexwallpapers.databinding.FragmentPreviewBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperViewPager2Adapter
 import com.adwi.pexwallpapers.ui.base.BaseFragment
 import com.adwi.pexwallpapers.util.ZoomOutPageTransformer
-import com.adwi.pexwallpapers.util.launchCoroutine
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -58,6 +57,10 @@ class PreviewFragment :
                 orientation = ViewPager2.ORIENTATION_HORIZONTAL
                 setPageTransformer(ZoomOutPageTransformer())
             }
+            val list = args.wallaperLIst.toList()
+            mAdapter?.submitList(list)
+            val index = list.indexOf(args.wallpaper)
+            pager.setCurrentItem(index, false)
         }
     }
 
@@ -69,31 +72,6 @@ class PreviewFragment :
         }
     }
 
-    override fun setupFlows() {
-        viewModel.setCategoryName(args.wallpaper.categoryName)
-        launchCoroutine {
-//            viewModel.wallpaperList.collect {
-//                var list = it ?: return@collect
-//                list = list.toMutableList()
-//                list.apply {
-//                    val index = indexOf(args.wallpaper)
-//                    removeAt(index)
-//                    add(0, args.wallpaper)
-//                    first().isFirst = true
-//                    last().isLast = true
-//                }
-            val list = args.wallaperLIst.toList()
-            binding.apply {
-                pager.isVisible = !list.isNullOrEmpty()
-                shimmerFrameLayout.apply {
-                    if (list.isNullOrEmpty()) startShimmer() else stopShimmer()
-                    isVisible = list.isNullOrEmpty()
-                }
-            }
-            mAdapter?.submitList(list)
-//            }
-        }
-    }
-
+    override fun setupFlows() {}
     override fun onMenuItemClick(item: MenuItem?) = false
 }

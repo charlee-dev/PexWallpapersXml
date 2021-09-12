@@ -7,16 +7,20 @@
         android:id="@+id/preview_root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="24dp"
         android:animateLayoutChanges="true"
         android:background="@color/backgroundColor"
         tools:context=".ui.preview.PreviewFragment">
 
-        <include
-            android:id="@+id/toolbar_container"
-            layout="@layout/toolbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/back_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/statusBar_size"
+            android:background="@drawable/background_rounded_stroke"
+            android:drawableStart="@drawable/ic_arrow_back"
+            android:paddingStart="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +32,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_container">
+            app:layout_constraintTop_toBottomOf="@id/back_button">
 
             <include layout="@layout/layout_shimmer_placeholder_view_pager" />
 
@@ -42,9 +46,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_container">
+            app:layout_constraintTop_toBottomOf="@id/back_button" />
 
-        </androidx.viewpager2.widget.ViewPager2>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

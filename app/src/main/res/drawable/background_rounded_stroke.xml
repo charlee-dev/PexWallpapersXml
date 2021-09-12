@@ -4,7 +4,7 @@
     <corners android:radius="@dimen/image_small_corner_radius" />
     <stroke
         android:width="2dp"
-        android:color="@color/colorPrimary" />
+        android:color="@color/colorSecondaryDark" />
     <padding
         android:bottom="0dp"
         android:left="0dp"

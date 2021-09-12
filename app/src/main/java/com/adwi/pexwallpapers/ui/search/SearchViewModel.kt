@@ -2,16 +2,12 @@ package com.adwi.pexwallpapers.ui.search
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.adwi.pexwallpapers.data.local.entity.Suggestion
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
-import com.adwi.pexwallpapers.data.local.entity.suggestionNameList
 import com.adwi.pexwallpapers.data.repository.interfaces.SearchRepositoryInterface
 import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
-import com.adwi.pexwallpapers.data.repository.interfaces.SuggestionsRepositoryInterface
 import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
 import com.adwi.pexwallpapers.di.IoDispatcher
 import com.adwi.pexwallpapers.ui.base.BaseViewModel
-import com.adwi.pexwallpapers.util.TypeConverter
 import com.adwi.pexwallpapers.util.onDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,14 +19,10 @@ class SearchViewModel @Inject constructor(
     private val wallpaperRepository: WallpaperRepositoryInterface,
     private val searchRepository: SearchRepositoryInterface,
     private val settingsRepository: SettingsRepositoryInterface,
-    private val suggestionsRepository: SuggestionsRepositoryInterface,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
     val currentQuery = MutableStateFlow<String?>(null)
-
-    val suggestions = suggestionsRepository.getAllSuggestions()
-        .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     val hasCurrentQuery = currentQuery.map { it != null }
 
@@ -52,7 +44,6 @@ class SearchViewModel @Inject constructor(
     var pendingScrollToTopAfterNewQuery = false
 
     init {
-        initDefaultSuggestionList()
         restoreLastQuery()
     }
 
@@ -72,24 +63,6 @@ class SearchViewModel @Inject constructor(
             currentQuery.value = settingsRepository.getSettings().lastQuery
             newQueryInProgress = false
             pendingScrollToTopAfterNewQuery = false
-        }
-    }
-
-    fun deleteSuggestion(name: String) {
-        onDispatcher(ioDispatcher) { suggestionsRepository.deleteSuggestion(name) }
-    }
-
-    suspend fun addSuggestion(suggestion: Suggestion) {
-        suggestionsRepository.insertSuggestion(suggestion)
-    }
-
-    private fun initDefaultSuggestionList() {
-        if (suggestions.value.isNullOrEmpty()) {
-            onDispatcher(ioDispatcher) {
-                suggestionsRepository.insertAllSuggestions(
-                    TypeConverter.defaultSuggestionNameListToSuggestions(suggestionNameList)
-                )
-            }
         }
     }
 

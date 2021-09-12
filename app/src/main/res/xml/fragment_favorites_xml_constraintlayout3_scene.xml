@@ -45,8 +45,19 @@
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/bottomNav_blur_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottomNav_size"
+            android:alpha="1"
+            motion:layout_constraintBottom_toBottomOf="parent" />
+        <Constraint
+            android:id="@+id/toolbar_blur_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_size"
+            android:alpha="1"
+            motion:layout_constraintTop_toTopOf="parent" />
     </ConstraintSet>
-
     <ConstraintSet android:id="@+id/end">
         <Constraint
             android:id="@+id/recycler_view"
@@ -57,5 +68,48 @@
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:layout_marginBottom="8dp"
+            android:alpha="0"
+            motion:layout_constraintBottom_toBottomOf="@id/toolbar_blur_overlay"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/bottomNav_blur_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottomNav_size"
+            android:alpha=".8"
+            motion:layout_constraintBottom_toBottomOf="parent" />
+        <Constraint
+            android:id="@+id/toolbar_blur_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_size"
+            android:alpha=".8"
+            motion:layout_constraintTop_toTopOf="parent" />
     </ConstraintSet>
+    <ConstraintSet
+        android:id="@+id/launchTransition"
+        motion:deriveConstraintsFrom="@+id/start">
+        <Constraint
+            android:id="@+id/bottomNav_blur_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottomNav_size"
+            android:alpha=".8"
+            motion:layout_constraintBottom_toBottomOf="parent" />
+        <Constraint
+            android:id="@+id/toolbar_blur_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_size"
+            android:alpha=".8"
+            motion:layout_constraintTop_toTopOf="parent" />
+    </ConstraintSet>
+    <Transition
+        motion:autoTransition="animateToEnd"
+        motion:constraintSetEnd="@+id/start"
+        motion:constraintSetStart="@+id/launchTransition" />
 </MotionScene>

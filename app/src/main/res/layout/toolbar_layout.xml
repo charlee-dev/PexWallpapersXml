@@ -7,6 +7,7 @@
         android:id="@+id/toolbar_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:padding="@dimen/margin_small">
 
         <androidx.appcompat.widget.AppCompatButton

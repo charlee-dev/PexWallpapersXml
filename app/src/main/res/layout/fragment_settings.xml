@@ -12,14 +12,17 @@
             type="com.adwi.pexwallpapers.ui.settings.SettingsViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/root_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/fragment_settings_xml_root_view_scene">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/settings_scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/recyclerView_topMargin_size"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -27,12 +30,13 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
+                android:id="@+id/scrollView_linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/toolbar_size">
+                android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/groups_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/margin_medium">
@@ -105,7 +109,7 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/wallpaper_recomendations_title"
+                                android:id="@+id/wallpaper_recommendations_title"
                                 style="@style/TextStyle.Normal.Condensed"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -113,7 +117,7 @@
                                 android:text="@string/wallpaper_recomendations" />
 
                             <com.google.android.material.switchmaterial.SwitchMaterial
-                                android:id="@+id/wallpaper_recomendations_switch"
+                                android:id="@+id/wallpaper_recommendations_switch"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/switchHeight"
                                 android:checked="@{settingsViewModel.currentSettings.wallpaperRecommendations}"
@@ -288,6 +292,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/automation_textView"
                         style="@style/TextStyle.Header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -301,6 +306,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/groups_layout2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/margin_medium">
@@ -400,22 +406,85 @@
                         app:drawableStartCompat="@drawable/ic_privacy"
                         app:drawableTint="@color/colorPrimary" />
 
+                    <Space
+                        android:id="@+id/bottom_spacer"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/bottomNav_size" />
+
                 </LinearLayout>
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin_small" />
-
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
-        <include
-            android:id="@+id/toolbar_layout"
-            layout="@layout/toolbar_layout"
+        <View
+            android:id="@+id/toolbar_blur_overlay"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/toolbar_size"
+            android:alpha=".8"
+            android:background="@color/white"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/header_textview"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:autoSizeMaxTextSize="90sp"
+            android:autoSizeMinTextSize="24sp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="@string/settings"
+            android:textColor="@color/darkGray"
+            app:layout_constraintBottom_toTopOf="@id/settings_scrollView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:targetApi="o" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            style="@style/TextStyle.ToolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:alpha="0"
+            android:fontFamily="sans-serif"
+            android:text="@string/settings"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@id/toolbar_blur_overlay"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <View
+            android:id="@+id/bottomNav_blur_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_size"
+            android:alpha="0.8"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:clickable="true"
+            android:contentDescription="@string/save"
+            android:focusable="true"
+            android:text="@string/save"
+            app:backgroundTint="@color/colorSecondary"
+            app:cornerRadius="@dimen/image_corner_radius"
+            app:fabSize="normal"
+            app:icon="@drawable/ic_save"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNav_blur_overlay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlayExtended" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

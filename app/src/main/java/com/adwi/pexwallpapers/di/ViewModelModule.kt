@@ -2,8 +2,14 @@ package com.adwi.pexwallpapers.di
 
 import com.adwi.pexwallpapers.data.local.WallpaperDatabase
 import com.adwi.pexwallpapers.data.remote.PexApi
-import com.adwi.pexwallpapers.data.repository.*
-import com.adwi.pexwallpapers.data.repository.interfaces.*
+import com.adwi.pexwallpapers.data.repository.FavoritesRepository
+import com.adwi.pexwallpapers.data.repository.SearchRepository
+import com.adwi.pexwallpapers.data.repository.SettingsRepository
+import com.adwi.pexwallpapers.data.repository.WallpaperRepository
+import com.adwi.pexwallpapers.data.repository.interfaces.FavoritesRepositoryInterface
+import com.adwi.pexwallpapers.data.repository.interfaces.SearchRepositoryInterface
+import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
+import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,13 +48,6 @@ object ViewModelModule {
         wallpapersDatabase: WallpaperDatabase,
         @IoDispatcher ioDispatcher: CoroutineDispatcher
     ) = FavoritesRepository(wallpapersDatabase, ioDispatcher) as FavoritesRepositoryInterface
-
-    @Provides
-    @ViewModelScoped
-    fun provideSuggestionsRepository(
-        wallpapersDatabase: WallpaperDatabase,
-        @IoDispatcher ioDispatcher: CoroutineDispatcher
-    ) = SuggestionsRepository(wallpapersDatabase, ioDispatcher) as SuggestionsRepositoryInterface
 
     @Provides
     @ViewModelScoped

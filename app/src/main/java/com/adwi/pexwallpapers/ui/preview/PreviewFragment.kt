@@ -1,7 +1,6 @@
 package com.adwi.pexwallpapers.ui.preview
 
 import android.view.MenuItem
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -22,16 +21,7 @@ class PreviewFragment :
     override val viewModel: PreviewViewModel by viewModels()
     private val args: PreviewFragmentArgs by navArgs()
 
-    override fun setupToolbar() {
-        binding.toolbarContainer.apply {
-            menuButton.isVisible = false
-            backButton.isVisible = true
-            titleTextView.apply {
-                isVisible = true
-                text = args.wallpaper.categoryName
-            }
-        }
-    }
+    override fun setupToolbar() {}
 
     override fun setupAdapters() {
         mAdapter = WallpaperViewPager2Adapter(
@@ -66,7 +56,7 @@ class PreviewFragment :
 
     override fun setupListeners() {
         binding.apply {
-            toolbarContainer.backButton.setOnClickListener {
+            backButton.setOnClickListener {
                 findNavController().popBackStack()
             }
         }

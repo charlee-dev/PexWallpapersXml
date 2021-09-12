@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -36,7 +37,7 @@
                 android:id="@+id/share_button_bottom_sheet"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginStart="@dimen/margin_large"
                 android:clickable="true"
                 android:contentDescription="@string/share_button"
                 android:focusable="true"
@@ -46,7 +47,7 @@
                 android:id="@+id/download_button_bottom_sheet"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginStart="@dimen/margin_large"
                 android:clickable="true"
                 android:contentDescription="@string/download"
                 android:focusable="true"
@@ -56,13 +57,14 @@
                 android:id="@+id/favorites_bookmark_bottom_sheet"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginStart="@dimen/margin_large"
                 android:animateLayoutChanges="true"
                 android:clickable="true"
                 android:contentDescription="@string/add_to_favorites"
                 android:focusable="true"
                 app:isFavorite="@{wallpaper.favorite}"
-                app:tint="@color/red" />
+                app:tint="@color/red"
+                tools:src="@drawable/ic_favorite_checked" />
 
         </LinearLayout>
 

@@ -1,9 +1,7 @@
 package com.adwi.pexwallpapers.ui.settings
 
 import android.view.MenuItem
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Settings
 import com.adwi.pexwallpapers.databinding.FragmentSettingsBinding
@@ -23,32 +21,16 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
     private lateinit var currentSettings: Settings
     private var currentSliderValue = 5f
 
-    override fun setupToolbar() {
-        binding.toolbarLayout.apply {
-            backButton.isVisible = true
-            menuButton.isVisible = true
-            titleTextView.text = requireContext().getString(R.string.settings)
-        }
-    }
+    override fun setupToolbar() {}
 
     override fun setupViews() {
         binding.apply {
-            lifecycleOwner = viewLifecycleOwner
-            binding.settingsViewModel = viewModel
+            settingsViewModel = viewModel
         }
     }
 
     override fun setupListeners() {
         binding.apply {
-            toolbarLayout.apply {
-                backButton.setOnClickListener {
-                    findNavController().popBackStack()
-                }
-                menuButton.setOnClickListener {
-                    showMenu(it, R.menu.settings_menu)
-                }
-            }
-
             // Switches
             pushNotificationsSwitch.setOnCheckedChangeListener { _, checked ->
                 viewModel.updatePushNotification(checked)
@@ -56,7 +38,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
             newWallpaperSwitch.setOnCheckedChangeListener { _, checked ->
                 viewModel.updateNewWallpaperSet(checked)
             }
-            wallpaperRecomendationsSwitch.setOnCheckedChangeListener { _, checked ->
+            wallpaperRecommendationsSwitch.setOnCheckedChangeListener { _, checked ->
                 viewModel.updateWallpaperRecommendations(checked)
             }
             autoWallpaperSwitch.setOnCheckedChangeListener { _, checked ->

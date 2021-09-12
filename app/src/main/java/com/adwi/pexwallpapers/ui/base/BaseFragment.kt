@@ -33,6 +33,7 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
         savedInstanceState: Bundle?
     ): View? {
         _binding = inflate.invoke(inflater, container, false)
+        _binding!!.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 

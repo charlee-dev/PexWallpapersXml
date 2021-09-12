@@ -43,11 +43,6 @@ object LocalModule {
 
     @Provides
     @Singleton
-    fun provideSuggestionsDao(appDatabase: WallpaperDatabase) =
-        appDatabase.suggestionsDao()
-
-    @Provides
-    @Singleton
     fun provideCuratedDao(appDatabase: WallpaperDatabase) =
         appDatabase.curatedDao()
 

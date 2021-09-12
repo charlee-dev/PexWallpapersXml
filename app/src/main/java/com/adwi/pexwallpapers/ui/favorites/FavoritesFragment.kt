@@ -1,7 +1,6 @@
 package com.adwi.pexwallpapers.ui.favorites
 
 import android.view.*
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,12 +23,7 @@ class FavoritesFragment :
 
     private lateinit var wallpaperList: List<Wallpaper>
 
-    override fun setupToolbar() {
-        binding.toolbarLayout.apply {
-            titleTextView.text = getString(R.string.favorites)
-            backButton.isVisible = false
-        }
-    }
+    override fun setupToolbar() {}
 
     override fun setupAdapters() {
         mAdapter = WallpaperListAdapter(
@@ -67,13 +61,7 @@ class FavoritesFragment :
         }
     }
 
-    override fun setupListeners() {
-        binding.toolbarLayout.apply {
-            menuButton.setOnClickListener {
-                showMenu(it, R.menu.menu_wallpapers)
-            }
-        }
-    }
+    override fun setupListeners() {}
 
     override fun setupFlows() {
         binding.apply {

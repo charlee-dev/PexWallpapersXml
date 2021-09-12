@@ -3,31 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
-
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutDescription="@xml/fragment_favorites_xml_constraintlayout3_scene"
         tools:context=".ui.favorites.FavoritesFragment">
-
-        <TextView
-            android:id="@+id/header_textview"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginEnd="@dimen/margin_large"
-            android:autoSizeMaxTextSize="80sp"
-            android:autoSizeMinTextSize="24sp"
-            android:autoSizeTextType="uniform"
-            android:fontFamily="@font/montserrat"
-            android:textColor="@color/darkGray"
-            android:text="@string/favorites"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/recycler_view"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_layout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -54,30 +35,60 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_layout"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_blur_overlay"
             tools:visibility="visible" />
 
-        <include
-            android:id="@+id/toolbar_layout"
-            layout="@layout/toolbar_layout"
+        <View
+            android:id="@+id/toolbar_blur_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_size"
+            android:alpha=".8"
+            android:background="@color/white"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/header_textview"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:autoSizeMaxTextSize="90sp"
+            android:autoSizeMinTextSize="24sp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="@string/favorites"
+            android:textColor="@color/darkGray"
+            app:layout_constraintBottom_toTopOf="@id/recycler_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:targetApi="o" />
 
         <TextView
             android:id="@+id/toolbar_title"
             style="@style/TextStyle.ToolbarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_small"
             android:alpha="0"
             android:fontFamily="sans-serif"
             android:text="@string/favorites"
             android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="@id/toolbar_layout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@id/toolbar_blur_overlay" />
+
+        <View
+            android:id="@+id/bottomNav_blur_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottomNav_size"
+            android:alpha="@dimen/transparent_alpha"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

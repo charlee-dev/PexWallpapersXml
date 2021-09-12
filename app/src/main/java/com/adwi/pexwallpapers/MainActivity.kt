@@ -2,17 +2,16 @@ package com.adwi.pexwallpapers
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.adwi.pexwallpapers.databinding.ActivityMainBinding
+import com.adwi.pexwallpapers.ui.base.BaseActivity
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
@@ -22,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private val searchFragment = R.id.searchFragment
     private val favoritesFragment = R.id.favoritesFragment
     private val settingsFragment = R.id.settingsFragment
+
     private val bottomNavDirections =
         listOf(wallpaperFragment, searchFragment, favoritesFragment, settingsFragment)
 
@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setStatusBarNavigationBar()
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -64,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.bottomNav.isVisible = bottomNavDirections.contains(destination.id)
         }
+
     }
 
     override fun onNewIntent(intent: Intent?) {

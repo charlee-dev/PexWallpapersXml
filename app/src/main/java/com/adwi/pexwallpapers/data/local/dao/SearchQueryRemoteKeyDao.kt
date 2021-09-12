@@ -1,4 +1,4 @@
-package com.adwi.pexwallpapers.data.local
+package com.adwi.pexwallpapers.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

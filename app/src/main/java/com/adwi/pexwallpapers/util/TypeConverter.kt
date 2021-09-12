@@ -1,6 +1,9 @@
 package com.adwi.pexwallpapers.util
 
-import com.adwi.pexwallpapers.data.local.entity.*
+import com.adwi.pexwallpapers.data.local.entity.CuratedWallpapers
+import com.adwi.pexwallpapers.data.local.entity.SearchResult
+import com.adwi.pexwallpapers.data.local.entity.Src
+import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.remote.dto.WallpaperDto
 
 object TypeConverter {
@@ -41,24 +44,6 @@ object TypeConverter {
             wallpaperId = wallpaper.id,
             queryPosition = queryPosition
         )
-
-    fun suggestionNameToSuggestion(name: String) =
-        Suggestion(
-            name = name,
-            isAddedOnSubmit = true
-        )
-
-    fun defaultSuggestionNameListToSuggestions(suggestionNameList: List<String>): List<Suggestion> {
-        val suggestionList = ArrayList<Suggestion>()
-        suggestionNameList.forEach { name ->
-            val suggestion = Suggestion(
-                name = name,
-                isAddedOnSubmit = false
-            )
-            suggestionList.add(suggestion)
-        }
-        return suggestionList
-    }
 
     private val heights = listOf(830, 1220, 975, 513, 600, 790)
 }

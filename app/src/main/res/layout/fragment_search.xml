@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
 
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/search_constrain_layout"
@@ -18,7 +17,7 @@
             android:layout_height="0dp"
             android:layout_alignParentTop="true"
             android:layout_gravity="center"
-            android:layout_marginTop="140dp"
+            android:layout_marginTop="220dp"
             android:orientation="vertical"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -32,7 +31,7 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="160dp"
+            android:layout_marginTop="220dp"
             android:clipToPadding="false"
             android:paddingHorizontal="@dimen/margin_extra_small"
             android:paddingBottom="8dp"
@@ -54,7 +53,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="An error occured" />
+            tools:text="An error occurred" />
 
         <TextView
             android:id="@+id/no_results_textview"
@@ -84,7 +83,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/suggestions_recycler_view"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_blur_overlay"
             tools:visibility="visible" />
 
         <Button
@@ -101,38 +100,80 @@
             app:layout_constraintTop_toBottomOf="@+id/error_textview"
             tools:visibility="visible" />
 
+        <View
+            android:id="@+id/toolbar_blur_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_size"
+            android:alpha=".8"
+            android:background="@color/white"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/header_textview"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_large"
+
             android:autoSizeMaxTextSize="90sp"
             android:autoSizeMinTextSize="24sp"
             android:autoSizeTextType="uniform"
             android:fontFamily="@font/montserrat"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="@string/wallpapers"
             android:textColor="@color/darkGray"
             app:layout_constraintBottom_toTopOf="@id/recycler_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_layout"
-            tools:text="@string/search" />
+            app:layout_constraintTop_toBottomOf="@id/search_view"
+            tools:targetApi="o" />
 
-        <include
-            android:id="@+id/toolbar_layout"
-            layout="@layout/toolbar_search_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/suggestions_recycler_view"
+        <View
+            android:id="@+id/bottomNav_blur_overlay"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_gradient_vertical"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="@dimen/bottomNav_size"
+            android:alpha=".8"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/back_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/margin_small"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/background_rounded_stroke"
+            android:drawableStart="@drawable/ic_arrow_back"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:visibility="gone"
+            app:drawableTint="@color/darkGray"
+            app:layout_constraintBottom_toBottomOf="@id/search_view"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_layout" />
+            app:layout_constraintTop_toTopOf="@id/search_view"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:background="@drawable/background_rounded_stroke"
+            android:focusable="false"
+            android:focusableInTouchMode="true"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLines="1"
+            android:theme="@style/AppTheme.Toolbar"
+            app:iconifiedByDefault="false"
+            app:layout_constraintBottom_toBottomOf="@id/toolbar_blur_overlay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/back_button"
+            app:queryHint="@string/search" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

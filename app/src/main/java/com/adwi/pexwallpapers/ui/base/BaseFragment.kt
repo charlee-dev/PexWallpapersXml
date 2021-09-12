@@ -7,9 +7,10 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.adwi.pexwallpapers.R
-import com.adwi.pexwallpapers.util.showIcons
+import com.adwi.pexwallpapers.util.*
 import com.github.ajalt.timberkt.Timber
 import com.github.ajalt.timberkt.d
+import kotlinx.coroutines.flow.collectLatest
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
@@ -25,7 +26,7 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
 
     var mAdapter: AD? = null
 
-    val TAG = this::class.java.simpleName
+    val TAG: String = this::class.java.simpleName
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,6 +46,7 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
         setupListeners()
         setupViews()
         setupFlows()
+        observeViewModel()
     }
 
     override fun onDestroyView() {
@@ -61,6 +63,19 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
 
     protected fun navigateBack() {
         findNavController().popBackStack()
+    }
+
+    private fun observeViewModel() {
+        launchCoroutine {
+            viewModel?.snackBarMessage?.collectLatest {
+                showSnackbar(it)
+            }
+        }
+        launchCoroutine {
+            viewModel?.toastMessage?.collectLatest {
+                showToast(requireContext(), it)
+            }
+        }
     }
 
     fun showMenu(v: View, menuId: Int) {

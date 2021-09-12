@@ -13,7 +13,8 @@ import com.adwi.pexwallpapers.data.local.entity.*
         SearchQueryRemoteKey::class,
         Settings::class
     ],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class WallpaperDatabase : RoomDatabase() {
 

@@ -18,8 +18,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:src="@drawable/ic_image"
             app:tint="@color/darkGray"
             tools:ignore="ContentDescription" />
@@ -30,6 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginBottom="8dp"
             android:layout_weight="1"
             android:text="@string/set_wallpaper_on" />
 

@@ -7,7 +7,7 @@
     <dimen name="margin_large">24dp</dimen>
     <dimen name="margin_extra_large">36dp</dimen>
 
-    <dimen name="image_corner_radius">20dp</dimen>
+    <dimen name="image_corner_radius">14dp</dimen>
     <dimen name="image_small_corner_radius">8dp</dimen>
     <dimen name="toolbar_size">90dp</dimen>
     <dimen name="bottomNav_size">56dp</dimen>
@@ -15,6 +15,8 @@
     <dimen name="recyclerView_topMargin_size">200dp</dimen>
 
     <dimen name="transparent_alpha">.8</dimen>
+
+    <dimen name="stroke_width">2dp</dimen>
 
     <dimen name="icon_background_size">28dp</dimen>
     <dimen name="icon_size">20dp</dimen>

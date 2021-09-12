@@ -83,6 +83,11 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
             aboutButton.setOnClickListener { }
             supportButton.setOnClickListener { viewModel.contactSupport() }
             privacyPolicyButton.setOnClickListener { }
+
+            // Save
+            saveButton.setOnClickListener {
+                launchCoroutine { viewModel.saveSettings() }
+            }
         }
     }
 

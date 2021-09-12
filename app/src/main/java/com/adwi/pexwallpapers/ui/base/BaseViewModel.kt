@@ -3,12 +3,15 @@ package com.adwi.pexwallpapers.ui.base
 import androidx.lifecycle.ViewModel
 import com.github.ajalt.timberkt.Timber
 import com.github.ajalt.timberkt.d
+import kotlinx.coroutines.flow.MutableStateFlow
 
 
-// Add @HiltViewModel in each viewModel
 abstract class BaseViewModel : ViewModel() {
 
-    val TAG = javaClass.simpleName
+    val TAG: String = javaClass.simpleName
+
+    val snackBarMessage = MutableStateFlow("")
+    val toastMessage = MutableStateFlow("")
 
     init {
         Timber.tag(TAG).d { "Initialized" }

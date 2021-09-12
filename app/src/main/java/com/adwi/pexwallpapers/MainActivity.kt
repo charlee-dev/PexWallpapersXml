@@ -2,6 +2,7 @@ package com.adwi.pexwallpapers
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.adwi.pexwallpapers.databinding.ActivityMainBinding

@@ -111,6 +111,12 @@ class SettingsViewModel @Inject constructor(
         return builder.build()
     }
 
+    fun saveSettings() {
+        onDispatcher(ioDispatcher) {
+            setupAllWorks()
+        }
+    }
+
     private fun createAutoChangeWallpaperWork(
         wallpaper: Wallpaper,
         delayTimeUnit: TimeUnit,
@@ -153,7 +159,7 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    private fun setupAllWorks() {
+    fun setupAllWorks() {
         Timber.tag(TAG).d { "setupAllWorks" }
 
         // Get current settings

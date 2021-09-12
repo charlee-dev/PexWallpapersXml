@@ -4,9 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable-v24/outline_download_24.xml" value="0.32051282051282054" />
+        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/background_gradient_vertical.xml" value="0.6753846153846154" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/background_round_blue.xml" value="0.6864583333333333" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/background_rounded_bottom.xml" value="0.6864583333333333" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/background_rounded_bottom_stroke.xml" value="0.6864583333333333" />
+        <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/background_rounded_gray.xml" value="0.6753846153846154" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/background_rounded_stroke.xml" value="0.3476923076923077" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/background_rounded_stroke_gray.xml" value="0.6148148148148148" />
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/drawable/background_rounded_top.xml" value="0.6864583333333333" />

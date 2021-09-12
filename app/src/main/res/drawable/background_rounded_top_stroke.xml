@@ -5,7 +5,7 @@
         android:topLeftRadius="@dimen/image_corner_radius"
         android:topRightRadius="@dimen/image_corner_radius" />
     <stroke
-        android:width="2dp"
+        android:width="@dimen/stroke_width"
         android:color="@color/colorPrimary" />
     <padding
         android:bottom="0dp"

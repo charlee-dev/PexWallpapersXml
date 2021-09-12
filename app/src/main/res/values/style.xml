@@ -166,7 +166,7 @@
         <item name="fontFamily">sans-serif-condensed-light</item>
     </style>
 
-    <style name="ShapeAppearanceOverlayExtended" parent="">
+    <style name="ShapeAppearanceOverlay.MaterialComponents.ExtendedFloatingActionButton.Extended" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/image_small_corner_radius</item>
     </style>

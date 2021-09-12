@@ -1,6 +1,7 @@
 package com.adwi.pexwallpapers.ui.favorites
 
 import android.view.*
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager

@@ -477,14 +477,14 @@
             android:clickable="true"
             android:contentDescription="@string/save"
             android:focusable="true"
+            app:icon="@drawable/ic_save"
             android:text="@string/save"
             app:backgroundTint="@color/colorSecondary"
             app:cornerRadius="@dimen/image_corner_radius"
             app:fabSize="normal"
-            app:icon="@drawable/ic_save"
             app:layout_constraintBottom_toTopOf="@+id/bottomNav_blur_overlay"
             app:layout_constraintEnd_toEndOf="parent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlayExtended" />
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialComponents.ExtendedFloatingActionButton.Extended" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

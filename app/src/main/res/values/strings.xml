@@ -95,4 +95,5 @@
     <string name="rationale_desc">We require access to read external storage permission to be able to backup your previous wallpaper
         just in case you want to revert to it</string>
     <string name="save">Save</string>
+    <string name="settings_saved">Settings saved</string>
 </resources>

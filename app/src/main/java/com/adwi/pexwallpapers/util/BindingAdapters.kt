@@ -1,10 +1,12 @@
 package com.adwi.pexwallpapers.util
 
+import android.graphics.Bitmap
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import coil.load
+import coil.request.CachePolicy
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.facebook.shimmer.Shimmer
@@ -69,6 +71,8 @@ object BindingAdapters {
             placeholder(shimmerDrawable)
             placeholder(R.drawable.placeholder_item)
             crossfade(600)
+            diskCachePolicy(CachePolicy.ENABLED)
+            bitmapConfig(Bitmap.Config.ARGB_8888)
         }
         imageView.layoutParams.height = if (randomHeight) wallpaper.height else 500
         if (staticWidth) imageView.layoutParams.width = 400
@@ -81,6 +85,8 @@ object BindingAdapters {
             placeholder(shimmerDrawable)
             placeholder(R.drawable.placeholder_item)
             crossfade(600)
+            diskCachePolicy(CachePolicy.ENABLED)
+            bitmapConfig(Bitmap.Config.ARGB_8888)
         }
     }
 

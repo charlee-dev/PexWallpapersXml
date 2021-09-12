@@ -26,10 +26,10 @@ class WallpapersFragment :
     private lateinit var wallpaperList: List<Wallpaper>
 
     override fun setupToolbar() {
-        binding.toolbarLayout.apply {
-            titleTextView.text = getString(R.string.wallpapers)
-            backButton.isVisible = false
-        }
+//        binding.toolbarLayout.apply {
+//            titleTextView.text = getString(R.string.wallpapers)
+//            backButton.isVisible = false
+//        }
     }
 
     override fun setupAdapters() {
@@ -119,8 +119,11 @@ class WallpapersFragment :
             retryButton.setOnClickListener {
                 viewModel.onManualRefresh()
             }
-            toolbarLayout.menuButton.setOnClickListener {
-                showMenu(it, R.menu.menu_wallpapers)
+//            toolbarLayout.menuButton.setOnClickListener {
+//                showMenu(it, R.menu.menu_wallpapers)
+//            }
+            recyclerView.setOnScrollChangeListener { view, i, i2, i3, i4 ->
+                blurCardView.refreshBack()
             }
         }
     }

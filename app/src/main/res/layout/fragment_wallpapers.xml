@@ -30,7 +30,8 @@
             app:layout_constraintBottom_toTopOf="@id/recycler_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_layout" />
+            app:layout_constraintTop_toBottomOf="@id/blurCardView"
+            tools:targetApi="o" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmerFrameLayout"
@@ -92,11 +93,12 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
 
-        <include
-            android:id="@+id/toolbar_layout"
-            layout="@layout/toolbar_layout"
-            app:layout_constraintEnd_toEndOf="parent"
+        <com.adwi.pexwallpapers.util.blurview.BlurCardView
+            android:id="@+id/blurCardView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_size"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView

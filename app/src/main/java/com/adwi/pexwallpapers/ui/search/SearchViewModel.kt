@@ -27,7 +27,7 @@ class SearchViewModel @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
-    private val currentQuery = MutableStateFlow<String?>(null)
+    val currentQuery = MutableStateFlow<String?>(null)
 
     val suggestions = suggestionsRepository.getAllSuggestions()
         .stateIn(viewModelScope, SharingStarted.Lazily, null)

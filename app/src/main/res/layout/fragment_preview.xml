@@ -15,7 +15,7 @@
             android:id="@+id/toolbar_container"
             layout="@layout/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_size"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

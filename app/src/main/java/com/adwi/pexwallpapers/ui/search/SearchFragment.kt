@@ -171,6 +171,11 @@ class SearchFragment :
                 }
             }
             launchCoroutine {
+                viewModel.currentQuery.collect { currentQuery ->
+                    headerTextview.text = currentQuery
+                }
+            }
+            launchCoroutine {
                 viewModel.hasCurrentQuery.collect { hasCurrentQuery ->
                     instructionsTextview.isVisible = !hasCurrentQuery
                     recyclerView.isVisible = hasCurrentQuery
@@ -270,7 +275,6 @@ class SearchFragment :
                 viewModel.wallpaperList.collect {
                     val list = it ?: return@collect
                     wallpaperList = list
-                    headerTextview.text = wallpaperList.first().categoryName
                 }
             }
         }

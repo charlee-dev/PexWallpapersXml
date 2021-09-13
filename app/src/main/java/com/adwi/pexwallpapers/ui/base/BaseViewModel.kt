@@ -10,8 +10,8 @@ abstract class BaseViewModel : ViewModel() {
 
     val TAG: String = javaClass.simpleName
 
-    val snackBarMessage = MutableStateFlow("")
-    val toastMessage = MutableStateFlow("")
+    val snackBarMessage = MutableStateFlow<String?>(null)
+    val toastMessage = MutableStateFlow<String?>(null)
 
     init {
         Timber.tag(TAG).d { "Initialized" }

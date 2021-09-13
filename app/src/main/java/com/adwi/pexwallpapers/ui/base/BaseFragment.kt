@@ -10,7 +10,7 @@ import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.util.*
 import com.github.ajalt.timberkt.Timber
 import com.github.ajalt.timberkt.d
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.collect
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
@@ -67,13 +67,17 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
 
     private fun observeViewModel() {
         launchCoroutine {
-            viewModel?.snackBarMessage?.collectLatest {
-                showSnackbar(it)
+            viewModel?.snackBarMessage?.collect {
+                val message = it ?: return@collect
+                showSnackbar(message)
+                viewModel?.snackBarMessage?.value = null
             }
         }
         launchCoroutine {
-            viewModel?.toastMessage?.collectLatest {
-                showToast(requireContext(), it)
+            viewModel?.toastMessage?.collect {
+                val message = it ?: return@collect
+                showToast(requireContext(), message)
+                viewModel?.toastMessage?.value = null
             }
         }
     }

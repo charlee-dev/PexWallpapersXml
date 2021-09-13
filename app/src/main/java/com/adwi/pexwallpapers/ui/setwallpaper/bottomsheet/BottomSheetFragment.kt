@@ -10,7 +10,6 @@ import com.adwi.pexwallpapers.databinding.FragmentBottomSheetBinding
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListAdapter
 import com.adwi.pexwallpapers.ui.base.BaseBottomSheet
 import com.adwi.pexwallpapers.util.launchCoroutine
-import com.adwi.pexwallpapers.util.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -79,10 +78,8 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
                 }
                 downloadButtonBottomSheet.setOnClickListener {
                     viewModel.downloadWallpaper(wallpaperArgs)
-                    showSnackbar(
-                        "Saved to Gallery - Photo by ${wallpaperArgs.photographer}",
-                        view = root.rootView
-                    )
+                    viewModel.snackBarMessage.value =
+                        "Saved to Gallery - Photo by ${wallpaperArgs.photographer}"
                 }
                 favoritesBookmarkBottomSheet.setOnClickListener {
                     launchCoroutine {

@@ -209,7 +209,7 @@ class SearchFragment :
                                 errorTextview.text = errorMessage
 
                                 if (viewModel.refreshInProgress) {
-                                    showSnackbar(errorMessage)
+                                    viewModel.snackBarMessage.value = errorMessage
                                 }
                                 viewModel.refreshInProgress = false
                                 viewModel.pendingScrollToTopAfterRefresh = false

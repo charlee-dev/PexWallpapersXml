@@ -91,10 +91,6 @@ fun Context.hideKeyboard(view: View) {
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-fun showToast(context: Context, message: String) {
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-}
-
 tailrec fun Context?.activity(): Activity? = this as? Activity
     ?: (this as? ContextWrapper)?.baseContext?.activity()
 
@@ -116,6 +112,10 @@ fun Fragment.showSnackbar(
     view: View = requireView()
 ) {
     Snackbar.make(view, message, duration).show()
+}
+
+fun showToast(context: Context, message: String) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
 // ViewModel --------------------------------------------------------------------------------

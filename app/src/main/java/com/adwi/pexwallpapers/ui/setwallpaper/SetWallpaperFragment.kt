@@ -13,7 +13,6 @@ import com.adwi.pexwallpapers.databinding.FragmentSetWallpaperBinding
 import com.adwi.pexwallpapers.ui.base.BaseFragment
 import com.adwi.pexwallpapers.util.CalendarUtil
 import com.adwi.pexwallpapers.util.launchCoroutine
-import com.adwi.pexwallpapers.util.showSnackbar
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import dagger.hilt.android.AndroidEntryPoint
@@ -80,10 +79,8 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
             }
             downloadButton.setOnClickListener {
                 viewModel.downloadWallpaper(wallpaperArgs)
-                showSnackbar(
-                    "Saved to Gallery - Photo by ${wallpaperArgs.photographer}",
-                    view = root.rootView
-                )
+                viewModel.snackBarMessage.value =
+                    "Saved to Gallery - Photo by ${wallpaperArgs.photographer}"
             }
             favoriteButton.setOnClickListener {
                 launchCoroutine {
@@ -130,20 +127,16 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
             viewModel.setWallpaper(
                 wallpaperArgs.imageUrl, setHomeScreen = true, setLockScreen = false
             )
-            showSnackbar(
-                requireContext().getString(R.string.home_wallpaper_set),
-                view = binding.root
-            )
+            viewModel.snackBarMessage.value =
+                requireContext().getString(R.string.home_wallpaper_set)
             dialog.dismiss()
         }
         lock.setOnClickListener {
             viewModel.setWallpaper(
                 wallpaperArgs.imageUrl, setHomeScreen = false, setLockScreen = true
             )
-            showSnackbar(
-                requireContext().getString(R.string.lock_wallpaper_set),
-                view = binding.root
-            )
+            viewModel.snackBarMessage.value =
+                requireContext().getString(R.string.lock_wallpaper_set)
             dialog.dismiss()
         }
         homeAndLock.setOnClickListener {
@@ -152,10 +145,8 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
                 setHomeScreen = true,
                 setLockScreen = true
             )
-            showSnackbar(
-                requireContext().getString(R.string.home_and_lock_screen_wallpaper_set),
-                view = binding.root
-            )
+            viewModel.snackBarMessage.value =
+                requireContext().getString(R.string.home_and_lock_screen_wallpaper_set)
             dialog.dismiss()
         }
         dialog.show()

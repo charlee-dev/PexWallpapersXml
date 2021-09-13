@@ -101,12 +101,10 @@ class WallpapersFragment :
             launchCoroutine {
                 viewModel.events.collect { event ->
                     when (event) {
-                        is Event.ShowErrorMessage -> showSnackbar(
-                            getString(
-                                R.string.could_not_refresh,
-                                event.error.localizedMessage
-                                    ?: getString(R.string.unknown_error_occurred)
-                            )
+                        is Event.ShowErrorMessage -> viewModel.snackBarMessage.value = getString(
+                            R.string.could_not_refresh,
+                            event.error.localizedMessage
+                                ?: getString(R.string.unknown_error_occurred)
                         )
                     }.exhaustive
                 }

@@ -114,6 +114,7 @@ class SettingsViewModel @Inject constructor(
     fun saveSettings() {
         onDispatcher(ioDispatcher) {
             setupAllWorks()
+            snackBarMessage.value = application.getString(R.string.settings_saved)
         }
     }
 

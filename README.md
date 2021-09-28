@@ -1,3 +1,15 @@
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=adrianwitaszak)
+![](https://img.shields.io/github/stars/adrianwitaszak/pexwallpapers)
+![](https://img.shields.io/github/forks/adrianwitaszak/pexwallpapers)
+![](https://img.shields.io/github/watchers/adrianwitaszak/pexwallpapers)
+![](https://img.shields.io/github/commit-activity/m/adrianwitaszak/pexwallpapers)
+![](https://img.shields.io/github/last-commit/adrianwitaszak/pexwallpapers)
+![](https://img.shields.io/github/repo-size/adrianwitaszak/pexwallpapers)
+![](https://img.shields.io/tokei/lines/github/adrianwitaszak/pexwallpapers)
+![](https://img.shields.io/github/languages/count/adrianwitaszak/pexwallpapers)
+![](https://img.shields.io/github/languages/top/adrianwitaszak/pexwallpapers)
+
+![]()
 # Welcome to PexWallpapers!
 
 Hi! PexWallpapers is one of my current projects. The app use Pexels.com image library to show

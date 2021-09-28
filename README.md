@@ -4,7 +4,7 @@
 ![](https://img.shields.io/github/watchers/adrianwitaszak/pexwallpapers)
 ![](https://img.shields.io/github/languages/count/adrianwitaszak/pexwallpapers)
 ![Android](https://img.shields.io/badge/-Android-black?style=flat-square&logo=android)
-![Kotlin](https://img.shields.io/badge/-Kotlin-black?style=flat-square&logo=kotlin)
+![](https://img.shields.io/github/languages/top/adrianwitaszak/pexwallpapers)
 
 ![]()
 # Welcome to PexWallpapers!

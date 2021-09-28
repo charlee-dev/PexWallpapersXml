@@ -6,7 +6,6 @@
 ![](https://img.shields.io/github/last-commit/adrianwitaszak/pexwallpapers)
 ![](https://img.shields.io/github/repo-size/adrianwitaszak/pexwallpapers)
 ![](https://img.shields.io/tokei/lines/github/adrianwitaszak/pexwallpapers)
-![](https://img.shields.io/badge/-Android-black?logo=android)
 ![](https://img.shields.io/github/languages/count/adrianwitaszak/pexwallpapers)
 ![](https://img.shields.io/github/languages/top/adrianwitaszak/pexwallpapers)
 

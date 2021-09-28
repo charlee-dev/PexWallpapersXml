@@ -1,9 +1,9 @@
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=adrianwitaszak)
-![](https://img.shields.io/github/stars/adrianwitaszak/pexwallpapers?style=social)
-![](https://img.shields.io/github/forks/adrianwitaszak/pexwallpapers?style=social)
+![](https://img.shields.io/github/stars/adrianwitaszak/pexwallpapers)
+![](https://img.shields.io/github/forks/adrianwitaszak/pexwallpapers)
 ![](https://img.shields.io/github/watchers/adrianwitaszak/pexwallpapers)
 ![](https://img.shields.io/github/languages/count/adrianwitaszak/pexwallpapers)
-![Android](https://img.shields.io/badge/-Android-black?style=flat-square&logo=android)
+![Android](https://img.shields.io/badge/-Android-black?logo=android)
 ![](https://img.shields.io/github/languages/top/adrianwitaszak/pexwallpapers)
 
 ![]()

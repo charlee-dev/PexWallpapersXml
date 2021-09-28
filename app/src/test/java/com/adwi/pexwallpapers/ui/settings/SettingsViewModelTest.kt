@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.mock.SettingsMock
 import com.adwi.pexwallpapers.repository.FakeSettingsRepository
-import com.adwi.pexwallpapers.util.CoroutineTestRule
+import com.adwi.pexwallpapers.CoroutineTestRule
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -34,7 +34,7 @@ class SettingsViewModelTest {
     @Before
     fun setup() {
         repository = FakeSettingsRepository()
-        viewModel = SettingsViewModel(FakeSettingsRepository(), coroutineScope.testDispatcher)
+//        viewModel = SettingsViewModel(FakeSettingsRepository(), coroutineScope.testDispatcher)
     }
 
     @After

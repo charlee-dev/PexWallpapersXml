@@ -1,4 +1,4 @@
-package com.adwi.pexwallpapers.shared.tools
+package com.adwi.pexwallpapers.shared.tools.permissions
 
 import android.Manifest
 import android.content.Context
@@ -17,7 +17,8 @@ private const val TAG = "PermissionTools"
 
 class PermissionTools(
     @ActivityContext private val context: Context
-) {
+): PermissionToolsInterface {
+
     companion object {
         val runningOOrLater =
             android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O
@@ -25,10 +26,12 @@ class PermissionTools(
             android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N
         val runningQOrLater =
             android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q
+        val runningSOrLater =
+            android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S
     }
     private val storagePermission = Manifest.permission.READ_EXTERNAL_STORAGE
 
-    fun storagePermissionsCheck(body: () -> Unit) {
+    override fun storagePermissionsCheck(body: () -> Unit) {
         if (isReadStoragePermissionApproved()) {
             // Check if permission is not granted
             Timber.tag(TAG).d { "Permission for contacts is not granted" }
@@ -52,7 +55,7 @@ class PermissionTools(
         } else body()
     }
 
-    private fun showRationaleDialog(
+    override  fun showRationaleDialog(
         title: String,
         message: String
     ) {
@@ -65,7 +68,7 @@ class PermissionTools(
         builder.create().show()
     }
 
-    fun isReadStoragePermissionApproved(): Boolean {
+    override fun isReadStoragePermissionApproved(): Boolean {
         return if (runningOOrLater) {
             PackageManager.PERMISSION_GRANTED ==
                     ActivityCompat.checkSelfPermission(
@@ -74,7 +77,7 @@ class PermissionTools(
         } else true
     }
 
-    private fun requestStoragePermission() {
+    override  fun requestStoragePermission() {
         requestPermissions(context.activity()!!, arrayOf(storagePermission), STORAGE_REQUEST_CODE)
     }
 }

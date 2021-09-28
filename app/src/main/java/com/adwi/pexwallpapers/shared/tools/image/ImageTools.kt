@@ -1,4 +1,4 @@
-package com.adwi.pexwallpapers.shared.tools
+package com.adwi.pexwallpapers.shared.tools.image
 
 import android.annotation.SuppressLint
 import android.app.WallpaperManager
@@ -14,6 +14,7 @@ import androidx.core.graphics.drawable.toBitmap
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import com.adwi.pexwallpapers.shared.tools.permissions.PermissionTools
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 import java.io.FileOutputStream
@@ -22,10 +23,10 @@ import javax.inject.Inject
 
 class ImageTools @Inject constructor(
     @ApplicationContext private val context: Context
-) {
+) : ImageToolsInterface {
     private val permissionTools = PermissionTools(context)
 
-    suspend fun getImageUsingCoil(imageURL: String): Bitmap {
+    override suspend fun getImageUsingCoil(imageURL: String): Bitmap {
         val loader = ImageLoader(context)
         val request = ImageRequest.Builder(context)
             .data(imageURL)
@@ -36,12 +37,12 @@ class ImageTools @Inject constructor(
         return (result as BitmapDrawable).bitmap
     }
 
-    suspend fun saveImageToInternalStorage(url: String): Uri? {
+    override suspend fun saveImageToInternalStorage(url: String): Uri? {
         val bitmap = getBitmapFromRemote(url)
-        return bitmap.saveImage(context)
+        return saveImage(bitmap, context)
     }
 
-    suspend fun getBitmapFromRemote(url: String): Bitmap {
+    override suspend fun getBitmapFromRemote(url: String): Bitmap {
         val loader = ImageLoader(context)
         val request = ImageRequest.Builder(context)
             .data(url)
@@ -52,7 +53,7 @@ class ImageTools @Inject constructor(
         return (result as BitmapDrawable).bitmap
     }
 
-    suspend fun saveImageLocally(imageUrl: String, photographer: String) {
+    override suspend fun saveImageLocally(imageUrl: String, photographer: String) {
         val bitmap = getBitmapFromRemote(imageUrl)
         MediaStore.Images.Media.insertImage(
             context.contentResolver,
@@ -63,7 +64,7 @@ class ImageTools @Inject constructor(
     }
 
     @SuppressLint("MissingPermission")
-    private fun backupCurrentWallpaper() {
+    override fun backupCurrentWallpaper() {
         val wallpaperManager = WallpaperManager.getInstance(context)
 
         permissionTools.storagePermissionsCheck {
@@ -74,7 +75,7 @@ class ImageTools @Inject constructor(
         }
     }
 
-    private fun saveBackupBitmapToLocal(bitmap: Bitmap) {
+    override fun saveBackupBitmapToLocal(bitmap: Bitmap) {
         MediaStore.Images.Media.insertImage(
             context.contentResolver,
             bitmap,
@@ -83,8 +84,19 @@ class ImageTools @Inject constructor(
         )
     }
 
+    override fun saveImageToStream(bitmap: Bitmap, outputStream: OutputStream?) {
+        if (outputStream != null) {
+            try {
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                outputStream.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     @SuppressLint("InlinedApi")
-    private fun Bitmap.saveImage(context: Context): Uri? {
+    override fun saveImage(bitmap: Bitmap, context: Context): Uri? {
         if (PermissionTools.runningQOrLater) {
             val values = ContentValues()
             values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
@@ -97,7 +109,7 @@ class ImageTools @Inject constructor(
             val uri: Uri? =
                 context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
             if (uri != null) {
-                saveImageToStream(this, context.contentResolver.openOutputStream(uri))
+                saveImageToStream(bitmap, context.contentResolver.openOutputStream(uri))
                 values.put(MediaStore.Images.Media.IS_PENDING, false)
                 context.contentResolver.update(uri, values, null, null)
                 return uri
@@ -113,7 +125,7 @@ class ImageTools @Inject constructor(
             }
             val fileName = "img_${SystemClock.uptimeMillis()}" + ".jpeg"
             val file = File(directory, fileName)
-            saveImageToStream(this, FileOutputStream(file))
+            saveImageToStream(bitmap, FileOutputStream(file))
             if (file.absolutePath != null) {
                 val values = ContentValues()
                 values.put(MediaStore.Images.Media.DATA, file.absolutePath)
@@ -123,16 +135,5 @@ class ImageTools @Inject constructor(
             }
         }
         return null
-    }
-
-    private fun saveImageToStream(bitmap: Bitmap, outputStream: OutputStream?) {
-        if (outputStream != null) {
-            try {
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-                outputStream.close()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
     }
 }

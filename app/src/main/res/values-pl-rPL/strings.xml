@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pex Tapety</string>
+    <string name="wallpapers">Tapety</string>
+    <string name="search">Szukaj</string>
+    <string name="favorites">Ulubione</string>
+    <string name="preview">Podglad</string>
+    <string name="could_not_refresh">Nie mozna odswiezyc : %s</string>
+    <string name="could_not_load_search_results">Nie mozna odswiezyc wynikow : %s</string>
+    <string name="unknown_error_occurred">Nieoczekiwany blad</string>
+    <string name="retry">Sprobuj ponownie</string>
+    <string name="refresh">Odswiez</string>
+    <string name="no_favorites">Brak ulubionych</string>
+    <string name="no_results_found">Nie znaleciono wynikow</string>
+    <string name="search_instructions">Kliknij lupe zeby wyszukiwac</string>
+    <string name="delete_all_favorites">Usun wszystkie ulubione</string>
+    <string name="add_image_toFavorites">Dodaj tapete do ulubionych</string>
+    <string name="share_text">Udostepnij</string>
+    <string name="set_wallpaper">Ustaw tapete</string>
+    <string name="home_wallpaper_set">Ustawiono tapete na glownym ekranie</string>
+    <string name="lock_wallpaper_set">Ustawiono tapete na ekranie blokowania</string>
+    <string name="home_and_lock_screen_wallpaper_set">Ustawiono tapete na ekranie glownym i ekranie blokowania</string>
+    <string name="lock_screen_wallpaper_not_supported">Tapeta ekranu blokowania nie obslugiwana</string>
+    <string name="home_screen">Ekgran glowny</string>
+    <string name="lock_screen">Ekran blokowania</string>
+    <string name="home_and_lock_screen">Ekran glowny i blokowania</string>
+    <string name="set_wallpaper_on">Ustaw tapete na</string>
+    <string name="delete_favorite">Usun ulubione</string>
+    <string name="pexels_com_button">Link do Pexels.com</string>
+    <string name="share_button">Ubostepnij</string>
+    <string name="heart_image">Ulubione</string>
+    <string name="back_button">Wroc</string>
+    <string name="menu">Menu</string>
+    <string name="delete_suggestion_button">Usun sugestie</string>
+    <string name="photo_provided_by_pexels">Tapeta pochodzi z Pexels.com</string>
+    <string name="close_wallpaper_info">Zamknij informacje o tapecie</string>
+    <string name="wallpaper_info_button">Przycisk informacji o tapecie</string>
+    <string name="clock">Zegar</string>
+    <string name="open_image_in_fullscreen_button">Otworz na pelnym ekranie</string>
+    <string name="done_button">Gotowe</string>
+    <string name="you_may_also_like">Moga ci sie rowniez spodobac:</string>
+    <string name="photo_by">Autor zdjecia:</string>
+    <string name="add_to_favorites">Dodaj do ulubionych</string>
+</resources>

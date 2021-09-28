@@ -4,7 +4,7 @@ import androidx.test.filters.SmallTest
 import com.adwi.pexwallpapers.data.local.WallpaperDatabase
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.local.entity.WallpaperMockAndroid
-import com.adwi.pexwallpapers.util.CoroutineAndroidTestRule
+import com.adwi.pexwallpapers.CoroutineAndroidTestRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.first

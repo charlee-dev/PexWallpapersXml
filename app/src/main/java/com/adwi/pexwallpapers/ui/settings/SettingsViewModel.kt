@@ -9,8 +9,8 @@ import com.adwi.pexwallpapers.data.local.entity.defaultSettings
 import com.adwi.pexwallpapers.data.repository.FavoritesRepository
 import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
 import com.adwi.pexwallpapers.di.IoDispatcher
-import com.adwi.pexwallpapers.shared.tools.NotificationTools
-import com.adwi.pexwallpapers.shared.tools.SharingTools
+import com.adwi.pexwallpapers.shared.tools.notification.NotificationTools
+import com.adwi.pexwallpapers.shared.tools.sharing.SharingTools
 import com.adwi.pexwallpapers.shared.work.AutoChangeWallpaperWork
 import com.adwi.pexwallpapers.shared.work.WORKER_NEW_WALLPAPER_IMAGE_URL_FULL
 import com.adwi.pexwallpapers.shared.work.WORKER_NEW_WALLPAPER_NOTIFICATION_IMAGE

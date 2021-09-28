@@ -1,10 +1,10 @@
 package com.adwi.pexwallpapers.di
 
 import android.content.Context
-import com.adwi.pexwallpapers.shared.tools.ImageTools
-import com.adwi.pexwallpapers.shared.tools.NotificationTools
-import com.adwi.pexwallpapers.shared.tools.SharingTools
-import com.adwi.pexwallpapers.shared.tools.WallpaperSetter
+import com.adwi.pexwallpapers.shared.tools.image.ImageTools
+import com.adwi.pexwallpapers.shared.tools.notification.NotificationTools
+import com.adwi.pexwallpapers.shared.tools.sharing.SharingTools
+import com.adwi.pexwallpapers.shared.tools.wallpaper.WallpaperSetter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

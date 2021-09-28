@@ -2,6 +2,7 @@ package com.adwi.pexwallpapers
 
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
+import androidx.viewbinding.BuildConfig
 import androidx.work.Configuration
 import com.github.ajalt.timberkt.Timber
 import dagger.hilt.android.HiltAndroidApp

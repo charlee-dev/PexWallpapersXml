@@ -6,9 +6,9 @@ import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker.Result.failure
 import androidx.work.ListenableWorker.Result.success
 import androidx.work.WorkerParameters
-import com.adwi.pexwallpapers.shared.tools.Channel
-import com.adwi.pexwallpapers.shared.tools.NotificationTools
-import com.adwi.pexwallpapers.shared.tools.WallpaperSetter
+import com.adwi.pexwallpapers.shared.tools.notification.Channel
+import com.adwi.pexwallpapers.shared.tools.notification.NotificationTools
+import com.adwi.pexwallpapers.shared.tools.wallpaper.WallpaperSetter
 import com.github.ajalt.timberkt.Timber
 import com.github.ajalt.timberkt.d
 import dagger.assisted.Assisted

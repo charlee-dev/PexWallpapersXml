@@ -22,7 +22,7 @@ object TestAppModule {
 
     @Provides
     @Named("test_database")
-    fun provideWallpaperDatabase(
+    fun provideInMemoryDatabase(
         @ApplicationContext context: Context
     ) = Room.inMemoryDatabaseBuilder(
         context,

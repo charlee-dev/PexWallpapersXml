@@ -6,7 +6,7 @@ import com.adwi.pexwallpapers.mock.WallpapersMock
 import com.adwi.pexwallpapers.repository.FakeFavoritesRepository
 import com.adwi.pexwallpapers.repository.FakeSettingsRepository
 import com.adwi.pexwallpapers.repository.FakeWallpaperRepository
-import com.adwi.pexwallpapers.util.CoroutineTestRule
+import com.adwi.pexwallpapers.CoroutineTestRule
 import com.adwi.pexwallpapers.util.Resource
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ObsoleteCoroutinesApi

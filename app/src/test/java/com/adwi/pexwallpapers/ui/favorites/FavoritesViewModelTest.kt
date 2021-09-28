@@ -3,7 +3,7 @@ package com.adwi.pexwallpapers.ui.favorites
 import app.cash.turbine.test
 import com.adwi.pexwallpapers.mock.WallpapersMock
 import com.adwi.pexwallpapers.repository.FakeFavoritesRepository
-import com.adwi.pexwallpapers.util.CoroutineTestRule
+import com.adwi.pexwallpapers.CoroutineTestRule
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

@@ -1,10 +1,12 @@
-package com.adwi.pexwallpapers.shared.tools
+package com.adwi.pexwallpapers.shared.tools.wallpaper
 
 import android.annotation.SuppressLint
 import android.app.WallpaperManager
 import android.content.Context
 import android.graphics.Bitmap
 import com.adwi.pexwallpapers.R
+import com.adwi.pexwallpapers.shared.tools.image.ImageTools
+import com.adwi.pexwallpapers.shared.tools.permissions.PermissionTools
 import com.adwi.pexwallpapers.util.showToast
 import com.github.ajalt.timberkt.Timber
 import com.github.ajalt.timberkt.d
@@ -18,19 +20,20 @@ private const val TAG = "WallpaperSetter"
 class WallpaperSetter @Inject constructor(
     @ApplicationContext private val context: Context,
     private val imageTools: ImageTools
-) {
+): WallpaperSetterInterface {
+
     private lateinit var wallpaperManager: WallpaperManager
 
-    suspend fun setWallpaperByImagePath(
+    override suspend fun setWallpaperByImagePath(
         imageURL: String,
-        setHomeScreen: Boolean = false,
-        setLockScreen: Boolean = false
+        setHomeScreen: Boolean,
+        setLockScreen: Boolean
     ) {
         val bitmap = imageTools.getImageUsingCoil(imageURL)
         setWallpaper(bitmap, setHomeScreen, setLockScreen)
     }
 
-    private fun setWallpaper(bitmap: Bitmap, setHomeScreen: Boolean, setLockScreen: Boolean) {
+    override fun setWallpaper(bitmap: Bitmap, setHomeScreen: Boolean, setLockScreen: Boolean) {
         wallpaperManager = WallpaperManager.getInstance(context)
         try {
             if (setHomeScreen && !setLockScreen) setHomeScreenWallpaper(bitmap)
@@ -41,13 +44,13 @@ class WallpaperSetter @Inject constructor(
         }
     }
 
-    private fun setHomeScreenWallpaper(
+    override fun setHomeScreenWallpaper(
         bitmap: Bitmap
     ) {
         wallpaperManager.setBitmap(bitmap)
     }
 
-    private fun setLockScreenWallpaper(bitmap: Bitmap) {
+    override fun setLockScreenWallpaper(bitmap: Bitmap) {
         try {
             if (PermissionTools.runningNOrLater) {
                 wallpaperManager.setBitmap(
@@ -65,7 +68,7 @@ class WallpaperSetter @Inject constructor(
         }
     }
 
-    private fun setHomeAndLockScreenWallpaper(bitmap: Bitmap) {
+    override fun setHomeAndLockScreenWallpaper(bitmap: Bitmap) {
         Timber.tag(TAG).d { "setHomeAndLockScreenWallpaper" }
         setHomeScreenWallpaper(bitmap)
         setLockScreenWallpaper(bitmap)

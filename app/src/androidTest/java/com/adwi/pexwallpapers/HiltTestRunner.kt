@@ -1,4 +1,4 @@
-package com.adwi.pexwallpapers.util
+package com.adwi.pexwallpapers
 
 import android.app.Application
 import android.content.Context

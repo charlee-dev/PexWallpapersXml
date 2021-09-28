@@ -1,4 +1,4 @@
-package com.adwi.pexwallpapers.shared.tools
+package com.adwi.pexwallpapers.shared.tools.notification
 
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
@@ -16,6 +16,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.adwi.pexwallpapers.MainActivity
 import com.adwi.pexwallpapers.R
+import com.adwi.pexwallpapers.shared.tools.image.ImageTools
+import com.adwi.pexwallpapers.shared.tools.permissions.PermissionTools
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -27,14 +29,14 @@ enum class Channel {
 class NotificationTools @Inject constructor(
     @ApplicationContext private val context: Context,
     private val imageTools: ImageTools
-) {
+) : NotificationToolsInterface {
     private lateinit var channelId: String
 
     private val wallpaperGroupId = "wallpaper_group"
     private val appGroupId = "app_group"
 
 
-    fun setupNotifications() {
+    override fun setupNotifications() {
         if (PermissionTools.runningOOrLater) {
             val wallpaperGroupName = context.getString(R.string.wallpapers)
             val appGroupName = context.getString(R.string.other)
@@ -60,7 +62,7 @@ class NotificationTools @Inject constructor(
         }
     }
 
-    private fun createNotificationChannel(channel: Channel) {
+    override fun createNotificationChannel(channel: Channel) {
         if (PermissionTools.runningOOrLater) {
             var name = ""
             var importance = 0
@@ -105,11 +107,11 @@ class NotificationTools @Inject constructor(
     }
 
     @SuppressLint("UnspecifiedImmutableFlag")
-    suspend fun sendNotification(
+    override suspend fun sendNotification(
         id: Int,
         channel: Channel,
         imageUrl: String,
-        longMessage: String = ""
+        longMessage: String
     ) {
         var requestCode = 1
         val intentDestination: Class<*>
@@ -152,7 +154,12 @@ class NotificationTools @Inject constructor(
         val intent = Intent(context, intentDestination).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
-        val pendingIntent = PendingIntent.getActivity(context, requestCode, intent, 0)
+
+        val pendingIntent = if (PermissionTools.runningSOrLater) {
+            PendingIntent.getActivity(context, requestCode, intent, PendingIntent.FLAG_MUTABLE)
+        } else {
+            PendingIntent.getActivity(context, requestCode, intent, PendingIntent.FLAG_ONE_SHOT)
+        }
 
         notification.setContentIntent(pendingIntent)
             .setGroup(GROUP_NAME)

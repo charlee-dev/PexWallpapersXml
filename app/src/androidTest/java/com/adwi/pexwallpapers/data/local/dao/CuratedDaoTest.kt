@@ -5,7 +5,7 @@ import com.adwi.pexwallpapers.data.local.WallpaperDatabase
 import com.adwi.pexwallpapers.data.local.entity.CuratedWallpaperMock
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.local.entity.WallpaperMockAndroid
-import com.adwi.pexwallpapers.util.CoroutineAndroidTestRule
+import com.adwi.pexwallpapers.CoroutineAndroidTestRule
 import com.google.common.truth.Truth
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -17,6 +17,7 @@ import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
 import javax.inject.Named
+
 
 @HiltAndroidTest
 @SmallTest

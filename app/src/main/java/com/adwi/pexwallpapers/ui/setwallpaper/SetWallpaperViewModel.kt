@@ -1,11 +1,12 @@
 package com.adwi.pexwallpapers.ui.setwallpaper
 
+import android.content.Context
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
 import com.adwi.pexwallpapers.di.IoDispatcher
-import com.adwi.pexwallpapers.shared.tools.ImageTools
-import com.adwi.pexwallpapers.shared.tools.SharingTools
-import com.adwi.pexwallpapers.shared.tools.WallpaperSetter
+import com.adwi.pexwallpapers.shared.tools.image.ImageTools
+import com.adwi.pexwallpapers.shared.tools.sharing.SharingTools
+import com.adwi.pexwallpapers.shared.tools.wallpaper.WallpaperSetter
 import com.adwi.pexwallpapers.ui.base.BaseViewModel
 import com.adwi.pexwallpapers.util.onDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,9 +34,10 @@ class SetWallpaperViewModel @Inject constructor(
         sharingTools.openUrlInBrowser(wallpaper.url!!)
     }
 
-    fun shareWallpaper(wallpaper: Wallpaper) {
+    fun shareWallpaper(context: Context, wallpaper: Wallpaper) {
         onDispatcher(ioDispatcher) {
             sharingTools.shareImage(
+                context,
                 wallpaper.imageUrl,
                 wallpaper.photographer
             )

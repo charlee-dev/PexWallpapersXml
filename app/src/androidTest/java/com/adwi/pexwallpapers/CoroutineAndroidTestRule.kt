@@ -1,4 +1,4 @@
-package com.adwi.pexwallpapers.util
+package com.adwi.pexwallpapers
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -10,12 +10,11 @@ import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
 @ExperimentalCoroutinesApi
-class CoroutineTestRule(
-    val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
-) : TestWatcher(), TestCoroutineScope by TestCoroutineScope(testDispatcher) {
+class CoroutineAndroidTestRule(val dispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()) :
+    TestWatcher(), TestCoroutineScope by TestCoroutineScope(dispatcher) {
     override fun starting(description: Description?) {
         super.starting(description)
-        Dispatchers.setMain(testDispatcher)
+        Dispatchers.setMain(dispatcher)
     }
 
     override fun finished(description: Description?) {

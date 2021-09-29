@@ -19,8 +19,8 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/back_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
             android:animateLayoutChanges="true"
             android:background="@drawable/background_rounded_stroke"
             android:drawableStart="@drawable/ic_arrow_back"
@@ -33,7 +33,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
-            android:layout_width="250dp"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="@dimen/margin_medium"
             android:animateLayoutChanges="true"
@@ -95,7 +95,7 @@
                     layout="@layout/sample_header_layout_lockscreen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="50dp"
+                    android:padding="@dimen/margin_extra_extra_large"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +108,7 @@
             android:id="@+id/action_buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:elevation="3dp"
+            android:elevation="@dimen/elevation_small"
             android:orientation="vertical"
             android:paddingEnd="@dimen/margin_medium"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -117,10 +117,10 @@
 
             <RelativeLayout
                 android:id="@+id/pexels_button_preview"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size"
                 android:background="@drawable/background_rounded_stroke"
-                android:elevation="2dp">
+                android:elevation="@dimen/elevation_small">
 
                 <ImageButton
                     android:id="@+id/pexels_button"
@@ -136,11 +136,11 @@
 
             <RelativeLayout
                 android:id="@+id/share_button_preview"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size"
                 android:layout_marginTop="@dimen/margin_medium"
                 android:background="@drawable/background_rounded_stroke"
-                android:elevation="2dp">
+                android:elevation="@dimen/elevation_small">
 
                 <ImageButton
                     android:id="@+id/share_button"
@@ -154,11 +154,11 @@
 
             <RelativeLayout
                 android:id="@+id/download_button_preview"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size"
                 android:layout_marginTop="@dimen/margin_medium"
                 android:background="@drawable/background_rounded_stroke"
-                android:elevation="2dp">
+                android:elevation="@dimen/elevation_small">
 
                 <ImageButton
                     android:id="@+id/download_button"
@@ -172,11 +172,11 @@
 
             <RelativeLayout
                 android:id="@+id/favorite_button_layout"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size"
                 android:layout_marginTop="@dimen/margin_medium"
                 android:background="@drawable/background_rounded_stroke"
-                android:elevation="2dp">
+                android:elevation="@dimen/elevation_small">
 
                 <ImageButton
                     android:id="@+id/favorite_button"
@@ -199,7 +199,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:elevation="10dp"
+            android:elevation="@dimen/elevation_big"
             android:paddingHorizontal="@dimen/margin_extra_large"
             android:layout_marginTop="@dimen/margin_small"
             app:layout_constraintBottom_toTopOf="@id/info_button"
@@ -214,7 +214,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/margin_extra_small"
                 android:background="@drawable/background_rounded_stroke"
                 android:clickable="true"
                 android:focusable="true"
@@ -228,7 +228,7 @@
                 style="@style/TextStyle.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+                android:layout_margin="@dimen/margin_extra_small"
                 android:layout_marginStart="@dimen/margin_small"
                 android:layout_weight="1"
                 android:background="@drawable/background_rounded_stroke"
@@ -255,9 +255,9 @@
             android:layout_height="wrap_content"
             android:background="@color/transparent"
             android:contentDescription="@string/done_button"
-            android:minWidth="48dp"
-            android:elevation="10dp"
-            android:minHeight="48dp"
+            android:minWidth="@dimen/button_size"
+            android:elevation="@dimen/elevation_big"
+            android:minHeight="@dimen/button_size"
             android:src="@drawable/ic_done"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -268,9 +268,9 @@
             android:layout_height="wrap_content"
             android:background="@color/transparent"
             android:contentDescription="@string/open_image_in_fullscreen_button"
-            android:minWidth="48dp"
-            android:elevation="10dp"
-            android:minHeight="48dp"
+            android:minWidth="@dimen/button_size"
+            android:elevation="@dimen/elevation_big"
+            android:minHeight="@dimen/button_size"
             android:src="@drawable/ic_open_in_full"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/done_button"
@@ -282,9 +282,9 @@
             android:layout_height="wrap_content"
             android:background="@color/transparent"
             android:contentDescription="@string/info_button"
-            android:minWidth="48dp"
-            android:elevation="10dp"
-            android:minHeight="48dp"
+            android:minWidth="@dimen/button_size"
+            android:elevation="@dimen/elevation_big"
+            android:minHeight="@dimen/button_size"
             android:src="@drawable/ic_info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

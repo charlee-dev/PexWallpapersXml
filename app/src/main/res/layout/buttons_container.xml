@@ -25,8 +25,8 @@
 
             <ImageView
                 android:id="@+id/pexels_button_bottom_sheet"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size"
                 android:clickable="true"
                 android:contentDescription="@string/pexels_com_button"
                 android:focusable="true"
@@ -34,8 +34,8 @@
 
             <ImageView
                 android:id="@+id/share_button_bottom_sheet"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size"
                 android:layout_marginStart="@dimen/margin_medium"
                 android:clickable="true"
                 android:contentDescription="@string/share_button"
@@ -44,8 +44,8 @@
 
             <ImageView
                 android:id="@+id/download_button_bottom_sheet"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size"
                 android:layout_marginStart="@dimen/margin_medium"
                 android:clickable="true"
                 android:contentDescription="@string/download"
@@ -54,8 +54,8 @@
 
             <ImageView
                 android:id="@+id/favorites_bookmark_bottom_sheet"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size"
                 android:layout_marginStart="@dimen/margin_medium"
                 android:animateLayoutChanges="true"
                 android:clickable="true"

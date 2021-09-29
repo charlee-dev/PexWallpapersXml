@@ -48,7 +48,7 @@
     <style name="CustomTabLayoutStyle" parent="Widget.Design.TabLayout">
         <item name="background">@color/actionBarBackgroundColor</item>
         <item name="tabIndicatorColor">@color/white</item>
-        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabIndicatorHeight">@dimen/elevation_small</item>
         <item name="tabSelectedTextColor">@color/white</item>
     </style>
 
@@ -64,7 +64,7 @@
 
     <style name="text_alert">
         <item name="android:fontFamily">@font/montserrat</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
     </style>
 
     <style name="TextStyle">
@@ -81,7 +81,7 @@
     </style>
 
     <style name="TextStyle.Normal">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/condensed_text_size</item>
         <item name="android:textColor">@color/darkGray</item>
     </style>
 
@@ -96,13 +96,13 @@
 
     <style name="TextStyle.InfoTitle">
         <item name="android:fontFamily">@font/montserrat</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
         <item name="android:textColor">@color/darkGray</item>
     </style>
 
     <style name="TextStyle.InfoText">
         <item name="android:fontFamily">sans-serif-condensed-light</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
         <item name="android:textColor">@color/darkGray</item>
         <item name="android:ellipsize">end</item>
         <item name="maxLines">1</item>
@@ -110,7 +110,7 @@
 
     <style name="TextStyle.Condensed">
         <item name="android:fontFamily">sans-serif-condensed-light</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/condensed_text_size</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:ellipsize">end</item>
         <item name="maxLines">1</item>
@@ -118,13 +118,13 @@
 
     <style name="TextStyle.Header">
         <item name="android:fontFamily">@font/montserrat</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">@dimen/header_text_size</item>
         <item name="android:textColor">@color/darkGray</item>
     </style>
 
     <style name="TextStyle.Button">
         <item name="android:fontFamily">@font/montserrat</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
         <item name="android:textColor">@color/darkGray</item>
         <item name="android:animateOnClick">true</item>
         <item name="background">@drawable/background_rounded_stroke</item>
@@ -133,7 +133,7 @@
     </style>
 
     <style name="TextStyle.Clock">
-        <item name="android:textSize">100sp</item>
+        <item name="android:textSize">@dimen/clock_text_size</item>
         <item name="fontFamily">sans-serif-condensed-light</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>

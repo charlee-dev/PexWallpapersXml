@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:textColor="@color/backgroundColor"
-        android:translationZ="2dp"
+        android:translationZ="@dimen/elevation_small"
         tools:text="Saturday," />
 
     <TextView
@@ -21,7 +21,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/margin_extra_small"
         android:textColor="@color/backgroundColor"
-        android:translationZ="2dp"
+        android:translationZ="@dimen/elevation_small"
         tools:text="21 Aug" />
 
     <ImageView
@@ -31,7 +31,7 @@
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/margin_extra_small"
         android:src="@drawable/ic_weather"
-        android:translationZ="2dp" />
+        android:translationZ="@dimen/elevation_small" />
 
     <TextView
         android:id="@+id/temp_textview"
@@ -40,7 +40,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/margin_extra_small"
         android:textColor="@color/backgroundColor"
-        android:translationZ="2dp"
+        android:translationZ="@dimen/elevation_small"
         tools:text="24&#176;C" />
 
 </LinearLayout>

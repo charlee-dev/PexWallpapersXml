@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="@color/darkGray"
-        android:translationZ="2dp"
+        android:translationZ="@dimen/elevation_small"
         app:cardCornerRadius="@dimen/image_corner_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,5 +47,4 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

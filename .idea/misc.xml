@@ -100,6 +100,29 @@
         <entry key="..\:/AndroidStudioProjects/MyProjects/PexWallpapers/app/src/main/res/xml/searchable.xml" value="0.4083333333333333" />
         <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/activity_main.xml" value="0.6588541666666666" />
         <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/activity_splash.xml" value="0.31990881458966564" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/buttons_container.xml" value="0.10277777777777777" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_bottom_sheet.xml" value="0.21739130434782608" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_favorites.xml" value="0.31990881458966564" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_preview.xml" value="0.31990881458966564" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_search.xml" value="0.31990881458966564" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_set_wallpaper.xml" value="0.26481481481481484" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_settings.xml" value="0.5153985507246377" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/fragment_wallpapers.xml" value="0.5153985507246377" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/layout_load_state_footer.xml" value="0.5153985507246377" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/layout_shimmer_placeholder.xml" value="0.5153985507246377" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/layout_shimmer_placeholder_horizontal.xml" value="0.5153985507246377" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/layout_shimmer_placeholder_view_pager.xml" value="0.5153985507246377" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/sample_app_row_layout.xml" value="0.5153985507246377" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/sample_header_layout.xml" value="0.5153985507246377" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/sample_header_layout_lockscreen.xml" value="0.5153985507246377" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/sample_search_bar.xml" value="0.5153985507246377" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/set_wallpaper_dialog.xml" value="0.5153985507246377" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/suggestion_item.xml" value="0.5153985507246377" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/toolbar_layout.xml" value="0.5153985507246377" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/toolbar_search_layout.xml" value="0.5153985507246377" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/wallpaper_dialog_chooser.xml" value="0.5153985507246377" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/wallpaper_item.xml" value="0.5153985507246377" />
+        <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/wallpaper_view_pager_item.xml" value="0.5153985507246377" />
       </map>
     </option>
   </component>

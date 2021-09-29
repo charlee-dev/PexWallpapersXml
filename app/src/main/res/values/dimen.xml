@@ -4,13 +4,22 @@
     <dimen name="margin_extra_small">4dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_medium_small">12dp</dimen>
     <dimen name="margin_large">24dp</dimen>
     <dimen name="margin_extra_large">36dp</dimen>
+    <dimen name="margin_extra_extra_large">50dp</dimen>
+    <dimen name="margin_below_top_bar">160dp</dimen>
+    <dimen name="margin_below_top_bar_small">100dp</dimen>
+
+    <dimen name="elevation_big">10dp</dimen>
+    <dimen name="elevation_medium">4dp</dimen>
+    <dimen name="elevation_small">2dp</dimen>
 
     <!-- IMAGE_ITEM -->
     <dimen name="image_corner_radius">20dp</dimen>
     <dimen name="image_small_corner_radius">8dp</dimen>
     <dimen name="toolbar_size">56dp</dimen>
+    <dimen name="searchbar_size">46dp</dimen>
 
     <!-- ICONS -->
     <dimen name="icon_background_size">28dp</dimen>
@@ -25,7 +34,20 @@
     <!-- BOTTOM NAV -->
     <dimen name="cnb_radius">5dp</dimen>
 
-    <!-- SPLASH SCREEN -->
+    <!-- BUTTONS CONTAINER -->
+    <dimen name="button_size">48dp</dimen>
 
+    <!-- BOTTOM SHEET -->
+    <dimen name="image_height">150</dimen>
+    <dimen name="image_width">100</dimen>
+
+    <!-- TEXT -->
+    <dimen name="header_text_size">24sp</dimen>
+    <dimen name="button_text_size">14sp</dimen>
+    <dimen name="condensed_text_size">18sp</dimen>
+    <dimen name="clock_text_size">56sp</dimen>
+    <!-- IMAGE_ITEM -->
+    <!-- IMAGE_ITEM -->
+    <!-- IMAGE_ITEM -->
     <!-- IMAGE_ITEM -->
 </resources>

@@ -26,7 +26,7 @@
             android:fontFamily="@font/montserrat"
             android:text="@{suggestion.name}"
             android:textColor="@color/darkGray"
-            android:textSize="16sp"
+            android:textSize="@dimen/condensed_text_size"
             tools:text="Flowers" />
 
         <ImageButton

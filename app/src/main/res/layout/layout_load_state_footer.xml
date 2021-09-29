@@ -21,13 +21,13 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/retry_button"
-        android:layout_margin="4dp"
+        android:layout_margin="@dimen/margin_extra_small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/background_rounded_stroke"
         android:clickable="true"
         android:focusable="true"
         android:text="@string/retry"
-        android:translationZ="4dp" />
+        android:translationZ="@dimen/elevation_small" />
 
 </LinearLayout>

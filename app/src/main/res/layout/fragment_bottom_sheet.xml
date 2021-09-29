@@ -33,10 +33,9 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/wallpaper_image_cardview"
-                android:layout_width="100dp"
-                android:layout_height="150dp"
-                android:layout_margin="8dp"
-                android:translationZ="4dp"
+                android:layout_width="@dimen/margin_below_top_bar_small"
+                android:layout_height="@dimen/margin_below_top_bar"
+                android:layout_margin="@dimen/margin_small"
                 app:cardCornerRadius="@dimen/image_corner_radius"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -121,7 +120,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="@dimen/margin_below_top_bar"
             android:clipToPadding="false"
             android:paddingStart="@dimen/margin_small"
             android:paddingEnd="@dimen/margin_small"

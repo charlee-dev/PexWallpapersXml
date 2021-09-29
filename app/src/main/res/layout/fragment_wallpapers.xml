@@ -21,8 +21,6 @@
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_large"
-            android:autoSizeMaxTextSize="70sp"
-            android:autoSizeMinTextSize="24sp"
             android:autoSizeTextType="uniform"
             android:fontFamily="@font/montserrat"
             android:text="@string/wallpapers"
@@ -30,13 +28,14 @@
             app:layout_constraintBottom_toTopOf="@id/recycler_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_layout" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar_layout"
+            tools:ignore="UnusedAttribute" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmerFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="@dimen/margin_below_top_bar"
             android:orientation="vertical"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -53,10 +52,10 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="@dimen/margin_below_top_bar"
             android:clipToPadding="false"
             android:paddingHorizontal="@dimen/margin_extra_small"
-            android:paddingBottom="8dp"
+            android:paddingBottom="@dimen/margin_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

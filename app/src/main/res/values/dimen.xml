@@ -7,15 +7,25 @@
     <dimen name="margin_large">24dp</dimen>
     <dimen name="margin_extra_large">36dp</dimen>
 
+    <!-- IMAGE_ITEM -->
     <dimen name="image_corner_radius">20dp</dimen>
     <dimen name="image_small_corner_radius">8dp</dimen>
     <dimen name="toolbar_size">56dp</dimen>
 
+    <!-- ICONS -->
     <dimen name="icon_background_size">28dp</dimen>
     <dimen name="icon_size">20dp</dimen>
     <dimen name="icon_text_size">8sp</dimen>
 
+    <!-- DIALOG -->
     <dimen name="dialogButtonWidth">250dp</dimen>
     <dimen name="switchHeight">48dp</dimen>
     <dimen name="sliderHeight">48dp</dimen>
+
+    <!-- BOTTOM NAV -->
+    <dimen name="cnb_radius">5dp</dimen>
+
+    <!-- SPLASH SCREEN -->
+
+    <!-- IMAGE_ITEM -->
 </resources>

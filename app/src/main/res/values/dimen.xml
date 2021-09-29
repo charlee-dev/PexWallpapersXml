@@ -45,7 +45,7 @@
     <dimen name="header_text_size">24sp</dimen>
     <dimen name="button_text_size">14sp</dimen>
     <dimen name="condensed_text_size">18sp</dimen>
-    <dimen name="clock_text_size">56sp</dimen>
+    <dimen name="clock_text_size">100sp</dimen>
     <!-- IMAGE_ITEM -->
     <!-- IMAGE_ITEM -->
     <!-- IMAGE_ITEM -->

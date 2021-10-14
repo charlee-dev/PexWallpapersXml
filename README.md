@@ -122,36 +122,68 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ```
 
-<div class="edina_tm_mobile_menu">
-		<div class="mobile_menu_inner">
+<div class="edina_tm_about" id="about">
 			<div class="container">
-				<div class="mobile_in">
-					<div class="logo">
-						<a href="#"><img src="img/logo/dark.png" alt="" /></a>
+				<div class="about_title">
+					<h3>About Me</h3>
+				</div>
+				<div class="content">
+					<div class="leftpart wow fadeInLeft" data-wow-duration="1s">
+						<div class="info">
+							<h3>Hi, I'm <span>Rogers Nelson</span></h3>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ipsum sit nibh amet egestas tellus. Eu leo morbi massa sem faucibus nulla gravida arcu ante sollicitudin orci nunc gravida.</p>
+						</div>
+						<div class="my_skills">
+							<h3 class="title">What is my skill level?</h3>
+							<p class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ipsum sit nibh amet egestas tellus.</p>
+							<div class="wrapper">
+								<div class="left">
+									<div class="dodo_progress">
+										<div class="progress_inner" data-value="95">
+											<span class="label">React.Js</span>
+											<div class="background"><div class="bar"><div class="bar_in"></div></div></div>
+										</div>
+										<div class="progress_inner" data-value="80" >
+											<span class="label">Photoshop</span>
+											<div class="background"><div class="bar"><div class="bar_in"></div></div></div>
+										</div>
+										<div class="progress_inner" data-value="90">
+											<span class="label">Illustrator</span>
+											<div class="background"><div class="bar"><div class="bar_in"></div></div></div>
+										</div>
+									</div>
+								</div>
+								<div class="right">
+									<div class="dodo_progress">
+										<div class="progress_inner" data-value="95">
+											<span class="label">Vue.Js</span>
+											<div class="background"><div class="bar"><div class="bar_in"></div></div></div>
+										</div>
+										<div class="progress_inner" data-value="80" >
+											<span class="label">Figma</span>
+											<div class="background"><div class="bar"><div class="bar_in"></div></div></div>
+										</div>
+										<div class="progress_inner" data-value="90">
+											<span class="label">WordPress</span>
+											<div class="background"><div class="bar"><div class="bar_in"></div></div></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="my_trigger">
-						<div class="hamburger hamburger--collapse-r">
-							<div class="hamburger-box">
-								<div class="hamburger-inner"></div>
+					<div class="rightpart wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.2s">
+						<div class="image">
+							<img src="img/thumbs/26-35.jpg" alt="" />
+							<div class="main" data-img-url="img/about/2.jpg"></div>
+							<div class="experience" data-wow-duration="1.2s">
+								<div class="info">
+									<h3>6+ Years</h3>
+									<span>Of Experiance</span>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="dropdown">
-			<div class="container">
-				<div class="dropdown_inner">
-					<ul class="anchor_nav">
-						<li><a href="#home">Home</a></li>
-						<li><a href="#about">About</a></li>
-						<li><a href="#service">Service</a></li>
-						<li><a href="#portfolio">Portfolio</a></li>
-						<li><a href="#testimonial">Testimonial</a></li>
-						<li><a href="#blog">Blog</a></li>
-						<li><a href="#contact">Contact</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>

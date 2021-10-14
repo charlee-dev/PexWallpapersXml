@@ -122,22 +122,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ```
 
-<div class="edina_tm_hero" id="home">
-			<div class="content">
-				<div class="image">
-					<div class="main" data-img-url="img/hero/2.jpg"></div>
-				</div>
-				<div class="extra">
-					<h3 class="name">Davide Santon</h3>
-					<p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Volut purus ut erat mus.pendisse aliquam.</p>
-					<div class="social">
-						<ul>
-							<li><a href="#"><img class="svg custom" src="img/svg/social/fb.svg" alt="" /></a></li>
-							<li><a href="#"><img class="svg custom" src="img/svg/social/tw.svg" alt="" /></a></li>
-							<li><a href="#"><img class="svg custom" src="img/svg/social/in.svg" alt="" /></a></li>
-							<li><a href="#"><img class="svg custom" src="img/svg/social/db.svg" alt="" /></a></li>
-						</ul>
+<div class="edina_tm_mobile_menu">
+		<div class="mobile_menu_inner">
+			<div class="container">
+				<div class="mobile_in">
+					<div class="logo">
+						<a href="#"><img src="img/logo/dark.png" alt="" /></a>
+					</div>
+					<div class="my_trigger">
+						<div class="hamburger hamburger--collapse-r">
+							<div class="hamburger-box">
+								<div class="hamburger-inner"></div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<div class="dropdown">
+			<div class="container">
+				<div class="dropdown_inner">
+					<ul class="anchor_nav">
+						<li><a href="#home">Home</a></li>
+						<li><a href="#about">About</a></li>
+						<li><a href="#service">Service</a></li>
+						<li><a href="#portfolio">Portfolio</a></li>
+						<li><a href="#testimonial">Testimonial</a></li>
+						<li><a href="#blog">Blog</a></li>
+						<li><a href="#contact">Contact</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>

@@ -1,3 +1,5 @@
+![](https://github.com/adimanwit/PexWallpapers/raw/master/screenshots/pexWalls_blog_banner.png)
+
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=adrianwitaszak)
 ![](https://img.shields.io/github/stars/adrianwitaszak/pexwallpapers)
 ![](https://img.shields.io/github/forks/adrianwitaszak/pexwallpapers)

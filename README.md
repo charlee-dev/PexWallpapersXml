@@ -121,3 +121,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
+<div class="edina_tm_hero" id="home">
+			<div class="content">
+				<div class="image">
+					<div class="main" data-img-url="img/hero/2.jpg"></div>
+				</div>
+				<div class="extra">
+					<h3 class="name">Davide Santon</h3>
+					<p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Volut purus ut erat mus.pendisse aliquam.</p>
+					<div class="social">
+						<ul>
+							<li><a href="#"><img class="svg custom" src="img/svg/social/fb.svg" alt="" /></a></li>
+							<li><a href="#"><img class="svg custom" src="img/svg/social/tw.svg" alt="" /></a></li>
+							<li><a href="#"><img class="svg custom" src="img/svg/social/in.svg" alt="" /></a></li>
+							<li><a href="#"><img class="svg custom" src="img/svg/social/db.svg" alt="" /></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>

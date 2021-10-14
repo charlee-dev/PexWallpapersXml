@@ -1,5 +1,3 @@
-![](https://github.com/adimanwit/PexWallpapers/raw/master/screenshots/pexWalls_blog_banner.png)
-
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=adrianwitaszak)
 ![](https://img.shields.io/github/stars/adrianwitaszak/pexwallpapers)
 ![](https://img.shields.io/github/forks/adrianwitaszak/pexwallpapers)
@@ -11,7 +9,8 @@
 ![](https://img.shields.io/github/languages/count/adrianwitaszak/pexwallpapers)
 ![](https://img.shields.io/github/languages/top/adrianwitaszak/pexwallpapers)
 
-![]()
+![](https://github.com/adimanwit/PexWallpapers/raw/master/screenshots/pexWalls_blog_banner.png)
+
 # Welcome to PexWallpapers!
 
 Hi! PexWallpapers is one of my current projects. The app use Pexels.com image library to show

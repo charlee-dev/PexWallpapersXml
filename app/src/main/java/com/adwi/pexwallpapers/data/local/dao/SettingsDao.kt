@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.adwi.pexwallpapers.data.local.entity.Settings
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SettingsDao {
@@ -12,8 +13,8 @@ interface SettingsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSettings(setting: Settings)
 
-    @Query("SELECT * FROM settings WHERE id = 1")
-    suspend fun getSettings(): Settings
+    @Query("SELECT * FROM settings")
+    fun getSettings(): Flow<Settings>
 
     @Query("UPDATE settings SET lastQuery = :query")
     suspend fun updateLastQuery(query: String)
@@ -36,6 +37,6 @@ interface SettingsDao {
     @Query("UPDATE settings SET selectedButton = :radioButton")
     suspend fun updateChangePeriodType(radioButton: Int)
 
-    @Query("UPDATE settings SET sliderValue = :periodValue")
+    @Query("UPDATE settings SET sliderMinutes = :periodValue")
     suspend fun updateChangePeriodValue(periodValue: Float)
 }

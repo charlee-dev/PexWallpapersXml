@@ -9,10 +9,9 @@ import androidx.work.WorkerParameters
 import com.adwi.pexwallpapers.shared.tools.notification.Channel
 import com.adwi.pexwallpapers.shared.tools.notification.NotificationTools
 import com.adwi.pexwallpapers.shared.tools.wallpaper.WallpaperSetter
-import com.github.ajalt.timberkt.Timber
-import com.github.ajalt.timberkt.d
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import timber.log.Timber
 
 const val NOTIFICATION_WORK = "appName_notification_work"
 const val TAG = "NewWallpaperWork"
@@ -32,8 +31,8 @@ class AutoChangeWallpaperWork @AssistedInject constructor(
             // Get arguments
             val wallpaperImage = inputData.getString(WORKER_NEW_WALLPAPER_IMAGE_URL_FULL)
             val notificationImage = inputData.getString(WORKER_NEW_WALLPAPER_NOTIFICATION_IMAGE)
-            Timber.tag(TAG).d { "doWork - $wallpaperImage" }
-            Timber.tag(TAG).d { "doWork - $notificationImage" }
+            Timber.tag(TAG).d ( "doWork - $wallpaperImage" )
+            Timber.tag(TAG).d ( "doWork - $notificationImage" )
             if (wallpaperImage != null && notificationImage != null) {
                 // Set wallpaper
                 wallpaperSetter.setWallpaperByImagePath(wallpaperImage, setHomeScreen = true)
@@ -44,15 +43,15 @@ class AutoChangeWallpaperWork @AssistedInject constructor(
                     channel = Channel.NEW_WALLPAPER,
                     imageUrl = notificationImage
                 )
-                Timber.tag(TAG).d { "doWork - success" }
+                Timber.tag(TAG).d ( "doWork - success" )
                 success()
             } else {
-                Timber.tag(TAG).d { "wallpaper or notificationImage is null" }
+                Timber.tag(TAG).d ( "wallpaper or notificationImage is null" )
                 failure()
             }
             success()
         } catch (ex: Exception) {
-            Timber.tag(TAG).d { ex.toString() }
+            Timber.tag(TAG).d (ex.toString())
             failure()
         }
     }

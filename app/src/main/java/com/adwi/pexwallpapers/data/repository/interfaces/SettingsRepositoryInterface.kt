@@ -1,10 +1,11 @@
 package com.adwi.pexwallpapers.data.repository.interfaces
 
 import com.adwi.pexwallpapers.data.local.entity.Settings
+import kotlinx.coroutines.flow.Flow
 
 interface SettingsRepositoryInterface {
 
-    suspend fun getSettings(): Settings
+    fun getSettings(): Flow<Settings>
     suspend fun insertSettings(settings: Settings)
     suspend fun updateLastQuery(query: String)
     suspend fun updatePushNotification(enabled: Boolean)

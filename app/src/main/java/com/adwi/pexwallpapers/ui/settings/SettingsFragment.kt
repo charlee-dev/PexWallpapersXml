@@ -9,18 +9,20 @@ import com.adwi.pexwallpapers.data.local.entity.Settings
 import com.adwi.pexwallpapers.databinding.FragmentSettingsBinding
 import com.adwi.pexwallpapers.ui.base.BaseFragment
 import com.adwi.pexwallpapers.util.launchCoroutine
+import com.adwi.pexwallpapers.util.showSnackbar
 import com.google.android.material.slider.Slider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
     inflate = FragmentSettingsBinding::inflate
 ) {
-
     override val viewModel: SettingsViewModel by viewModels()
 
-    private lateinit var currentSettings: Settings
+    private lateinit var settings: Settings
+
     private var currentSliderValue = 5f
 
     override fun setupToolbar() {
@@ -34,12 +36,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
     override fun setupViews() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            binding.settingsViewModel = viewModel
+            settingsViewModel = viewModel
         }
     }
 
     override fun setupListeners() {
         binding.apply {
+
+            // Toolbar
             toolbarLayout.apply {
                 backButton.setOnClickListener {
                     findNavController().popBackStack()
@@ -65,26 +69,11 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
             downloadOverWifiSwitch.setOnCheckedChangeListener { _, checked ->
                 viewModel.updateDownloadOverWiFi(checked)
             }
-            pushNotificationsSwitch.setOnCheckedChangeListener { _, checked ->
-                viewModel.updatePushNotification(checked)
-            }
 
             // Radios
             changePeriodRadioGroup.setOnCheckedChangeListener { _, itemId ->
-                when (itemId) {
-                    R.id.minutes_radio_button -> {
-                        viewModel.updateChangePeriodType(itemId)
-                        setSlider(itemId)
-                    }
-                    R.id.hours_radio_button -> {
-                        viewModel.updateChangePeriodType(itemId)
-                        setSlider(itemId)
-                    }
-                    else -> {
-                        viewModel.updateChangePeriodType(itemId)
-                        setSlider(itemId)
-                    }
-                }
+                viewModel.updateChangePeriodType(itemId)
+                setSlider(itemId)
             }
 
             // Slider
@@ -97,7 +86,12 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
                 }
             })
 
-            // Info
+            // Buttons
+            saveAutomationButton.setOnClickListener {
+                Timber.tag(TAG).d("setupWorks")
+                viewModel.setupWorks(requireContext(), settings)
+                showSnackbar(getString(R.string.automation_settings_saved))
+            }
             aboutButton.setOnClickListener { }
             supportButton.setOnClickListener { viewModel.contactSupport() }
             privacyPolicyButton.setOnClickListener { }
@@ -107,27 +101,27 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
     override fun setupFlows() {
         binding.apply {
             launchCoroutine {
-                viewModel.currentChangePeriodType.collect { setSlider(it) }
-            }
-            launchCoroutine {
-                viewModel.currentSettings.collect {
-                    currentSettings = it
-                    setCheckedRadioButton(it.selectedButton)
-                    currentSliderValue = it.sliderValue
-                    setSlider(it.selectedButton)
+//                viewModel.changeWallpaperEvery.collect {
+//                    setSlider(it)
+//                }
+                viewModel.settings.collect {
+                    settings = it
+                    pushNotificationsSwitch.isChecked = it.pushNotification
+                    newWallpaperSwitch.isChecked = it.newWallpaperSet
+                    wallpaperRecomendationsSwitch.isChecked = it.wallpaperRecommendations
+                    autoWallpaperSwitch.isChecked = it.autoChangeWallpaper
+                    changePeriodRadioGroup.check(it.selectedButton)
+                    periodSlider.value = when (it.selectedButton) {
+                        R.id.minutes_radio_button -> it.sliderMinutes
+                        R.id.hours_radio_button -> it.sliderHours
+                        else -> it.sliderDays
+                    }
+                    downloadOverWifiSwitch.isChecked = it.downloadOverWiFi
+
+                    saveAutomationButton.isEnabled = settings.autoChangeWallpaper
+                    saveAutomationButton.alpha = if (saveAutomationButton.isEnabled) 1f else .3f
                 }
             }
-        }
-    }
-
-    private fun setCheckedRadioButton(radioButton: Int) {
-        binding.apply {
-            val button = when (radioButton) {
-                R.id.minutes_radio_button -> minutesRadioButton
-                R.id.hours_radio_button -> hoursRadioButton
-                else -> daysRadioButton
-            }
-            button.isChecked = true
         }
     }
 

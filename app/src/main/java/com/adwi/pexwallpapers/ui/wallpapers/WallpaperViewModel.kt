@@ -13,10 +13,8 @@ import com.adwi.pexwallpapers.util.onDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -42,6 +40,21 @@ class WallpaperViewModel @Inject constructor(
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     init {
+        initSettings()
+        deleteOldNonFavoriteWallpapers()
+    }
+
+    private fun initSettings() {
+        onDispatcher(ioDispatcher) {
+            val settings = settingsRepository.getSettings().first()
+            if (settings == null) {
+                Timber.d("INIT SETTINGS")
+                settingsRepository.insertSettings(defaultSettings)
+            }
+        }
+    }
+
+    private fun deleteOldNonFavoriteWallpapers() {
         onDispatcher(ioDispatcher) {
             favoritesRepository.deleteNonFavoriteWallpapersOlderThan(
                 System.currentTimeMillis() - TimeUnit.DAYS.toMillis(14)

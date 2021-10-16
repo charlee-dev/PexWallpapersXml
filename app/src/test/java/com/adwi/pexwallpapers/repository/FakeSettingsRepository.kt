@@ -56,7 +56,7 @@ class FakeSettingsRepository : SettingsRepositoryInterface {
     }
 
     override suspend fun updateChangePeriodValue(periodValue: Float) {
-        settingsItem.sliderValue = periodValue
+        settingsItem.sliderMinutes = periodValue
         refreshFlow()
     }
 

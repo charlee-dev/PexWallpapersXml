@@ -69,9 +69,9 @@ class SearchViewModel @Inject constructor(
 
     private fun restoreLastQuery() {
         onDispatcher(ioDispatcher) {
-            currentQuery.value = settingsRepository.getSettings().lastQuery
-            newQueryInProgress = false
-            pendingScrollToTopAfterNewQuery = false
+                currentQuery.value = settingsRepository.getSettings().first().lastQuery
+                newQueryInProgress = false
+                pendingScrollToTopAfterNewQuery = false
         }
     }
 

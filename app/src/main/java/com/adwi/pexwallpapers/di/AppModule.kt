@@ -5,6 +5,7 @@ import com.adwi.pexwallpapers.shared.tools.image.ImageTools
 import com.adwi.pexwallpapers.shared.tools.notification.NotificationTools
 import com.adwi.pexwallpapers.shared.tools.sharing.SharingTools
 import com.adwi.pexwallpapers.shared.tools.wallpaper.WallpaperSetter
+import com.adwi.pexwallpapers.shared.work.WorkTools
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -48,4 +49,10 @@ class AppModule {
         @ApplicationContext context: Context,
         imageTools: ImageTools
     ) = SharingTools(context, imageTools)
+
+    @Singleton
+    @Provides
+    fun provideWorkTools(
+        @ApplicationContext context: Context
+    ) = WorkTools(context)
 }

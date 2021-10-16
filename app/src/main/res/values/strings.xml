@@ -94,4 +94,6 @@
     <string name="rationale_title">We need permission to read external storage</string>
     <string name="rationale_desc">We require access to read external storage permission to be able to backup your previous wallpaper
         just in case you want to revert to it</string>
+    <string name="save">Save</string>
+    <string name="automation_settings_saved">Automation settings saved</string>
 </resources>

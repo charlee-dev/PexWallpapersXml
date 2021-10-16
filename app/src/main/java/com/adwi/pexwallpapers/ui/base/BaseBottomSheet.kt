@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.navigation.NavArgs
 import com.adwi.pexwallpapers.R
-import com.github.ajalt.timberkt.Timber
-import com.github.ajalt.timberkt.d
+import timber.log.Timber
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
@@ -37,7 +36,7 @@ abstract class BaseBottomSheet<VB : ViewDataBinding, AD : Any?>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Timber.tag(TAG).d { resources.getString(R.string.init_class) }
+        Timber.tag(TAG).d (resources.getString(R.string.init_class))
         setupAdapters()
         setupListeners()
         setupViews()

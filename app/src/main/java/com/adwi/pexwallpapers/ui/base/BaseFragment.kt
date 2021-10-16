@@ -8,8 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.util.showIcons
-import com.github.ajalt.timberkt.Timber
-import com.github.ajalt.timberkt.d
+import timber.log.Timber
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
@@ -38,7 +37,7 @@ abstract class BaseFragment<out VB : ViewDataBinding, AD : Any?>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Timber.tag(TAG).d { resources.getString(R.string.init_class) }
+        Timber.tag(TAG).d ( resources.getString(R.string.init_class) )
         setupToolbar()
         setupAdapters()
         setupListeners()

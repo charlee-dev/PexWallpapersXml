@@ -8,8 +8,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.requestPermissions
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.util.activity
-import com.github.ajalt.timberkt.Timber
-import com.github.ajalt.timberkt.d
+import timber.log.Timber
 import dagger.hilt.android.qualifiers.ActivityContext
 
 const val STORAGE_REQUEST_CODE = 123
@@ -34,7 +33,7 @@ class PermissionTools(
     override fun storagePermissionsCheck(body: () -> Unit) {
         if (isReadStoragePermissionApproved()) {
             // Check if permission is not granted
-            Timber.tag(TAG).d { "Permission for contacts is not granted" }
+            Timber.tag(TAG).d ( "Permission for contacts is not granted" )
             if (ActivityCompat.shouldShowRequestPermissionRationale(
                     context.activity()!!,
                     storagePermission
@@ -45,7 +44,7 @@ class PermissionTools(
                     context.getString(R.string.rationale_desc)
                 )
             } else {
-                Timber.tag(TAG).d { "Checking permission" }
+                Timber.tag(TAG).d ( "Checking permission" )
                 requestPermissions(
                     context.activity()!!,
                     arrayOf(storagePermission),

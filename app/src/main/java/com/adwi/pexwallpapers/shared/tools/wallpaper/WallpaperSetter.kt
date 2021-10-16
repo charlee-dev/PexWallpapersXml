@@ -8,9 +8,8 @@ import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.shared.tools.image.ImageTools
 import com.adwi.pexwallpapers.shared.tools.permissions.PermissionTools
 import com.adwi.pexwallpapers.util.showToast
-import com.github.ajalt.timberkt.Timber
-import com.github.ajalt.timberkt.d
 import dagger.hilt.android.qualifiers.ApplicationContext
+import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
@@ -40,7 +39,7 @@ class WallpaperSetter @Inject constructor(
             if (!setHomeScreen && setLockScreen) setLockScreenWallpaper(bitmap)
             if (setHomeScreen && setLockScreen) setHomeAndLockScreenWallpaper(bitmap)
         } catch (ex: IOException) {
-            Timber.tag(TAG).d { "Exception: ${ex.printStackTrace()}" }
+            Timber.tag(TAG).d ( "Exception: ${ex.printStackTrace()}" )
         }
     }
 
@@ -69,7 +68,7 @@ class WallpaperSetter @Inject constructor(
     }
 
     override fun setHomeAndLockScreenWallpaper(bitmap: Bitmap) {
-        Timber.tag(TAG).d { "setHomeAndLockScreenWallpaper" }
+        Timber.tag(TAG).d("setHomeAndLockScreenWallpaper")
         setHomeScreenWallpaper(bitmap)
         setLockScreenWallpaper(bitmap)
     }

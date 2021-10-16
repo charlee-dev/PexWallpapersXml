@@ -15,18 +15,22 @@ class Settings(
     var wallpaperRecommendations: Boolean = true,
     var autoChangeWallpaper: Boolean = false,
     var selectedButton: Int = R.id.hours_radio_button,
-    var sliderValue: Float = 5f,
+    var sliderMinutes: Float = 5f,
+    var sliderHours: Float = 5f,
+    var sliderDays: Float = 5f,
     var downloadOverWiFi: Boolean = true
 )
 
 val defaultSettings = Settings(
     id = 1,
     lastQuery = "Flowers",
-    pushNotification = false,
+    pushNotification = true,
     newWallpaperSet = false,
     wallpaperRecommendations = true,
     autoChangeWallpaper = false,
     selectedButton = R.id.hours_radio_button,
-    sliderValue = 5f,
+    sliderMinutes = 5f,
+    sliderHours = 5f,
+    sliderDays = 5f,
     downloadOverWiFi = false
 )

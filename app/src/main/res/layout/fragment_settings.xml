@@ -69,8 +69,7 @@
                             <com.google.android.material.switchmaterial.SwitchMaterial
                                 android:id="@+id/push_notifications_switch"
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/switchHeight"
-                                android:checked="@{settingsViewModel.currentSettings.pushNotification}" />
+                                android:layout_height="@dimen/switchHeight" />
 
                         </LinearLayout>
 
@@ -92,8 +91,7 @@
                             <com.google.android.material.switchmaterial.SwitchMaterial
                                 android:id="@+id/new_wallpaper_switch"
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/switchHeight"
-                                android:checked="@{settingsViewModel.currentSettings.newWallpaperSet}" />
+                                android:layout_height="@dimen/switchHeight" />
 
                         </LinearLayout>
 
@@ -116,7 +114,6 @@
                                 android:id="@+id/wallpaper_recomendations_switch"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/switchHeight"
-                                android:checked="@{settingsViewModel.currentSettings.wallpaperRecommendations}"
                                 tools:checked="false" />
 
                         </LinearLayout>
@@ -171,8 +168,7 @@
                             <com.google.android.material.switchmaterial.SwitchMaterial
                                 android:id="@+id/auto_wallpaper_switch"
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/switchHeight"
-                                android:checked="@{settingsViewModel.currentSettings.autoChangeWallpaper}" />
+                                android:layout_height="@dimen/switchHeight" />
 
                         </LinearLayout>
 
@@ -272,7 +268,6 @@
                                     android:layout_weight="1"
                                     android:contentDescription="@string/set_period"
                                     android:stepSize="1.0"
-                                    android:value="5"
                                     android:valueFrom="1.0"
                                     android:valueTo="12.0" />
 
@@ -284,6 +279,23 @@
                                     tools:ignore="HardcodedText" />
 
                             </LinearLayout>
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/save_automation_button"
+                                style="@style/TextStyle.Button"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:layout_gravity="center"
+                                android:layout_margin="@dimen/margin_extra_small"
+                                android:background="@drawable/background_rounded_stroke"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:padding="@dimen/margin_small"
+                                android:paddingHorizontal="@dimen/margin_small"
+                                android:singleLine="true"
+                                android:text="@string/save" />
+
                         </LinearLayout>
                     </LinearLayout>
 
@@ -337,8 +349,7 @@
                             <com.google.android.material.switchmaterial.SwitchMaterial
                                 android:id="@+id/download_over_wifi_switch"
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/switchHeight"
-                                android:checked="@{settingsViewModel.currentSettings.downloadOverWiFi}" />
+                                android:layout_height="@dimen/switchHeight" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -417,5 +428,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

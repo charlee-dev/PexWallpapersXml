@@ -15,9 +15,7 @@ class Settings(
     var wallpaperRecommendations: Boolean = true,
     var autoChangeWallpaper: Boolean = false,
     var selectedButton: Int = R.id.hours_radio_button,
-    var sliderMinutes: Float = 5f,
-    var sliderHours: Float = 5f,
-    var sliderDays: Float = 5f,
+    var sliderValue: Float = 5f,
     var downloadOverWiFi: Boolean = true
 )
 
@@ -29,8 +27,6 @@ val defaultSettings = Settings(
     wallpaperRecommendations = true,
     autoChangeWallpaper = false,
     selectedButton = R.id.hours_radio_button,
-    sliderMinutes = 5f,
-    sliderHours = 5f,
-    sliderDays = 5f,
+    sliderValue = 5f,
     downloadOverWiFi = false
 )

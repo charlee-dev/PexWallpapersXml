@@ -1,6 +1,5 @@
 package com.adwi.pexwallpapers.ui.settings
 
-import app.cash.turbine.test
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.mock.SettingsMock
 import com.adwi.pexwallpapers.repository.FakeSettingsRepository
@@ -103,7 +102,7 @@ class SettingsViewModelTest {
     fun `updateChangePeriodValue changes sliderValue returns true`() =
         coroutineScope.testDispatcher.runBlockingTest {
             repository.insertSettings(settingsMock)
-            viewModel.updateChangePeriodValue(30f)
+            viewModel.updateChangePeriodMinutes(30f)
             viewModel.currentSettings.test {
                 assertThat(awaitItem().sliderValue).isEqualTo(30f)
                 cancelAndIgnoreRemainingEvents()

@@ -55,8 +55,8 @@ class FakeSettingsRepository : SettingsRepositoryInterface {
         refreshFlow()
     }
 
-    override suspend fun updateChangePeriodValue(periodValue: Float) {
-        settingsItem.sliderMinutes = periodValue
+    override suspend fun updateChangePeriodMinutes(periodValue: Float) {
+        settingsItem.timeRangeMinutes = periodValue
         refreshFlow()
     }
 

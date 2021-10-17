@@ -36,7 +36,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
     override fun setupViews() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            settingsViewModel = viewModel
         }
     }
 
@@ -106,20 +105,25 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
 //                }
                 viewModel.settings.collect {
                     settings = it
+
                     pushNotificationsSwitch.isChecked = it.pushNotification
                     newWallpaperSwitch.isChecked = it.newWallpaperSet
                     wallpaperRecomendationsSwitch.isChecked = it.wallpaperRecommendations
                     autoWallpaperSwitch.isChecked = it.autoChangeWallpaper
                     changePeriodRadioGroup.check(it.selectedButton)
-                    periodSlider.value = when (it.selectedButton) {
-                        R.id.minutes_radio_button -> it.sliderMinutes
-                        R.id.hours_radio_button -> it.sliderHours
-                        else -> it.sliderDays
-                    }
+                    periodSlider.value = it.sliderValue
                     downloadOverWifiSwitch.isChecked = it.downloadOverWiFi
 
-                    saveAutomationButton.isEnabled = settings.autoChangeWallpaper
-                    saveAutomationButton.alpha = if (saveAutomationButton.isEnabled) 1f else .3f
+                    with(settings.autoChangeWallpaper) {
+                        periodSlider.isEnabled = this
+                        daysRadioButton.isEnabled = this
+                        hoursRadioButton.isEnabled = this
+                        minutesRadioButton.isEnabled = this
+                        saveAutomationButton.isEnabled = this
+                    }
+
+                    autoChangeDependantViewsLayout.alpha =
+                        if (settings.autoChangeWallpaper) 1f else .5f
                 }
             }
         }

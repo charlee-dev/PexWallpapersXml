@@ -173,129 +173,136 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/period_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/period_title"
-                                style="@style/TextStyle.Normal.Condensed"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/margin_small"
-                                android:text="@string/change_wallpaper_every" />
-
-                            <RadioGroup
-                                android:id="@+id/change_period_radio_group"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginVertical="@dimen/margin_small"
-                                android:orientation="horizontal">
-
-                                <RadioButton
-                                    android:id="@+id/minutes_radio_button"
-                                    style="@style/RadioWithTextOnTop"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="@string/minutes" />
-
-                                <RadioButton
-                                    android:id="@+id/hours_radio_button"
-                                    style="@style/RadioWithTextOnTop"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="@string/hours" />
-
-                                <RadioButton
-                                    android:id="@+id/days_radio_button"
-                                    style="@style/RadioWithTextOnTop"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="@string/days" />
-
-                            </RadioGroup>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/period_duration_layout"
+                            android:id="@+id/auto_change_dependant_views_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-
-                                <TextView
-                                    android:id="@+id/period_duration_title"
-                                    style="@style/TextStyle.Normal.Condensed"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/time_range" />
-
-                                <TextView
-                                    android:id="@+id/period_duration_value"
-                                    style="@style/TextStyle.Normal.Condensed"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/margin_small" />
-                            </LinearLayout>
-
-
-                            <LinearLayout
-                                android:id="@+id/period_weeks_layout"
+                                android:id="@+id/period_layout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:orientation="horizontal">
+                                android:orientation="vertical">
 
                                 <TextView
-                                    android:id="@+id/slider_min_vlue"
+                                    android:id="@+id/period_title"
+                                    style="@style/TextStyle.Normal.Condensed"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    tools:text="1"
-                                    tools:ignore="HardcodedText" />
+                                    android:layout_marginTop="@dimen/margin_small"
+                                    android:text="@string/change_wallpaper_every" />
 
-                                <com.google.android.material.slider.Slider
-                                    android:id="@+id/period_slider"
-                                    android:layout_width="0dp"
-                                    android:layout_height="@dimen/sliderHeight"
-                                    android:layout_weight="1"
-                                    android:contentDescription="@string/set_period"
-                                    android:stepSize="1.0"
-                                    android:valueFrom="1.0"
-                                    android:valueTo="12.0" />
-
-                                <TextView
-                                    android:id="@+id/slider_max_value"
-                                    android:layout_width="wrap_content"
+                                <RadioGroup
+                                    android:id="@+id/change_period_radio_group"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    tools:text="24"
-                                    tools:ignore="HardcodedText" />
+                                    android:layout_marginVertical="@dimen/margin_small"
+                                    android:orientation="horizontal">
+
+                                    <RadioButton
+                                        android:id="@+id/minutes_radio_button"
+                                        style="@style/RadioWithTextOnTop"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="@string/minutes" />
+
+                                    <RadioButton
+                                        android:id="@+id/hours_radio_button"
+                                        style="@style/RadioWithTextOnTop"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="@string/hours" />
+
+                                    <RadioButton
+                                        android:id="@+id/days_radio_button"
+                                        style="@style/RadioWithTextOnTop"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="@string/days" />
+
+                                </RadioGroup>
 
                             </LinearLayout>
 
-                            <androidx.appcompat.widget.AppCompatButton
-                                android:id="@+id/save_automation_button"
-                                style="@style/TextStyle.Button"
+                            <LinearLayout
+                                android:id="@+id/period_duration_layout"
                                 android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:layout_gravity="center"
-                                android:layout_margin="@dimen/margin_extra_small"
-                                android:background="@drawable/background_rounded_stroke"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:padding="@dimen/margin_small"
-                                android:paddingHorizontal="@dimen/margin_small"
-                                android:singleLine="true"
-                                android:text="@string/save" />
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
 
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/period_duration_title"
+                                        style="@style/TextStyle.Normal.Condensed"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/time_range" />
+
+                                    <TextView
+                                        android:id="@+id/period_duration_value"
+                                        style="@style/TextStyle.Normal.Condensed"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/margin_small" />
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:id="@+id/period_weeks_layout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/slider_min_vlue"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        tools:text="1"
+                                        tools:ignore="HardcodedText" />
+
+                                    <com.google.android.material.slider.Slider
+                                        android:id="@+id/period_slider"
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/sliderHeight"
+                                        android:layout_weight="1"
+                                        android:contentDescription="@string/set_period"
+                                        android:stepSize="1.0"
+                                        android:valueFrom="1.0"
+                                        android:valueTo="12.0" />
+
+                                    <TextView
+                                        android:id="@+id/slider_max_value"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        tools:text="24"
+                                        tools:ignore="HardcodedText" />
+
+                                </LinearLayout>
+
+                                <androidx.appcompat.widget.AppCompatButton
+                                    android:id="@+id/save_automation_button"
+                                    style="@style/TextStyle.Button"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="@dimen/margin_extra_small"
+                                    android:background="@drawable/background_rounded_stroke"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:padding="@dimen/margin_small"
+                                    android:paddingHorizontal="@dimen/margin_small"
+                                    android:singleLine="true"
+                                    android:text="@string/save" />
+
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
 

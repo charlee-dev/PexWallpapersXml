@@ -13,7 +13,7 @@ object SettingsMock {
         wallpaperRecommendations = true,
         autoChangeWallpaper = false,
         selectedButton = R.id.hours_radio_button,
-        sliderMinutes = 5f,
+        timeRangeMinutes = 5f,
         downloadOverWiFi = false
     )
 }

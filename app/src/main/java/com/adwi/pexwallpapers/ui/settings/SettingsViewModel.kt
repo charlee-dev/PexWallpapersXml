@@ -101,7 +101,7 @@ class SettingsViewModel @Inject constructor(
                 workTools.setupAllWorks(
                     favorites = favorites.value,
                     timeUnit = getTimeUnit(settings.selectedButton),
-                    timeValue = settings.sliderMinutes
+                    timeValue = settings.sliderValue
                 )
                 Timber.tag(TAG).d("autoChangeWallpaper - true")
             } else {

@@ -37,6 +37,6 @@ interface SettingsDao {
     @Query("UPDATE settings SET selectedButton = :radioButton")
     suspend fun updateChangePeriodType(radioButton: Int)
 
-    @Query("UPDATE settings SET sliderMinutes = :periodValue")
+    @Query("UPDATE settings SET sliderValue = :periodValue")
     suspend fun updateChangePeriodValue(periodValue: Float)
 }

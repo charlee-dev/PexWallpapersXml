@@ -8,6 +8,7 @@ import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Settings
 import com.adwi.pexwallpapers.databinding.FragmentSettingsBinding
 import com.adwi.pexwallpapers.ui.base.BaseFragment
+import com.adwi.pexwallpapers.util.Constants.Companion.WORK_AUTO_WALLPAPER
 import com.adwi.pexwallpapers.util.launchCoroutine
 import com.adwi.pexwallpapers.util.showSnackbar
 import com.google.android.material.slider.Slider
@@ -64,8 +65,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
             autoWallpaperSwitch.setOnCheckedChangeListener { _, checked ->
                 viewModel.updateAutoChangeWallpaper(checked)
                 if (!checked) {
-                    viewModel.cancelWorks(requireContext())
-                    val message = "${getString(R.string.auto_change_wallpaper)} ${getString(R.string.is_disabled)}"
+                    viewModel.cancelWorks(WORK_AUTO_WALLPAPER)
+                    val message =
+                        "${getString(R.string.auto_change_wallpaper)} ${getString(R.string.is_disabled)}"
                     showSnackbar(
                         message = message,
                         actionMessageId = R.string.enable,
@@ -95,7 +97,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
 
             // Buttons
             saveAutomationButton.setOnClickListener {
-                viewModel.saveSettings(requireContext(), settings)
+                viewModel.saveSettings(settings)
                 showSnackbar(getString(R.string.automation_settings_saved))
             }
             aboutButton.setOnClickListener { }
@@ -143,7 +145,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
             var step = 1f
             when (radioButton) {
                 R.id.minutes_radio_button -> {
-                    min = 15f
+                    min = 5f
                     max = 60f
                     step = 5f
                 }

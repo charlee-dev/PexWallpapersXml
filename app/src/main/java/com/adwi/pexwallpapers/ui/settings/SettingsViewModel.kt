@@ -1,7 +1,5 @@
 package com.adwi.pexwallpapers.ui.settings
 
-import android.content.Context
-import androidx.work.WorkManager
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Settings
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
@@ -28,7 +26,7 @@ class SettingsViewModel @Inject constructor(
     private val favoritesRepository: FavoritesRepository,
     private val sharingTools: SharingTools,
     private val workTools: WorkTools,
-    private val notificationTools: NotificationTools,
+    notificationTools: NotificationTools,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
@@ -83,25 +81,20 @@ class SettingsViewModel @Inject constructor(
         sharingTools.contactSupport()
     }
 
-    fun cancelWorks(context: Context) {
-        val workManager = WorkManager.getInstance(context)
-        workManager.cancelAllWorkByTag(WORK_AUTO_WALLPAPER)
-        Timber.tag(TAG).d("cancelWorks - $WORK_AUTO_WALLPAPER")
+    fun cancelWorks(workTag: String) {
+        workTools.cancelWorks(workTag)
     }
 
-    fun saveSettings(context: Context, settings: Settings) {
+    fun saveSettings(settings: Settings) {
         onDispatcher(ioDispatcher) {
-            val workManager = WorkManager.getInstance(context)
             if (settings.autoChangeWallpaper && favorites.value.isNotEmpty()) {
-                workTools.setupAllWorks(
+                workTools.setupAutoChangeWallpaperWorks(
                     favorites = favorites.value,
                     timeUnit = getTimeUnit(settings.selectedButton),
                     timeValue = settings.sliderValue
                 )
-                Timber.tag(TAG).d("autoChangeWallpaper - true")
             } else {
-                workManager.cancelAllWorkByTag(WORK_AUTO_WALLPAPER)
-                Timber.tag(TAG).d("autoChangeWallpaper - false")
+                cancelWorks(WORK_AUTO_WALLPAPER)
             }
         }
     }

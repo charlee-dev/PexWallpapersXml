@@ -11,12 +11,12 @@ class Settings(
     val id: Int = 1,
     var lastQuery: String = "Flowers",
     var pushNotification: Boolean = true,
-    var newWallpaperSet: Boolean = false,
+    var newWallpaperSet: Boolean = true,
     var wallpaperRecommendations: Boolean = true,
     var autoChangeWallpaper: Boolean = false,
     var selectedButton: Int = R.id.hours_radio_button,
     var sliderValue: Float = 5f,
-    var downloadOverWiFi: Boolean = true
+    var downloadOverWiFi: Boolean = false
 )
 
 val defaultSettings = Settings(

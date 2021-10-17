@@ -9,14 +9,13 @@ import androidx.work.WorkerParameters
 import com.adwi.pexwallpapers.shared.tools.notification.Channel
 import com.adwi.pexwallpapers.shared.tools.notification.NotificationTools
 import com.adwi.pexwallpapers.shared.tools.wallpaper.WallpaperSetter
+import com.adwi.pexwallpapers.util.Constants.Companion.WORKER_AUTO_WALLPAPER_IMAGE_URL_FULL
+import com.adwi.pexwallpapers.util.Constants.Companion.WORKER_AUTO_WALLPAPER_NOTIFICATION_IMAGE
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import timber.log.Timber
 
-const val NOTIFICATION_WORK = "appName_notification_work"
-const val TAG = "NewWallpaperWork"
-const val WORKER_NEW_WALLPAPER_IMAGE_URL_FULL = "WallpaperUrlFull"
-const val WORKER_NEW_WALLPAPER_NOTIFICATION_IMAGE = "WallpaperUrlTiny"
+private const val TAG = "AutoChangeWallpaperWork"
 
 @HiltWorker
 class AutoChangeWallpaperWork @AssistedInject constructor(
@@ -29,10 +28,9 @@ class AutoChangeWallpaperWork @AssistedInject constructor(
     override suspend fun doWork(): Result {
         return try {
             // Get arguments
-            val wallpaperImage = inputData.getString(WORKER_NEW_WALLPAPER_IMAGE_URL_FULL)
-            val notificationImage = inputData.getString(WORKER_NEW_WALLPAPER_NOTIFICATION_IMAGE)
-            Timber.tag(TAG).d ( "doWork - $wallpaperImage" )
-            Timber.tag(TAG).d ( "doWork - $notificationImage" )
+            val wallpaperImage = inputData.getString(WORKER_AUTO_WALLPAPER_IMAGE_URL_FULL)
+            val notificationImage = inputData.getString(WORKER_AUTO_WALLPAPER_NOTIFICATION_IMAGE)
+            Timber.tag(TAG).d ( "doWork - $wallpaperImage, $notificationImage" )
             if (wallpaperImage != null && notificationImage != null) {
                 // Set wallpaper
                 wallpaperSetter.setWallpaperByImagePath(wallpaperImage, setHomeScreen = true)

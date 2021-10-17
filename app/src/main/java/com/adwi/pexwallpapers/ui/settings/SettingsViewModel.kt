@@ -10,16 +10,15 @@ import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInter
 import com.adwi.pexwallpapers.di.IoDispatcher
 import com.adwi.pexwallpapers.shared.tools.notification.NotificationTools
 import com.adwi.pexwallpapers.shared.tools.sharing.SharingTools
-import com.adwi.pexwallpapers.shared.work.TAG_NEW_WALLPAPER
 import com.adwi.pexwallpapers.shared.work.WorkTools
 import com.adwi.pexwallpapers.ui.base.BaseViewModel
+import com.adwi.pexwallpapers.util.Constants.Companion.WORK_AUTO_WALLPAPER
 import com.adwi.pexwallpapers.util.onDispatcher
-import timber.log.Timber
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -30,13 +29,12 @@ class SettingsViewModel @Inject constructor(
     private val sharingTools: SharingTools,
     private val workTools: WorkTools,
     private val notificationTools: NotificationTools,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
-    @ApplicationContext context: Context
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
-    val settings = repository.getSettings()
-
     private val favorites = MutableStateFlow<List<Wallpaper>>(emptyList())
+
+    val settings = repository.getSettings()
 
     init {
         notificationTools.setupNotifications()
@@ -51,7 +49,6 @@ class SettingsViewModel @Inject constructor(
 
     fun updatePushNotification(checked: Boolean) {
         onDispatcher(ioDispatcher) { repository.updatePushNotification(checked) }
-        Timber.d("push: $checked")
     }
 
     fun updateNewWallpaperSet(checked: Boolean) {
@@ -86,15 +83,13 @@ class SettingsViewModel @Inject constructor(
         sharingTools.contactSupport()
     }
 
-    private fun getTimeUnit(buttonId: Int): TimeUnit {
-        return when (buttonId) {
-            R.id.minutes_radio_button -> TimeUnit.MINUTES
-            R.id.hours_radio_button -> TimeUnit.HOURS
-            else -> TimeUnit.DAYS
-        }
+    fun cancelWorks(context: Context) {
+        val workManager = WorkManager.getInstance(context)
+        workManager.cancelAllWorkByTag(WORK_AUTO_WALLPAPER)
+        Timber.tag(TAG).d("cancelWorks - $WORK_AUTO_WALLPAPER")
     }
 
-    fun setupWorks(context: Context, settings: Settings) {
+    fun saveSettings(context: Context, settings: Settings) {
         onDispatcher(ioDispatcher) {
             val workManager = WorkManager.getInstance(context)
             if (settings.autoChangeWallpaper && favorites.value.isNotEmpty()) {
@@ -105,9 +100,17 @@ class SettingsViewModel @Inject constructor(
                 )
                 Timber.tag(TAG).d("autoChangeWallpaper - true")
             } else {
-                workManager.cancelAllWorkByTag(TAG_NEW_WALLPAPER)
+                workManager.cancelAllWorkByTag(WORK_AUTO_WALLPAPER)
                 Timber.tag(TAG).d("autoChangeWallpaper - false")
             }
+        }
+    }
+
+    private fun getTimeUnit(buttonId: Int): TimeUnit {
+        return when (buttonId) {
+            R.id.minutes_radio_button -> TimeUnit.MINUTES
+            R.id.hours_radio_button -> TimeUnit.HOURS
+            else -> TimeUnit.DAYS
         }
     }
 }

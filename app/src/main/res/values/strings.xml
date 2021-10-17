@@ -96,4 +96,6 @@
         just in case you want to revert to it</string>
     <string name="save">Save</string>
     <string name="automation_settings_saved">Automation settings saved</string>
+    <string name="enable">Enable</string>
+    <string name="is_disabled">is disabled</string>
 </resources>

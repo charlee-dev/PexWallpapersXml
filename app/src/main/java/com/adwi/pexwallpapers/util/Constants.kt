@@ -18,5 +18,11 @@ class Constants {
 
         // Database
         const val WALLPAPER_DATABASE = "wallpaper_database"
+
+        // Work
+        const val WORK_AUTO_WALLPAPER = "work_auto_wallpaper"
+        const val NOTIFICATION_WORK = "appName_notification_work"
+        const val WORKER_AUTO_WALLPAPER_IMAGE_URL_FULL = "WallpaperUrlFull"
+        const val WORKER_AUTO_WALLPAPER_NOTIFICATION_IMAGE = "WallpaperUrlTiny"
     }
 }

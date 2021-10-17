@@ -113,9 +113,20 @@ fun Fragment.hideKeyboard() {
 fun Fragment.showSnackbar(
     message: String,
     duration: Int = Snackbar.LENGTH_LONG,
-    view: View = requireView()
+    view: View = requireView(),
+    actionMessageId: Int? = null,
+    action: () -> Unit = {}
 ) {
-    Snackbar.make(view, message, duration).show()
+    val snackbar = Snackbar
+        .make(view, message, duration)
+
+    if (actionMessageId != null) {
+        snackbar.setAction(actionMessageId) {
+            action()
+        }
+    }
+
+    snackbar.show()
 }
 
 // ViewModel --------------------------------------------------------------------------------

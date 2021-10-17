@@ -13,7 +13,6 @@ import com.adwi.pexwallpapers.util.showSnackbar
 import com.google.android.material.slider.Slider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import timber.log.Timber
 
 @AndroidEntryPoint
 class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
@@ -64,6 +63,15 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
             }
             autoWallpaperSwitch.setOnCheckedChangeListener { _, checked ->
                 viewModel.updateAutoChangeWallpaper(checked)
+                if (!checked) {
+                    viewModel.cancelWorks(requireContext())
+                    val message = "${getString(R.string.auto_change_wallpaper)} ${getString(R.string.is_disabled)}"
+                    showSnackbar(
+                        message = message,
+                        actionMessageId = R.string.enable,
+                        action = { viewModel.updateAutoChangeWallpaper(true) }
+                    )
+                }
             }
             downloadOverWifiSwitch.setOnCheckedChangeListener { _, checked ->
                 viewModel.updateDownloadOverWiFi(checked)
@@ -87,8 +95,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
 
             // Buttons
             saveAutomationButton.setOnClickListener {
-                Timber.tag(TAG).d("setupWorks")
-                viewModel.setupWorks(requireContext(), settings)
+                viewModel.saveSettings(requireContext(), settings)
                 showSnackbar(getString(R.string.automation_settings_saved))
             }
             aboutButton.setOnClickListener { }
@@ -114,6 +121,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
                     periodSlider.value = it.sliderValue
                     downloadOverWifiSwitch.isChecked = it.downloadOverWiFi
 
+                    autoChangeDependantViewsLayout.alpha =
+                        if (settings.autoChangeWallpaper) 1f else .5f
+
                     with(settings.autoChangeWallpaper) {
                         periodSlider.isEnabled = this
                         daysRadioButton.isEnabled = this
@@ -121,9 +131,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
                         minutesRadioButton.isEnabled = this
                         saveAutomationButton.isEnabled = this
                     }
-
-                    autoChangeDependantViewsLayout.alpha =
-                        if (settings.autoChangeWallpaper) 1f else .5f
                 }
             }
         }
@@ -143,7 +150,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
                 R.id.hours_radio_button -> max = 24f
                 else -> max = 7f
             }
-            sliderMinVlue.text = "$min"
+            sliderMinValue.text = "$min"
             sliderMaxValue.text = "$max"
             periodSlider.apply {
                 valueFrom = min

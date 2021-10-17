@@ -3,12 +3,16 @@ package com.adwi.pexwallpapers.shared.work
 import android.content.Context
 import androidx.work.*
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
+import com.adwi.pexwallpapers.util.Constants.Companion.WORKER_AUTO_WALLPAPER_IMAGE_URL_FULL
+import com.adwi.pexwallpapers.util.Constants.Companion.WORKER_AUTO_WALLPAPER_NOTIFICATION_IMAGE
+import com.adwi.pexwallpapers.util.Constants.Companion.WORK_AUTO_WALLPAPER
 import timber.log.Timber
 import dagger.hilt.android.internal.Contexts
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import com.adwi.pexwallpapers.R
+
+private const val TAG = "WorkTools"
 
 class WorkTools @Inject constructor(
     @ApplicationContext private val context: Context
@@ -28,7 +32,7 @@ class WorkTools @Inject constructor(
         // Auto change wallpaper
         Timber.tag(TAG).d ("setupAllWorks - autoChangeWallpaper - true")
         Timber.tag(TAG).d ("favorites list size = ${favorites.size}")
-        workManager.cancelAllWorkByTag(TAG_NEW_WALLPAPER)
+        workManager.cancelAllWorkByTag(WORK_AUTO_WALLPAPER)
 
         favorites.forEachIndexed { index, wallpaper ->
             Timber.tag(TAG)
@@ -47,8 +51,8 @@ class WorkTools @Inject constructor(
 
     private fun createDataForAutoChangeWallpaperWorker(wallpaper: Wallpaper): Data {
         val builder = Data.Builder()
-        builder.putString(WORKER_NEW_WALLPAPER_IMAGE_URL_FULL, wallpaper.src?.portrait)
-        builder.putString(WORKER_NEW_WALLPAPER_NOTIFICATION_IMAGE, wallpaper.src?.portrait)
+        builder.putString(WORKER_AUTO_WALLPAPER_IMAGE_URL_FULL, wallpaper.src?.portrait)
+        builder.putString(WORKER_AUTO_WALLPAPER_NOTIFICATION_IMAGE, wallpaper.src?.portrait)
         Timber.tag(TAG).d ("createDataForAutoChangeWallpaperWorker")
         return builder.build()
     }
@@ -71,7 +75,7 @@ class WorkTools @Inject constructor(
             .setInputData(createDataForAutoChangeWallpaperWorker(wallpaper))
             .setInitialDelay(delay, delayTimeUnit)
 //            .setConstraints(constraints)
-            .addTag(TAG_NEW_WALLPAPER)
+            .addTag(WORK_AUTO_WALLPAPER)
             .build()
 
         WorkManager.getInstance(this.application.applicationContext).enqueueUniquePeriodicWork(
@@ -85,5 +89,3 @@ class WorkTools @Inject constructor(
         workManager.enqueue(work)
     }
 }
-
-const val TAG_NEW_WALLPAPER = "tag_new_wallpaper"

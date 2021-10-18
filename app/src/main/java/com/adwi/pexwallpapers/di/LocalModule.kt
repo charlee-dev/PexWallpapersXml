@@ -25,7 +25,6 @@ object LocalModule {
                 WALLPAPER_DATABASE
             )
             .createFromAsset("database/database.db")
-            .fallbackToDestructiveMigration()
             .build()
 
     @Provides

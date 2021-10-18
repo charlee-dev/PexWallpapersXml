@@ -1,8 +1,8 @@
 package com.adwi.pexwallpapers.ui.wallpapers
 
 import androidx.lifecycle.viewModelScope
+import com.adwi.pexwallpapers.data.local.entity.Settings
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
-import com.adwi.pexwallpapers.data.local.entity.defaultSettings
 import com.adwi.pexwallpapers.data.repository.interfaces.FavoritesRepositoryInterface
 import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
 import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
@@ -67,7 +67,7 @@ class WallpaperViewModel @Inject constructor(
             }
         onDispatcher(ioDispatcher) {
             if (settingsRepository.getSettings() == null) {
-                settingsRepository.insertSettings(defaultSettings)
+                settingsRepository.insertSettings(Settings())
             }
         }
     }

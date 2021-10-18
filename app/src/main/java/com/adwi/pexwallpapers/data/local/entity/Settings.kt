@@ -18,15 +18,3 @@ class Settings(
     var sliderValue: Float = 5f,
     var downloadOverWiFi: Boolean = false
 )
-
-val defaultSettings = Settings(
-    id = 1,
-    lastQuery = "Flowers",
-    pushNotification = true,
-    newWallpaperSet = false,
-    wallpaperRecommendations = true,
-    autoChangeWallpaper = false,
-    selectedButton = R.id.hours_radio_button,
-    sliderValue = 5f,
-    downloadOverWiFi = false
-)

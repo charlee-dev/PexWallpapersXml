@@ -1,6 +1,5 @@
 package com.adwi.pexwallpapers.di
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.adwi.pexwallpapers.data.local.WallpaperDatabase
@@ -25,6 +24,7 @@ object LocalModule {
                 WallpaperDatabase::class.java,
                 WALLPAPER_DATABASE
             )
+            .createFromAsset("database/database.db")
             .fallbackToDestructiveMigration()
             .build()
 

@@ -32,8 +32,10 @@ class AutoChangeWallpaperWork @AssistedInject constructor(
             val notificationImage = inputData.getString(WORKER_AUTO_WALLPAPER_NOTIFICATION_IMAGE)
             Timber.tag(TAG).d ( "doWork - $wallpaperImage, $notificationImage" )
             if (wallpaperImage != null && notificationImage != null) {
+
                 // Set wallpaper
                 wallpaperSetter.setWallpaperByImagePath(wallpaperImage, setHomeScreen = true)
+
                 //Send notification
                 val id = inputData.getLong(wallpaperImage, 0).toInt()
                 notificationTools.sendNotification(
@@ -41,6 +43,7 @@ class AutoChangeWallpaperWork @AssistedInject constructor(
                     channel = Channel.NEW_WALLPAPER,
                     imageUrl = notificationImage
                 )
+
                 Timber.tag(TAG).d ( "doWork - success" )
                 success()
             } else {

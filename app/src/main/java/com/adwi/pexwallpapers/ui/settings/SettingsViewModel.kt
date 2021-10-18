@@ -6,6 +6,7 @@ import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.repository.FavoritesRepository
 import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
 import com.adwi.pexwallpapers.di.IoDispatcher
+import com.adwi.pexwallpapers.shared.tools.notification.Channel
 import com.adwi.pexwallpapers.shared.tools.notification.NotificationTools
 import com.adwi.pexwallpapers.shared.tools.sharing.SharingTools
 import com.adwi.pexwallpapers.shared.work.WorkTools
@@ -16,7 +17,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -26,7 +26,7 @@ class SettingsViewModel @Inject constructor(
     private val favoritesRepository: FavoritesRepository,
     private val sharingTools: SharingTools,
     private val workTools: WorkTools,
-    notificationTools: NotificationTools,
+    private val notificationTools: NotificationTools,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
@@ -35,7 +35,6 @@ class SettingsViewModel @Inject constructor(
     val settings = repository.getSettings()
 
     init {
-        notificationTools.setupNotifications()
         getFavorites()
     }
 
@@ -83,6 +82,17 @@ class SettingsViewModel @Inject constructor(
 
     fun cancelWorks(workTag: String) {
         workTools.cancelWorks(workTag)
+    }
+
+    fun sendNotification() {
+        onDispatcher(ioDispatcher) {
+            notificationTools.sendNotification(
+                id = 1,
+                channel = Channel.RECOMMENDATIONS,
+                imageUrl = "https://images.pexels.com/photos/8175462/pexels-photo-8175462.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+                longMessage = "test test"
+            )
+        }
     }
 
     fun saveSettings(settings: Settings) {

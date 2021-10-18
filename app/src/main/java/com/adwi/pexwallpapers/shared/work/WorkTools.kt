@@ -7,16 +7,15 @@ import com.adwi.pexwallpapers.util.Constants.Companion.WORKER_AUTO_WALLPAPER_IMA
 import com.adwi.pexwallpapers.util.Constants.Companion.WORKER_AUTO_WALLPAPER_NOTIFICATION_IMAGE
 import com.adwi.pexwallpapers.util.Constants.Companion.WORK_AUTO_WALLPAPER
 import com.adwi.pexwallpapers.util.Constants.Companion.WORK_AUTO_WALLPAPER_NAME
-import timber.log.Timber
 import dagger.hilt.android.internal.Contexts
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.delay
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 private const val TAG = "WorkTools"
 private const val timeSpeeding = 10
-private const val minutesWorkTimes = 2
+private const val minutesWorkTimes = 3
 
 class WorkTools @Inject constructor(
     @ApplicationContext private val context: Context
@@ -37,25 +36,38 @@ class WorkTools @Inject constructor(
         Timber.tag(TAG).d("setupAllWorks")
         cancelWorks(WORK_AUTO_WALLPAPER)
 
-        for (i in 1..minutesWorkTimes) {
+        val list = makeMultiplierList(favorites.size)
+
+        var multiplier = 1
+
+        for (number in 1..minutesWorkTimes) {
             favorites.forEachIndexed { index, wallpaper ->
 
                 val delay = getDelay(
-                    multiplier = i,
-                    times = index,
                     timeUnit = timeUnit,
                     timeValue = timeValue
                 ) / timeSpeeding
 
                 createAutoChangeWallpaperWork(
-                    workName = "${i}_${index}_${WORK_AUTO_WALLPAPER_NAME}_${wallpaper.id}",
+                    workName = "${number}_${WORK_AUTO_WALLPAPER_NAME}_${wallpaper.id}",
                     wallpaper = wallpaper,
-                    delay = delay
+                    delay = delay * multiplier
                 )
-                Timber.tag(TAG).d("delay is: ${delay + (delay * i)}")
+                multiplier++
+
+                Timber.tag(TAG)
+                    .d("delay is: ${delay + (delay)}, multiplier = $multiplier, number = $number")
             }
         }
+    }
 
+    private fun makeMultiplierList(listSize: Int): List<Int> {
+        val list = mutableListOf<Int>()
+        val delayMultipliers = minutesWorkTimes * listSize
+        for (i in 1..delayMultipliers) {
+            list += i
+        }
+        return list
     }
 
     private fun createAutoChangeWallpaperWork(
@@ -94,7 +106,7 @@ class WorkTools @Inject constructor(
         return builder.build()
     }
 
-    private fun getDelay(multiplier: Int, times: Int, timeUnit: TimeUnit, timeValue: Float): Long {
+    private fun getDelay(timeUnit: TimeUnit, timeValue: Float): Long {
         val minute = 60 * 1000
         val hour = 60 * minute
         val day = 24 * hour
@@ -105,6 +117,6 @@ class WorkTools @Inject constructor(
             else -> day * value
         }.toLong()
 
-        return delay * (times + 1)
+        return delay
     }
 }

@@ -52,7 +52,6 @@ class SearchViewModel @Inject constructor(
     var pendingScrollToTopAfterNewQuery = false
 
     init {
-        initDefaultSuggestionList()
         restoreLastQuery()
     }
 
@@ -69,9 +68,9 @@ class SearchViewModel @Inject constructor(
 
     private fun restoreLastQuery() {
         onDispatcher(ioDispatcher) {
-                currentQuery.value = settingsRepository.getSettings().first().lastQuery
-                newQueryInProgress = false
-                pendingScrollToTopAfterNewQuery = false
+            currentQuery.value = settingsRepository.getSettings().first().lastQuery
+            newQueryInProgress = false
+            pendingScrollToTopAfterNewQuery = false
         }
     }
 
@@ -81,16 +80,6 @@ class SearchViewModel @Inject constructor(
 
     suspend fun addSuggestion(suggestion: Suggestion) {
         suggestionsRepository.insertSuggestion(suggestion)
-    }
-
-    private fun initDefaultSuggestionList() {
-        if (suggestions.value.isNullOrEmpty()) {
-            onDispatcher(ioDispatcher) {
-                suggestionsRepository.insertAllSuggestions(
-                    TypeConverter.defaultSuggestionNameListToSuggestions(suggestionNameList)
-                )
-            }
-        }
     }
 
     fun onFavoriteClick(wallpaper: Wallpaper) {

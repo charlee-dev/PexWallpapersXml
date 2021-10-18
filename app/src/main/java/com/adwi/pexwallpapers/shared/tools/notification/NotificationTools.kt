@@ -18,6 +18,9 @@ import com.adwi.pexwallpapers.MainActivity
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.shared.tools.image.ImageTools
 import com.adwi.pexwallpapers.shared.tools.permissions.PermissionTools
+import com.adwi.pexwallpapers.util.Constants.Companion.GROUP_AUTO
+import com.adwi.pexwallpapers.util.Constants.Companion.GROUP_INFO
+import com.adwi.pexwallpapers.util.Constants.Companion.GROUP_RECOMMENDATIONS
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -116,7 +119,6 @@ class NotificationTools @Inject constructor(
         var requestCode = 1
         val intentDestination: Class<*>
 
-//         TODO() add deep link to set wallpaper
         val smallBitmap =
             BitmapFactory.decodeResource(context.resources, R.drawable.ic_launcher_foreground)
 
@@ -132,6 +134,7 @@ class NotificationTools @Inject constructor(
                     .setContentTitle("New wallpaper set")
                     .setContentText("PexWallpapers just set an amazing wallpaper for you")
                     .setLargeIcon(smallBitmap)
+                    .setGroup(GROUP_AUTO)
                     .priority = NotificationCompat.PRIORITY_DEFAULT
             }
             Channel.RECOMMENDATIONS -> {
@@ -143,12 +146,17 @@ class NotificationTools @Inject constructor(
                     .setContentTitle("Recommendations")
                     .setContentText("PexWallpapers have some amazing wallpapers to offer for you")
                     .setLargeIcon(smallBitmap)
+                    .setGroup(GROUP_RECOMMENDATIONS)
                     .priority = NotificationCompat.PRIORITY_DEFAULT
             }
             Channel.INFO -> {
                 requestCode = 3
                 intentDestination = MainActivity::class.java
-                notification.setStyle(NotificationCompat.BigTextStyle().bigText(longMessage))
+                notification
+                    .setStyle(NotificationCompat.BigTextStyle().bigText(longMessage))
+                    .setGroup(GROUP_INFO)
+                    .setGroupAlertBehavior(NotificationCompat.GROUP_ALERT_CHILDREN)
+                    .setGroupSummary(true)
             }
         }
         val intent = Intent(context, intentDestination).apply {
@@ -162,7 +170,6 @@ class NotificationTools @Inject constructor(
         }
 
         notification.setContentIntent(pendingIntent)
-            .setGroup(GROUP_NAME)
             .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(context)) {
@@ -170,5 +177,3 @@ class NotificationTools @Inject constructor(
         }
     }
 }
-
-private const val GROUP_NAME = "PexWallpapers"

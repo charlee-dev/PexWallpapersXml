@@ -25,5 +25,9 @@ class Constants {
         const val NOTIFICATION_WORK = "appName_notification_work"
         const val WORKER_AUTO_WALLPAPER_IMAGE_URL_FULL = "WallpaperUrlFull"
         const val WORKER_AUTO_WALLPAPER_NOTIFICATION_IMAGE = "WallpaperUrlTiny"
+
+        const val GROUP_AUTO = "pex_auto_change"
+        const val GROUP_RECOMMENDATIONS = "pex_recommendations"
+        const val GROUP_INFO = "pex_info"
     }
 }

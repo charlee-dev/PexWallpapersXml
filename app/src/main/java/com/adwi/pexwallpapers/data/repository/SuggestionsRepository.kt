@@ -3,19 +3,15 @@ package com.adwi.pexwallpapers.data.repository
 import com.adwi.pexwallpapers.data.local.WallpaperDatabase
 import com.adwi.pexwallpapers.data.local.entity.Suggestion
 import com.adwi.pexwallpapers.data.repository.interfaces.SuggestionsRepositoryInterface
-import com.adwi.pexwallpapers.di.IoDispatcher
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class SuggestionsRepository @Inject constructor(
-    private val wallpapersDatabase: WallpaperDatabase,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    wallpapersDatabase: WallpaperDatabase
 ) : SuggestionsRepositoryInterface {
 
     private val dao = wallpapersDatabase.suggestionsDao()
 
-    override fun getAllSuggestions() = dao.getAllSuggestions().flowOn(ioDispatcher)
+    override fun getAllSuggestions() = dao.getAllSuggestions()
 
     override suspend fun insertSuggestion(suggestion: Suggestion) {
         dao.insertSuggestion(suggestion)

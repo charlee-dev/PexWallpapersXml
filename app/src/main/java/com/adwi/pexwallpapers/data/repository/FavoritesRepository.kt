@@ -9,13 +9,12 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class FavoritesRepository @Inject constructor(
-    private val wallpapersDatabase: WallpaperDatabase,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    private val wallpapersDatabase: WallpaperDatabase
 ) : FavoritesRepositoryInterface {
 
     private val dao = wallpapersDatabase.favoritesDao()
 
-    override fun getAllFavorites() = dao.getAllFavorites().flowOn(ioDispatcher)
+    override fun getAllFavorites() = dao.getAllFavorites()
 
     override suspend fun deleteNonFavoriteWallpapersOlderThan(timestampInMillis: Long) =
         dao.deleteNonFavoriteWallpapersOlderThan(timestampInMillis)

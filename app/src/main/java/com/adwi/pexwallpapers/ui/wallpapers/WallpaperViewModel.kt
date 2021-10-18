@@ -7,6 +7,7 @@ import com.adwi.pexwallpapers.data.repository.interfaces.FavoritesRepositoryInte
 import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
 import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
 import com.adwi.pexwallpapers.di.IoDispatcher
+import com.adwi.pexwallpapers.shared.tools.notification.NotificationTools
 import com.adwi.pexwallpapers.ui.base.BaseViewModel
 import com.adwi.pexwallpapers.util.Resource
 import com.adwi.pexwallpapers.util.onDispatcher
@@ -40,18 +41,7 @@ class WallpaperViewModel @Inject constructor(
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     init {
-        initSettings()
         deleteOldNonFavoriteWallpapers()
-    }
-
-    private fun initSettings() {
-        onDispatcher(ioDispatcher) {
-            val settings = settingsRepository.getSettings().first()
-            if (settings == null) {
-                Timber.d("INIT SETTINGS")
-                settingsRepository.insertSettings(defaultSettings)
-            }
-        }
     }
 
     private fun deleteOldNonFavoriteWallpapers() {

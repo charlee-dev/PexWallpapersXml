@@ -9,7 +9,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
-import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -20,35 +19,30 @@ object ViewModelModule {
     fun provideWallpaperRepository(
         pexApi: PexApi,
         wallpapersDatabase: WallpaperDatabase,
-        @IoDispatcher ioDispatcher: CoroutineDispatcher
     ) =
         WallpaperRepository(
             pexApi,
-            wallpapersDatabase,
-            ioDispatcher
+            wallpapersDatabase
         ) as WallpaperRepositoryInterface
 
     @Provides
     @ViewModelScoped
     fun provideSearchRepository(
         pexApi: PexApi,
-        wallpapersDatabase: WallpaperDatabase,
-        @IoDispatcher ioDispatcher: CoroutineDispatcher
-    ) = SearchRepository(pexApi, wallpapersDatabase, ioDispatcher) as SearchRepositoryInterface
+        wallpapersDatabase: WallpaperDatabase
+    ) = SearchRepository(pexApi, wallpapersDatabase) as SearchRepositoryInterface
 
     @Provides
     @ViewModelScoped
     fun provideFavoritesRepository(
-        wallpapersDatabase: WallpaperDatabase,
-        @IoDispatcher ioDispatcher: CoroutineDispatcher
-    ) = FavoritesRepository(wallpapersDatabase, ioDispatcher) as FavoritesRepositoryInterface
+        wallpapersDatabase: WallpaperDatabase
+    ) = FavoritesRepository(wallpapersDatabase) as FavoritesRepositoryInterface
 
     @Provides
     @ViewModelScoped
     fun provideSuggestionsRepository(
-        wallpapersDatabase: WallpaperDatabase,
-        @IoDispatcher ioDispatcher: CoroutineDispatcher
-    ) = SuggestionsRepository(wallpapersDatabase, ioDispatcher) as SuggestionsRepositoryInterface
+        wallpapersDatabase: WallpaperDatabase
+    ) = SuggestionsRepository(wallpapersDatabase) as SuggestionsRepositoryInterface
 
     @Provides
     @ViewModelScoped

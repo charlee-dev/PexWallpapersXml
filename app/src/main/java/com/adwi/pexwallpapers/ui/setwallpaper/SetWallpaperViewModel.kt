@@ -1,6 +1,7 @@
 package com.adwi.pexwallpapers.ui.setwallpaper
 
 import android.content.Context
+import androidx.fragment.app.FragmentActivity
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
 import com.adwi.pexwallpapers.di.IoDispatcher
@@ -55,8 +56,9 @@ class SetWallpaperViewModel @Inject constructor(
 
     fun setWallpaper(imageURL: String, setHomeScreen: Boolean, setLockScreen: Boolean) {
         onDispatcher(ioDispatcher) {
-            wallpaperSetter.setWallpaperByImagePath(
-                imageURL = imageURL,
+            val bitmap = imageTools.getBitmapFromRemote(imageURL)
+            wallpaperSetter.setWallpaper(
+                bitmap = bitmap,
                 setHomeScreen = setHomeScreen,
                 setLockScreen = setLockScreen
             )

@@ -1,5 +1,6 @@
 package com.adwi.pexwallpapers.di
 
+import android.app.WallpaperManager
 import android.content.Context
 import com.adwi.pexwallpapers.shared.tools.image.ImageTools
 import com.adwi.pexwallpapers.shared.tools.notification.NotificationTools
@@ -40,8 +41,8 @@ class AppModule {
     @Provides
     fun provideWallpaperSetter(
         @ApplicationContext context: Context,
-        imageTools: ImageTools
-    ) = WallpaperSetter(context, imageTools)
+        wallpaperManager: WallpaperManager
+    ) = WallpaperSetter(context, wallpaperManager)
 
     @Singleton
     @Provides
@@ -55,4 +56,10 @@ class AppModule {
     fun provideWorkTools(
         @ApplicationContext context: Context
     ) = WorkTools(context)
+
+    @Singleton
+    @Provides
+    fun provideWallpaperManager(
+        @ApplicationContext context: Context
+    ): WallpaperManager = WallpaperManager.getInstance(context)
 }

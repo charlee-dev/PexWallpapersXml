@@ -6,6 +6,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker.Result.failure
 import androidx.work.ListenableWorker.Result.success
 import androidx.work.WorkerParameters
+import com.adwi.pexwallpapers.shared.tools.image.ImageTools
 import com.adwi.pexwallpapers.shared.tools.notification.Channel
 import com.adwi.pexwallpapers.shared.tools.notification.NotificationTools
 import com.adwi.pexwallpapers.shared.tools.wallpaper.WallpaperSetter
@@ -22,6 +23,7 @@ class AutoChangeWallpaperWork @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted params: WorkerParameters,
     private val notificationTools: NotificationTools,
+    private val imageTools: ImageTools,
     private val wallpaperSetter: WallpaperSetter
 ) : CoroutineWorker(context, params) {
 
@@ -30,11 +32,14 @@ class AutoChangeWallpaperWork @AssistedInject constructor(
             // Get arguments
             val wallpaperImage = inputData.getString(WORKER_AUTO_WALLPAPER_IMAGE_URL_FULL)
             val notificationImage = inputData.getString(WORKER_AUTO_WALLPAPER_NOTIFICATION_IMAGE)
-            Timber.tag(TAG).d ( "doWork - $wallpaperImage, $notificationImage" )
+            Timber.tag(TAG).d("doWork - $wallpaperImage, $notificationImage")
             if (wallpaperImage != null && notificationImage != null) {
 
+                // Get bitmap
+                val bitmap = imageTools.getBitmapFromRemote(wallpaperImage)
+
                 // Set wallpaper
-                wallpaperSetter.setWallpaperByImagePath(wallpaperImage, setHomeScreen = true)
+                wallpaperSetter.setWallpaper(bitmap, setHomeScreen = true, setLockScreen = false)
 
                 //Send notification
                 val id = inputData.getLong(wallpaperImage, 0).toInt()
@@ -44,15 +49,15 @@ class AutoChangeWallpaperWork @AssistedInject constructor(
                     imageUrl = notificationImage
                 )
 
-                Timber.tag(TAG).d ( "doWork - success" )
+                Timber.tag(TAG).d("doWork - success")
                 success()
             } else {
-                Timber.tag(TAG).d ( "wallpaper or notificationImage is null" )
+                Timber.tag(TAG).d("wallpaper or notificationImage is null")
                 failure()
             }
             success()
         } catch (ex: Exception) {
-            Timber.tag(TAG).d (ex.toString())
+            Timber.tag(TAG).d(ex.toString())
             failure()
         }
     }

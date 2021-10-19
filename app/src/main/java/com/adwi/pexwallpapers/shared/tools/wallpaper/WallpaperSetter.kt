@@ -13,43 +13,59 @@ import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
+
 private const val TAG = "WallpaperSetter"
 
+/**
+ * Wallpaper setter
+ *
+ * @property context
+ * @property wallpaperManager
+ * @constructor Create empty Wallpaper setter
+ */
 @SuppressLint("NewApi")
 class WallpaperSetter @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val imageTools: ImageTools
-): WallpaperSetterInterface {
+    private val wallpaperManager: WallpaperManager
+) {
 
-    private lateinit var wallpaperManager: WallpaperManager
-
-    override suspend fun setWallpaperByImagePath(
-        imageURL: String,
-        setHomeScreen: Boolean,
-        setLockScreen: Boolean
-    ) {
-        val bitmap = imageTools.getImageUsingCoil(imageURL)
-        setWallpaper(bitmap, setHomeScreen, setLockScreen)
-    }
-
-    override fun setWallpaper(bitmap: Bitmap, setHomeScreen: Boolean, setLockScreen: Boolean) {
-        wallpaperManager = WallpaperManager.getInstance(context)
+    /**
+     * Set wallpaper
+     *
+     * @param bitmap
+     * @param setHomeScreen
+     * @param setLockScreen
+     */
+    fun setWallpaper(bitmap: Bitmap, setHomeScreen: Boolean, setLockScreen: Boolean) {
         try {
             if (setHomeScreen && !setLockScreen) setHomeScreenWallpaper(bitmap)
             if (!setHomeScreen && setLockScreen) setLockScreenWallpaper(bitmap)
-            if (setHomeScreen && setLockScreen) setHomeAndLockScreenWallpaper(bitmap)
+            if (setHomeScreen && setLockScreen) {
+                setHomeScreenWallpaper(bitmap)
+                setLockScreenWallpaper(bitmap)
+            }
         } catch (ex: IOException) {
-            Timber.tag(TAG).d ( "Exception: ${ex.printStackTrace()}" )
+            Timber.tag(TAG).d("Exception: ${ex.printStackTrace()}")
         }
     }
 
-    override fun setHomeScreenWallpaper(
+    /**
+     * Set home screen wallpaper
+     *
+     * @param bitmap
+     */
+    private fun setHomeScreenWallpaper(
         bitmap: Bitmap
     ) {
         wallpaperManager.setBitmap(bitmap)
     }
 
-    override fun setLockScreenWallpaper(bitmap: Bitmap) {
+    /**
+     * Set lock screen wallpaper
+     *
+     * @param bitmap
+     */
+    private fun setLockScreenWallpaper(bitmap: Bitmap) {
         try {
             if (PermissionTools.runningNOrLater) {
                 wallpaperManager.setBitmap(
@@ -65,11 +81,5 @@ class WallpaperSetter @Inject constructor(
         } catch (e: Exception) {
             e.message?.let { showToast(context, it) }
         }
-    }
-
-    override fun setHomeAndLockScreenWallpaper(bitmap: Bitmap) {
-        Timber.tag(TAG).d("setHomeAndLockScreenWallpaper")
-        setHomeScreenWallpaper(bitmap)
-        setLockScreenWallpaper(bitmap)
     }
 }

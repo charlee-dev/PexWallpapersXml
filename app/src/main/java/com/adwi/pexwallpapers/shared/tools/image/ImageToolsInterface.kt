@@ -7,8 +7,6 @@ import java.io.OutputStream
 
 interface ImageToolsInterface {
 
-    suspend fun getImageUsingCoil(imageURL: String): Bitmap
-
     suspend fun saveImageToInternalStorage(url: String): Uri?
 
     suspend fun getBitmapFromRemote(url: String): Bitmap

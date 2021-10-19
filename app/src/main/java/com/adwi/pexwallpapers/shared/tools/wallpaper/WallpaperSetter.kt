@@ -26,9 +26,9 @@ private const val TAG = "WallpaperSetter"
 @SuppressLint("NewApi")
 class WallpaperSetter @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val wallpaperManager: WallpaperManager
+    private val wallpaperManager: WallpaperManager,
+    private val permissionTools: PermissionTools
 ) {
-
     /**
      * Set wallpaper
      *
@@ -67,7 +67,7 @@ class WallpaperSetter @Inject constructor(
      */
     private fun setLockScreenWallpaper(bitmap: Bitmap) {
         try {
-            if (PermissionTools.runningNOrLater) {
+            if (permissionTools.runningNOrLater) {
                 wallpaperManager.setBitmap(
                     bitmap, null, true,
                     WallpaperManager.FLAG_LOCK

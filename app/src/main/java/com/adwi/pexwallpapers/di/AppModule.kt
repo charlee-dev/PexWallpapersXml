@@ -4,6 +4,7 @@ import android.app.WallpaperManager
 import android.content.Context
 import com.adwi.pexwallpapers.shared.tools.image.ImageTools
 import com.adwi.pexwallpapers.shared.tools.notification.NotificationTools
+import com.adwi.pexwallpapers.shared.tools.permissions.PermissionTools
 import com.adwi.pexwallpapers.shared.tools.sharing.SharingTools
 import com.adwi.pexwallpapers.shared.tools.wallpaper.WallpaperSetter
 import com.adwi.pexwallpapers.shared.work.WorkTools
@@ -18,31 +19,34 @@ import javax.inject.Singleton
 @Module
 class AppModule {
 
-//    @Singleton
-//    @Provides
-//    fun providePermissionTools(
-//         @ActivityContext activity: Context
-//    ) = PermissionTools(activity)
+    @Singleton
+    @Provides
+    fun providePermissionTools(
+        @ApplicationContext context: Context
+    ) = PermissionTools(context)
 
     @Singleton
     @Provides
     fun provideImageTools(
-        @ApplicationContext context: Context
-    ) = ImageTools(context)
+        @ApplicationContext context: Context,
+        permissionTools: PermissionTools
+    ) = ImageTools(context, permissionTools)
 
     @Singleton
     @Provides
     fun provideNotificationTools(
         @ApplicationContext context: Context,
-        imageTools: ImageTools
-    ) = NotificationTools(context, imageTools)
+        imageTools: ImageTools,
+        permissionTools: PermissionTools
+    ) = NotificationTools(context, imageTools, permissionTools)
 
     @Singleton
     @Provides
     fun provideWallpaperSetter(
         @ApplicationContext context: Context,
-        wallpaperManager: WallpaperManager
-    ) = WallpaperSetter(context, wallpaperManager)
+        wallpaperManager: WallpaperManager,
+        permissionTools: PermissionTools
+    ) = WallpaperSetter(context, wallpaperManager, permissionTools)
 
     @Singleton
     @Provides

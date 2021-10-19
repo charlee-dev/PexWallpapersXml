@@ -8,32 +8,44 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.requestPermissions
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.util.activity
-import timber.log.Timber
 import dagger.hilt.android.qualifiers.ActivityContext
+import timber.log.Timber
 
-const val STORAGE_REQUEST_CODE = 123
+private const val STORAGE_REQUEST_CODE = 123
 private const val TAG = "PermissionTools"
 
+/**
+ * Permission tools
+ *
+ * @property context
+ */
 class PermissionTools(
     @ActivityContext private val context: Context
-): PermissionToolsInterface {
+) {
+    val runningOOrLater =
+        android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O
+    val runningNOrLater =
+        android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N
+    val runningQOrLater =
+        android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q
+    val runningSOrLater =
+        android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S
 
-    companion object {
-        val runningOOrLater =
-            android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O
-        val runningNOrLater =
-            android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N
-        val runningQOrLater =
-            android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q
-        val runningSOrLater =
-            android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S
-    }
+    /**
+     * Storage permission
+     */
     private val storagePermission = Manifest.permission.READ_EXTERNAL_STORAGE
 
-    override fun storagePermissionsCheck(body: () -> Unit) {
+    /**
+     * Storage permissions check
+     *
+     * @param body
+     * @receiver
+     */
+    fun storagePermissionsCheck(body: () -> Unit) {
         if (isReadStoragePermissionApproved()) {
             // Check if permission is not granted
-            Timber.tag(TAG).d ( "Permission for contacts is not granted" )
+            Timber.tag(TAG).d("Permission for contacts is not granted")
             if (ActivityCompat.shouldShowRequestPermissionRationale(
                     context.activity()!!,
                     storagePermission
@@ -44,7 +56,7 @@ class PermissionTools(
                     context.getString(R.string.rationale_desc)
                 )
             } else {
-                Timber.tag(TAG).d ( "Checking permission" )
+                Timber.tag(TAG).d("Checking permission")
                 requestPermissions(
                     context.activity()!!,
                     arrayOf(storagePermission),
@@ -54,7 +66,13 @@ class PermissionTools(
         } else body()
     }
 
-    override  fun showRationaleDialog(
+    /**
+     * Show rationale dialog
+     *
+     * @param title
+     * @param message
+     */
+    private fun showRationaleDialog(
         title: String,
         message: String
     ) {
@@ -67,7 +85,12 @@ class PermissionTools(
         builder.create().show()
     }
 
-    override fun isReadStoragePermissionApproved(): Boolean {
+    /**
+     * Is read storage permission approved
+     *
+     * @return Storage permission
+     */
+    private fun isReadStoragePermissionApproved(): Boolean {
         return if (runningOOrLater) {
             PackageManager.PERMISSION_GRANTED ==
                     ActivityCompat.checkSelfPermission(
@@ -76,7 +99,11 @@ class PermissionTools(
         } else true
     }
 
-    override  fun requestStoragePermission() {
+    /**
+     * Request storage permission
+     *
+     */
+    private fun requestStoragePermission() {
         requestPermissions(context.activity()!!, arrayOf(storagePermission), STORAGE_REQUEST_CODE)
     }
 }

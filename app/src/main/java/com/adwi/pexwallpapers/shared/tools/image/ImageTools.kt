@@ -16,17 +16,15 @@ import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.adwi.pexwallpapers.shared.tools.permissions.PermissionTools
 import dagger.hilt.android.qualifiers.ApplicationContext
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
 import javax.inject.Inject
 
 class ImageTools @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val permissionTools: PermissionTools
 ) : ImageToolsInterface {
-
-    private val permissionTools = PermissionTools(context)
 
     override suspend fun getBitmapFromRemote(url: String): Bitmap {
         val loader = ImageLoader(context)
@@ -90,7 +88,7 @@ class ImageTools @Inject constructor(
 
     @SuppressLint("InlinedApi")
     override fun saveImage(bitmap: Bitmap, context: Context): Uri? {
-        if (PermissionTools.runningQOrLater) {
+        if (permissionTools.runningQOrLater) {
             val values = ContentValues()
             values.put(MediaStore.Images.Media.MIME_TYPE, "image/*")
             values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000)

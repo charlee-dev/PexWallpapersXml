@@ -31,7 +31,8 @@ enum class Channel {
 @SuppressLint("NewApi")
 class NotificationTools @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val imageTools: ImageTools
+    private val imageTools: ImageTools,
+    private val permissionTools: PermissionTools
 ) : NotificationToolsInterface {
     private lateinit var channelId: String
 
@@ -40,7 +41,7 @@ class NotificationTools @Inject constructor(
 
 
     override fun setupNotifications() {
-        if (PermissionTools.runningOOrLater) {
+        if (permissionTools.runningOOrLater) {
             val wallpaperGroupName = context.getString(R.string.wallpapers)
             val appGroupName = context.getString(R.string.other)
 
@@ -66,7 +67,7 @@ class NotificationTools @Inject constructor(
     }
 
     override fun createNotificationChannel(channel: Channel) {
-        if (PermissionTools.runningOOrLater) {
+        if (permissionTools.runningOOrLater) {
             var name = ""
             var importance = 0
             val channelGroup: String
@@ -163,7 +164,7 @@ class NotificationTools @Inject constructor(
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
-        val pendingIntent = if (PermissionTools.runningSOrLater) {
+        val pendingIntent = if (permissionTools.runningSOrLater) {
             PendingIntent.getActivity(context, requestCode, intent, PendingIntent.FLAG_MUTABLE)
         } else {
             PendingIntent.getActivity(context, requestCode, intent, PendingIntent.FLAG_ONE_SHOT)

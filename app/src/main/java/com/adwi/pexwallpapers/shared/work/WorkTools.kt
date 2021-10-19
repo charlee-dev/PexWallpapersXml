@@ -2,8 +2,7 @@ package com.adwi.pexwallpapers.shared.work
 
 import androidx.work.*
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
-import com.adwi.pexwallpapers.util.Constants.Companion.WORKER_AUTO_WALLPAPER_IMAGE_URL_FULL
-import com.adwi.pexwallpapers.util.Constants.Companion.WORKER_AUTO_WALLPAPER_NOTIFICATION_IMAGE
+import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_ID
 import com.adwi.pexwallpapers.util.Constants.Companion.WORK_AUTO_WALLPAPER
 import com.adwi.pexwallpapers.util.Constants.Companion.WORK_AUTO_WALLPAPER_NAME
 import timber.log.Timber
@@ -33,7 +32,7 @@ class WorkTools @Inject constructor(
         var multiplier = 1
 
         for (number in 1..minutesWorkTimes) {
-            favorites.forEachIndexed { index, wallpaper ->
+            favorites.forEach { wallpaper ->
 
                 val delay = getDelay(
                     timeUnit = timeUnit,
@@ -80,9 +79,8 @@ class WorkTools @Inject constructor(
 
     private fun createDataForAutoChangeWallpaperWorker(wallpaper: Wallpaper): Data {
         val builder = Data.Builder()
-        builder.putString(WORKER_AUTO_WALLPAPER_IMAGE_URL_FULL, wallpaper.src?.portrait)
-        builder.putString(WORKER_AUTO_WALLPAPER_NOTIFICATION_IMAGE, wallpaper.src?.portrait)
-        Timber.tag(TAG).d("createDataForAutoChangeWallpaperWorker")
+        builder.putInt(WALLPAPER_ID, wallpaper.id)
+        Timber.tag(TAG).d("createDataForAutoChangeWallpaperWorker \nimageUrl = ${wallpaper.src!!.portrait} \nwallpaperId = ${wallpaper.id}")
         return builder.build()
     }
 

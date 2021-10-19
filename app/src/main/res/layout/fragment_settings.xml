@@ -302,22 +302,6 @@
                                     android:singleLine="true"
                                     android:text="@string/save" />
 
-                                <androidx.appcompat.widget.AppCompatButton
-                                    android:id="@+id/send_notification_button"
-                                    style="@style/TextStyle.Button"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_gravity="center"
-                                    android:layout_margin="@dimen/margin_extra_small"
-                                    android:background="@drawable/background_rounded_stroke"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    android:padding="@dimen/margin_small"
-                                    android:paddingHorizontal="@dimen/margin_small"
-                                    android:singleLine="true"
-                                    android:text="Send notification" />
-
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>

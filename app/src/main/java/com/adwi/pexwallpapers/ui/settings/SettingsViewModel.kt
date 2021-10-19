@@ -6,13 +6,11 @@ import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.repository.FavoritesRepository
 import com.adwi.pexwallpapers.data.repository.interfaces.SettingsRepositoryInterface
 import com.adwi.pexwallpapers.di.IoDispatcher
-import com.adwi.pexwallpapers.shared.tools.notification.Channel
 import com.adwi.pexwallpapers.shared.tools.notification.NotificationTools
 import com.adwi.pexwallpapers.shared.tools.permissions.PermissionTools
 import com.adwi.pexwallpapers.shared.tools.sharing.SharingTools
 import com.adwi.pexwallpapers.shared.work.WorkTools
 import com.adwi.pexwallpapers.ui.base.BaseViewModel
-import com.adwi.pexwallpapers.util.Constants.Companion.GROUP_RECOMMENDATIONS
 import com.adwi.pexwallpapers.util.Constants.Companion.WORK_AUTO_WALLPAPER
 import com.adwi.pexwallpapers.util.onDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +26,6 @@ class SettingsViewModel @Inject constructor(
     private val favoritesRepository: FavoritesRepository,
     private val sharingTools: SharingTools,
     private val workTools: WorkTools,
-    private val notificationTools: NotificationTools,
     private val permissionTools: PermissionTools,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
@@ -87,21 +84,6 @@ class SettingsViewModel @Inject constructor(
         workTools.cancelWorks(workTag)
     }
 
-    fun sendNotification() {
-        onDispatcher(ioDispatcher) {
-            notificationTools.createGroupNotification(
-                channelId = Channel.RECOMMENDATIONS,
-                title = Channel.RECOMMENDATIONS.name
-            )
-            notificationTools.sendNotification(
-                id = 1,
-                channelId = Channel.RECOMMENDATIONS,
-                imageUrl = "https://images.pexels.com/photos/8175462/pexels-photo-8175462.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
-                longMessage = "test test"
-            )
-        }
-    }
-
     fun saveSettings(settings: Settings) {
         onDispatcher(ioDispatcher) {
             if (settings.autoChangeWallpaper && favorites.value.isNotEmpty()) {
@@ -113,7 +95,7 @@ class SettingsViewModel @Inject constructor(
                     )
                 }
             } else {
-                // Cancel works if not favorites added to the list
+                // Cancel works if not favorites list is empty
                 cancelWorks(WORK_AUTO_WALLPAPER)
             }
         }

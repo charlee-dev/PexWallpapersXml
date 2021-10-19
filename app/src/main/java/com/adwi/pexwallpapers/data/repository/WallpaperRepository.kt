@@ -83,6 +83,10 @@ class WallpaperRepository @Inject constructor(
     override fun getWallpapersOfCategory(categoryName: String) =
         wallpaperDao.getWallpapersOfCategory(categoryName)
 
+    override suspend fun getWallpaperById(wallpaperId: Int) =
+        wallpaperDao.getWallpaperById(wallpaperId)
+
+
     override suspend fun updateWallpaper(wallpaper: Wallpaper) =
         wallpaperDao.updateWallpaperFavorite(wallpaper)
 }

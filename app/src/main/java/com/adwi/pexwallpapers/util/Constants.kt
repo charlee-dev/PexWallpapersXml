@@ -29,5 +29,10 @@ class Constants {
         const val GROUP_AUTO = "pex_auto_change"
         const val GROUP_RECOMMENDATIONS = "pex_recommendations"
         const val GROUP_INFO = "pex_info"
+
+        const val RESTORE_AUTO_WALLPAPER = "restore_auto_wallpaper"
+
+        const val WALLPAPER_ID = "wallpaper_id"
+        const val WALLPAPER_KEY = "wallpaper_key"
     }
 }

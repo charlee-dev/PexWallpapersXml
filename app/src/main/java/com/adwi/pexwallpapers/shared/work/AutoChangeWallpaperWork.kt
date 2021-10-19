@@ -6,13 +6,12 @@ import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker.Result.failure
 import androidx.work.ListenableWorker.Result.success
 import androidx.work.WorkerParameters
+import com.adwi.pexwallpapers.data.repository.WallpaperRepository
 import com.adwi.pexwallpapers.shared.tools.image.ImageTools
 import com.adwi.pexwallpapers.shared.tools.notification.Channel
 import com.adwi.pexwallpapers.shared.tools.notification.NotificationTools
 import com.adwi.pexwallpapers.shared.tools.wallpaper.WallpaperSetter
-import com.adwi.pexwallpapers.util.Constants
-import com.adwi.pexwallpapers.util.Constants.Companion.WORKER_AUTO_WALLPAPER_IMAGE_URL_FULL
-import com.adwi.pexwallpapers.util.Constants.Companion.WORKER_AUTO_WALLPAPER_NOTIFICATION_IMAGE
+import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_ID
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import timber.log.Timber
@@ -32,8 +31,9 @@ private const val TAG = "AutoChangeWallpaperWork"
  */
 @HiltWorker
 class AutoChangeWallpaperWork @AssistedInject constructor(
-    @Assisted context: Context,
+    @Assisted private val context: Context,
     @Assisted params: WorkerParameters,
+    private val wallpaperRepository: WallpaperRepository,
     private val notificationTools: NotificationTools,
     private val imageTools: ImageTools,
     private val wallpaperSetter: WallpaperSetter
@@ -41,42 +41,44 @@ class AutoChangeWallpaperWork @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         return try {
+
             // Get arguments
-            val wallpaperImage = inputData.getString(WORKER_AUTO_WALLPAPER_IMAGE_URL_FULL)
-            val notificationImage = inputData.getString(WORKER_AUTO_WALLPAPER_NOTIFICATION_IMAGE)
-            Timber.tag(TAG).d("doWork - $wallpaperImage, $notificationImage")
+            val wallpaperId = inputData.getInt(WALLPAPER_ID, 0)
 
-            if (wallpaperImage != null && notificationImage != null) {
+            // Get wallpaper from repository
+            val wallpaper = wallpaperRepository.getWallpaperById(wallpaperId)
 
-                // Backup current wallpaper
-//                val backupImage = wallpaperSetter.getCurrentWallpaperForBackup()
+            // Get current wallpaper for backup
+            val backupImage = wallpaperSetter.getCurrentWallpaperForBackup()
 
-                // Get bitmap to be set
-                val bitmap = imageTools.getBitmapFromRemote(wallpaperImage)
+            // Save backup locally
+            if (backupImage != null) {
+                imageTools.backupImageToLocal(wallpaperId, backupImage)
+            } else {
+                Timber.tag(TAG).d("doWork - No backup bitmap")
+            }
 
-                // Set wallpaper
+            // Fetch bitmap using Coil
+            val bitmap = wallpaper.src?.let { imageTools.getBitmapFromRemote(it.portrait) }
+
+            // Set wallpaper
+            if (bitmap != null) {
                 wallpaperSetter.setWallpaper(bitmap, setHomeScreen = true, setLockScreen = false)
 
-                // Notification
-                val id = inputData.getLong(wallpaperImage, 0).toInt()
-
-                notificationTools.createGroupNotification(
-                    Channel.NEW_WALLPAPER,
-                    Channel.NEW_WALLPAPER.name
-                )
-
-                notificationTools.sendNotification(
-                    id = id,
+                notificationTools.createNotificationForWallpaper(
                     channelId = Channel.NEW_WALLPAPER,
-                    imageUrl = notificationImage
+                    bitmap = bitmap,
+                    wallpaperId = wallpaperId,
+                    categoryName = wallpaper.categoryName,
+                    photographerName = wallpaper.photographer
                 )
-
-                Timber.tag(TAG).d("doWork - success")
-                success()
             } else {
-                Timber.tag(TAG).d("wallpaper or notificationImage is null")
-                failure()
+                Timber.tag(TAG).d("odWork - bitmap null")
             }
+
+            Timber.tag(TAG).d("doWork - success")
+            success()
+
             success()
         } catch (ex: Exception) {
             Timber.tag(TAG).d(ex.toString())

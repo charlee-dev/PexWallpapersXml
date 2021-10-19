@@ -1,79 +1,121 @@
 package com.adwi.pexwallpapers.shared.tools.image
 
 import android.annotation.SuppressLint
-import android.app.WallpaperManager
 import android.content.ContentValues
 import android.content.Context
+import android.content.ContextWrapper
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Environment
 import android.os.SystemClock
 import android.provider.MediaStore
-import androidx.core.graphics.drawable.toBitmap
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.adwi.pexwallpapers.shared.tools.permissions.PermissionTools
 import dagger.hilt.android.qualifiers.ApplicationContext
+import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
 import javax.inject.Inject
 
+
 class ImageTools @Inject constructor(
     @ApplicationContext private val context: Context,
     private val permissionTools: PermissionTools
 ) {
+    suspend fun fetchRemoteAndSaveLocally(id: Int, url: String): Uri {
+        val bitmap = getBitmapFromRemote(url)
+        val uri = saveImageToInternalStorage(id, bitmap)
+        Timber.tag(TAG).d("fetchRemoteAndSaveLocally - $uri")
+        return uri
+    }
 
-    suspend fun getBitmapFromRemote(url: String): Bitmap {
+    suspend fun fetchRemoteAndSaveToGallery(url: String): Uri? {
+        val bitmap = getBitmapFromRemote(url)
+        val uri = saveImageToGallery(bitmap)
+        Timber.tag(TAG).d("fetchRemoteAndSaveToGallery - $uri")
+        return uri
+    }
+
+    suspend fun getBitmapFromRemote(imageUrl: String): Bitmap {
         val loader = ImageLoader(context)
         val request = ImageRequest.Builder(context)
-            .data(url)
+            .data(imageUrl)
             .allowHardware(false) // Disable hardware bitmaps.
             .build()
 
-        val result = (loader.execute(request) as SuccessResult).drawable
-        return (result as BitmapDrawable).bitmap
+        val drawable = (loader.execute(request) as SuccessResult).drawable
+        return (drawable as BitmapDrawable).bitmap
     }
 
-    suspend fun saveImageToInternalStorage(url: String): Uri? {
-        val bitmap = getBitmapFromRemote(url)
-        return saveImage(bitmap, context)
-    }
+    fun bitmapFromLocal(wallpaperId: Int): Bitmap {
+        val directory = ContextWrapper(context).getDir("images", Context.MODE_PRIVATE)
+        val file = File(directory, "$BACKUP_WALLPAPER$wallpaperId.jpg")
 
-    suspend fun saveImageLocally(imageUrl: String, photographer: String) {
-        val bitmap = getBitmapFromRemote(imageUrl)
-        MediaStore.Images.Media.insertImage(
-            context.contentResolver,
-            bitmap,
-            photographer,
-            "Image of $photographer"
-        )
-    }
-
-    private fun saveBackupBitmapToLocal(bitmap: Bitmap) {
-        MediaStore.Images.Media.insertImage(
-            context.contentResolver,
-            bitmap,
-            "backup_wallpaper",
-            "Backup of last set wallpaper"
-        )
-    }
-
-    private fun saveImageToStream(bitmap: Bitmap, outputStream: OutputStream?) {
-        if (outputStream != null) {
-            try {
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-                outputStream.close()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+        if (!file.exists()) {
+            Timber.tag(TAG).d("bitmapFromLocal - file doesn't exist")
         }
+
+        return BitmapFactory.decodeFile(file.absolutePath)
+    }
+
+    fun deleteBackupBitmap(wallpaperId: Int) {
+        Timber.tag(TAG).d("deleteBackupBitmap - Deleted image $wallpaperId")
+    }
+
+    // SAVE
+
+    fun backupImageToLocal(wallpaperId: Int, bitmap: Bitmap): Uri {
+        val directory = ContextWrapper(context).getDir("images", Context.MODE_PRIVATE)
+
+        if (!directory.exists()) {
+            directory.mkdirs()
+        }
+
+        val fileName = "$BACKUP_WALLPAPER$wallpaperId.jpg"
+        val file = File(directory, fileName)
+
+        try {
+            val stream: OutputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            stream.flush()
+            stream.close()
+        } catch (e: Exception) { // Catch the exception
+            e.printStackTrace()
+        }
+
+        return Uri.parse(file.absolutePath)
+    }
+
+
+    private fun saveImageToInternalStorage(wallpaperId: Int, bitmap: Bitmap): Uri {
+        val directory = ContextWrapper(context).getDir("images", Context.MODE_PRIVATE)
+
+        if (!directory.exists()) {
+            directory.mkdirs()
+        }
+
+        val fileName = "$BACKUP_WALLPAPER$wallpaperId.jpg"
+        val file = File(directory, fileName)
+
+        try {
+            val stream: OutputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            stream.flush()
+            stream.close()
+        } catch (e: Exception) { // Catch the exception
+            e.printStackTrace()
+        }
+
+        return Uri.parse(file.absolutePath)
     }
 
     @SuppressLint("InlinedApi")
-    fun saveImage(bitmap: Bitmap, context: Context): Uri? {
+    fun saveImageToGallery(bitmap: Bitmap): Uri? {
         if (permissionTools.runningQOrLater) {
             val values = ContentValues()
             values.put(MediaStore.Images.Media.MIME_TYPE, "image/*")
@@ -93,7 +135,6 @@ class ImageTools @Inject constructor(
                 return uri
             }
         } else {
-
             val directory = File(
                 context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
                     .toString() + File.separator + "pex_wallpapers"
@@ -114,4 +155,18 @@ class ImageTools @Inject constructor(
         }
         return null
     }
+
+    private fun saveImageToStream(bitmap: Bitmap, outputStream: OutputStream?) {
+        if (outputStream != null) {
+            try {
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                outputStream.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
 }
+
+private const val TAG = "ImageTools"
+private const val BACKUP_WALLPAPER = "backup_wallpaper_"

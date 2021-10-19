@@ -75,7 +75,7 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
                 }
 
                 shareButtonBottomSheet.setOnClickListener {
-                    viewModel.shareWallpaper(requireContext(), wallpaperArgs)
+                    viewModel.shareWallpaper(wallpaperArgs)
                 }
                 downloadButtonBottomSheet.setOnClickListener {
                     viewModel.downloadWallpaper(wallpaperArgs)

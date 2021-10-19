@@ -79,7 +79,7 @@ class SetWallpaperFragment : BaseFragment<FragmentSetWallpaperBinding, Any>(
                 viewModel.goToPexels(wallpaperArgs)
             }
             shareButton.setOnClickListener {
-                viewModel.shareWallpaper(requireContext(), wallpaperArgs)
+                viewModel.shareWallpaper(wallpaperArgs)
             }
             downloadButton.setOnClickListener {
                 viewModel.downloadWallpaper(wallpaperArgs)

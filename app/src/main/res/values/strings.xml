@@ -98,6 +98,8 @@
     <string name="automation_settings_saved">Automation settings saved</string>
     <string name="enable">Enable</string>
     <string name="is_disabled">is disabled</string>
-    <string name="group_notification_for">All notifications for PexWallpapers</string>
     <string name="checking_permissions">Checking permission</string>
+    <string name="restore">Restore</string>
+
+    <string name="group_notification_for">This is the %s notification group.</string>
 </resources>

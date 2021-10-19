@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface WallpaperRepositoryInterface {
 
     fun getWallpapersOfCategory(categoryName: String): Flow<List<Wallpaper>>
+    suspend fun getWallpaperById(wallpaperId: Int): Wallpaper
     suspend fun updateWallpaper(wallpaper: Wallpaper)
 
     fun getCuratedWallpapers(

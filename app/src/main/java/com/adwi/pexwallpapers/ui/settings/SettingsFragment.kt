@@ -11,7 +11,6 @@ import com.adwi.pexwallpapers.ui.base.BaseFragment
 import com.adwi.pexwallpapers.util.Constants.Companion.WORK_AUTO_WALLPAPER
 import com.adwi.pexwallpapers.util.launchCoroutine
 import com.adwi.pexwallpapers.util.showSnackbar
-import com.adwi.pexwallpapers.util.showToast
 import com.google.android.material.slider.Slider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -105,10 +104,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
             supportButton.setOnClickListener { viewModel.contactSupport() }
             privacyPolicyButton.setOnClickListener {
 
-            }
-            sendNotificationButton.setOnClickListener {
-                showToast(requireContext(), "test")
-                viewModel.sendNotification()
             }
         }
     }

@@ -13,6 +13,9 @@ interface WallpapersDao {
     @Query("SELECT * FROM wallpaper_table")
     fun getAllWallpapers(): Flow<List<Wallpaper>>
 
+    @Query("SELECT * FROM wallpaper_table WHERE id = :wallpaperId")
+    suspend fun getWallpaperById(wallpaperId: Int): Wallpaper
+
     @Query("SELECT * FROM wallpaper_table WHERE categoryName = :categoryName")
     fun getWallpapersOfCategory(categoryName: String): Flow<List<Wallpaper>>
 

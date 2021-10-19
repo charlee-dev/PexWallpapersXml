@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.core.content.ContextCompat.startActivity
+import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.shared.tools.image.ImageTools
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -53,15 +54,13 @@ class SharingTools @Inject constructor(
      * @param imageUrl
      * @param photographer
      */
-    suspend fun shareImage(context: Context, imageUrl: String, photographer: String) {
-
-        val uri = imageTools.saveImageToInternalStorage(imageUrl)
+    fun shareImage(uri: Uri, wallpaper: Wallpaper) {
 
         val intent = Intent(Intent.ACTION_SEND).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             setDataAndType(uri, "image/*")
-            putExtra(Intent.EXTRA_SUBJECT, "Picture by $photographer")
+            putExtra(Intent.EXTRA_SUBJECT, "Picture by ${wallpaper.photographer}")
             putExtra(Intent.EXTRA_TITLE, "Picture by PexWallpapers")
             putExtra(Intent.EXTRA_STREAM, uri)
         }

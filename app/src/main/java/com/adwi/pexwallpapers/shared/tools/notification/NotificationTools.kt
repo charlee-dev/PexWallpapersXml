@@ -24,23 +24,50 @@ import com.adwi.pexwallpapers.util.Constants.Companion.GROUP_RECOMMENDATIONS
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
+/**
+ * Defines notification channels
+ */
 enum class Channel {
-    NEW_WALLPAPER, RECOMMENDATIONS, INFO
+    NEW_WALLPAPER,
+    RECOMMENDATIONS,
+    INFO
 }
 
+/**
+ * Notification tools
+ *
+ * @property context
+ * @property imageTools
+ * @property permissionTools
+ * @constructor Create empty Notification tools
+ */
 @SuppressLint("NewApi")
 class NotificationTools @Inject constructor(
     @ApplicationContext private val context: Context,
     private val imageTools: ImageTools,
     private val permissionTools: PermissionTools
-) : NotificationToolsInterface {
+) {
+    /**
+     * Channel id
+     */
     private lateinit var channelId: String
 
+    /**
+     * Wallpaper group id
+     */
     private val wallpaperGroupId = "wallpaper_group"
+
+    /**
+     * App group id
+     */
     private val appGroupId = "app_group"
 
 
-    override fun setupNotifications() {
+    /**
+     * Setup notifications
+     *
+     */
+    fun setupNotifications() {
         if (permissionTools.runningOOrLater) {
             val wallpaperGroupName = context.getString(R.string.wallpapers)
             val appGroupName = context.getString(R.string.other)
@@ -66,7 +93,12 @@ class NotificationTools @Inject constructor(
         }
     }
 
-    override fun createNotificationChannel(channel: Channel) {
+    /**
+     * Create notification channel
+     *
+     * @param channel
+     */
+    private fun createNotificationChannel(channel: Channel) {
         if (permissionTools.runningOOrLater) {
             var name = ""
             var importance = 0
@@ -110,12 +142,42 @@ class NotificationTools @Inject constructor(
         }
     }
 
+    fun createGroupNotification(
+        channelId: Channel = Channel.NEW_WALLPAPER,
+        title: String = channelId.name,
+    ): NotificationCompat.Builder {
+        // 1
+//        val channelId = "${context.packageName}-${reminderData.type.name}"
+        return NotificationCompat.Builder(context, channelId.name).apply {
+            setSmallIcon(R.drawable.ic_launcher_foreground)
+            setContentTitle(title)
+            setContentText(context.getString(R.string.group_notification_for))
+            setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText(context.getString(R.string.group_notification_for))
+            )
+            setAutoCancel(true)
+            setGroupSummary(true)
+            setGroup(setGroup(channelId))
+        }
+    }
+
+    /**
+     * Send notification
+     *
+     * @param id
+     * @param channelId
+     * @param imageUrl
+     * @param longMessage
+     */
     @SuppressLint("UnspecifiedImmutableFlag")
-    override suspend fun sendNotification(
+    suspend fun sendNotification(
         id: Int,
-        channel: Channel,
+        channelId: Channel,
         imageUrl: String,
-        longMessage: String
+        longMessage: String = "",
+        actionName: String? = null,
+        action: () -> Unit = {}
     ) {
         var requestCode = 1
         val intentDestination: Class<*>
@@ -123,10 +185,10 @@ class NotificationTools @Inject constructor(
         val smallBitmap =
             BitmapFactory.decodeResource(context.resources, R.drawable.ic_launcher_foreground)
 
-        val notification = NotificationCompat.Builder(context, channelId)
+        val notification = NotificationCompat.Builder(context, this.channelId)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
 
-        when (channel) {
+        when (val channel = channelId) {
             Channel.NEW_WALLPAPER -> {
                 val largeBitmap = imageTools.getBitmapFromRemote(imageUrl)
                 intentDestination = MainActivity::class.java
@@ -135,7 +197,7 @@ class NotificationTools @Inject constructor(
                     .setContentTitle("New wallpaper set")
                     .setContentText("PexWallpapers just set an amazing wallpaper for you")
                     .setLargeIcon(smallBitmap)
-                    .setGroup(GROUP_AUTO)
+                    .setGroup(setGroup(channel))
                     .priority = NotificationCompat.PRIORITY_DEFAULT
             }
             Channel.RECOMMENDATIONS -> {
@@ -147,7 +209,7 @@ class NotificationTools @Inject constructor(
                     .setContentTitle("Recommendations")
                     .setContentText("PexWallpapers have some amazing wallpapers to offer for you")
                     .setLargeIcon(smallBitmap)
-                    .setGroup(GROUP_RECOMMENDATIONS)
+                    .setGroup(setGroup(channel))
                     .priority = NotificationCompat.PRIORITY_DEFAULT
             }
             Channel.INFO -> {
@@ -155,7 +217,7 @@ class NotificationTools @Inject constructor(
                 intentDestination = MainActivity::class.java
                 notification
                     .setStyle(NotificationCompat.BigTextStyle().bigText(longMessage))
-                    .setGroup(GROUP_INFO)
+                    .setGroup(setGroup(channel))
                     .setGroupAlertBehavior(NotificationCompat.GROUP_ALERT_CHILDREN)
                     .setGroupSummary(true)
             }
@@ -176,5 +238,11 @@ class NotificationTools @Inject constructor(
         with(NotificationManagerCompat.from(context)) {
             notify(id, notification.build())
         }
+    }
+
+    private fun setGroup(channelId: Channel) = when (channelId) {
+        Channel.NEW_WALLPAPER -> GROUP_AUTO
+        Channel.RECOMMENDATIONS -> GROUP_RECOMMENDATIONS
+        Channel.INFO -> GROUP_AUTO
     }
 }

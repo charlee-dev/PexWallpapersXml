@@ -45,7 +45,7 @@ class PermissionTools(
     fun storagePermissionsCheck(body: () -> Unit) {
         if (isReadStoragePermissionApproved()) {
             // Check if permission is not granted
-            Timber.tag(TAG).d("Permission for contacts is not granted")
+            Timber.tag(TAG).d("Permission for storage is not granted")
             if (ActivityCompat.shouldShowRequestPermissionRationale(
                     context.activity()!!,
                     storagePermission
@@ -56,7 +56,7 @@ class PermissionTools(
                     context.getString(R.string.rationale_desc)
                 )
             } else {
-                Timber.tag(TAG).d("Checking permission")
+                Timber.tag(TAG).d(context.getString(R.string.checking_permissions))
                 requestPermissions(
                     context.activity()!!,
                     arrayOf(storagePermission),

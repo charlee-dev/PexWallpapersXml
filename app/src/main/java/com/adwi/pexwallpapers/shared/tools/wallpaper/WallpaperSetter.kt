@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.WallpaperManager
 import android.content.Context
 import android.graphics.Bitmap
+import androidx.core.graphics.drawable.toBitmap
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.shared.tools.image.ImageTools
 import com.adwi.pexwallpapers.shared.tools.permissions.PermissionTools
@@ -81,5 +82,18 @@ class WallpaperSetter @Inject constructor(
         } catch (e: Exception) {
             e.message?.let { showToast(context, it) }
         }
+    }
+
+
+    @SuppressLint("MissingPermission")
+    fun getCurrentWallpaperForBackup(): Bitmap? {
+        var bitmap: Bitmap? = null
+
+        permissionTools.storagePermissionsCheck {
+            bitmap = wallpaperManager
+                .drawable
+                .toBitmap()
+        }
+        return bitmap
     }
 }

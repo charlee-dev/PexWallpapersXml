@@ -24,9 +24,9 @@ import javax.inject.Inject
 class ImageTools @Inject constructor(
     @ApplicationContext private val context: Context,
     private val permissionTools: PermissionTools
-) : ImageToolsInterface {
+) {
 
-    override suspend fun getBitmapFromRemote(url: String): Bitmap {
+    suspend fun getBitmapFromRemote(url: String): Bitmap {
         val loader = ImageLoader(context)
         val request = ImageRequest.Builder(context)
             .data(url)
@@ -37,12 +37,12 @@ class ImageTools @Inject constructor(
         return (result as BitmapDrawable).bitmap
     }
 
-    override suspend fun saveImageToInternalStorage(url: String): Uri? {
+    suspend fun saveImageToInternalStorage(url: String): Uri? {
         val bitmap = getBitmapFromRemote(url)
         return saveImage(bitmap, context)
     }
 
-    override suspend fun saveImageLocally(imageUrl: String, photographer: String) {
+    suspend fun saveImageLocally(imageUrl: String, photographer: String) {
         val bitmap = getBitmapFromRemote(imageUrl)
         MediaStore.Images.Media.insertImage(
             context.contentResolver,
@@ -52,21 +52,7 @@ class ImageTools @Inject constructor(
         )
     }
 
-    @SuppressLint("MissingPermission")
-    override fun backupCurrentWallpaper() {
-        val wallpaperManager = WallpaperManager.getInstance(context)
-
-//        TODO() move this logic to viewModel
-
-        permissionTools.storagePermissionsCheck {
-            val bitmap = wallpaperManager
-                .drawable
-                .toBitmap()
-            saveBackupBitmapToLocal(bitmap)
-        }
-    }
-
-    override fun saveBackupBitmapToLocal(bitmap: Bitmap) {
+    private fun saveBackupBitmapToLocal(bitmap: Bitmap) {
         MediaStore.Images.Media.insertImage(
             context.contentResolver,
             bitmap,
@@ -75,7 +61,7 @@ class ImageTools @Inject constructor(
         )
     }
 
-    override fun saveImageToStream(bitmap: Bitmap, outputStream: OutputStream?) {
+    private fun saveImageToStream(bitmap: Bitmap, outputStream: OutputStream?) {
         if (outputStream != null) {
             try {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
@@ -87,7 +73,7 @@ class ImageTools @Inject constructor(
     }
 
     @SuppressLint("InlinedApi")
-    override fun saveImage(bitmap: Bitmap, context: Context): Uri? {
+    fun saveImage(bitmap: Bitmap, context: Context): Uri? {
         if (permissionTools.runningQOrLater) {
             val values = ContentValues()
             values.put(MediaStore.Images.Media.MIME_TYPE, "image/*")

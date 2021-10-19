@@ -2,19 +2,30 @@ package com.adwi.pexwallpapers.shared.tools.sharing
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import androidx.core.content.ContextCompat.startActivity
 import com.adwi.pexwallpapers.shared.tools.image.ImageTools
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
+/**
+ * Sharing tools
+ *
+ * @property context
+ * @property imageTools
+ * @constructor Create empty Sharing tools
+ */
 class SharingTools @Inject constructor(
     @ApplicationContext private val context: Context,
     private val imageTools: ImageTools
-) : SharingToolsInterface {
+) {
 
-    override fun openUrlInBrowser(url: String) {
+    /**
+     * Open url in browser
+     *
+     * @param url
+     */
+    fun openUrlInBrowser(url: String) {
         val intent = Intent(Intent.ACTION_VIEW).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             data = Uri.parse(url)
@@ -22,7 +33,11 @@ class SharingTools @Inject constructor(
         startActivity(context, intent, null)
     }
 
-    override fun contactSupport() {
+    /**
+     * Contact support
+     *
+     */
+    fun contactSupport() {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             data = Uri.parse("mailto:adrianwitaszak@gmial.com")
@@ -31,8 +46,17 @@ class SharingTools @Inject constructor(
         startActivity(context, Intent.createChooser(intent, "Choose an app"), null)
     }
 
-    override suspend fun shareImage(context: Context, imageUrl: String, photographer: String) {
+    /**
+     * Share image
+     *
+     * @param context Application Context
+     * @param imageUrl
+     * @param photographer
+     */
+    suspend fun shareImage(context: Context, imageUrl: String, photographer: String) {
+
         val uri = imageTools.saveImageToInternalStorage(imageUrl)
+
         val intent = Intent(Intent.ACTION_SEND).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)

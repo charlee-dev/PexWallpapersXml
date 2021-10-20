@@ -3,8 +3,10 @@ package com.adwi.pexwallpapers.shared.work
 import androidx.work.*
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_ID
+import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_IMAGE_URL
 import com.adwi.pexwallpapers.util.Constants.Companion.WORK_AUTO_WALLPAPER
 import com.adwi.pexwallpapers.util.Constants.Companion.WORK_AUTO_WALLPAPER_NAME
+import com.adwi.pexwallpapers.util.Constants.Companion.WORK_DOWNLOAD_WALLPAPER
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -18,7 +20,35 @@ class WorkTools @Inject constructor(
 ) {
     fun cancelWorks(workTag: String) {
         workManager.cancelAllWorkByTag(workTag)
-        Timber.tag(TAG).d("cancelWorks - $WORK_AUTO_WALLPAPER")
+        Timber.tag(TAG).d("cancelWorks - $workTag")
+    }
+
+    fun createDownloadWallpaperWork(wallpaper: Wallpaper) {
+        Timber.tag(TAG).d("downloadWallpaperWork")
+
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val builder = Data.Builder()
+            .putInt(WALLPAPER_ID, wallpaper.id)
+            .putString(WALLPAPER_IMAGE_URL, wallpaper.src?.portrait)
+            .build()
+
+        val work = OneTimeWorkRequestBuilder<DownloadWallpaperWork>()
+            .setInputData(builder)
+            .setConstraints(constraints)
+            .addTag(WORK_DOWNLOAD_WALLPAPER) // TODO()
+            .build()
+
+        workManager.enqueueUniqueWork(
+            WORK_AUTO_WALLPAPER_NAME + wallpaper.id,
+            ExistingWorkPolicy.KEEP,
+            work
+        )
+
+        Timber.tag(TAG)
+            .d("Created work: \nwallpaperId = ${wallpaper.id}")
     }
 
     fun setupAutoChangeWallpaperWorks(
@@ -26,7 +56,7 @@ class WorkTools @Inject constructor(
         timeUnit: TimeUnit,
         timeValue: Float
     ) {
-        Timber.tag(TAG).d("setupAllWorks")
+        Timber.tag(TAG).d("setupAutoChangeWallpaperWorks")
         cancelWorks(WORK_AUTO_WALLPAPER)
 
         var multiplier = 1
@@ -80,7 +110,8 @@ class WorkTools @Inject constructor(
     private fun createDataForAutoChangeWallpaperWorker(wallpaper: Wallpaper): Data {
         val builder = Data.Builder()
         builder.putInt(WALLPAPER_ID, wallpaper.id)
-        Timber.tag(TAG).d("createDataForAutoChangeWallpaperWorker \nimageUrl = ${wallpaper.src!!.portrait} \nwallpaperId = ${wallpaper.id}")
+        Timber.tag(TAG)
+            .d("createDataForAutoChangeWallpaperWorker \nimageUrl = ${wallpaper.src!!.portrait} \nwallpaperId = ${wallpaper.id}")
         return builder.build()
     }
 

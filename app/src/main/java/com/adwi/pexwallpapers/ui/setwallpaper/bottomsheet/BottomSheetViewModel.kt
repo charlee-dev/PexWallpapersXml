@@ -7,6 +7,7 @@ import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInte
 import com.adwi.pexwallpapers.di.IoDispatcher
 import com.adwi.pexwallpapers.shared.tools.image.ImageTools
 import com.adwi.pexwallpapers.shared.tools.sharing.SharingTools
+import com.adwi.pexwallpapers.shared.work.WorkTools
 import com.adwi.pexwallpapers.ui.base.BaseViewModel
 import com.adwi.pexwallpapers.util.onDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +21,7 @@ class BottomSheetViewModel @Inject constructor(
     private val wallpaperRepository: WallpaperRepositoryInterface,
     private val sharingTools: SharingTools,
     private val imageTools: ImageTools,
+    private val workTools: WorkTools,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
@@ -64,9 +66,7 @@ class BottomSheetViewModel @Inject constructor(
     }
 
     fun downloadWallpaper(wallpaper: Wallpaper) {
-        onDispatcher(ioDispatcher) {
-            imageTools.fetchRemoteAndSaveToGallery(wallpaper.id, wallpaper.src!!.portrait)
-        }
+        workTools.createDownloadWallpaperWork(wallpaper)
     }
 
     companion object {

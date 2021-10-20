@@ -76,21 +76,24 @@ class NotificationTools @Inject constructor(
                 importance = NotificationManager.IMPORTANCE_DEFAULT,
                 showBadge = true,
                 name = Channel.NEW_WALLPAPER.name,
-                description = "Notifications for auto change wallpaper"
+                description = "Notifications for auto change wallpaper",
+                group = wallpaperGroupName
             )
             createNotificationChannel(
                 context = context,
                 importance = NotificationManager.IMPORTANCE_DEFAULT,
                 showBadge = true,
                 name = Channel.RECOMMENDATIONS.name,
-                description = "New wallpaper recommendations"
+                description = "New wallpaper recommendations",
+                group = wallpaperGroupName
             )
             createNotificationChannel(
                 context = context,
                 importance = NotificationManager.IMPORTANCE_HIGH,
                 showBadge = false,
                 name = Channel.INFO.name,
-                description = "PexWallpapers info channel"
+                description = "PexWallpapers info channel",
+                group = appGroupName
             )
         }
     }
@@ -110,7 +113,8 @@ class NotificationTools @Inject constructor(
         importance: Int = NotificationManager.IMPORTANCE_DEFAULT,
         showBadge: Boolean = true,
         name: String,
-        description: String
+        description: String,
+        group: String
     ) {
 
         // Create the NotificationChannel, but only on API 26+ because
@@ -120,6 +124,7 @@ class NotificationTools @Inject constructor(
             val channelId = "${context.packageName}-$name"
             val channel = NotificationChannel(channelId, name, importance)
             channel.description = description
+            channel.group = group
             channel.setShowBadge(showBadge)
 
             // Register the channel with the system
@@ -136,7 +141,6 @@ class NotificationTools @Inject constructor(
      * @param wallpaperId
      * @param channelId
      */
-
 
     fun createNotificationForWallpaper(
         bitmap: Bitmap,
@@ -165,7 +169,7 @@ class NotificationTools @Inject constructor(
         // call notify for both the group and the pet notification
         val notificationManager = NotificationManagerCompat.from(context)
         notificationManager.notify(channelId.ordinal, groupBuilder.build())
-        notificationManager.notify(channelId.ordinal, notificationBuilder.build())
+        notificationManager.notify(wallpaperId, notificationBuilder.build())
     }
 
 
@@ -198,7 +202,7 @@ class NotificationTools @Inject constructor(
             )
             setAutoCancel(true)
             setGroupSummary(true)
-            setGroup(setChannelGroup(channelId))
+            setGroup(channelId.name)
         }
     }
 
@@ -224,7 +228,7 @@ class NotificationTools @Inject constructor(
             setLargeIcon(largeIcon)
             setContentTitle("New wallpaper set")
             setContentText("PexWallpapers just set an amazing wallpaper for you")
-            setGroup(setChannelGroup(channelId))
+            setGroup(channelId.name)
 
             setStyle(NotificationCompat.BigPictureStyle().bigPicture(bitmap))
 

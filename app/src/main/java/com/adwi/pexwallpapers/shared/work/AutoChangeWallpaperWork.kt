@@ -49,7 +49,8 @@ class AutoChangeWallpaperWork @AssistedInject constructor(
             val wallpaper = wallpaperRepository.getWallpaperById(wallpaperId)
 
             // Get current wallpaper for backup
-            val backupImage = wallpaperSetter.getCurrentWallpaperForBackup()
+            val backupImage =
+                wallpaperSetter.getCurrentWallpaperForBackup()
 
             // Save backup locally
             imageTools.backupImageToLocal(wallpaperId, backupImage)

@@ -99,6 +99,7 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
                 viewModel.onCategoryNameSubmit(wallpaperArgs.categoryName)
                 viewModel.wallpaperResults.collect {
                     val wallpapers = it ?: return@collect
+                    wallpaperList = it
                     shimmerHorizontal.apply {
                         if (wallpapers.isNullOrEmpty()) startShimmer() else stopShimmer()
                         isVisible = wallpapers.isNullOrEmpty()

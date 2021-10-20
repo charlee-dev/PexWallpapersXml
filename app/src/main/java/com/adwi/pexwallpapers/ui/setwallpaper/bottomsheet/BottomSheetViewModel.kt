@@ -1,5 +1,6 @@
 package com.adwi.pexwallpapers.ui.setwallpaper.bottomsheet
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
@@ -58,10 +59,10 @@ class BottomSheetViewModel @Inject constructor(
         sharingTools.openUrlInBrowser(wallpaper.url!!)
     }
 
-    fun shareWallpaper(wallpaper: Wallpaper) {
+    fun shareWallpaper(activity: AppCompatActivity, wallpaper: Wallpaper) {
         onDispatcher(ioDispatcher) {
             val uri = imageTools.fetchRemoteAndSaveLocally(wallpaper.id, wallpaper.src!!.portrait)
-            sharingTools.shareImage(uri, wallpaper)
+            sharingTools.shareImage(activity, uri, wallpaper)
         }
     }
 

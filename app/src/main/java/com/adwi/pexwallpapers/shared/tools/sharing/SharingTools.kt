@@ -3,6 +3,7 @@ package com.adwi.pexwallpapers.shared.tools.sharing
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.shared.tools.image.ImageTools
@@ -54,7 +55,7 @@ class SharingTools @Inject constructor(
      * @param imageUrl
      * @param photographer
      */
-    fun shareImage(uri: Uri, wallpaper: Wallpaper) {
+    fun shareImage(activity: AppCompatActivity, uri: Uri, wallpaper: Wallpaper) {
 
         val intent = Intent(Intent.ACTION_SEND).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -66,7 +67,7 @@ class SharingTools @Inject constructor(
         }
 
         startActivity(
-            context,
+            activity,
             Intent.createChooser(intent, "Choose an app"),
             null
         )

@@ -1,5 +1,6 @@
 package com.adwi.pexwallpapers.ui.setwallpaper
 
+import androidx.appcompat.app.AppCompatActivity
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
 import com.adwi.pexwallpapers.di.IoDispatcher
@@ -33,10 +34,10 @@ class SetWallpaperViewModel @Inject constructor(
         sharingTools.openUrlInBrowser(wallpaper.url!!)
     }
 
-    fun shareWallpaper(wallpaper: Wallpaper) {
+    fun shareWallpaper(activity: AppCompatActivity, wallpaper: Wallpaper) {
         onDispatcher(ioDispatcher) {
             val uri = imageTools.fetchRemoteAndSaveLocally(wallpaper.id, wallpaper.src!!.portrait)
-            sharingTools.shareImage(uri, wallpaper)
+            sharingTools.shareImage(activity, uri, wallpaper)
         }
     }
 

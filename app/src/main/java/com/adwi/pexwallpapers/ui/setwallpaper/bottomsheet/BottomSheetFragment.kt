@@ -1,5 +1,6 @@
 package com.adwi.pexwallpapers.ui.setwallpaper.bottomsheet
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -75,7 +76,7 @@ class BottomSheetFragment : BaseBottomSheet<FragmentBottomSheetBinding, Wallpape
                 }
 
                 shareButtonBottomSheet.setOnClickListener {
-                    viewModel.shareWallpaper(wallpaperArgs)
+                    viewModel.shareWallpaper(requireActivity() as AppCompatActivity, wallpaperArgs)
                 }
                 downloadButtonBottomSheet.setOnClickListener {
                     viewModel.downloadWallpaper(wallpaperArgs)

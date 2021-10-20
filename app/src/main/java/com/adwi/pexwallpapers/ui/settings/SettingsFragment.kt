@@ -129,10 +129,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
             launchCoroutine {
                 viewModel.isStoragePermissionGranted.collect { permission ->
                     fixLayout.isVisible = !permission
-                    autoWallpaperSwitch.isEnabled = permission
-                    if (!permission) {
-                        viewModel.updateAutoChangeWallpaper(false)
-                    }
                 }
             }
             launchCoroutine {

@@ -264,8 +264,8 @@
                                         android:id="@+id/slider_min_value"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        tools:text="1"
-                                        tools:ignore="HardcodedText" />
+                                        tools:ignore="HardcodedText"
+                                        tools:text="1" />
 
                                     <com.google.android.material.slider.Slider
                                         android:id="@+id/period_slider"
@@ -281,8 +281,8 @@
                                         android:id="@+id/slider_max_value"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        tools:text="24"
-                                        tools:ignore="HardcodedText" />
+                                        tools:ignore="HardcodedText"
+                                        tools:text="24" />
 
                                 </LinearLayout>
 
@@ -291,9 +291,9 @@
                                     style="@style/TextStyle.Button"
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:layout_weight="1"
                                     android:layout_gravity="center"
                                     android:layout_margin="@dimen/margin_extra_small"
+                                    android:layout_weight="1"
                                     android:background="@drawable/background_rounded_stroke"
                                     android:clickable="true"
                                     android:focusable="true"
@@ -302,7 +302,68 @@
                                     android:singleLine="true"
                                     android:text="@string/save" />
 
+                                <androidx.appcompat.widget.AppCompatButton
+                                    android:id="@+id/save_image_button"
+                                    style="@style/TextStyle.Button"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="@dimen/margin_extra_small"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/background_rounded_stroke"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:padding="@dimen/margin_small"
+                                    android:paddingHorizontal="@dimen/margin_small"
+                                    android:singleLine="true"
+                                    android:text="Save image"
+                                    android:visibility="gone" />
+
+                                <androidx.appcompat.widget.AppCompatButton
+                                    android:id="@+id/read_image_button"
+                                    style="@style/TextStyle.Button"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="@dimen/margin_extra_small"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/background_rounded_stroke"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:padding="@dimen/margin_small"
+                                    android:paddingHorizontal="@dimen/margin_small"
+                                    android:singleLine="true"
+                                    android:text="Read image"
+                                    android:visibility="gone" />
+
                             </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/fix_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:visibility="visible">
+
+                            <TextView
+                                style="@style/TextStyle.InfoText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/auto_change_wallpaper_cannot_be_used_nwithout_storage_permission"
+                                android:layout_marginEnd="@dimen/margin_small"/>
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/fix_button"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_extra_small"
+                                android:layout_weight="1"
+                                android:background="@drawable/background_rounded_stroke"
+                                android:paddingHorizontal="@dimen/margin_small"
+                                android:textColor="@color/design_default_color_error"
+                                android:text="@string/fix" />
+
                         </LinearLayout>
                     </LinearLayout>
 

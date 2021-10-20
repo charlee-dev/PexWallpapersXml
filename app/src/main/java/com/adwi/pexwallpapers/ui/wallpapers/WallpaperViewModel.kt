@@ -65,11 +65,6 @@ class WallpaperViewModel @Inject constructor(
             onDispatcher(ioDispatcher) {
                 refreshTriggerChannel.send(Refresh.NORMAL)
             }
-        onDispatcher(ioDispatcher) {
-            if (settingsRepository.getSettings() == null) {
-                settingsRepository.insertSettings(Settings())
-            }
-        }
     }
 
     fun onManualRefresh() {

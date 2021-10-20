@@ -55,7 +55,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.google.android.material:material:1.5.0-alpha03'
+    implementation 'com.google.android.material:material:1.5.0-alpha04'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.makeramen:roundedimageview:2.3.0'
@@ -64,12 +64,12 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 
     // Lifecycle
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.4.0-beta01"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-beta01"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.4.0-rc01"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-rc01"
 
     // Navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.0-alpha09'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.0-alpha09'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.0-alpha10'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.0-alpha10'
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
@@ -77,7 +77,7 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
     // Coil
-    implementation "io.coil-kt:coil:1.3.0"
+    implementation "io.coil-kt:coil:1.3.2"
 
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -90,29 +90,30 @@ dependencies {
     kapt "androidx.hilt:hilt-compiler:1.0.0"
 
     // WorkManager
-    implementation "androidx.work:work-runtime-ktx:2.6.0"
+    implementation "androidx.work:work-runtime-ktx:2.7.0"
 
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt'
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2-native-mt"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
 
     // Retrofit + GSON
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
-    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
     implementation "com.github.skydoves:sandwich:1.0.9"
     testImplementation "com.squareup.okhttp3:mockwebserver:4.9.0"
 
     // Room
-    implementation "androidx.room:room-runtime:2.4.0-alpha04"
-    kapt "androidx.room:room-compiler:2.4.0-alpha04"
-    implementation "androidx.room:room-ktx:2.4.0-alpha04"
+    implementation "androidx.room:room-runtime:2.4.0-beta01"
+    kapt "androidx.room:room-compiler:2.4.0-beta01"
+    implementation "androidx.room:room-ktx:2.4.0-beta01"
+    implementation "androidx.room:room-paging:2.4.0-beta01"
 
     // SwipeRefreshLayout
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     // Paging 3
-    implementation "androidx.paging:paging-runtime-ktx:3.1.0-alpha03"
+    implementation "androidx.paging:paging-runtime-ktx:3.1.0-beta01"
 
     // Timber
     implementation 'com.jakewharton.timber:timber:5.0.1'
@@ -137,11 +138,14 @@ dependencies {
     // ViewPager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
+    // Permissions
+    implementation "com.sagar:coroutinespermission:2.0.3"
+
     // Unit tests
     implementation "androidx.test:core:1.4.0"
     testImplementation "junit:junit:4.13.2"
     testImplementation "org.hamcrest:hamcrest-all:1.3"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2"
     testImplementation "org.mockito:mockito-core:3.9.0"
     testImplementation "com.google.truth:truth:1.1.3"
     testImplementation 'com.google.dagger:hilt-android-testing:2.38.1'
@@ -156,7 +160,7 @@ dependencies {
     // Android Test
     androidTestImplementation "junit:junit:4.13.2"
     androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:2.28.1"
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2"
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
     androidTestImplementation "com.google.truth:truth:1.1.3"

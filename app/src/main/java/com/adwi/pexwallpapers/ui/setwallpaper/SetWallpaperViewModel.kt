@@ -1,6 +1,5 @@
 package com.adwi.pexwallpapers.ui.setwallpaper
 
-import android.content.Context
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
 import com.adwi.pexwallpapers.di.IoDispatcher
@@ -43,7 +42,7 @@ class SetWallpaperViewModel @Inject constructor(
 
     fun downloadWallpaper(wallpaper: Wallpaper) {
         onDispatcher(ioDispatcher) {
-            imageTools.fetchRemoteAndSaveToGallery(wallpaper.src!!.portrait)
+            imageTools.fetchRemoteAndSaveToGallery(wallpaper.id, wallpaper.src!!.portrait)
         }
     }
 

@@ -2,6 +2,7 @@ package com.adwi.pexwallpapers.ui.settings
 
 import android.view.MenuItem
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.adwi.pexwallpapers.R
@@ -36,6 +37,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
     override fun setupViews() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
+            launchCoroutine {
+                checkPermissions(this@SettingsFragment)
+            }
         }
     }
 
@@ -70,7 +74,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
                         "${getString(R.string.auto_change_wallpaper)} ${getString(R.string.is_disabled)}"
                     showSnackbar(
                         message = message,
-                        actionMessageId = R.string.enable,
+                        actionTitle = R.string.enable,
                         action = { viewModel.updateAutoChangeWallpaper(true) }
                     )
                 }
@@ -97,23 +101,41 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
 
             // Buttons
             saveAutomationButton.setOnClickListener {
-                viewModel.saveSettings(settings)
-                showSnackbar(getString(R.string.automation_settings_saved))
+                launchCoroutine {
+                    checkStoragePermission(
+                        this@SettingsFragment,
+                        granted = {
+                            viewModel.saveSettings(settings)
+                            showSnackbar(getString(R.string.automation_settings_saved))
+                        }
+                    )
+                }
+            }
+            fixButton.setOnClickListener {
+                launchCoroutine {
+                    checkPermissions(this@SettingsFragment)
+                }
             }
             aboutButton.setOnClickListener { }
             supportButton.setOnClickListener { viewModel.contactSupport() }
-            privacyPolicyButton.setOnClickListener {
-
-            }
+            privacyPolicyButton.setOnClickListener {}
+            saveImageButton.setOnClickListener { viewModel.saveImage() }
+            readImageButton.setOnClickListener { viewModel.readImage() }
         }
     }
 
     override fun setupFlows() {
         binding.apply {
             launchCoroutine {
-//                viewModel.changeWallpaperEvery.collect {
-//                    setSlider(it)
-//                }
+                viewModel.isStoragePermissionGranted.collect { permission ->
+                    fixLayout.isVisible = !permission
+                    autoWallpaperSwitch.isEnabled = permission
+                    if (!permission) {
+                        viewModel.updateAutoChangeWallpaper(false)
+                    }
+                }
+            }
+            launchCoroutine {
                 viewModel.settings.collect {
                     settings = it
 
@@ -140,11 +162,22 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
         }
     }
 
+    private suspend fun checkPermissions(fragment: Fragment) {
+        checkStoragePermission(
+            fragment = fragment,
+            granted = { viewModel.setIsStoragePermissionGranted(true) },
+            denied = { viewModel.setIsStoragePermissionGranted(false) },
+            deniedPermanently = { viewModel.setIsStoragePermissionGranted(false) }
+        )
+    }
+
     private fun setSlider(radioButton: Int) {
         binding.apply {
+
             var min = 1f
             val max: Float
             var step = 1f
+
             when (radioButton) {
                 R.id.minutes_radio_button -> {
                     min = 5f
@@ -154,8 +187,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
                 R.id.hours_radio_button -> max = 24f
                 else -> max = 7f
             }
+
             sliderMinValue.text = "$min"
             sliderMaxValue.text = "$max"
+
             periodSlider.apply {
                 valueFrom = min
                 valueTo = max
@@ -164,6 +199,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
                     if (currentSliderValue > max || currentSliderValue < min || currentSliderValue % min != 0f)
                         max else currentSliderValue
             }
+
             periodDurationValue.text = periodSlider.value.toInt().toString()
             viewModel.updateChangePeriodValue(periodSlider.value)
         }

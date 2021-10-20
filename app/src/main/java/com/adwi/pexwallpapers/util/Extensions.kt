@@ -25,6 +25,15 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+val runningOOrLater =
+    android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O
+val runningNOrLater =
+    android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N
+val runningQOrLater =
+    android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q
+val runningSOrLater =
+    android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S
+
 val <T> T.exhaustive: T
     get() = this
 
@@ -114,14 +123,14 @@ fun Fragment.showSnackbar(
     message: String,
     duration: Int = Snackbar.LENGTH_LONG,
     view: View = requireView(),
-    actionMessageId: Int? = null,
+    actionTitle: Int? = null,
     action: () -> Unit = {}
 ) {
     val snackbar = Snackbar
         .make(view, message, duration)
 
-    if (actionMessageId != null) {
-        snackbar.setAction(actionMessageId) {
+    if (actionTitle != null) {
+        snackbar.setAction(actionTitle) {
             action()
         }
     }

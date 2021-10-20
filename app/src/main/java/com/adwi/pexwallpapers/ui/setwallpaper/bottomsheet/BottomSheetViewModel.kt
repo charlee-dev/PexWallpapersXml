@@ -65,7 +65,7 @@ class BottomSheetViewModel @Inject constructor(
 
     fun downloadWallpaper(wallpaper: Wallpaper) {
         onDispatcher(ioDispatcher) {
-            imageTools.fetchRemoteAndSaveToGallery(wallpaper.src!!.portrait)
+            imageTools.fetchRemoteAndSaveToGallery(wallpaper.id, wallpaper.src!!.portrait)
         }
     }
 

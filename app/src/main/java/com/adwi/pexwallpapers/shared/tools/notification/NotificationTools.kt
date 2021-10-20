@@ -16,10 +16,11 @@ import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.shared.tools.image.ImageTools
 import com.adwi.pexwallpapers.shared.tools.notification.AppGlobalReceiver.Companion.NOTIFICATION_ID
-import com.adwi.pexwallpapers.shared.tools.permissions.PermissionTools
 import com.adwi.pexwallpapers.util.Constants.Companion.GROUP_AUTO
 import com.adwi.pexwallpapers.util.Constants.Companion.GROUP_RECOMMENDATIONS
 import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_ID
+import com.adwi.pexwallpapers.util.runningOOrLater
+import com.adwi.pexwallpapers.util.runningSOrLater
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -44,14 +45,13 @@ enum class Channel {
 class NotificationTools @Inject constructor(
     @ApplicationContext private val context: Context,
     private val imageTools: ImageTools,
-    private val permissionTools: PermissionTools
 ) {
     /**
      * Setup notifications
      *
      */
     fun setupNotifications() {
-        if (permissionTools.runningOOrLater) {
+        if (runningOOrLater) {
             val wallpaperGroupName = context.getString(R.string.wallpapers)
             val appGroupName = context.getString(R.string.other)
 
@@ -115,7 +115,7 @@ class NotificationTools @Inject constructor(
 
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
-        if (permissionTools.runningOOrLater) {
+        if (runningOOrLater) {
 
             val channelId = "${context.packageName}-$name"
             val channel = NotificationChannel(channelId, name, importance)
@@ -233,7 +233,7 @@ class NotificationTools @Inject constructor(
                 putExtra(WALLPAPER_ID, wallpaperId)
             }
 
-            val flag = if (permissionTools.runningSOrLater)
+            val flag = if (runningSOrLater)
                 PendingIntent.FLAG_MUTABLE else PendingIntent.FLAG_ONE_SHOT
 
             val pendingIntent = PendingIntent.getActivity(context, 0, intent, flag)

@@ -52,11 +52,7 @@ class AutoChangeWallpaperWork @AssistedInject constructor(
             val backupImage = wallpaperSetter.getCurrentWallpaperForBackup()
 
             // Save backup locally
-            if (backupImage != null) {
-                imageTools.backupImageToLocal(wallpaperId, backupImage)
-            } else {
-                Timber.tag(TAG).d("doWork - No backup bitmap")
-            }
+            imageTools.backupImageToLocal(wallpaperId, backupImage)
 
             // Fetch bitmap using Coil
             val bitmap = wallpaper.src?.let { imageTools.getBitmapFromRemote(it.portrait) }

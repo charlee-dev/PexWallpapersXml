@@ -6,7 +6,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import androidx.core.graphics.drawable.toBitmap
 import com.adwi.pexwallpapers.R
-import com.adwi.pexwallpapers.shared.tools.permissions.PermissionTools
+import com.adwi.pexwallpapers.util.runningNOrLater
 import com.adwi.pexwallpapers.util.showToast
 import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
@@ -26,8 +26,7 @@ private const val TAG = "WallpaperSetter"
 @SuppressLint("NewApi")
 class WallpaperSetter @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val wallpaperManager: WallpaperManager,
-    private val permissionTools: PermissionTools
+    private val wallpaperManager: WallpaperManager
 ) {
     /**
      * Set wallpaper
@@ -67,7 +66,7 @@ class WallpaperSetter @Inject constructor(
      */
     private fun setLockScreenWallpaper(bitmap: Bitmap) {
         try {
-            if (permissionTools.runningNOrLater) {
+            if (runningNOrLater) {
                 wallpaperManager.setBitmap(
                     bitmap, null, true,
                     WallpaperManager.FLAG_LOCK
@@ -85,14 +84,8 @@ class WallpaperSetter @Inject constructor(
 
 
     @SuppressLint("MissingPermission")
-    fun getCurrentWallpaperForBackup(): Bitmap? {
-        var bitmap: Bitmap? = null
-
-        permissionTools.storagePermissionsCheck {
-            bitmap = wallpaperManager
-                .drawable
-                .toBitmap()
-        }
-        return bitmap
-    }
+    fun getCurrentWallpaperForBackup() =
+        wallpaperManager
+            .drawable
+            .toBitmap()
 }

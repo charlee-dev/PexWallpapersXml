@@ -9,12 +9,11 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Environment
-import android.os.SystemClock
 import android.provider.MediaStore
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
-import com.adwi.pexwallpapers.shared.tools.permissions.PermissionTools
+import com.adwi.pexwallpapers.util.runningQOrLater
 import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
 import java.io.File
@@ -24,8 +23,7 @@ import javax.inject.Inject
 
 
 class ImageTools @Inject constructor(
-    @ApplicationContext private val context: Context,
-    private val permissionTools: PermissionTools
+    @ApplicationContext private val context: Context
 ) {
     suspend fun fetchRemoteAndSaveLocally(id: Int, url: String): Uri {
         val bitmap = getBitmapFromRemote(url)
@@ -34,9 +32,9 @@ class ImageTools @Inject constructor(
         return uri
     }
 
-    suspend fun fetchRemoteAndSaveToGallery(url: String): Uri? {
+    suspend fun fetchRemoteAndSaveToGallery(id: Int, url: String): Uri? {
         val bitmap = getBitmapFromRemote(url)
-        val uri = saveImageToGallery(bitmap)
+        val uri = saveImageToGallery(id, bitmap)
         Timber.tag(TAG).d("fetchRemoteAndSaveToGallery - $uri")
         return uri
     }
@@ -115,22 +113,25 @@ class ImageTools @Inject constructor(
     }
 
     @SuppressLint("InlinedApi")
-    fun saveImageToGallery(bitmap: Bitmap): Uri? {
-        if (permissionTools.runningQOrLater) {
+    fun saveImageToGallery(id: Int, bitmap: Bitmap): Uri? {
+        if (runningQOrLater) {
             val values = ContentValues()
             values.put(MediaStore.Images.Media.MIME_TYPE, "image/*")
             values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000)
             values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
-            values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/test_pictures")
+            values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/pex_wallpapers")
             values.put(MediaStore.Images.Media.IS_PENDING, true)
-            values.put(MediaStore.Images.Media.DISPLAY_NAME, "img_${SystemClock.uptimeMillis()}")
+            values.put(MediaStore.Images.Media.DISPLAY_NAME, "img_$id")
 
             val uri: Uri? =
                 context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+
             if (uri != null) {
                 saveImageToStream(bitmap, context.contentResolver.openOutputStream(uri))
+
                 values.put(MediaStore.Images.Media.IS_PENDING, false)
-                values.put(MediaStore.Images.Media.MIME_TYPE, "image/*")
+//                values.put(MediaStore.Images.Media.MIME_TYPE, "image/*")
+
                 context.contentResolver.update(uri, values, null, null)
                 return uri
             }
@@ -139,19 +140,20 @@ class ImageTools @Inject constructor(
                 context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
                     .toString() + File.separator + "pex_wallpapers"
             )
+
             if (!directory.exists()) {
                 directory.mkdirs()
             }
-            val fileName = "img_${SystemClock.uptimeMillis()}" + ".jpeg"
+
+            val fileName = "img_$id.jpeg"
             val file = File(directory, fileName)
             saveImageToStream(bitmap, FileOutputStream(file))
-            if (file.absolutePath != null) {
-                val values = ContentValues()
-                values.put(MediaStore.Images.Media.DATA, file.absolutePath)
-                // .DATA is deprecated in API 29
-                context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-                return Uri.fromFile(file)
-            }
+
+            val values = ContentValues()
+            values.put(MediaStore.Images.Media.DATA, file.absolutePath) // .DATA is deprecated in API 29
+
+            context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+            return Uri.fromFile(file)
         }
         return null
     }

@@ -34,5 +34,7 @@ class Constants {
 
         const val WALLPAPER_ID = "wallpaper_id"
         const val WALLPAPER_KEY = "wallpaper_key"
+
+        const val STORAGE_REQUEST_CODE = 233
     }
 }

@@ -9,6 +9,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.media.AudioAttributes
+import android.media.RingtoneManager.TYPE_NOTIFICATION
+import android.media.RingtoneManager.getDefaultUri
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.adwi.pexwallpapers.MainActivity
@@ -17,6 +20,7 @@ import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.shared.tools.image.ImageTools
 import com.adwi.pexwallpapers.shared.tools.notification.AppGlobalReceiver.Companion.NOTIFICATION_ID
 import com.adwi.pexwallpapers.util.Constants.Companion.GROUP_AUTO
+import com.adwi.pexwallpapers.util.Constants.Companion.GROUP_INFO
 import com.adwi.pexwallpapers.util.Constants.Companion.GROUP_RECOMMENDATIONS
 import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_ID
 import com.adwi.pexwallpapers.util.runningOOrLater
@@ -46,12 +50,18 @@ class NotificationTools @Inject constructor(
     @ApplicationContext private val context: Context,
     private val imageTools: ImageTools,
 ) {
+    private lateinit var channelId: String
+
+    private val wallpaperGroupId = "wallpaper_group"
+    private val appGroupId = "app_group"
+
     /**
      * Setup notifications
      *
      */
     fun setupNotifications() {
         if (runningOOrLater) {
+
             val wallpaperGroupName = context.getString(R.string.wallpapers)
             val appGroupName = context.getString(R.string.other)
 
@@ -60,41 +70,44 @@ class NotificationTools @Inject constructor(
 
             notificationManager.createNotificationChannelGroup(
                 NotificationChannelGroup(
-                    WALLPAPER_GROUP_ID,
+                    wallpaperGroupId,
                     wallpaperGroupName
                 )
             )
             notificationManager.createNotificationChannelGroup(
                 NotificationChannelGroup(
-                    APP_GROUP_ID,
+                    appGroupId,
                     appGroupName
                 )
             )
+            createNotificationChannel(Channel.NEW_WALLPAPER)
+            createNotificationChannel(Channel.RECOMMENDATIONS)
+            createNotificationChannel(Channel.INFO)
 
-            createNotificationChannel(
-                context = context,
-                importance = NotificationManager.IMPORTANCE_DEFAULT,
-                showBadge = true,
-                name = Channel.NEW_WALLPAPER.name,
-                description = "Notifications for auto change wallpaper",
-                group = wallpaperGroupName
-            )
-            createNotificationChannel(
-                context = context,
-                importance = NotificationManager.IMPORTANCE_DEFAULT,
-                showBadge = true,
-                name = Channel.RECOMMENDATIONS.name,
-                description = "New wallpaper recommendations",
-                group = wallpaperGroupName
-            )
-            createNotificationChannel(
-                context = context,
-                importance = NotificationManager.IMPORTANCE_HIGH,
-                showBadge = false,
-                name = Channel.INFO.name,
-                description = "PexWallpapers info channel",
-                group = appGroupName
-            )
+//            createNotificationChannel(
+//                context = context,
+//                importance = NotificationManager.IMPORTANCE_DEFAULT,
+//                showBadge = true,
+//                name = Channel.NEW_WALLPAPER.name,
+//                description = "Notifications for auto change wallpaper",
+//                group = wallpaperGroupName
+//            )
+//            createNotificationChannel(
+//                context = context,
+//                importance = NotificationManager.IMPORTANCE_DEFAULT,
+//                showBadge = true,
+//                name = Channel.RECOMMENDATIONS.name,
+//                description = "New wallpaper recommendations",
+//                group = wallpaperGroupName
+//            )
+//            createNotificationChannel(
+//                context = context,
+//                importance = NotificationManager.IMPORTANCE_HIGH,
+//                showBadge = false,
+//                name = Channel.INFO.name,
+//                description = "PexWallpapers info channel",
+//                group = appGroupName
+//            )
         }
     }
 
@@ -108,33 +121,75 @@ class NotificationTools @Inject constructor(
      * @param name        name for the notification channel
      * @param description description for the notification channel
      */
-    private fun createNotificationChannel(
-        context: Context,
-        importance: Int = NotificationManager.IMPORTANCE_DEFAULT,
-        showBadge: Boolean = true,
-        name: String,
-        description: String,
-        group: String
-    ) {
+//    private fun createNotificationChannel(
+//        context: Context,
+//        importance: Int = NotificationManager.IMPORTANCE_DEFAULT,
+//        showBadge: Boolean = true,
+//        name: String,
+//        description: String,
+//        group: String
+//    ) {
+//
+//        // Create the NotificationChannel, but only on API 26+ because
+//        // the NotificationChannel class is new and not in the support library
+//        if (runningOOrLater) {
+//
+//            val channelId = "${context.packageName}-$name"
+//            val channel = NotificationChannel(channelId, name, importance)
+//            channel.description = description
+//            channel.group = group
+//            channel.setShowBadge(showBadge)
+//
+//            // Register the channel with the system
+//            val notificationManager = context.getSystemService(NotificationManager::class.java)
+//            notificationManager.createNotificationChannel(channel)
+//        }
+//    }
 
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (runningOOrLater) {
+    fun createNotificationChannel(channel: Channel) {
+            if (runningOOrLater) {
+                var name = ""
+                var importance = 0
+                val channelGroup: String
+                when (channel) {
+                    Channel.NEW_WALLPAPER -> {
+                        channelId = "pex_new_wallpaper"
+                        name = "New wallpaper"
+                        importance = NotificationManager.IMPORTANCE_DEFAULT
+                        channelGroup = wallpaperGroupId
+                    }
+                    Channel.RECOMMENDATIONS -> {
+                        channelId = "pex_recommendations"
+                        name = "Recommendations"
+                        importance = NotificationManager.IMPORTANCE_DEFAULT
+                        channelGroup = wallpaperGroupId
+                    }
+                    Channel.INFO -> {
+                        channelId = "info"
+                        name = "Info"
+                        importance = NotificationManager.IMPORTANCE_HIGH
+                        channelGroup = appGroupId
+                    }
+                }
+                val ringtoneManager = getDefaultUri(TYPE_NOTIFICATION)
+                val audioAttributes =
+                    AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build()
+                val notificationChannel = NotificationChannel(channelId, name, importance)
+                notificationChannel.apply {
+                    group = channelGroup
+                    enableLights(true)
+                    lightColor = RED
+                    enableVibration(true)
+                    vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
+                    setSound(ringtoneManager, audioAttributes)
+                }
+                val notificationManager =
+                    context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                notificationManager.createNotificationChannel(notificationChannel)
+            }
 
-            val channelId = "${context.packageName}-$name"
-            val channel = NotificationChannel(channelId, name, importance)
-            channel.description = description
-            channel.group = group
-            channel.setShowBadge(showBadge)
-
-            // Register the channel with the system
-            val notificationManager = context.getSystemService(NotificationManager::class.java)
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-
-    /**
+        /**
      * Creates a notification for [Wallpaper] with a full notification tap and a single action.
      *
      * @param bitmap

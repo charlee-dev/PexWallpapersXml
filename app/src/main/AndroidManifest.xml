@@ -48,7 +48,6 @@
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
             tools:node="remove" />
-        <!-- Global Broadcast Receiver -->
-        <receiver android:name=".shared.tools.notification.AppGlobalReceiver" />
+        <receiver android:name=".shared.tools.notification.PexBroadcastReceiver"/>
     </application>
 </manifest>

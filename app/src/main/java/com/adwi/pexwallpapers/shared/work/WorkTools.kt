@@ -7,6 +7,8 @@ import com.adwi.pexwallpapers.util.Constants.Companion.WALLPAPER_IMAGE_URL
 import com.adwi.pexwallpapers.util.Constants.Companion.WORK_AUTO_WALLPAPER
 import com.adwi.pexwallpapers.util.Constants.Companion.WORK_AUTO_WALLPAPER_NAME
 import com.adwi.pexwallpapers.util.Constants.Companion.WORK_DOWNLOAD_WALLPAPER
+import com.adwi.pexwallpapers.util.Constants.Companion.WORK_RESTORE_WALLPAPER
+import com.adwi.pexwallpapers.util.Constants.Companion.WORK_RESTORE_WALLPAPER_NAME
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -21,6 +23,26 @@ class WorkTools @Inject constructor(
     fun cancelWorks(workTag: String) {
         workManager.cancelAllWorkByTag(workTag)
         Timber.tag(TAG).d("cancelWorks - $workTag")
+    }
+
+    fun createRestoreWallpaperWork(wallpaperId: String) {
+        val builder = Data.Builder()
+            .putString(WALLPAPER_ID, wallpaperId)
+            .build()
+
+        val work = OneTimeWorkRequestBuilder<RestoreWallpaperWork>()
+            .setInputData(builder)
+            .addTag(WORK_RESTORE_WALLPAPER) // TODO()
+            .build()
+
+        workManager.enqueueUniqueWork(
+            WORK_RESTORE_WALLPAPER_NAME + wallpaperId,
+            ExistingWorkPolicy.KEEP,
+            work
+        )
+
+        Timber.tag(TAG)
+            .d("Created work: \nwallpaperId = $wallpaperId")
     }
 
     fun createDownloadWallpaperWork(wallpaper: Wallpaper) {

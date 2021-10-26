@@ -61,11 +61,9 @@ class ImageTools @Inject constructor(
         return BitmapFactory.decodeFile(file.absolutePath)
     }
 
-    fun deleteBackupBitmap(wallpaperId: Int) {
+    fun deleteBackupBitmap(wallpaperId: String) {
         Timber.tag(TAG).d("deleteBackupBitmap - Deleted image $wallpaperId")
     }
-
-    // SAVE
 
     fun backupImageToLocal(wallpaperId: Int, bitmap: Bitmap): Uri {
         val directory = ContextWrapper(context).getDir("images", Context.MODE_PRIVATE)
@@ -87,6 +85,14 @@ class ImageTools @Inject constructor(
         }
 
         return Uri.parse(file.absolutePath)
+    }
+
+    fun restoreBackup(wallpaperId: String): Bitmap {
+        val directory = ContextWrapper(context).getDir("images", Context.MODE_PRIVATE)
+        val fileName = "$BACKUP_WALLPAPER$wallpaperId.jpg"
+        val file = File(directory, fileName)
+
+        return BitmapFactory.decodeFile(file.absolutePath)
     }
 
 
@@ -150,7 +156,10 @@ class ImageTools @Inject constructor(
             saveImageToStream(bitmap, FileOutputStream(file))
 
             val values = ContentValues()
-            values.put(MediaStore.Images.Media.DATA, file.absolutePath) // .DATA is deprecated in API 29
+            values.put(
+                MediaStore.Images.Media.DATA,
+                file.absolutePath
+            ) // .DATA is deprecated in API 29
 
             context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
             return Uri.fromFile(file)

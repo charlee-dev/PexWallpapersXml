@@ -62,12 +62,11 @@ class AutoChangeWallpaperWork @AssistedInject constructor(
             if (bitmap != null) {
                 wallpaperSetter.setWallpaper(bitmap, setHomeScreen = true, setLockScreen = false)
 
-                notificationTools.createNotificationForWallpaper(
-                    channelId = Channel.NEW_WALLPAPER,
+                notificationTools.sendNotification(
+                    channelId = Channel.AUTO_WALLPAPER,
                     bitmap = bitmap,
-                    wallpaperId = wallpaperId,
-                    categoryName = wallpaper.categoryName,
-                    photographerName = wallpaper.photographer
+                    id = wallpaperId,
+                    wallpaperId = wallpaperId
                 )
             } else {
                 Timber.tag(TAG).d("odWork - bitmap null")

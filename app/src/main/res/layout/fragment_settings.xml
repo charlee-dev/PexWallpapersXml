@@ -52,28 +52,6 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
-                            android:id="@+id/push_notifications_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/push_notifications_title"
-                                style="@style/TextStyle.Normal.Condensed"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/push_notifications" />
-
-                            <com.google.android.material.switchmaterial.SwitchMaterial
-                                android:id="@+id/push_notifications_switch"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/switchHeight" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
                             android:id="@+id/new_notification_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -444,7 +422,8 @@
                     android:layout_marginHorizontal="@dimen/margin_medium"
                     android:layout_marginVertical="@dimen/margin_medium"
                     android:orientation="vertical"
-                    android:padding="@dimen/margin_medium">
+                    android:padding="@dimen/margin_medium"
+                    android:paddingBottom="@dimen/margin_small">
 
                     <TextView
                         android:id="@+id/about_button"
@@ -480,11 +459,6 @@
                         app:drawableTint="@color/colorPrimary" />
 
                 </LinearLayout>
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin_small" />
-
             </LinearLayout>
         </ScrollView>
 

@@ -10,7 +10,6 @@ class Settings(
     @PrimaryKey(autoGenerate = false)
     val id: Int = 1,
     var lastQuery: String = "Flowers",
-    var pushNotification: Boolean = true,
     var newWallpaperSet: Boolean = true,
     var wallpaperRecommendations: Boolean = true,
     var autoChangeWallpaper: Boolean = false,

@@ -8,7 +8,6 @@ interface SettingsRepositoryInterface {
     fun getSettings(): Flow<Settings>
     suspend fun insertSettings(settings: Settings)
     suspend fun updateLastQuery(query: String)
-    suspend fun updatePushNotification(enabled: Boolean)
     suspend fun updateNewWallpaperSet(enabled: Boolean)
     suspend fun updateWallpaperRecommendations(enabled: Boolean)
     suspend fun updateAutoChangeWallpaper(enabled: Boolean)

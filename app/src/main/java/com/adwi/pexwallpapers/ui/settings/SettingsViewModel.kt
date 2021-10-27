@@ -44,10 +44,6 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun updatePushNotification(checked: Boolean) {
-        onDispatcher(ioDispatcher) { repository.updatePushNotification(checked) }
-    }
-
     fun updateNewWallpaperSet(checked: Boolean) {
         onDispatcher(ioDispatcher) { repository.updateNewWallpaperSet(checked) }
     }

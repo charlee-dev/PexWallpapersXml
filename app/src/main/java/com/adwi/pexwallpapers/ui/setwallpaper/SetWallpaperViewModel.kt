@@ -2,15 +2,18 @@ package com.adwi.pexwallpapers.ui.setwallpaper
 
 import androidx.appcompat.app.AppCompatActivity
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
+import com.adwi.pexwallpapers.data.repository.SettingsRepository
 import com.adwi.pexwallpapers.data.repository.interfaces.WallpaperRepositoryInterface
 import com.adwi.pexwallpapers.di.IoDispatcher
 import com.adwi.pexwallpapers.shared.tools.image.ImageTools
 import com.adwi.pexwallpapers.shared.tools.sharing.SharingTools
 import com.adwi.pexwallpapers.shared.tools.wallpaper.WallpaperSetter
+import com.adwi.pexwallpapers.shared.work.WorkTools
 import com.adwi.pexwallpapers.ui.base.BaseViewModel
 import com.adwi.pexwallpapers.util.onDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,6 +22,8 @@ class SetWallpaperViewModel @Inject constructor(
     private val sharingTools: SharingTools,
     private val wallpaperSetter: WallpaperSetter,
     private val imageTools: ImageTools,
+    private val workTools: WorkTools,
+    private val settingsRepository: SettingsRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
@@ -43,7 +48,9 @@ class SetWallpaperViewModel @Inject constructor(
 
     fun downloadWallpaper(wallpaper: Wallpaper) {
         onDispatcher(ioDispatcher) {
-            imageTools.fetchRemoteAndSaveToGallery(wallpaper.id, wallpaper.src!!.portrait)
+            val settings = settingsRepository.getSettings().first()
+
+            workTools.createDownloadWallpaperWork(wallpaper, settings.downloadOverWiFi)
         }
     }
 

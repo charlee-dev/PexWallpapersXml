@@ -19,9 +19,6 @@ interface SettingsDao {
     @Query("UPDATE settings SET lastQuery = :query")
     suspend fun updateLastQuery(query: String)
 
-    @Query("UPDATE settings SET pushNotification = :enabled")
-    suspend fun updatePushNotification(enabled: Boolean)
-
     @Query("UPDATE settings SET newWallpaperSet = :enabled")
     suspend fun updateNewWallpaperSet(enabled: Boolean)
 

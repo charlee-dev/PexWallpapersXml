@@ -13,6 +13,7 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+
 private const val TAG = "WorkTools"
 private const val timeSpeeding = 30
 private const val minutesWorkTimes = 3
@@ -45,12 +46,18 @@ class WorkTools @Inject constructor(
             .d("Created work: \nwallpaperId = $wallpaperId")
     }
 
-    fun createDownloadWallpaperWork(wallpaper: Wallpaper) {
+    fun createDownloadWallpaperWork(wallpaper: Wallpaper, wifiOnly: Boolean) {
         Timber.tag(TAG).d("downloadWallpaperWork")
 
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
+        val constraints = if (wifiOnly) {
+            Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.UNMETERED)
+                .build()
+        } else {
+            Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+        }
 
         val builder = Data.Builder()
             .putInt(WALLPAPER_ID, wallpaper.id)
@@ -68,6 +75,10 @@ class WorkTools @Inject constructor(
             ExistingWorkPolicy.KEEP,
             work
         )
+
+        if (wifiOnly)
+            Timber.tag(TAG)
+                .d("Download will start when you connect to WiFi \nYou can change this in Settings")
 
         Timber.tag(TAG)
             .d("Created work: \nwallpaperId = ${wallpaper.id}")

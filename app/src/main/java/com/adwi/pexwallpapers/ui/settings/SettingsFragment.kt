@@ -57,9 +57,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
             }
 
             // Switches
-            pushNotificationsSwitch.setOnCheckedChangeListener { _, checked ->
-                viewModel.updatePushNotification(checked)
-            }
             newWallpaperSwitch.setOnCheckedChangeListener { _, checked ->
                 viewModel.updateNewWallpaperSet(checked)
             }
@@ -135,7 +132,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
                 viewModel.settings.collect {
                     settings = it
 
-                    pushNotificationsSwitch.isChecked = it.pushNotification
                     newWallpaperSwitch.isChecked = it.newWallpaperSet
                     wallpaperRecomendationsSwitch.isChecked = it.wallpaperRecommendations
                     autoWallpaperSwitch.isChecked = it.autoChangeWallpaper

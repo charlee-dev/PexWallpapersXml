@@ -19,9 +19,6 @@ class SettingsRepository @Inject constructor(
     override suspend fun updateLastQuery(query: String) =
         dao.updateLastQuery(query)
 
-    override suspend fun updatePushNotification(enabled: Boolean) =
-        dao.updatePushNotification(enabled)
-
     override suspend fun updateNewWallpaperSet(enabled: Boolean) =
         dao.updateNewWallpaperSet(enabled)
 

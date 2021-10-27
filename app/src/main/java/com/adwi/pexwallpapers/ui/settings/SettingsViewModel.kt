@@ -82,6 +82,7 @@ class SettingsViewModel @Inject constructor(
 
     fun cancelWorks(workTag: String) {
         workTools.cancelWorks(workTag)
+        imageTools.deleteAllBackups()
     }
 
     fun saveSettings(settings: Settings) {

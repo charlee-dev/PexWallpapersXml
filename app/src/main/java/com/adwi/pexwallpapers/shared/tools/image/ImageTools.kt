@@ -51,29 +51,32 @@ class ImageTools @Inject constructor(
     }
 
     fun bitmapFromLocal(wallpaperId: Int): Bitmap {
-        val directory = ContextWrapper(context).getDir("images", Context.MODE_PRIVATE)
-        val file = File(directory, "$BACKUP_WALLPAPER$wallpaperId.jpg")
-
-        if (!file.exists()) {
-            Timber.tag(TAG).d("bitmapFromLocal - file doesn't exist")
-        }
-
+        val file = getFileByWallpaperId(wallpaperId.toString())
         return BitmapFactory.decodeFile(file.absolutePath)
     }
 
     fun deleteBackupBitmap(wallpaperId: String) {
-        Timber.tag(TAG).d("deleteBackupBitmap - Deleted image $wallpaperId")
+        val file = getFileByWallpaperId(wallpaperId)
+        file.delete()
+        if (file.exists()) {
+            Timber.tag(TAG).d("deleteBackupBitmap - Can't delete image $wallpaperId")
+        } else {
+            Timber.tag(TAG).d("deleteBackupBitmap - Deleted image $wallpaperId")
+        }
+    }
+
+    fun deleteAllBackups() {
+        val directory = ContextWrapper(context).getDir("images", Context.MODE_PRIVATE)
+        if (directory.exists()) {
+            directory.deleteRecursively()
+            Timber.tag(TAG).d("Deleted directory - images")
+        } else {
+            Timber.tag(TAG).d("Directory - images - doesn't exist")
+        }
     }
 
     fun backupImageToLocal(wallpaperId: Int, bitmap: Bitmap): Uri {
-        val directory = ContextWrapper(context).getDir("images", Context.MODE_PRIVATE)
-
-        if (!directory.exists()) {
-            directory.mkdirs()
-        }
-
-        val fileName = "$BACKUP_WALLPAPER$wallpaperId.jpg"
-        val file = File(directory, fileName)
+        val file = getFileByWallpaperId(wallpaperId.toString())
 
         try {
             val stream: OutputStream = FileOutputStream(file)
@@ -88,23 +91,22 @@ class ImageTools @Inject constructor(
     }
 
     fun restoreBackup(wallpaperId: String): Bitmap {
-        val directory = ContextWrapper(context).getDir("images", Context.MODE_PRIVATE)
-        val fileName = "$BACKUP_WALLPAPER$wallpaperId.jpg"
-        val file = File(directory, fileName)
-
+        val file = getFileByWallpaperId(wallpaperId)
         return BitmapFactory.decodeFile(file.absolutePath)
     }
 
-
-    private fun saveImageToInternalStorage(wallpaperId: Int, bitmap: Bitmap): Uri {
+    private fun getFileByWallpaperId(wallpaperId: String): File {
         val directory = ContextWrapper(context).getDir("images", Context.MODE_PRIVATE)
-
         if (!directory.exists()) {
             directory.mkdirs()
         }
 
         val fileName = "$BACKUP_WALLPAPER$wallpaperId.jpg"
-        val file = File(directory, fileName)
+        return File(directory, fileName)
+    }
+
+    private fun saveImageToInternalStorage(wallpaperId: Int, bitmap: Bitmap): Uri {
+        val file = getFileByWallpaperId(wallpaperId.toString())
 
         try {
             val stream: OutputStream = FileOutputStream(file)

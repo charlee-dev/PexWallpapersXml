@@ -15,9 +15,12 @@ import android.media.RingtoneManager.TYPE_NOTIFICATION
 import android.media.RingtoneManager.getDefaultUri
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.navigation.NavDeepLinkBuilder
 import com.adwi.pexwallpapers.MainActivity
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.shared.tools.image.ImageTools
+import com.adwi.pexwallpapers.shared.tools.notification.receivers.ActionRestoreReceiver
+import com.adwi.pexwallpapers.shared.tools.notification.receivers.OnDismissReceiver
 import com.adwi.pexwallpapers.util.runningOOrLater
 import com.adwi.pexwallpapers.util.runningSOrLater
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -153,7 +156,6 @@ class NotificationTools @Inject constructor(
         actionId: String? = null,
         actionTitle: String = ""
     ) {
-        var requestCode = 1
         val intentDestination: Class<*>
 
         val smallBitmap =
@@ -165,18 +167,38 @@ class NotificationTools @Inject constructor(
 
         when (channelId) {
             Channel.AUTO_WALLPAPER -> {
+                val onClickIntent = NavDeepLinkBuilder(context)
+                    .setGraph(R.navigation.nav_graph)
+                    .setDestination(R.id.favoritesFragment)
+                    .createPendingIntent()
 
-                intentDestination = MainActivity::class.java
+                val dismissPendingIntent = getPendingIntent(
+                    Intent(context, OnDismissReceiver::class.java).apply {
+                        putExtra(ACTION_AUTO, wallpaperId.toString())
+                    }
+                )
+
+                val restorePendingIntent = getPendingIntent(
+                    Intent(context, ActionRestoreReceiver::class.java).apply {
+                        putExtra(ACTION_AUTO, wallpaperId.toString())
+                    }
+                )
+
                 notification
                     .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bitmap))
                     .setContentTitle("New wallpaper set")
-                    .setContentText("PexWallpapers just set an amazing wallpaper for you")
+                    .setContentText("PexWallpapers just set an amazing wallpaper for you \nClick notification to edit favorites list")
                     .setLargeIcon(smallBitmap)
+                    .setContentIntent(onClickIntent)
+                    .setDeleteIntent(dismissPendingIntent)
+                    .addAction(
+                        R.drawable.ic_refresh,
+                        context.getString(R.string.restore),
+                        restorePendingIntent
+                    )
                     .priority = NotificationCompat.PRIORITY_DEFAULT
             }
             Channel.RECOMMENDATIONS -> {
-                requestCode = 2
-                intentDestination = MainActivity::class.java
                 notification
                     .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bitmap))
                     .setContentTitle("Recommendations")
@@ -185,8 +207,6 @@ class NotificationTools @Inject constructor(
                     .priority = NotificationCompat.PRIORITY_DEFAULT
             }
             Channel.INFO -> {
-                requestCode = 3
-                intentDestination = MainActivity::class.java
                 notification
                     .setStyle(NotificationCompat.BigTextStyle().bigText(longMessage))
                     .setGroupAlertBehavior(NotificationCompat.GROUP_ALERT_CHILDREN)
@@ -194,39 +214,26 @@ class NotificationTools @Inject constructor(
             }
         }
 
-        val intent = Intent(context, intentDestination).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            action = actionName
-            putExtra(actionId, actionTitle)
-        }
+//        val notificationClickPendingIntent =
+//            getPendingIntent(
+//                Intent(context, intentDestination).apply {
+//                    flags =
+//                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                    action = actionName
+//                    putExtra(actionId, actionTitle)
+//                })
 
-        val pendingIntentFlag = if (runningSOrLater)
-            PendingIntent.FLAG_MUTABLE else PendingIntent.FLAG_ONE_SHOT
-
-        if (wallpaperId != null) {
-            val broadcastIntent =
-                Intent(context, PexBroadcastReceiver::class.java).apply {
-                    putExtra(ACTION_AUTO, wallpaperId.toString())
-                }
-
-            val broadcastPendingIntent: PendingIntent =
-                PendingIntent.getBroadcast(context, 0, broadcastIntent, pendingIntentFlag)
-
-            notification.addAction(
-                R.drawable.ic_refresh,
-                context.getString(R.string.restore),
-                broadcastPendingIntent
-            )
-        }
-
-        val pendingIntent =
-            PendingIntent.getActivity(context, requestCode, intent, pendingIntentFlag)
-
-        notification.setContentIntent(pendingIntent)
+//        notification.setContentIntent(notificationClickPendingIntent)
 
         with(NotificationManagerCompat.from(context)) {
             notify(id, notification.build())
         }
+    }
+
+    private fun getPendingIntent(intent: Intent): PendingIntent {
+        val pendingIntentFlag = if (runningSOrLater)
+            PendingIntent.FLAG_MUTABLE else PendingIntent.FLAG_ONE_SHOT
+        return PendingIntent.getBroadcast(context, 1, intent, pendingIntentFlag)
     }
 }
 

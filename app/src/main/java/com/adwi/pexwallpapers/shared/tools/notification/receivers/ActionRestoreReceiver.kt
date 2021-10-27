@@ -1,17 +1,18 @@
-package com.adwi.pexwallpapers.shared.tools.notification
+package com.adwi.pexwallpapers.shared.tools.notification.receivers
 
 import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.adwi.pexwallpapers.R
+import com.adwi.pexwallpapers.shared.tools.notification.ACTION_AUTO
 import com.adwi.pexwallpapers.shared.work.WorkTools
 import com.adwi.pexwallpapers.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PexBroadcastReceiver : BroadcastReceiver() {
+class ActionRestoreReceiver : BroadcastReceiver() {
 
     @Inject
     lateinit var workTools: WorkTools
@@ -31,5 +32,3 @@ class PexBroadcastReceiver : BroadcastReceiver() {
         }
     }
 }
-
-private const val TAG = "PexBroadcastReceiverReceiver"

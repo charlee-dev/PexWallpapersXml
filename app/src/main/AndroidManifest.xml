@@ -48,6 +48,12 @@
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
             tools:node="remove" />
-        <receiver android:name=".shared.tools.notification.PexBroadcastReceiver"/>
+
+        <receiver
+            android:name=".shared.tools.notification.receivers.ActionRestoreReceiver"
+            android:exported="false" />
+        <receiver
+            android:name=".shared.tools.notification.receivers.OnDismissReceiver"
+            android:exported="false" />
     </application>
 </manifest>

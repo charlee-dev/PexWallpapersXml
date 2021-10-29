@@ -37,5 +37,13 @@ class SettingsRepository @Inject constructor(
     override suspend fun updateChangePeriodValue(periodValue: Float) =
         dao.updateChangePeriodValue(periodValue)
 
+    override suspend fun updateAutoHome(enabled: Boolean) {
+        dao.updateAutoHome(enabled)
+    }
+
+    override suspend fun updateAutoLock(enabled: Boolean) {
+        dao.updateAutoLock(enabled)
+    }
+
     override suspend fun resetAllSettings() = dao.insertSettings(Settings())
 }

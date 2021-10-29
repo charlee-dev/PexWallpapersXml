@@ -14,5 +14,7 @@ interface SettingsRepositoryInterface {
     suspend fun updateDownloadOverWiFi(enabled: Boolean)
     suspend fun updateChangePeriodType(radioButton: Int)
     suspend fun updateChangePeriodValue(periodValue: Float)
+    suspend fun updateAutoHome(enabled: Boolean)
+    suspend fun updateAutoLock(enabled: Boolean)
     suspend fun resetAllSettings()
 }

@@ -56,16 +56,24 @@ class SettingsViewModel @Inject constructor(
         onDispatcher(ioDispatcher) { repository.updateAutoChangeWallpaper(checked) }
     }
 
-    fun updateDownloadOverWiFi(checked: Boolean) {
-        onDispatcher(ioDispatcher) { repository.updateDownloadOverWiFi(checked) }
-    }
-
     fun updateChangePeriodType(radioButton: Int) {
         onDispatcher(ioDispatcher) { repository.updateChangePeriodType(radioButton) }
     }
 
     fun updateChangePeriodValue(periodValue: Float) {
         onDispatcher(ioDispatcher) { repository.updateChangePeriodValue(periodValue) }
+    }
+
+    fun updateDownloadOverWiFi(checked: Boolean) {
+        onDispatcher(ioDispatcher) { repository.updateDownloadOverWiFi(checked) }
+    }
+
+    fun updateAutoHome(checked: Boolean) {
+        onDispatcher(ioDispatcher) { repository.updateAutoHome(checked) }
+    }
+
+    fun updateAutoLock(checked: Boolean) {
+        onDispatcher(ioDispatcher) { repository.updateAutoLock(checked) }
     }
 
     fun resetSettings() {
@@ -101,22 +109,6 @@ class SettingsViewModel @Inject constructor(
             R.id.minutes_radio_button -> TimeUnit.MINUTES
             R.id.hours_radio_button -> TimeUnit.HOURS
             else -> TimeUnit.DAYS
-        }
-    }
-
-    fun saveImage() {
-        onDispatcher(ioDispatcher) {
-            imageTools.fetchRemoteAndSaveLocally(
-                9800867,
-                "https://images.pexels.com/photos/9800867/pexels-photo-9800867.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800"
-            )
-        }
-    }
-
-    fun readImage() {
-        onDispatcher(ioDispatcher) {
-            val bitmap = imageTools.bitmapFromLocal(9800867)
-            Timber.tag(TAG).d("readImage - ${bitmap.height} ${bitmap.width}")
         }
     }
 }

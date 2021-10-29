@@ -36,4 +36,10 @@ interface SettingsDao {
 
     @Query("UPDATE settings SET sliderValue = :periodValue")
     suspend fun updateChangePeriodValue(periodValue: Float)
+
+    @Query("UPDATE settings SET autoHome = :enabled")
+    suspend fun updateAutoHome(enabled: Boolean)
+
+    @Query("UPDATE settings SET autoLock = :enabled")
+    suspend fun updateAutoLock(enabled: Boolean)
 }

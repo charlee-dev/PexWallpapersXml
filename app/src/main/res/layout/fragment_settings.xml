@@ -4,12 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="settingsViewModel"
-            type="com.adwi.pexwallpapers.ui.settings.SettingsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,7 +63,7 @@
                             <com.google.android.material.switchmaterial.SwitchMaterial
                                 android:id="@+id/new_wallpaper_switch"
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/switchHeight" />
+                                android:layout_height="@dimen/switchHeight"/>
 
                         </LinearLayout>
 
@@ -92,7 +86,7 @@
                                 android:id="@+id/wallpaper_recomendations_switch"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/switchHeight"
-                                tools:checked="false" />
+                                tools:checked="false"/>
 
                         </LinearLayout>
                     </LinearLayout>
@@ -146,7 +140,7 @@
                             <com.google.android.material.switchmaterial.SwitchMaterial
                                 android:id="@+id/auto_wallpaper_switch"
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/switchHeight" />
+                                android:layout_height="@dimen/switchHeight"/>
 
                         </LinearLayout>
 
@@ -277,7 +271,7 @@
                                         android:contentDescription="@string/set_period"
                                         android:stepSize="1.0"
                                         android:valueFrom="1.0"
-                                        android:valueTo="12.0" />
+                                        android:valueTo="12.0"/>
 
                                     <TextView
                                         android:id="@+id/slider_max_value"
@@ -303,40 +297,6 @@
                                     android:paddingHorizontal="@dimen/margin_small"
                                     android:singleLine="true"
                                     android:text="@string/save" />
-
-                                <androidx.appcompat.widget.AppCompatButton
-                                    android:id="@+id/save_image_button"
-                                    style="@style/TextStyle.Button"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_gravity="center"
-                                    android:layout_margin="@dimen/margin_extra_small"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/background_rounded_stroke"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    android:padding="@dimen/margin_small"
-                                    android:paddingHorizontal="@dimen/margin_small"
-                                    android:singleLine="true"
-                                    android:text="Save image"
-                                    android:visibility="gone" />
-
-                                <androidx.appcompat.widget.AppCompatButton
-                                    android:id="@+id/read_image_button"
-                                    style="@style/TextStyle.Button"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_gravity="center"
-                                    android:layout_margin="@dimen/margin_extra_small"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/background_rounded_stroke"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    android:padding="@dimen/margin_small"
-                                    android:paddingHorizontal="@dimen/margin_small"
-                                    android:singleLine="true"
-                                    android:text="Read image"
-                                    android:visibility="gone" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -421,7 +381,7 @@
                             <com.google.android.material.switchmaterial.SwitchMaterial
                                 android:id="@+id/download_over_wifi_switch"
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/switchHeight" />
+                                android:layout_height="@dimen/switchHeight"/>
 
                         </LinearLayout>
                     </LinearLayout>

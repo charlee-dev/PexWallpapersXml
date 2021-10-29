@@ -86,6 +86,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
                 setSlider(itemId)
             }
 
+            // Checkboxes
+            homeCheckbox.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.updateAutoHome(isChecked)
+            }
+            lockCheckbox.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.updateAutoLock(isChecked)
+            }
+
             // Slider
             periodSlider.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
                 override fun onStartTrackingTouch(slider: Slider) {}
@@ -116,8 +124,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
             aboutButton.setOnClickListener { }
             supportButton.setOnClickListener { viewModel.contactSupport() }
             privacyPolicyButton.setOnClickListener {}
-            saveImageButton.setOnClickListener { viewModel.saveImage() }
-            readImageButton.setOnClickListener { viewModel.readImage() }
         }
     }
 
@@ -138,11 +144,15 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
                     changePeriodRadioGroup.check(it.selectedButton)
                     periodSlider.value = it.sliderValue
                     downloadOverWifiSwitch.isChecked = it.downloadOverWiFi
+                    homeCheckbox.isChecked = it.autoHome
+                    lockCheckbox.isChecked = it.autoLock
 
                     autoChangeDependantViewsLayout.alpha =
                         if (settings.autoChangeWallpaper) 1f else .5f
 
                     with(settings.autoChangeWallpaper) {
+                        homeCheckbox.isEnabled = this
+                        lockCheckbox.isEnabled = this
                         periodSlider.isEnabled = this
                         daysRadioButton.isEnabled = this
                         hoursRadioButton.isEnabled = this

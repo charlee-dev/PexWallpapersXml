@@ -82,8 +82,11 @@
     <string name="auto_change_wallpaper">Auto change wallpaper</string>
     <string name="change_wallpaper_every">Change wallpaper every:</string>
     <string name="minutes">Minutes</string>
+    <string name="minute">Minute</string>
     <string name="hours">Hours</string>
+    <string name="hour">Hour</string>
     <string name="days">Days</string>
+    <string name="day">Day</string>
     <string name="weeks">Weeks</string>
     <string name="set_period">Set period</string>
     <string name="sign_out">Sign out</string>
@@ -95,13 +98,13 @@
     <string name="rationale_desc">We require access to read external storage permission to be able to backup your previous wallpaper
         just in case you want to revert to it</string>
     <string name="save">Save</string>
-    <string name="saved">Saved</string>
+    <string name="wallpaper_will_change_in">Wallpaper will change every %1$s %2$s</string>
     <string name="enable">Enable</string>
     <string name="is_disabled">is disabled</string>
     <string name="checking_permissions">Checking permission</string>
     <string name="restore">Restore</string>
 
-    <string name="group_notification_for">This is the %s notification group.</string>
+    <string name="group_notification_for">This is the % notification group.</string>
     <string name="auto_change_wallpaper_cannot_be_used_nwithout_storage_permission">Auto change wallpaper cannot be used\nREAD EXTERNAL STORAGE\npermission is required</string>
     <string name="fix">Fix</string>
     <string name="previous_wallpaper_has_been_restored">Previous wallpaper has been restored</string>

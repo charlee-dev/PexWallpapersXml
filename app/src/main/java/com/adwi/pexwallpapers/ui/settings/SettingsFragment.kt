@@ -118,7 +118,13 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
                             this@SettingsFragment,
                             granted = {
                                 viewModel.saveSettings(settings)
-                                showSnackbar(getString(R.string.saved))
+                                showSnackbar(
+                                    getString(
+                                        R.string.wallpaper_will_change_in,
+                                        settings.sliderValue.toInt().toString(),
+                                        getTimeRange(settings.sliderValue, settings.selectedButton)
+                                    )
+                                )
                             }
                         )
                     }
@@ -213,6 +219,15 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
             periodDurationValue.text = periodSlider.value.toInt().toString()
             viewModel.updateChangePeriodValue(periodSlider.value)
         }
+    }
+
+    private fun getTimeRange(value: Float, selectedButton: Int): String {
+        val timeRange = when (selectedButton) {
+            R.id.minutes_radio_button -> getString(R.string.minute)
+            R.id.hours_radio_button -> getString(R.string.hour)
+            else -> getString(R.string.day)
+        }
+        return if (value.toInt() == 1) timeRange else timeRange + "s"
     }
 
     override fun setupAdapters() {}

@@ -24,7 +24,7 @@ object LocalModule {
                 WallpaperDatabase::class.java,
                 WALLPAPER_DATABASE
             )
-            .createFromAsset("database/database.db")
+            .createFromAsset("database/db.db")
             .build()
 
     @Provides
@@ -41,11 +41,6 @@ object LocalModule {
     @Singleton
     fun provideSearchDao(appDatabase: WallpaperDatabase) =
         appDatabase.searchDao()
-
-    @Provides
-    @Singleton
-    fun provideSuggestionsDao(appDatabase: WallpaperDatabase) =
-        appDatabase.suggestionsDao()
 
     @Provides
     @Singleton

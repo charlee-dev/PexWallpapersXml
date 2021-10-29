@@ -42,23 +42,5 @@ object TypeConverter {
             queryPosition = queryPosition
         )
 
-    fun suggestionNameToSuggestion(name: String) =
-        Suggestion(
-            name = name,
-            isAddedOnSubmit = true
-        )
-
-    fun defaultSuggestionNameListToSuggestions(suggestionNameList: List<String>): List<Suggestion> {
-        val suggestionList = ArrayList<Suggestion>()
-        suggestionNameList.forEach { name ->
-            val suggestion = Suggestion(
-                name = name,
-                isAddedOnSubmit = false
-            )
-            suggestionList.add(suggestion)
-        }
-        return suggestionList
-    }
-
     private val heights = listOf(830, 1220, 975, 513, 600, 790)
 }

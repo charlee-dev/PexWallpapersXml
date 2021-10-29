@@ -33,7 +33,7 @@ class WorkTools @Inject constructor(
 
         val work = OneTimeWorkRequestBuilder<RestoreWallpaperWork>()
             .setInputData(builder)
-            .addTag(WORK_RESTORE_WALLPAPER) // TODO()
+            .addTag(WORK_RESTORE_WALLPAPER)
             .build()
 
         workManager.enqueueUniqueWork(

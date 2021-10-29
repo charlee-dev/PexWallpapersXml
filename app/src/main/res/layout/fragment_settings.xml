@@ -60,7 +60,7 @@
 
                             <TextView
                                 android:id="@+id/new_wallpaper_title"
-                                style="@style/TextStyle.Normal.Condensed"
+                                style="@style/TextStyle.Normal"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -82,7 +82,7 @@
 
                             <TextView
                                 android:id="@+id/wallpaper_recomendations_title"
-                                style="@style/TextStyle.Normal.Condensed"
+                                style="@style/TextStyle.Normal"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -137,7 +137,7 @@
 
                             <TextView
                                 android:id="@+id/auto_wallpaper_title"
-                                style="@style/TextStyle.Normal.Condensed"
+                                style="@style/TextStyle.Normal"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -156,6 +156,29 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
+                            <CheckBox
+                                android:id="@+id/home_checkbox"
+                                style="@style/TextStyle.Normal.Condensed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/home_screen"
+                                android:textAllCaps="true"
+                                android:textSize="14sp"
+                                android:paddingStart="@dimen/margin_large"
+                                android:layout_marginStart="@dimen/margin_large"/>
+
+                            <CheckBox
+                                android:id="@+id/lock_checkbox"
+                                style="@style/TextStyle.Normal.Condensed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lock_screen"
+                                android:textSize="14sp"
+                                android:fontFamily="sans-serif-condensed-light"
+                                android:textAllCaps="true"
+                                android:paddingStart="@dimen/margin_large"
+                                android:layout_marginStart="@dimen/margin_large"/>
+
                             <LinearLayout
                                 android:id="@+id/period_layout"
                                 android:layout_width="match_parent"
@@ -164,7 +187,7 @@
 
                                 <TextView
                                     android:id="@+id/period_title"
-                                    style="@style/TextStyle.Normal.Condensed"
+                                    style="@style/TextStyle.Normal"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/margin_small"
@@ -174,7 +197,7 @@
                                     android:id="@+id/change_period_radio_group"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginVertical="@dimen/margin_small"
+                                    android:layout_marginVertical="@dimen/margin_medium"
                                     android:orientation="horizontal">
 
                                     <RadioButton
@@ -217,7 +240,7 @@
 
                                     <TextView
                                         android:id="@+id/period_duration_title"
-                                        style="@style/TextStyle.Normal.Condensed"
+                                        style="@style/TextStyle.Normal"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/time_range" />
@@ -236,7 +259,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
-                                    android:orientation="horizontal">
+                                    android:orientation="horizontal"
+                                    android:layout_marginVertical="@dimen/margin_small">
 
                                     <TextView
                                         android:id="@+id/slider_min_value"
@@ -372,6 +396,7 @@
                         android:background="@drawable/background_rounded_stroke"
                         android:orientation="vertical"
                         android:padding="@dimen/margin_medium"
+                        android:paddingVertical="@dimen/margin_medium"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -381,12 +406,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:paddingTop="@dimen/margin_small"
                             android:orientation="horizontal"
                             tools:ignore="UselessParent">
 
                             <TextView
                                 android:id="@+id/download_over_wifi_title"
-                                style="@style/TextStyle.Normal.Condensed"
+                                style="@style/TextStyle.Normal"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"

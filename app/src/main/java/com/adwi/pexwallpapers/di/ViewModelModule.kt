@@ -40,12 +40,6 @@ object ViewModelModule {
 
     @Provides
     @ViewModelScoped
-    fun provideSuggestionsRepository(
-        wallpapersDatabase: WallpaperDatabase
-    ) = SuggestionsRepository(wallpapersDatabase) as SuggestionsRepositoryInterface
-
-    @Provides
-    @ViewModelScoped
     fun provideSettingsRepository(
         wallpapersDatabase: WallpaperDatabase
     ) = SettingsRepository(wallpapersDatabase) as SettingsRepositoryInterface

@@ -3,8 +3,6 @@ package com.adwi.pexwallpapers
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
-import com.adwi.pexwallpapers.data.repository.SettingsRepository
-import com.adwi.pexwallpapers.data.repository.SuggestionsRepository
 import com.adwi.pexwallpapers.shared.tools.notification.NotificationTools
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.DelicateCoroutinesApi

@@ -124,8 +124,10 @@
         <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/wallpaper_item.xml" value="0.5153985507246377" />
         <entry key="..\:/Users/adria/StudioProjects/MyProjects/PexWallpapers/app/src/main/res/layout/wallpaper_view_pager_item.xml" value="0.5153985507246377" />
         <entry key="app/src/main/res/layout/fragment_preview.xml" value="0.3591485507246377" />
-        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.23711340206185566" />
+        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.6744791666666666" />
         <entry key="app/src/main/res/layout/fragment_simple_preview.xml" value="0.23711340206185566" />
+        <entry key="app/src/main/res/layout/suggestion_item.xml" value="0.24479166666666666" />
       </map>
     </option>
   </component>

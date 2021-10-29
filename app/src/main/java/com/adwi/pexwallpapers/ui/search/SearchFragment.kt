@@ -7,13 +7,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.adwi.pexwallpapers.R
-import com.adwi.pexwallpapers.data.local.entity.Suggestion
 import com.adwi.pexwallpapers.data.local.entity.Wallpaper
 import com.adwi.pexwallpapers.databinding.FragmentSearchBinding
-import com.adwi.pexwallpapers.shared.adapter.SuggestionListAdapter
 import com.adwi.pexwallpapers.shared.adapter.WallpaperListPagingAdapter
 import com.adwi.pexwallpapers.shared.adapter.WallpapersLoadStateAdapter
 import com.adwi.pexwallpapers.ui.base.BaseFragment
@@ -32,12 +29,7 @@ class SearchFragment :
     override val viewModel: SearchViewModel by viewModels()
 
     private lateinit var wallpaperList: List<Wallpaper>
-    private lateinit var suggestionList: List<Suggestion>
 
-    private var _suggestionListAdapter: SuggestionListAdapter? = null
-    private val suggestionListAdapter get() = _suggestionListAdapter
-
-    private var filteredSuggestionList: ArrayList<Suggestion> = arrayListOf()
 
     override fun setupToolbar() {
         binding.apply {
@@ -48,35 +40,10 @@ class SearchFragment :
                 searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
                         newQuery(query!!)
-                        addSuggestion(query)
                         return true
                     }
 
-                    override fun onQueryTextChange(query: String?): Boolean {
-                        filteredSuggestionList = ArrayList()
-                        if (query.isNullOrBlank()) {
-                            if (this@SearchFragment::suggestionList.isInitialized) {
-                                suggestionListAdapter?.submitList(suggestionList)
-                            }
-                        } else {
-                            launchCoroutine {
-                                query.let {
-                                    suggestionList.forEach { suggestion ->
-                                        if (suggestion.name.contains(query, true)) {
-                                            filteredSuggestionList.add(suggestion)
-                                            if (filteredSuggestionList.isNotEmpty()) {
-                                                suggestionListAdapter?.submitList(
-                                                    filteredSuggestionList.toList()
-                                                )
-                                            }
-                                            suggestionsRecyclerView.scrollToPosition(0)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        return true
-                    }
+                    override fun onQueryTextChange(newText: String?) = true
                 })
             }
         }
@@ -101,18 +68,6 @@ class SearchFragment :
                 viewModel.onFavoriteClick(wallpaper)
             }
         )
-        _suggestionListAdapter = SuggestionListAdapter(
-            onItemClick = { suggestion ->
-                newQuery(suggestion.name)
-                searchViewOnFocusBehaviour(false)
-            },
-            onSuggestionDeleteClick = { suggestion ->
-                launchCoroutine {
-                    viewModel.deleteSuggestion(suggestion.name)
-                    filteredSuggestionList.remove(suggestion)
-                }
-            }
-        )
     }
 
     override fun setupViews() {
@@ -125,14 +80,6 @@ class SearchFragment :
                 layoutManager =
                     StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                 setHasFixedSize(true)
-                itemAnimator?.changeDuration = 0
-            }
-            suggestionsRecyclerView.apply {
-                adapter = suggestionListAdapter
-                layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                setHasFixedSize(true)
-                itemAnimator = null
                 itemAnimator?.changeDuration = 0
             }
         }
@@ -157,13 +104,7 @@ class SearchFragment :
 
     override fun setupFlows() {
         binding.apply {
-            launchCoroutine {
-                viewModel.suggestions.collect {
-                    val suggestions = it ?: return@collect
-                    suggestionList = suggestions
-                    suggestionListAdapter?.submitList(suggestions)
-                }
-            }
+
             launchCoroutine {
                 // collectLatest - as soon new data received, current block will be suspended
                 viewModel.searchResults.collectLatest { data ->
@@ -280,17 +221,9 @@ class SearchFragment :
         }
     }
 
-    private fun addSuggestion(name: String) {
-        launchCoroutine {
-            viewModel.addSuggestion(TypeConverter.suggestionNameToSuggestion(name))
-        }
-    }
-
     private fun searchViewOnFocusBehaviour(hasFocus: Boolean) {
         binding.apply {
-            suggestionsRecyclerView.isVisible = hasFocus
             toolbarLayout.backButton.isVisible = hasFocus
-            if (!hasFocus) filteredSuggestionList.clear()
         }
     }
 
@@ -320,10 +253,5 @@ class SearchFragment :
         binding.apply {
             shimmerFrameLayout.stopShimmer()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _suggestionListAdapter = null
     }
 }

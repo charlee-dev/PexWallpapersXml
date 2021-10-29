@@ -61,7 +61,11 @@ class AutoChangeWallpaperWork @AssistedInject constructor(
             // Set wallpaper
             if (bitmap != null) {
 
-                wallpaperSetter.setWallpaper(bitmap, setHomeScreen = true, setLockScreen = false)
+                wallpaperSetter.setWallpaper(
+                    bitmap = bitmap,
+                    setHomeScreen = settings.autoHome,
+                    setLockScreen = settings.autoLock
+                )
 
                 if (settings.autoChangeWallpaper) {
                     notificationTools.sendNotification(
@@ -77,8 +81,6 @@ class AutoChangeWallpaperWork @AssistedInject constructor(
                 Timber.tag(TAG).d("odWork - bitmap null")
             }
             Timber.tag(TAG).d("doWork - success")
-            success()
-
             success()
         } catch (ex: Exception) {
             Timber.tag(TAG).d(ex.toString())

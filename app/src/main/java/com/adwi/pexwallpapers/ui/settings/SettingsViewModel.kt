@@ -30,7 +30,7 @@ class SettingsViewModel @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
 
-    private val favorites = MutableStateFlow<List<Wallpaper>>(emptyList())
+     val favorites = MutableStateFlow<List<Wallpaper>>(emptyList())
 
     val settings = repository.getSettings()
 

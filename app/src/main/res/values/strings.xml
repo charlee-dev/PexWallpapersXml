@@ -95,7 +95,7 @@
     <string name="rationale_desc">We require access to read external storage permission to be able to backup your previous wallpaper
         just in case you want to revert to it</string>
     <string name="save">Save</string>
-    <string name="automation_settings_saved">Automation settings saved</string>
+    <string name="saved">Saved</string>
     <string name="enable">Enable</string>
     <string name="is_disabled">is disabled</string>
     <string name="checking_permissions">Checking permission</string>
@@ -105,4 +105,6 @@
     <string name="auto_change_wallpaper_cannot_be_used_nwithout_storage_permission">Auto change wallpaper cannot be used\nREAD EXTERNAL STORAGE\npermission is required</string>
     <string name="fix">Fix</string>
     <string name="previous_wallpaper_has_been_restored">Previous wallpaper has been restored</string>
+    <string name="minimum_one_screen_need_to_be_selected">Minimum one screen need to be selected</string>
+    <string name="add_minimum_2_wallpapers_to_favorites">Add minimum 2 wallpapers to favorites</string>
 </resources>

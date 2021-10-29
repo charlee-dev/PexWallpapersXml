@@ -107,13 +107,21 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
             // Buttons
             saveAutomationButton.setOnClickListener {
                 launchCoroutine {
-                    checkStoragePermission(
-                        this@SettingsFragment,
-                        granted = {
-                            viewModel.saveSettings(settings)
-                            showSnackbar(getString(R.string.automation_settings_saved))
-                        }
-                    )
+                    when {
+                        !settings.autoHome && !settings.autoLock -> showSnackbar(
+                            getString(R.string.minimum_one_screen_need_to_be_selected)
+                        )
+                        viewModel.favorites.value.size < 2 -> showSnackbar(
+                            getString(R.string.add_minimum_2_wallpapers_to_favorites)
+                        )
+                        else -> checkStoragePermission(
+                            this@SettingsFragment,
+                            granted = {
+                                viewModel.saveSettings(settings)
+                                showSnackbar(getString(R.string.saved))
+                            }
+                        )
+                    }
                 }
             }
             fixButton.setOnClickListener {

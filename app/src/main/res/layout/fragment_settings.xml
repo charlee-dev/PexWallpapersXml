@@ -283,19 +283,12 @@
                                 </LinearLayout>
 
                                 <androidx.appcompat.widget.AppCompatButton
+                                    style="@style/button"
                                     android:id="@+id/save_automation_button"
-                                    style="@style/TextStyle.Button"
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
                                     android:layout_gravity="center"
-                                    android:layout_margin="@dimen/margin_extra_small"
                                     android:layout_weight="1"
-                                    android:background="@drawable/background_rounded_stroke"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    android:padding="@dimen/margin_small"
-                                    android:paddingHorizontal="@dimen/margin_small"
-                                    android:singleLine="true"
                                     android:text="@string/save" />
 
                             </LinearLayout>
@@ -316,13 +309,11 @@
                                 android:layout_marginEnd="@dimen/margin_small"/>
 
                             <androidx.appcompat.widget.AppCompatButton
+                                style="@style/button"
                                 android:id="@+id/fix_button"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/margin_extra_small"
                                 android:layout_weight="1"
-                                android:background="@drawable/background_rounded_stroke"
-                                android:paddingHorizontal="@dimen/margin_small"
                                 android:textColor="@color/design_default_color_error"
                                 android:text="@string/fix" />
 

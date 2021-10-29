@@ -18,14 +18,13 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/back_button"
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
+            style="@style/button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:animateLayoutChanges="true"
-            android:background="@drawable/background_rounded_stroke"
             android:drawableStart="@drawable/ic_arrow_back"
-            android:paddingStart="@dimen/margin_extra_small"
+            android:paddingStart="@dimen/margin_medium_small"
             android:visibility="gone"
-            app:drawableTint="@color/darkGray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -54,12 +53,12 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/menu_button"
+            style="@style/button"
             android:layout_width="@dimen/button_size"
             android:layout_height="@dimen/button_size"
             android:animateLayoutChanges="true"
-            android:background="@drawable/background_rounded_stroke"
             android:drawableStart="@drawable/ic_menu_more"
-            android:paddingStart="@dimen/margin_medium"
+            android:paddingStart="@dimen/margin_medium_small"
             app:drawableTint="@color/darkGray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

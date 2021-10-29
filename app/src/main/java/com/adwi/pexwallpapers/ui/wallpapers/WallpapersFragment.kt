@@ -25,12 +25,7 @@ class WallpapersFragment :
 
     private lateinit var wallpaperList: List<Wallpaper>
 
-    override fun setupToolbar() {
-        binding.toolbarLayout.apply {
-            titleTextView.text = getString(R.string.wallpapers)
-            backButton.isVisible = false
-        }
-    }
+    override fun setupToolbar() {}
 
     override fun setupAdapters() {
         mAdapter = WallpaperListAdapter(
@@ -119,7 +114,7 @@ class WallpapersFragment :
             retryButton.setOnClickListener {
                 viewModel.onManualRefresh()
             }
-            toolbarLayout.menuButton.setOnClickListener {
+            menuButton.setOnClickListener {
                 showMenu(it, R.menu.menu_wallpapers)
             }
         }

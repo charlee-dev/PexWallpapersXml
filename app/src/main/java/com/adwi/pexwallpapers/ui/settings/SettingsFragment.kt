@@ -4,7 +4,6 @@ import android.view.MenuItem
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.adwi.pexwallpapers.R
 import com.adwi.pexwallpapers.data.local.entity.Settings
 import com.adwi.pexwallpapers.databinding.FragmentSettingsBinding
@@ -26,13 +25,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
 
     private var currentSliderValue = 5f
 
-    override fun setupToolbar() {
-        binding.toolbarLayout.apply {
-            backButton.isVisible = true
-            menuButton.isVisible = true
-            titleTextView.text = requireContext().getString(R.string.settings)
-        }
-    }
+    override fun setupToolbar() {}
 
     override fun setupViews() {
         binding.apply {
@@ -47,13 +40,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, Any>(
         binding.apply {
 
             // Toolbar
-            toolbarLayout.apply {
-                backButton.setOnClickListener {
-                    findNavController().popBackStack()
-                }
-                menuButton.setOnClickListener {
-                    showMenu(it, R.menu.settings_menu)
-                }
+            menuButton.setOnClickListener {
+                showMenu(it, R.menu.settings_menu)
             }
 
             // Switches

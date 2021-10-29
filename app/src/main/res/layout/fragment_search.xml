@@ -11,7 +11,7 @@
         android:id="@+id/search_constrain_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutDescription="@xml/fragment_search_xml_search_constrain_layout_scene"
+        app:layoutDescription="@xml/fragment_scene"
         tools:context=".ui.search.SearchFragment">
 
         <com.facebook.shimmer.ShimmerFrameLayout
@@ -104,24 +104,42 @@
 
         <TextView
             android:id="@+id/header_textview"
-            style="@style/TextStyle.Header"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginEnd="@dimen/margin_large"
             android:autoSizeTextType="uniform"
+            android:background="@color/colorPrimary"
+            android:fontFamily="@font/montserrat"
+            android:gravity="bottom"
+            android:paddingStart="@dimen/margin_small"
+            android:paddingTop="50dp"
+            android:autoSizeMaxTextSize="70sp"
+            android:paddingEnd="@dimen/margin_large"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@id/recycler_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_layout"
-            tools:text="@string/search" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Flowers"
+            tools:ignore="UnusedAttribute" />
+        <View
+            android:id="@+id/toolbar_background"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:alpha="0"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <include
             android:id="@+id/toolbar_layout"
             layout="@layout/toolbar_search_layout"
+            android:layout_marginTop="@dimen/margin_extra_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

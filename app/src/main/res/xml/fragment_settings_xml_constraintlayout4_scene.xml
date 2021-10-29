@@ -43,13 +43,25 @@
                 motion:motionTarget="@+id/toolbar_background"
                 motion:framePosition="100"
                 android:alpha="0.5" />
+            <KeyAttribute
+                motion:motionTarget="@+id/header_image"
+                motion:framePosition="0"
+                android:alpha="1" />
+            <KeyAttribute
+                motion:motionTarget="@+id/header_image"
+                motion:framePosition="50"
+                android:alpha="0" />
+            <KeyAttribute
+                motion:motionTarget="@+id/header_image"
+                motion:framePosition="100"
+                android:alpha="0" />
         </KeyFrameSet>
-        <OnSwipe motion:touchAnchorId="@+id/recycler_view" />
+        <OnSwipe motion:touchAnchorId="@+id/settings_scrollView" />
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
         <Constraint
-            android:id="@+id/recycler_view"
+            android:id="@+id/settings_scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="160dp"
@@ -78,7 +90,7 @@
 
     <ConstraintSet android:id="@+id/end">
         <Constraint
-            android:id="@+id/recycler_view"
+            android:id="@+id/settings_scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="0dp"

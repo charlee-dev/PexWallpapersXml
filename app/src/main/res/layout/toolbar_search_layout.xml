@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_size"
         android:animateLayoutChanges="true"
-        android:background="@color/backgroundColorTransparent"
+        android:background="@color/transparent"
         android:paddingStart="@dimen/margin_medium"
         android:paddingEnd="@dimen/margin_medium">
 
